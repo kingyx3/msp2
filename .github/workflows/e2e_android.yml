@@ -11,7 +11,7 @@ defaults:
     working-directory: app
 jobs:
   e2e-android:
-    runs-on: macos-latest
+    runs-on: ubuntu-latest
     env:
       API_LEVEL: 33
       ARCH: x86_64
@@ -51,7 +51,7 @@ jobs:
       # - name: Gradle cache
       #   uses: gradle/actions/setup-gradle@v3
 
-      # - name: AVD cache
+      # - name: AVD cache # not working, waste time for both macOS, Ubuntu
       #   uses: actions/cache@v4
       #   id: avd-cache
       #   with:
@@ -61,37 +61,7 @@ jobs:
       #     key: avd-${{ env.API_LEVEL }}
       #     save-always: true
 
-      # - name: AVD cache (get)
-      #   uses: actions/cache/restore@v3
-      #   id: avd-cache-get
-      #   with:
-      #     path: |
-      #       ~/.android/avd/*
-      #       ~/.android/adb*
-      #     key: avd-${{ env.API_LEVEL }}
-
-      # - name: Create AVD and generate snapshot for caching
-      #   if: steps.avd-cache-get.outputs.cache-hit != 'true'
-      #   uses: reactivecircus/android-emulator-runner@v2
-      #   with:
-      #     api-level: ${{ env.API_LEVEL }}
-      #     arch: ${{ env.ARCH }}
-      #     disable-animations: false
-      #     emulator-options: -no-window -gpu swiftshader_indirect -noaudio -no-boot-anim -camera-back none
-      #     force-avd-creation: false
-      #     script: echo 'Generated AVD snapshot for caching.'
-
-      # - name: AVD cache (set)
-      #   uses: actions/cache/save@v3
-      #   id: avd-cache-set
-      #   if: always() && steps.avd-cache-get.outputs.cache-hit != 'true'
-      #   with:
-      #     path: |
-      #       ~/.android/avd/*
-      #       ~/.android/adb*
-      #     key: avd-${{ env.API_LEVEL }}
-
-      # - name: Detox build cache
+      # - name: Detox build cache # save-always not working (bug)
       #   id: detox-build-cache
       #   uses: actions/cache@v4
       #   with:
