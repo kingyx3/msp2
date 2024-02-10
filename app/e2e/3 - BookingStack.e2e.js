@@ -28,8 +28,8 @@ describe('Check a booking detail & send message to the host', () => {
 
   it('Navigate to BookingDetail screen', async () => {
     // await element(by.id('bookings-scroll-view')).scroll(350, 'down');
-    // await element(by.id('1')).tap();
-    await element(by.id('0')).tap();
+    // await element(by.id('1_booking_detail')).tap();
+    await element(by.id('0_booking_detail')).tap();
 
     // Wait for navigation to complete & perform the visibility checks
     await waitFor(element(by.id("booking-detail-scroll-view"))).toBeVisible(100) // Not visible for past bookings, visible up to booking start (user), visible up to 2 days after booking end (host)
