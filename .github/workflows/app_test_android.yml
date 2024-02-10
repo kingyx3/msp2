@@ -1,0 +1,39 @@
+name: EAS Build & Detox Test (Android)
+on:
+  push:
+    branches:
+      - '**'
+    paths:
+      - app/App.js
+defaults:
+  run:
+    working-directory: app
+jobs:
+  update:
+    name: EAS Build & Detox Test (Android)
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Setup Node
+        uses: actions/setup-node@v3
+        with:
+          node-version: 18.x
+          cache: yarn
+          cache-dependency-path: ./app/yarn.lock
+
+      - name: Setup EAS
+        uses: expo/expo-github-action@v8
+        with:
+          eas-version: latest
+          token: ${{ secrets.EXPO_TOKEN }}
+
+      - name: Install dependencies
+        run: yarn install
+
+      - name: Run Jest tests
+        run: yarn testFinal
+
+      - name: EAS Build & Detox Test (Android)
+        run: eas build -p android -e test --non-interactive --no-wait # eas build -p ios -e test
