@@ -2,9 +2,12 @@ name: EAS Update Production Apps
 on:
   push:
     branches:
-      - '**'
+      - "**"
     paths:
-      - app/**
+      - "app/**"
+      - "!app/e2e/**"
+      - "!app/eas-hooks/**"
+
 defaults:
   run:
     working-directory: app
