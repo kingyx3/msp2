@@ -1,0 +1,16 @@
+diff --git a/node_modules/expo-dev-menu/android/build.gradle b/node_modules/expo-dev-menu/android/build.gradle
+index a1a7860..8fdc45c 100644
+--- a/node_modules/expo-dev-menu/android/build.gradle
++++ b/node_modules/expo-dev-menu/android/build.gradle
+@@ -48,6 +48,11 @@ afterEvaluate {
+       }
+     }
+   }
++  // workaround for https://github.com/wix/Detox/issues/4220
++  tasks.matching { it.name == 'packageReleaseAssets' }.all {
++        dependsOn ':expo-dev-menu:copyAssets'
++        mustRunAfter ':expo-dev-menu:copyAssets'
++  }
+ }
+ 
+ android {

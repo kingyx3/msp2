@@ -1,0 +1,481 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Default Component renders icon correctly - Default 1`] = `
+<View
+  accessibilityValue={
+    {
+      "max": undefined,
+      "min": undefined,
+      "now": undefined,
+      "text": undefined,
+    }
+  }
+  accessible={true}
+  focusable={false}
+  onClick={[Function]}
+  onResponderGrant={[Function]}
+  onResponderMove={[Function]}
+  onResponderRelease={[Function]}
+  onResponderTerminate={[Function]}
+  onResponderTerminationRequest={[Function]}
+  onStartShouldSetResponder={[Function]}
+>
+  <View
+    style={
+      {
+        "alignItems": "center",
+        "backgroundColor": "white",
+        "flexDirection": "row",
+        "paddingBottom": 20,
+        "paddingLeft": 0,
+        "paddingRight": 0,
+        "paddingTop": 20,
+      }
+    }
+  >
+    <View
+      style={
+        {
+          "flexBasis": 0,
+          "flexDirection": "column",
+          "flexGrow": 1,
+          "flexShrink": 1,
+        }
+      }
+    >
+      <View
+        style={{}}
+      >
+        <Text
+          style={
+            {
+              "fontFamily": "Avenir",
+            }
+          }
+        >
+          <Text>
+            <Text
+              style={
+                [
+                  {
+                    "fontSize": 7.2,
+                  },
+                  {
+                    "color": "#333333",
+                  },
+                ]
+              }
+            >
+              Test Title
+            </Text>
+          </Text>
+        </Text>
+      </View>
+    </View>
+    <Text />
+  </View>
+</View>
+`;
+
+exports[`LogsList Component renders icon correctly - LogsList 1`] = `
+<View
+  accessibilityValue={
+    {
+      "max": undefined,
+      "min": undefined,
+      "now": undefined,
+      "text": undefined,
+    }
+  }
+  accessible={true}
+  focusable={false}
+  onClick={[Function]}
+  onResponderGrant={[Function]}
+  onResponderMove={[Function]}
+  onResponderRelease={[Function]}
+  onResponderTerminate={[Function]}
+  onResponderTerminationRequest={[Function]}
+  onStartShouldSetResponder={[Function]}
+>
+  <View
+    style={
+      {
+        "backgroundColor": "#fff3ff",
+        "borderRadius": 8,
+        "marginVertical": 4,
+        "paddingHorizontal": 16,
+        "paddingVertical": 8,
+      }
+    }
+  >
+    <View
+      style={
+        {
+          "alignItems": "center",
+          "flexDirection": "row",
+          "justifyContent": "space-between",
+          "marginBottom": 4,
+        }
+      }
+    >
+      <View
+        style={{}}
+      >
+        <Text
+          style={
+            {
+              "fontFamily": "Avenir",
+            }
+          }
+        >
+          <Text
+            style={
+              {
+                "fontWeight": "bold",
+              }
+            }
+          >
+            <Text
+              style={
+                [
+                  {
+                    "fontSize": 8.1,
+                  },
+                  {
+                    "color": undefined,
+                  },
+                ]
+              }
+            >
+              Log Title
+            </Text>
+          </Text>
+        </Text>
+      </View>
+      <View
+        style={{}}
+      >
+        <Text
+          style={
+            {
+              "fontFamily": "Avenir",
+            }
+          }
+        >
+          <Text
+            style={
+              [
+                {
+                  "fontSize": 5.4,
+                },
+                {
+                  "color": undefined,
+                },
+              ]
+            }
+          />
+        </Text>
+      </View>
+    </View>
+    <View
+      style={
+        {
+          "alignItems": "center",
+          "flexDirection": "row",
+          "justifyContent": "space-between",
+          "marginBottom": 4,
+        }
+      }
+    >
+      <View
+        style={{}}
+      >
+        <Text
+          style={
+            {
+              "fontFamily": "Avenir",
+            }
+          }
+        >
+          <Text>
+            <Text
+              style={
+                [
+                  {
+                    "fontSize": 6.3,
+                    "lineHeight": 22,
+                  },
+                  {
+                    "color": undefined,
+                  },
+                ]
+              }
+            >
+              Log Message
+            </Text>
+          </Text>
+        </Text>
+      </View>
+      <View
+        style={{}}
+      >
+        <Text
+          style={
+            {
+              "fontFamily": "Avenir",
+            }
+          }
+        >
+          <Text
+            style={
+              {
+                "fontWeight": "bold",
+              }
+            }
+          >
+            <Text
+              style={
+                [
+                  {
+                    "fontSize": 6.3,
+                    "lineHeight": 22,
+                  },
+                  {
+                    "color": "red",
+                  },
+                ]
+              }
+            >
+              $100
+            </Text>
+          </Text>
+        </Text>
+      </View>
+    </View>
+    <View
+      style={{}}
+    >
+      <Text
+        numberOfLines={1}
+        style={
+          {
+            "fontFamily": "Avenir",
+          }
+        }
+      >
+        <Text>
+          <Text
+            style={
+              [
+                {
+                  "fontSize": 6.3,
+                  "lineHeight": 22,
+                },
+                {
+                  "color": "#707070",
+                },
+              ]
+            }
+          >
+            Log Secondary
+          </Text>
+        </Text>
+      </Text>
+    </View>
+  </View>
+</View>
+`;
+
+exports[`UserList Component renders icon correctly - UserList 1`] = `
+<View
+  collapsable={false}
+  handlerTag={3}
+  handlerType="PanGestureHandler"
+  onGestureHandlerEvent={[Function]}
+  onGestureHandlerStateChange={[Function]}
+  onLayout={[Function]}
+  style={
+    {
+      "overflow": "hidden",
+    }
+  }
+>
+  <View
+    collapsable={false}
+    handlerTag={4}
+    handlerType="TapGestureHandler"
+    onGestureHandlerEvent={[Function]}
+    onGestureHandlerStateChange={[Function]}
+    pointerEvents="auto"
+    style={
+      {
+        "transform": [
+          {
+            "translateX": -0,
+          },
+        ],
+      }
+    }
+  >
+    <View
+      accessibilityValue={
+        {
+          "max": undefined,
+          "min": undefined,
+          "now": undefined,
+          "text": undefined,
+        }
+      }
+      accessible={true}
+      focusable={false}
+      onClick={[Function]}
+      onResponderGrant={[Function]}
+      onResponderMove={[Function]}
+      onResponderRelease={[Function]}
+      onResponderTerminate={[Function]}
+      onResponderTerminationRequest={[Function]}
+      onStartShouldSetResponder={[Function]}
+    >
+      <View>
+        <View
+          style={
+            {
+              "alignItems": "center",
+              "backgroundColor": "white",
+              "flexDirection": "row",
+              "paddingBottom": 20,
+              "paddingLeft": 0,
+              "paddingRight": 0,
+              "paddingTop": 20,
+            }
+          }
+        >
+          <ImgSliderItems
+            customStyle={
+              {
+                "borderRadius": 35,
+                "height": 70,
+                "marginRight": 15,
+                "width": 70,
+              }
+            }
+            placeholder={1}
+            source="http://example.com/image.jpg"
+          />
+          <View
+            style={
+              {
+                "flexBasis": 0,
+                "flexDirection": "column",
+                "flexGrow": 1,
+                "flexShrink": 1,
+              }
+            }
+          >
+            <View
+              style={
+                {
+                  "flexDirection": "row",
+                  "justifyContent": "space-between",
+                }
+              }
+            >
+              <View
+                style={{}}
+              >
+                <Text
+                  style={
+                    {
+                      "fontFamily": "Avenir",
+                    }
+                  }
+                >
+                  <Text>
+                    <Text
+                      style={
+                        [
+                          {
+                            "fontSize": 7.2,
+                          },
+                          {
+                            "color": "#333333",
+                          },
+                        ]
+                      }
+                    >
+                      User Title
+                    </Text>
+                  </Text>
+                </Text>
+              </View>
+              <View
+                style={{}}
+              >
+                <Text
+                  style={
+                    {
+                      "fontFamily": "Avenir",
+                    }
+                  }
+                >
+                  <Text
+                    style={
+                      [
+                        {
+                          "fontSize": 5.4,
+                        },
+                        {
+                          "color": "#333333",
+                        },
+                      ]
+                    }
+                  />
+                </Text>
+              </View>
+            </View>
+            <View
+              style={
+                {
+                  "flexDirection": "row",
+                  "justifyContent": "space-between",
+                }
+              }
+            >
+              <View
+                style={{}}
+              >
+                <Text
+                  numberOfLines={1}
+                  style={
+                    {
+                      "fontFamily": "Avenir",
+                    }
+                  }
+                >
+                  <Text>
+                    <Text
+                      style={
+                        [
+                          {
+                            "fontSize": 6.3,
+                            "lineHeight": 22,
+                          },
+                          {
+                            "color": "#707070",
+                          },
+                        ]
+                      }
+                    >
+                      User Secondary
+                    </Text>
+                  </Text>
+                </Text>
+              </View>
+            </View>
+          </View>
+        </View>
+      </View>
+    </View>
+  </View>
+</View>
+`;

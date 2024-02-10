@@ -1,0 +1,16 @@
+diff --git a/node_modules/expo-constants/android/build.gradle b/node_modules/expo-constants/android/build.gradle
+index d96d4bc..9edbff6 100644
+--- a/node_modules/expo-constants/android/build.gradle
++++ b/node_modules/expo-constants/android/build.gradle
+@@ -50,6 +50,11 @@ afterEvaluate {
+       }
+     }
+   }
++  // workaround for https://github.com/wix/Detox/issues/4220
++  tasks.matching { it.name.startsWith('package') && it.name.endsWith('Assets') }.all {
++          dependsOn ':expo-dev-menu:copyAssets', ':expo-constants:copyDebugExpoConfig'
++          mustRunAfter ':expo-dev-menu:copyAssets', ':expo-constants:copyDebugExpoConfig', ':expo-constants:copyReleaseExpoConfig'
++  }
+ }
+ 
+ android {

@@ -1,0 +1,114 @@
+USERS/{userId}/
+  id
+  name
+  email
+  creation
+  lastUpdated
+
+USERS/{userId}/USERSPACES/{userSpacesDocNum}/
+[spaceId]:{
+  spaceId
+  spaceType
+  title
+  imagePath
+}
+
+USERS/{userId}/USERBOOKINGS/{userBookingsDocNum}/
+[bookingId]:{
+bookingId
+spaceId
+spaceType
+start
+end
+title
+imagePath
+price
+  fee
+  subtotal
+  total
+creation
+lastUpdated
+cancelled
+}
+
+USERS/{userId}/PUBLIC/{userId}/
+  name
+
+ALLSPACES/{spaceType+allSpacesDocNum}/
+  spaceType,
+  [spaceId]:{
+    id
+    title
+    description
+    imagePath
+    location
+      latitude
+      longitude
+    price
+    peakPrice
+    offPeakPrice
+    openingHours
+  }
+
+SPACES/{spaceId}/
+  id
+  userId
+  userName
+  userCreation
+  spaceType
+  title
+  description
+  imagePath
+  location
+    geohash
+    latitude
+    longitude
+    country
+    city
+    district
+    isoCountryCode
+    name
+    postalCode
+    region
+    street
+    subregion
+    timezone
+  ccy
+  price
+  peakPrice
+  offPeakPrice
+  openingHours
+  allSpacesDocNum
+  userSpacesDocNum
+  creation
+  lastUpdated
+
+ALLSPACESAVAILABILITY/{spaceType+YYYYMMDD+allSpacesDocNum}/
+  [spaceId]: true,
+  [TIME IN MILS]: {
+    [spaceId]:[spaceCount],
+    [spaceId]:[spaceCount],
+    [spaceId]:[spaceCount],
+  },
+  [TIME IN MILS]: {
+    [spaceId]:[spaceCount],
+    [spaceId]:[spaceCount],
+    [spaceId]:[spaceCount],
+  },
+
+BOOKINGS/{bookingId}/
+  id
+  userId
+  spaceId
+  spaceType
+  imagePath
+  start
+  end
+  price: {
+    fee
+    subtotal
+    total
+  }
+  creation
+  lastUpdated
+  cancelled

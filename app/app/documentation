@@ -1,0 +1,91 @@
+Firebase files
+- app
+- messagedetails
+- firebase
+- firebaseconfig
+
+- details
+- spacedetails
+
+- hosting step 6
+
+TESTS (Writes)
+
+USER
+- Can create bookings
+- Can cancel bookings (full refund for user before cutoff, $0 refund after cutoff) - default 12 hrs before booking starts
+
+HOST
+- Can create space
+- Can update space
+- Can disable space
+- Can enable space
+- Can cancel bookings (full refund for user, cancel by T+5)
+- Can update timeslot prices & blocked status for selected spaces that they own
+
+
+
+FOR HOSTS
+1. Changing spaceCount is possible, but it only affects space availabilities after x number of months, where x is the number of months in advance booking allowed.
+2. Payout will be 7 days after booking ends (Stripe Standard) - if booking is not cancelled by then.
+
+FOR GUESTS
+1.
+
+GENERAL
+1. Cancellation policy is currently not completely set up yet. Default cancellation policy will be in place until then.
+
+NETWORK
+1. Login screen (Auth)
+- onPress "Continue with email" - DD
+2. Home screen
+- onPress Search spaces ("What are you doing today?") - DD
+- onPress "Shortcut to details"(recommended bookings) - X (Future)
+- onPress "TopUp" - DD
+2a. TopUpScreen
+- onPress "TopUp" - DD
+2b. RangePicker
+- onPress "Submit" (to go to Listings) - DD
+2c. Listings
+- onPress "Open Details" - DD
+2d. Reserve_1
+- onPress "createBooking" - DD
+3. Bookings screen
+- onPress "Open BookingDetail" - DD
+3a. BookingDetail
+- onPress "cancelBooking" - DD
+4. Hosting screen
+- onPress "List Now / Setup Payments" - DD
+- onPress "Open SpaceDetail" - DD
+4a. HostingEdit8
+- onPress "createSpace/updateSpace" - DD
+4b. spaceAvailability
+- onPress "UpdateBlocked" - DD
+4c. Manage Hosting
+- onPress "Manage Calendar / View Bookings History/ Edit Space Details / Enable/Disable Space" - DD
+5. Messages screen
+- onPress "Open MessageDetail" - DD
+5a. MessageDetail
+- onPress "Send Message" - DD
+6. Account screen
+- N/A
+
+
+
+App store image assets - Google Play
+1*. Your app icon must be a PNG or JPEG, up to 1 MB, 512 px by 512 px, and meet our design specifications and metadata policy
+2*. Your feature graphic must be a PNG or JPEG, up to 15 MB and 1,024 px by 500 px
+3*. Upload 4–8 phone screenshots. Screenshots must be PNG or JPEG, up to 8 MB each, 16:9 or 9:16 aspect ratio, with each side between 320 px and 3,840 px
+4. Upload up to eight 7-inch tablet screenshots. Screenshots must be PNG or JPEG, up to 8 MB each, 16:9 or 9:16 aspect ratio, with each side between 320 px and 3,840 px
+5. Upload up to eight 10-inch tablet screenshots. Screenshots must be PNG or JPEG, up to 8 MB each, 16:9 or 9:16 aspect ratio, with each side between 1,080 px and 7,680 px
+6. Upload 4–8 screenshots. Screenshots must be PNG or JPEG, up to 8 MB each, 16:9 or 9:16 aspect ratio, with each side between 1,080 px and 7,680 px
+
+App store image assets - iOS
+The screenshots must be in flattened JPEG or PNG RGB file format with 72 dpi resolution and without transparency.
+- 6.5-inch iPhone screenshots with corresponding portrait and landscape sizes
+- 5.5-inch iPhone screenshots with related portrait and landscape sizes
+- 12.9-inch iPad screenshots for 2nd and 3rd generation with related portrait and landscape sizes
+
+The first thing you need to do on this matter is to define a story for your screenshots or adequately present them. To do so, you can follow the A.I.D.A (Attention, Interest, Desire, Action) copywriting technique. By doing so, you will work on creating engaging screenshots that will make users more likely to download your app.
+https://appradar.com/blog/ios-app-screenshot-sizes-and-guidelines-for-the-apple-app-store
+Figma

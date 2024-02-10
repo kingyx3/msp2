@@ -1,0 +1,42 @@
+{
+  "cli": {
+    "version": ">= 0.53.0"
+  },
+  "build": {
+    "test": {
+      "android": {
+        "gradleCommand": ":app:assembleRelease :app:assembleAndroidTest -DtestBuildType=release",
+        "withoutCredentials": true
+      },
+      "ios": {
+        "simulator": true,
+        "buildConfiguration": "Release"
+      },
+      "buildArtifactPaths": [
+        "artifacts/**/*.png"
+      ],
+      "developmentClient": true,
+      "distribution": "internal"
+    },
+    "development": {
+      "channel": "development"
+    },
+    "production": {
+      "channel": "production"
+    }
+  },
+  "submit": {
+    "development": {
+      "android": {
+        "serviceAccountKeyPath": "pc-api-6795295579632533760-300-d0f297d14ac0.json",
+        "track": "internal"
+      }
+    },
+    "production": {
+      "android": {
+        "serviceAccountKeyPath": "pc-api-6795295579632533760-300-d0f297d14ac0.json",
+        "track": "production"
+      }
+    }
+  }
+}
