@@ -11,7 +11,7 @@ defaults:
     working-directory: app
 jobs:
   e2e-android:
-    runs-on: macos-latest
+    runs-on: ubuntu-latest
     env:
       API_LEVEL: 33
       ARCH: x86_64
