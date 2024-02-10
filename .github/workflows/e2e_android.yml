@@ -84,17 +84,31 @@ jobs:
             ~/.android/adb*
           key: avd-${{ env.API_LEVEL }}
 
-      - name: Detox build cache
-        id: detox-build-cache
-        uses: actions/cache@v4
+      # - name: Detox build cache
+      #   id: detox-build-cache
+      #   uses: actions/cache@v4
+      #   with:
+      #     path: android/app/build
+      #     key: ${{ runner.os }}-detox-build
+      #     save-always: true
+
+      - name: Detox build cache (get)
+        id: detox-build-cache-get
+        uses: actions/cache/restore@v3
         with:
           path: android/app/build
           key: ${{ runner.os }}-detox-build
-          save-always: true
-
       - name: Detox build
-        if: steps.detox-build-cache.outputs.cache-hit != 'true'
+        if: steps.detox-build-cache-get.outputs.cache-hit != 'true'
         run: yarn detox build --configuration ${{ env.DETOX_CONFIGURATION }}
+
+      - name: Detox build cache (set)
+        id: detox-build-cache-set
+        uses: actions/cache/save@v3
+        if: always() && steps.detox-build-cache-get.outputs.cache-hit != 'true'
+        with:
+          path: android/app/build
+          key: ${{ runner.os }}-detox-build
 
       - name: Get device name
         id: device
