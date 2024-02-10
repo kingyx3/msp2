@@ -96,8 +96,9 @@ jobs:
         id: detox-build-cache-get
         uses: actions/cache/restore@v3
         with:
-          path: android/app/build
+          path: app/android/app/build
           key: ${{ runner.os }}-detox-build
+
       - name: Detox build
         if: steps.detox-build-cache-get.outputs.cache-hit != 'true'
         run: yarn detox build --configuration ${{ env.DETOX_CONFIGURATION }}
@@ -107,7 +108,7 @@ jobs:
         uses: actions/cache/save@v3
         if: always() && steps.detox-build-cache-get.outputs.cache-hit != 'true'
         with:
-          path: android/app/build
+          path: app/android/app/build
           key: ${{ runner.os }}-detox-build
 
       - name: Get device name
