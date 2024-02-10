@@ -124,11 +124,11 @@ jobs:
           disable-animations: true
           emulator-options: -no-snapshot-save -no-window -gpu swiftshader_indirect -noaudio -no-boot-anim -camera-back none
           force-avd-creation: false
-          script: cd app && yarn detox test --configuration ${{ env.DETOX_CONFIGURATION }} --headless --record-logs all --take-screenshots failing
+          script: cd app && yarn detox test --configuration ${{ env.DETOX_CONFIGURATION }} --headless
 
       - name: Upload artifacts
         if: failure()
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v3
         with:
           name: detox-artifacts
           path: app/artifacts
