@@ -46,14 +46,14 @@ jobs:
       - name: Prebuild Expo
         run: npx expo prebuild --platform ios
 
-      - name: Cache CocoaPods
-        id: cache-cocoapods
-        uses: actions/cache@v3
-        with:
-          path: ios/Pods
-          key: ${{ runner.os }}-pods-${{ hashFiles('ios/Podfile.lock') }}
-          restore-keys: |
-            ${{ runner.os }}-pods-
+      # - name: Cache CocoaPods
+      #   id: cache-cocoapods
+      #   uses: actions/cache@v3
+      #   with:
+      #     path: ios/Pods
+      #     key: ${{ runner.os }}-pods-${{ hashFiles('ios/Podfile.lock') }}
+      #     restore-keys: |
+      #       ${{ runner.os }}-pods-
 
       - name: Install CocoaPods
         if: steps.cache-cocoapods.outputs.cache-hit != 'true'
