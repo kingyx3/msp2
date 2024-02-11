@@ -46,7 +46,7 @@ jobs:
           java-version: 17
 
       - name: Prebuild Expo
-        run: npx expo prebuild --platform android
+        run: npx expo prebuild --platform android --clean
 
       # - name: Gradle cache
       #   uses: gradle/actions/setup-gradle@v3
