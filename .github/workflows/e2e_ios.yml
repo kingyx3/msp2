@@ -26,9 +26,6 @@ jobs:
           cache: yarn
           cache-dependency-path: ./app/yarn.lock
 
-      - name: Install Yarn dependencies
-        run: yarn
-
       - name: Install macOS dependencies
         run: |
           brew tap wix/brew
@@ -43,39 +40,28 @@ jobs:
           bundler-cache: true
           ruby-version: "3.1" # or whatever version
 
-      - name: Clean CocoaPods cache
-        run: pod cache clean --all
-
-      - name: Prebuild Expo
-        run: npx expo prebuild --platform ios --clean
-
-      # - name: Cache CocoaPods
-      #   id: cache-cocoapods
-      #   uses: actions/cache@v3
-      #   with:
-      #     path: ios/Pods
-      #     key: ${{ runner.os }}-pods-${{ hashFiles('ios/Podfile.lock') }}
-      #     restore-keys: |
-      #       ${{ runner.os }}-pods-
-
-      # - name: Delete Pods directory and Podfile.lock
-      #   run: |
-      #     rm -rf app/ios/Pods/
-      #     rm app/ios/Podfile.lock
-
-      - name: Install CocoaPods
-        # if: steps.cache-cocoapods.outputs.cache-hit != 'true'
-        run: cd ios ; pod install --repo-update; cd -
-
-      - name: Detox rebuild framework cache
-        run: yarn detox rebuild-framework-cache
-
       - name: Detox build cache (get)
         id: detox-build-cache-get
         uses: actions/cache/restore@v3
         with:
           path: app/ios/build
           key: ${{ runner.os }}-detox-build-${{ env.DETOX_CONFIGURATION }}
+
+      - name: Install Yarn dependencies
+        if: steps.detox-build-cache-get.outputs.cache-hit != 'true'
+        run: yarn
+
+      - name: Clean CocoaPods cache
+        if: steps.detox-build-cache-get.outputs.cache-hit != 'true'
+        run: pod cache clean --all
+
+      - name: Prebuild Expo
+        if: steps.detox-build-cache-get.outputs.cache-hit != 'true'
+        run: npx expo prebuild --platform ios --clean
+
+      - name: Detox rebuild framework cache
+        if: steps.detox-build-cache-get.outputs.cache-hit != 'true'
+        run: yarn detox rebuild-framework-cache
 
       - name: Detox build
         if: steps.detox-build-cache-get.outputs.cache-hit != 'true'
