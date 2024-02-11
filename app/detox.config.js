@@ -14,7 +14,7 @@ module.exports = {
     plugins: {
       log: 'failing',
       // log: process.env.CI ? 'failing' : undefined,
-      screenshot: 'all',
+      screenshot: 'failing',
       // video: 'failing',
       // uiHierarchy: 'enabled'
     },

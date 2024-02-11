@@ -192,7 +192,7 @@ describe('Make a booking via quick search & Listings', () => {
   });
 
   it('Navigate to Listing Details screen', async () => {
-    await element(by.id('0_listing')).tap();
+    await element(by.id('0_listmap')).tap();
 
     // Wait for navigation to complete & perform the visibility checks
     await waitFor(element(by.id('image-carousel'))).toBeVisible().withTimeout(20000);
