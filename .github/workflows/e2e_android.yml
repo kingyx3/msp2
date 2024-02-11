@@ -41,10 +41,8 @@ jobs:
       - name: Setup Java
         uses: actions/setup-java@v4
         with:
-          cache: gradle
           distribution: temurin
           java-version: 17
-          cache-dependency-path: app/android/*.gradle*
 
       # - name: Gradle cache
       #   uses: gradle/actions/setup-gradle@v3
