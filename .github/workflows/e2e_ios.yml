@@ -34,13 +34,6 @@ jobs:
           HOMEBREW_NO_AUTO_UPDATE: 1
           HOMEBREW_NO_INSTALL_CLEANUP: 1
 
-      - name: Setup Ruby
-        uses: ruby/setup-ruby@v1
-        with:
-          bundler-cache: true
-          ruby-version: "3.1" # or whatever version
-          working-directory: app
-
       - name: Install Yarn dependencies
         run: yarn
 
@@ -51,9 +44,6 @@ jobs:
           path: app/ios/build
           key: ${{ runner.os }}-detox-build-${{ env.DETOX_CONFIGURATION }}
 
-      - name: Install Yarn dependencies
-        run: yarn
-
       - name: Clean CocoaPods cache
         if: steps.detox-build-cache-get.outputs.cache-hit != 'true'
         run: pod cache clean --all
@@ -61,6 +51,14 @@ jobs:
       - name: Prebuild Expo
         if: steps.detox-build-cache-get.outputs.cache-hit != 'true'
         run: npx expo prebuild --platform ios --clean
+
+      - name: Setup Ruby
+        uses: ruby/setup-ruby@v1
+        if: steps.detox-build-cache-get.outputs.cache-hit != 'true'
+        with:
+          bundler-cache: true
+          ruby-version: "3.1" # or whatever version
+          working-directory: app
 
       - name: Detox rebuild framework cache
         if: steps.detox-build-cache-get.outputs.cache-hit != 'true'
