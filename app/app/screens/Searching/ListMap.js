@@ -40,8 +40,8 @@ const ListMap = (props) => {
   if (props.latitude && props.longitude) {
     initialState = {
       region: {
-        latitude: props.latitude,
-        longitude: props.longitude,
+        latitude: process.env.EXPO_PUBLIC_TYPE == 'TEST' ? 1.30 : props.latitude,
+        longitude: process.env.EXPO_PUBLIC_TYPE == 'TEST' ? 104 : props.longitude,
         latitudeDelta: 0.5,
         longitudeDelta: 0.5,
       },
