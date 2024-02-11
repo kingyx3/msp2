@@ -40,6 +40,9 @@ jobs:
           bundler-cache: true
           ruby-version: "3.1" # or whatever version
 
+      - name: Install Yarn dependencies
+        run: yarn
+
       - name: Detox build cache (get)
         id: detox-build-cache-get
         uses: actions/cache/restore@v3
@@ -48,7 +51,6 @@ jobs:
           key: ${{ runner.os }}-detox-build-${{ env.DETOX_CONFIGURATION }}
 
       - name: Install Yarn dependencies
-        if: steps.detox-build-cache-get.outputs.cache-hit != 'true'
         run: yarn
 
       - name: Clean CocoaPods cache

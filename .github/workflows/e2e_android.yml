@@ -35,6 +35,16 @@ jobs:
           sudo udevadm control --reload-rules
           sudo udevadm trigger --name-match=kvm
 
+      - name: Install Yarn dependencies
+        run: yarn
+
+      - name: Setup Java
+        uses: actions/setup-java@v4
+        with:
+          cache: gradle
+          distribution: temurin
+          java-version: 17
+
       # - name: Gradle cache
       #   uses: gradle/actions/setup-gradle@v3
 
@@ -62,18 +72,6 @@ jobs:
         with:
           path: app/android/app/build
           key: ${{ runner.os }}-detox-build-${{ env.DETOX_CONFIGURATION }}
-
-      - name: Install Yarn dependencies
-        if: steps.detox-build-cache-get.outputs.cache-hit != 'true'
-        run: yarn
-
-      - name: Setup Java
-        uses: actions/setup-java@v4
-        if: steps.detox-build-cache-get.outputs.cache-hit != 'true'
-        with:
-          cache: gradle
-          distribution: temurin
-          java-version: 17
 
       - name: Prebuild Expo
         if: steps.detox-build-cache-get.outputs.cache-hit != 'true'
