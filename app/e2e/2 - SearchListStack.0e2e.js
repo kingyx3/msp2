@@ -46,7 +46,7 @@ describe('Make a booking via picking datetime & ListMap', () => {
       // Set Date to January 1, 2030
       await element(by.id('open-date-picker')).tap()
       await waitFor(datePicker).toBeVisible().withTimeout(20000);
-      // await datePicker.setDatePickerDate(`${+year}-${+month}-${+day + 2}T00:00:00+08:00`, 'ISO8601');
+      await datePicker.setDatePickerDate(`${+year}-${+month}-${+day + 2}T12:00:00+08:00`, 'ISO8601');
       await element(by.text('OK')).tap();
       await waitFor(datePicker).not.toBeVisible().withTimeout(20000);
 
@@ -64,14 +64,14 @@ describe('Make a booking via picking datetime & ListMap', () => {
       // Set Date to January 1, 2030
       await element(by.id('open-date-picker')).tap()
       await waitFor(datePicker).toBeVisible().withTimeout(20000);
-      // await datePicker.setDatePickerDate(`${+year}-${+month}-${+day + 2}T00:00:00+08:00`, 'ISO8601');
+      await datePicker.setDatePickerDate(`${+year}-${+month}-${+day + 2}T00:00:00+08:00`, 'ISO8601');
       await element(by.text('Confirm')).tap();
       await waitFor(datePicker).not.toBeVisible().withTimeout(20000);
 
       // Set Time to 10 AM
       await element(by.id('open-time-picker')).tap();
       await waitFor(datePicker).toBeVisible().withTimeout(20000);
-      // await datePicker.setDatePickerDate(`${+year}-${+month}-${+day + 2}T11:00:00+08:00`, 'ISO8601');
+      await datePicker.setDatePickerDate(`${+year}-${+month}-${+day + 2}T11:00:00+08:00`, 'ISO8601');
       await element(by.text('Confirm')).tap();
       await waitFor(datePicker).not.toBeVisible().withTimeout(20000);
     }
