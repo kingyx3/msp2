@@ -53,16 +53,8 @@ describe('Make a booking via picking datetime & ListMap', () => {
       // Set Time to 10 AM
       await element(by.id('open-time-picker')).tap();
       await waitFor(timePicker).toBeVisible().withTimeout(20000);
-      try {
-        console.log('Trying set column to value for android timepicker')
-        // await timePicker.setColumnToValue(0, '10');
-        // await timePicker.setColumnToValue(1, '30');
-      } catch (e) {
-        console.log(`An error occurred: ${e.message}`);
-        console.log('Trying tap text to change time for android timepicker')
-        // await element(by.text('11')).tap();
-      }
-      // await timePicker.setDatePickerDate(`${+year}-${+month}-${+day + 2}T11:00:00+08:00`, 'ISO8601');
+      // console.log('Trying tap text to change time for android timepicker')
+      // await element(by.text('11')).tap();
       await element(by.text('OK')).tap();
       await waitFor(timePicker).not.toBeVisible().withTimeout(20000);
 
@@ -96,6 +88,7 @@ describe('Make a booking via picking datetime & ListMap', () => {
 
     // Wait for navigation to complete & perform the visibility checks
     await waitFor(element(by.id('listings-flatlist'))).toBeVisible();
+    await waitFor(element(by.id('0_listing'))).toBeVisible();
   });
 
   it('Navigate to Listing Details screen', async () => {
