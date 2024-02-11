@@ -39,6 +39,7 @@ jobs:
         with:
           bundler-cache: true
           ruby-version: "3.1" # or whatever version
+          working-directory: app
 
       - name: Install Yarn dependencies
         run: yarn
