@@ -55,9 +55,17 @@ jobs:
       #     restore-keys: |
       #       ${{ runner.os }}-pods-
 
+      - name: Clean CocoaPods cache
+        run: app/ios/pod cache clean --all
+
+      - name: Delete Pods directory and Podfile.lock
+        run: |
+          rm -rf app/ios/Pods/
+          rm app/ios/Podfile.lock
+
       - name: Install CocoaPods
-        if: steps.cache-cocoapods.outputs.cache-hit != 'true'
-        run: cd ios ; pod install ; cd -
+        # if: steps.cache-cocoapods.outputs.cache-hit != 'true'
+        run: cd ios ; pod install --repo-update; cd -
 
       - name: Detox rebuild framework cache
         run: yarn detox rebuild-framework-cache
