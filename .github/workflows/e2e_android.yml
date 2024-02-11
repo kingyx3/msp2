@@ -74,7 +74,7 @@ jobs:
         uses: actions/cache/restore@v3
         with:
           path: app/android/app/build
-          key: ${{ runner.os }}-detox-build
+          key: ${{ runner.os }}-detox-build-${{ env.DETOX_CONFIGURATION }}
 
       - name: Detox build
         if: steps.detox-build-cache-get.outputs.cache-hit != 'true'
@@ -86,7 +86,7 @@ jobs:
         if: always() && steps.detox-build-cache-get.outputs.cache-hit != 'true'
         with:
           path: app/android/app/build
-          key: ${{ runner.os }}-detox-build
+          key: ${{ runner.os }}-detox-build-${{ env.DETOX_CONFIGURATION }}
 
       - name: Get device name
         id: device

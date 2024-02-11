@@ -67,7 +67,7 @@ jobs:
         uses: actions/cache/restore@v3
         with:
           path: app/ios/build
-          key: ${{ runner.os }}-detox-build
+          key: ${{ runner.os }}-detox-build-${{ env.DETOX_CONFIGURATION }}
 
       - name: Detox build
         if: steps.detox-build-cache-get.outputs.cache-hit != 'true'
@@ -79,7 +79,7 @@ jobs:
         if: always() && steps.detox-build-cache-get.outputs.cache-hit != 'true'
         with:
           path: app/ios/build
-          key: ${{ runner.os }}-detox-build
+          key: ${{ runner.os }}-detox-build-${{ env.DETOX_CONFIGURATION }}
 
       - name: Detox test
         run: yarn detox test --configuration ${{ env.DETOX_CONFIGURATION }} --cleanup --headless
