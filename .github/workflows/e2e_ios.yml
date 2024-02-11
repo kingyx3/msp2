@@ -40,6 +40,9 @@ jobs:
           ruby-version: "3.1" # or whatever version
           working-directory: app
 
+      - name: Clean CocoaPods cache
+        run: pod cache clean --all
+
       - name: Install Yarn dependencies
         run: yarn
 
@@ -49,10 +52,6 @@ jobs:
         with:
           path: app/ios/build
           key: ${{ runner.os }}-detox-build-${{ env.DETOX_CONFIGURATION }}
-
-      - name: Clean CocoaPods cache
-        if: steps.detox-build-cache-get.outputs.cache-hit != 'true'
-        run: pod cache clean --all
 
       - name: Prebuild Expo
         if: steps.detox-build-cache-get.outputs.cache-hit != 'true'
