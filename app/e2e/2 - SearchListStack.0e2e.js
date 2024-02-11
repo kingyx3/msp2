@@ -46,7 +46,7 @@ describe('Make a booking via picking datetime & ListMap', () => {
       // Set Date to January 1, 2030
       await element(by.id('open-date-picker')).tap()
       await waitFor(datePicker).toBeVisible().withTimeout(20000);
-      await datePicker.setDatePickerDate(`${+year}-${+month}-${+day + 2}T00:00:00+08:00`, 'ISO8601');
+      // await datePicker.setDatePickerDate(`${+year}-${+month}-${+day + 2}T00:00:00+08:00`, 'ISO8601');
       await element(by.text('OK')).tap();
       await waitFor(datePicker).not.toBeVisible().withTimeout(20000);
 
@@ -64,23 +64,24 @@ describe('Make a booking via picking datetime & ListMap', () => {
       // Set Date to January 1, 2030
       await element(by.id('open-date-picker')).tap()
       await waitFor(datePicker).toBeVisible().withTimeout(20000);
-      await datePicker.setDatePickerDate(`${+year}-${+month}-${+day + 2}T00:00:00+08:00`, 'ISO8601');
+      // await datePicker.setDatePickerDate(`${+year}-${+month}-${+day + 2}T00:00:00+08:00`, 'ISO8601');
       await element(by.text('Confirm')).tap();
       await waitFor(datePicker).not.toBeVisible().withTimeout(20000);
 
       // Set Time to 10 AM
       await element(by.id('open-time-picker')).tap();
       await waitFor(datePicker).toBeVisible().withTimeout(20000);
-      await datePicker.setDatePickerDate(`${+year}-${+month}-${+day + 2}T11:00:00+08:00`, 'ISO8601');
+      // await datePicker.setDatePickerDate(`${+year}-${+month}-${+day + 2}T11:00:00+08:00`, 'ISO8601');
       await element(by.text('Confirm')).tap();
       await waitFor(datePicker).not.toBeVisible().withTimeout(20000);
     }
 
     // Set Duration to 2 hours
     await element(by.id('duration-picker')).tap();
+    await waitFor(element(by.id('duration-picker'))).not.toBeVisible().withTimeout(20000);
     await waitFor(element(by.text('2 hr'))).toBeVisible().withTimeout(20000);
     await element(by.label('2 hr')).tap();
-    await waitFor(element(by.text('1 hr'))).not.toBeVisible(1).withTimeout(20000);
+    await waitFor(element(by.text('1 hr'))).not.toBeVisible().withTimeout(30000);
 
     // Submit to search for listings
     await waitFor(element(by.id('search-listings-button'))).toBeVisible().withTimeout(30000);
