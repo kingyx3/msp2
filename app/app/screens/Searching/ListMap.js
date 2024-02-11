@@ -37,11 +37,11 @@ const CARD_ADJ = Math.floor(CARD_INSET / 2)
 
 const ListMap = (props) => {
   let initialState
-  if (props.latitude && props.longitude) {
+  if (props.latitude && props.longitude && process.env.EXPO_PUBLIC_TYPE != 'TEST') {
     initialState = {
       region: {
-        latitude: process.env.EXPO_PUBLIC_TYPE == 'TEST' ? 1.30 : props.latitude,
-        longitude: process.env.EXPO_PUBLIC_TYPE == 'TEST' ? 104 : props.longitude,
+        latitude: props.latitude,
+        longitude: props.longitude,
         latitudeDelta: 0.5,
         longitudeDelta: 0.5,
       },

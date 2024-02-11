@@ -164,7 +164,6 @@ const BtnContainer = styled.View`
 `;
 
 const MapBtnWrapper = styled.View`
-  width: 20%;
   align-self: center;
   position: absolute;
   bottom: 20px;
