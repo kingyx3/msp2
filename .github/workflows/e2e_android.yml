@@ -99,6 +99,7 @@ jobs:
           arch: ${{ env.ARCH }}
           avd-name: ${{ steps.device.outputs.AVD_NAME }}
           disable-animations: true
+          target: google_apis
           # emulator-options: -no-snapshot-save -no-window -gpu swiftshader_indirect -noaudio -no-boot-anim -camera-back none
           force-avd-creation: false
           working-directory: app/
