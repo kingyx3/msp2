@@ -1,0 +1,92 @@
+name: e2e-ios
+on:
+  push:
+    branches:
+      - "**"
+    paths:
+      - "app/e2e/**"
+      - ".github/workflows/**"
+defaults:
+  run:
+    working-directory: app
+jobs:
+  e2e-ios:
+    runs-on: macos-latest
+    env:
+      DETOX_CONFIGURATION: ios.release
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20.x
+          cache: yarn
+          cache-dependency-path: ./app/yarn.lock
+
+      - name: Install Yarn dependencies
+        run: yarn
+
+      - name: Install macOS dependencies
+        run: |
+          brew tap wix/brew
+          brew install applesimutils
+        env:
+          HOMEBREW_NO_AUTO_UPDATE: 1
+          HOMEBREW_NO_INSTALL_CLEANUP: 1
+
+      - name: Setup Ruby
+        uses: ruby/setup-ruby@v1
+        with:
+          bundler-cache: true
+          ruby-version: "3.1" # or whatever version
+
+      - name: Prebuild Expo
+        run: npx expo prebuild --platform ios
+
+      - name: Cache CocoaPods
+        id: cache-cocoapods
+        uses: actions/cache@v3
+        with:
+          path: ios/Pods
+          key: ${{ runner.os }}-pods-${{ hashFiles('ios/Podfile.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-pods-
+
+      - name: Install CocoaPods
+        if: steps.cache-cocoapods.outputs.cache-hit != 'true'
+        run: cd ios ; pod install ; cd -
+
+      - name: Detox rebuild framework cache
+        run: yarn detox rebuild-framework-cache
+
+      - name: Detox build cache (get)
+        id: detox-build-cache-get
+        uses: actions/cache/restore@v3
+        with:
+          path: app/ios/build
+          key: ${{ runner.os }}-detox-build
+
+      - name: Detox build
+        if: steps.detox-build-cache-get.outputs.cache-hit != 'true'
+        run: yarn detox build --configuration ${{ env.DETOX_CONFIGURATION }}
+
+      - name: Detox build cache (set)
+        id: detox-build-cache-set
+        uses: actions/cache/save@v3
+        if: always() && steps.detox-build-cache-get.outputs.cache-hit != 'true'
+        with:
+          path: app/ios/build
+          key: ${{ runner.os }}-detox-build
+
+      - name: Detox test
+        run: yarn detox test --configuration ${{ env.DETOX_CONFIGURATION }} --cleanup --headless
+
+      - name: Upload artifacts
+        if: failure()
+        uses: actions/upload-artifact@v3
+        with:
+          name: detox-artifacts
+          path: app/artifacts
