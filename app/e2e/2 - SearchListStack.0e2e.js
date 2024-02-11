@@ -162,7 +162,7 @@ describe('Make a booking via quick search & Listings', () => {
   });
 
   it('Navigate to Listings screen (Shortcut)', async () => {
-    await element(by.id('1')).tap();
+    await element(by.id('0')).tap();
 
     // Wait for navigation to complete & perform the visibility checks
     await waitFor(element(by.id('listings-flatlist'))).toBeVisible();

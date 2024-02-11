@@ -23,15 +23,9 @@ import { DURATION } from "../../config/appConfig"
 import { connect } from "react-redux";
 import { setStart, setEnd } from "../../store/search";
 
+// Testing date params (must remove in production)
 let now = new Date()
-now.setMinutes(60, 0, 0)
-
-// Testing date params (must remove in production)
-now.setDate(now.getDate() + 1)
-now.setHours(10);
-now.setMinutes(0);
-now.setMilliseconds(0);
-// Testing date params (must remove in production)
+process.env.EXPO_PUBLIC_TYPE == 'TEST' ? now.setUTCHours(26, 0, 0, 0, 0) : now.setMinutes(60, 0, 0);
 
 const isDark = Appearance.getColorScheme() === 'dark'
 
