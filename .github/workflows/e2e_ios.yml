@@ -43,6 +43,9 @@ jobs:
           bundler-cache: true
           ruby-version: "3.1" # or whatever version
 
+      - name: Clean CocoaPods cache
+        run: pod cache clean --all
+
       - name: Prebuild Expo
         run: npx expo prebuild --platform ios --clean
 
@@ -55,13 +58,10 @@ jobs:
       #     restore-keys: |
       #       ${{ runner.os }}-pods-
 
-      - name: Clean CocoaPods cache
-        run: pod cache clean --all
-
-      - name: Delete Pods directory and Podfile.lock
-        run: |
-          rm -rf app/ios/Pods/
-          rm app/ios/Podfile.lock
+      # - name: Delete Pods directory and Podfile.lock
+      #   run: |
+      #     rm -rf app/ios/Pods/
+      #     rm app/ios/Podfile.lock
 
       - name: Install CocoaPods
         # if: steps.cache-cocoapods.outputs.cache-hit != 'true'
