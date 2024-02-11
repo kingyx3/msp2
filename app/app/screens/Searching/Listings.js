@@ -121,13 +121,6 @@ const Listings = (props) => {
             onPress={() => props.navigation.navigate("ListMap", selectedSpaces)} //console.log(spaceType, startM, duration = '1 hr', selectedSpaces) }
           />
         </MapBtnWrapper>
-        <Modal visible={showMap} animationType="slide">
-          <ListMap
-            rooms={selectedSpaces}
-            closeBtn={() => setShowMap(false)}
-          // showListing={() => props.navigation.navigate("Details", room)}
-          />
-        </Modal>
       </Main>
     </Body>
   );

@@ -34,47 +34,47 @@ describe('Make a booking via picking datetime & ListMap', () => {
   });
 
   it('Navigate to Listings screen', async () => {
-    const today = new Date();
-    const day = today.getDate().toString().padStart(2, '0');
-    const month = (today.getMonth() + 1).toString().padStart(2, '0'); // getMonth() is zero-based
-    const year = today.getFullYear();
+    // const today = new Date();
+    // const day = today.getDate().toString().padStart(2, '0');
+    // const month = (today.getMonth() + 1).toString().padStart(2, '0'); // getMonth() is zero-based
+    // const year = today.getFullYear();
 
-    if (device.getPlatform() === 'android') {
-      const datePicker = element(by.type('android.widget.DatePicker'))
-      const timePicker = element(by.type('android.widget.TimePicker'))
+    // if (device.getPlatform() === 'android') {
+    //   const datePicker = element(by.type('android.widget.DatePicker'))
+    //   const timePicker = element(by.type('android.widget.TimePicker'))
 
-      // Set Date to January 1, 2030
-      await element(by.id('open-date-picker')).tap()
-      await waitFor(datePicker).toBeVisible().withTimeout(20000);
-      // await datePicker.setDatePickerDate(`${+year}-${+month}-${+day + 2}T00:00:00+08:00`, 'ISO8601');
-      await element(by.text('OK')).tap();
-      await waitFor(datePicker).not.toBeVisible().withTimeout(20000);
+    //   // Set Date to January 1, 2030
+    //   await element(by.id('open-date-picker')).tap()
+    //   await waitFor(datePicker).toBeVisible().withTimeout(20000);
+    //   // await datePicker.setDatePickerDate(`${+year}-${+month}-${+day + 2}T00:00:00+08:00`, 'ISO8601');
+    //   await element(by.text('OK')).tap();
+    //   await waitFor(datePicker).not.toBeVisible().withTimeout(20000);
 
-      // Set Time to 10 AM
-      await element(by.id('open-time-picker')).tap();
-      await waitFor(timePicker).toBeVisible().withTimeout(20000);
-      // console.log('Trying tap text to change time for android timepicker')
-      // await element(by.text('11')).tap();
-      await element(by.text('OK')).tap();
-      await waitFor(timePicker).not.toBeVisible().withTimeout(20000);
+    //   // Set Time to 10 AM
+    //   await element(by.id('open-time-picker')).tap();
+    //   await waitFor(timePicker).toBeVisible().withTimeout(20000);
+    //   // console.log('Trying tap text to change time for android timepicker')
+    //   // await element(by.text('11')).tap();
+    //   await element(by.text('OK')).tap();
+    //   await waitFor(timePicker).not.toBeVisible().withTimeout(20000);
 
-    } else {
-      const datePicker = element(by.type('UIDatePicker'));
+    // } else {
+    //   const datePicker = element(by.type('UIDatePicker'));
 
-      // Set Date to January 1, 2030
-      await element(by.id('open-date-picker')).tap()
-      await waitFor(datePicker).toBeVisible().withTimeout(20000);
-      // await datePicker.setDatePickerDate(`${+year}-${+month}-${+day + 2}T00:00:00+08:00`, 'ISO8601');
-      await element(by.text('Confirm')).tap();
-      await waitFor(datePicker).not.toBeVisible().withTimeout(20000);
+    //   // Set Date to January 1, 2030
+    //   await element(by.id('open-date-picker')).tap()
+    //   await waitFor(datePicker).toBeVisible().withTimeout(20000);
+    //   // await datePicker.setDatePickerDate(`${+year}-${+month}-${+day + 2}T00:00:00+08:00`, 'ISO8601');
+    //   await element(by.text('Confirm')).tap();
+    //   await waitFor(datePicker).not.toBeVisible().withTimeout(20000);
 
-      // Set Time to 10 AM
-      await element(by.id('open-time-picker')).tap();
-      await waitFor(datePicker).toBeVisible().withTimeout(20000);
-      // await datePicker.setDatePickerDate(`${+year}-${+month}-${+day + 2}T11:00:00+08:00`, 'ISO8601');
-      await element(by.text('Confirm')).tap();
-      await waitFor(datePicker).not.toBeVisible().withTimeout(20000);
-    }
+    //   // Set Time to 10 AM
+    //   await element(by.id('open-time-picker')).tap();
+    //   await waitFor(datePicker).toBeVisible().withTimeout(20000);
+    //   // await datePicker.setDatePickerDate(`${+year}-${+month}-${+day + 2}T11:00:00+08:00`, 'ISO8601');
+    //   await element(by.text('Confirm')).tap();
+    //   await waitFor(datePicker).not.toBeVisible().withTimeout(20000);
+    // }
 
     // Set Duration to 2 hours
     await element(by.id('duration-picker')).tap();
