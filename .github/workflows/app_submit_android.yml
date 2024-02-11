@@ -2,7 +2,7 @@ name: EAS Build & Submit to Google Playstore (Android)
 on:
   push:
     branches:
-      - '**'
+      - "**"
     paths:
       - app/app.json
 defaults:
@@ -31,6 +31,12 @@ jobs:
 
       - name: Install dependencies
         run: yarn install
+
+      - name: Decode Google Play Service Account
+        env:
+          SERVICE_ACCOUNT_JSON: ${{ secrets.GOOGLE_PLAY_SERVICE_ACCOUNT }}
+        run: |
+          echo "$SERVICE_ACCOUNT_JSON" | base64 --decode > pc-api-6795295579632533760-300-d0f297d14ac0.json
 
       - name: EAS Build & Submit to Google Playstore (Android)
         run: eas build -p android -e development --auto-submit
