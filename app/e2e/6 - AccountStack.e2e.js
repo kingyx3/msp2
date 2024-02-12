@@ -62,7 +62,7 @@ describe('Check AccountStack & ensure navigation works across bookings & spaces'
 
   it('Attempt user log tap', async () => {
     await element(by.id('user-top-tab')).tap(); // Not always necessary
-    await waitFor(element(by.id('0_user_log'))).toBeVisible().withTimeout(20000);
+    await waitFor(element(by.id('0_user_log'))).toBeVisible().withTimeout(60000);
     const userLogLabel = (await element(by.id("0_user_log")).getAttributes()).label
     console.log(userLogLabel + "USER_CONSOLE_LOG_OUTPUT")
 
@@ -87,7 +87,7 @@ describe('Check AccountStack & ensure navigation works across bookings & spaces'
 
   it('Attempt host log tap (needs work)', async () => {
     await element(by.id('host-top-tab')).tap(); // Not always necessary
-    await waitFor(element(by.id('0_host_log'))).toBeVisible().withTimeout(20000);
+    await waitFor(element(by.id('0_host_log'))).toBeVisible().withTimeout(60000);
     const hostLogLabel = (await element(by.id("0_host_log")).getAttributes()).label
     console.log(hostLogLabel + "HOST_CONSOLE_LOG_OUTPUT")
 

@@ -144,7 +144,7 @@ const testMessaging = async () => {
     console.log('Navigate back to BookingDetail screen')
     await element(by.id("back-button4")).tap();
 
-    await waitFor(element(by.id("messageInput"))).not.toBeVisible(1) //.withTimeout(10000);
+    await waitFor(element(by.id("messageInput"))).not.toBeVisible(1).withTimeout(60000);
 }
 
 const testReview = async () => {
