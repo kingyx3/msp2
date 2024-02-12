@@ -26,7 +26,7 @@ export const testBookingDetail = async () => {
         // Cannot see contact host/user
         await expect(element(by.id("contact-host-or-user"))).not.toBeVisible()
         // Can see cancel booking (as booking cancelled)
-        await expect(element(by.id("cancel-booking"))).toHaveText("Booking Cancelled") // Unable to test disabled status of buttons at the moment
+        await expect(element(by.id("cancel-booking"))).toHaveLabel("Booking Cancelled") // Unable to test disabled status of buttons at the moment
         // Cannot see write review
         await expect(element(by.id("write-review"))).not.toBeVisible()
     } else {
@@ -74,7 +74,7 @@ export const testBookingDetail = async () => {
                 // Can see contact host/user
                 await expect(element(by.id("contact-host-or-user"))).toBeVisible()
                 // Can see cancel booking (as cancel booking)
-                await expect(element(by.id("cancel-booking"))).toHaveText("Cancel Booking")
+                await expect(element(by.id("cancel-booking"))).toHaveLabel("Cancel Booking")
                 // Cannot see write review
                 await expect(element(by.id("write-review"))).not.toBeVisible()
 
@@ -86,7 +86,7 @@ export const testBookingDetail = async () => {
                 // Can see contact host/user
                 await expect(element(by.id("contact-host-or-user"))).toBeVisible()
                 // Can see cancel booking (as cancel booking (disabled))
-                await expect(element(by.id("cancel-booking"))).toHaveText("Cancel Booking") // Unable to test disabled status of buttons at the moment
+                await expect(element(by.id("cancel-booking"))).toHaveLabel("Cancel Booking") // Unable to test disabled status of buttons at the moment
                 // Cannot see write review
                 await expect(element(by.id("write-review"))).not.toBeVisible()
 
@@ -97,7 +97,7 @@ export const testBookingDetail = async () => {
                 // Can see contact host/user
                 await expect(element(by.id("contact-host-or-user"))).toBeVisible()
                 // Can see cancel booking (as booking completed)
-                await expect(element(by.id("cancel-booking"))).toHaveText("Booking Completed") // Unable to test disabled status of buttons at the moment
+                await expect(element(by.id("cancel-booking"))).toHaveLabel("Booking Completed") // Unable to test disabled status of buttons at the moment
                 // Can see write review
                 await expect(element(by.id("write-review"))).toBeVisible()
 
@@ -109,7 +109,7 @@ export const testBookingDetail = async () => {
                 // Cannot see contact host/user
                 await expect(element(by.id("contact-host-or-user"))).not.toBeVisible()
                 // Can see cancel booking (as booking completed)
-                await expect(element(by.id("cancel-booking"))).toHaveText("Booking Completed") // Unable to test disabled status of buttons at the moment
+                await expect(element(by.id("cancel-booking"))).toHaveLabel("Booking Completed") // Unable to test disabled status of buttons at the moment
                 // Cannot see write review
                 await expect(element(by.id("write-review"))).not.toBeVisible()
             }
