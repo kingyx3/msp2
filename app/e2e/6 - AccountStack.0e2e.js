@@ -114,7 +114,7 @@ describe('Check AccountStack & ensure navigation works across bookings & spaces'
   });
 
   it('Navigate back to Account screen', async () => {
-    await element(by.id("back-button")).tap();
+    await element(by.id("back-button-activity")).tap();
 
     await waitFor(element(by.id('account-header-component'))).toBeVisible().withTimeout(10000);
   })

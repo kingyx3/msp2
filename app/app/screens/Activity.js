@@ -108,7 +108,7 @@ const UserActivity = (props) => {
 
   return (
     <Container>
-      <NavBar nav="chevron-left" onPress={() => props.navigation.goBack()} />
+      <NavBar testID={'back-button-activity'} nav="chevron-left" onPress={() => props.navigation.goBack()} />
       <FlatList
         ListHeaderComponent={
           <Header testID='activity-header-component'>

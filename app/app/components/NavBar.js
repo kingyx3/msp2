@@ -10,13 +10,13 @@ import Colors from "../config/colors";
 import ImgSliderItems from "./ImgSliderItems";
 import { Sub1 } from "../config/Typography";
 
-export const NavBar = ({ nav, title, action, onPress }) => {
+export const NavBar = ({ nav, title, action, onPress, testID }) => {
   return (
     <Container>
       <Bar>
         <Back>
           <Btn.BtnCircle
-            testID='back-button'
+            testID={testID || 'back-button'}
             iconName="chevron-left"
             size={30}
             onPress={onPress}
