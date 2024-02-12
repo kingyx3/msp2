@@ -90,6 +90,7 @@ describe('Make a booking via picking datetime & ListMap', () => {
 
     // Wait for navigation to complete & perform the visibility checks
     await waitFor(element(by.id('listings-flatlist'))).toBeVisible().withTimeout(60000);
+    await waitFor(element(by.id('0_listing'))).toBeVisible().withTimeout(60000);
     await expect(element(by.id('0_listing'))).toBeVisible();
   });
 
@@ -194,6 +195,7 @@ describe('Make a booking via quick search & Listings', () => {
 
     // Wait for navigation to complete & perform the visibility checks
     await waitFor(element(by.id('listing-card-flatlist'))).toBeVisible().withTimeout(60000);
+    await waitFor(element(by.id('0_listmap'))).toBeVisible().withTimeout(60000);
     await expect(element(by.id('0_listmap'))).toBeVisible();
   });
 
