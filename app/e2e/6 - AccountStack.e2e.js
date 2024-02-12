@@ -40,7 +40,7 @@ describe('Check AccountStack & ensure navigation works across bookings & spaces'
     await waitFor(element(by.id('username-input'))).toHaveLabel('new_username' + randomText);
   });
 
-  it('Change user avatar', async () => {
+  it('Change user avatar (needs work)', async () => {
     // const randomText = (Math.floor(1000 + Math.random() * 9000)).toString();
 
     // await element(by.id('edit-input')).tap();
@@ -62,6 +62,7 @@ describe('Check AccountStack & ensure navigation works across bookings & spaces'
 
   it('Attempt user log tap', async () => {
     await element(by.id('user-top-tab')).tap(); // Not always necessary
+    await waitFor(element(by.id('0_user_log'))).toBeVisible().withTimeout(20000);
     const userLogLabel = (await element(by.id("0_user_log")).getAttributes()).label
     console.log(userLogLabel + "USER_CONSOLE_LOG_OUTPUT")
 
@@ -84,8 +85,9 @@ describe('Check AccountStack & ensure navigation works across bookings & spaces'
     await waitFor(element(by.text('Booking activity'))).toBeVisible().withTimeout(10000);
   });
 
-  it('Attempt host log tap', async () => {
+  it('Attempt host log tap (needs work)', async () => {
     await element(by.id('host-top-tab')).tap(); // Not always necessary
+    await waitFor(element(by.id('0_host_log'))).toBeVisible().withTimeout(20000);
     const hostLogLabel = (await element(by.id("0_host_log")).getAttributes()).label
     console.log(hostLogLabel + "HOST_CONSOLE_LOG_OUTPUT")
 

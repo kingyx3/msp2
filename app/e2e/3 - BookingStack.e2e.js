@@ -42,21 +42,19 @@ describe('Check a booking detail & send message to the host', () => {
     await testBookingDetail()
   })
 
-  // it('Navigate back to Bookings screen', async () => {
-  //   await element(by.id("back-button")).tap()
+  it('Navigate back to Bookings screen', async () => {
+    await element(by.id("back-button")).tap()
 
-  //   await waitFor(element(by.id("bookings-header-component"))).toBeVisible().withTimeout(10000);
-  // })
+    await waitFor(element(by.id("bookings-header-component"))).toBeVisible().withTimeout(10000);
+  })
 
-  // it('Check Cancelled Bookings', async () => {
-  //   await element(by.id('show-all-bookings-switch')).tap();
+  it('Check Bookings toggle (needs work)', async () => {
+    // await element(by.id('show-all-bookings-switch')).tap();
 
-  //   // // Wait for navigation to complete & perform the visibility checks
-  //   // await waitFor(element(by.id('open-date-picker'))).toBeVisible().withTimeout(10000);
-  //   // await expect(element(by.id('open-time-picker'))).toBeVisible()
-  // });
-
-  // write review for older bookings
+    // // Wait for navigation to complete & perform the visibility checks
+    // await waitFor(element(by.id('open-date-picker'))).toBeVisible().withTimeout(10000);
+    // await expect(element(by.id('open-time-picker'))).toBeVisible()
+  });
 });
 
 // // Dont need specific testing
