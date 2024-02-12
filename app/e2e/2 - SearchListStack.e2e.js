@@ -30,8 +30,8 @@ describe('Make a booking via picking datetime & ListMap', () => {
     await element(by.text('Badminton Court')).tap();
 
     // Wait for navigation to complete & perform the visibility checks
-    await waitFor(element(by.id('open-date-picker'))).toBeVisible()
-    await waitFor(element(by.id('open-time-picker'))).toBeVisible()
+    await waitFor(element(by.id('open-date-picker'))).toBeVisible(100)
+    await waitFor(element(by.id('open-time-picker'))).toBeVisible(100)
   });
 
   it('Navigate to Listings screen', async () => {
