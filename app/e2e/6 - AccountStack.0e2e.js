@@ -84,8 +84,8 @@ describe('Check AccountStack & ensure navigation works across bookings & spaces'
       // navigate to BookingDetail screen
       await element(by.id('0_host_log')).tap();
 
-      await waitFor(element(by.id("booking-detail-scroll-view"))).toBeVisible(100) // Not visible for past bookings, visible up to booking start (host), visible up to 2 days after booking end (host)
-      await waitFor(element(by.id("booking-title-price"))).toBeVisible(100) // Not visible for past bookings, visible up to booking start (host), visible up to 2 days after booking end (host)
+      await waitFor(element(by.id("booking-detail-scroll-view"))).toBeVisible().withTimeout(20000) // Not visible for past bookings, visible up to booking start (host), visible up to 2 days after booking end (host)
+      await waitFor(element(by.id("booking-title-price"))).toBeVisible().withTimeout(20000) // Not visible for past bookings, visible up to booking start (host), visible up to 2 days after booking end (host)
 
       await testBookingDetail()
 
