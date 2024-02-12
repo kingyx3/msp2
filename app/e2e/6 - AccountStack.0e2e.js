@@ -1,11 +1,11 @@
-// BookingStackModal
-import { testBookingDetail } from "./3 - BookingStack.0e2e";
+// AccountStackModal
+import { testBookingDetail } from "./helpers";
 
-describe('Check AccountStack & ', () => {
+describe('Check AccountStack & ensure navigation works across bookings & spaces', () => {
   beforeAll(async () => {
     await device.launchApp({
       permissions: {
-        location: 'always', // inuse||never||unset
+        // location: 'always', // inuse||never||unset
         photos: 'YES',
         medialibrary: 'YES',
       }
@@ -27,6 +27,13 @@ describe('Check AccountStack & ', () => {
 
     // Wait for navigation to complete & perform the visibility checks
     await waitFor(element(by.id('account-header-component'))).toBeVisible().withTimeout(10000);
+  });
+
+  it('Change user name, avatar', async () => {
+    // await element(by.id('btm-nav-account')).tap();
+
+    // // Wait for navigation to complete & perform the visibility checks
+    // await waitFor(element(by.id('account-header-component'))).toBeVisible().withTimeout(10000);
   });
 
   it('Navigate to Activity screen (user)', async () => {
