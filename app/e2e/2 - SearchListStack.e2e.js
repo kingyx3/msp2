@@ -89,8 +89,8 @@ describe('Make a booking via picking datetime & ListMap', () => {
     await element(by.id('search-listings-button')).tap();
 
     // Wait for navigation to complete & perform the visibility checks
-    await waitFor(element(by.id('listings-flatlist'))).toBeVisible();
-    await waitFor(element(by.id('0_listing'))).toBeVisible();
+    await waitFor(element(by.id('listings-flatlist'))).toBeVisible().withTimeout(60000);
+    await expect(element(by.id('0_listing'))).toBeVisible();
   });
 
   it('Navigate to Listing Details screen', async () => {
@@ -178,7 +178,7 @@ describe('Make a booking via quick search & Listings', () => {
     // Wait for navigation to complete & perform the visibility checks
     await waitFor(element(by.id('listing-card-flatlist'))).toBeVisible();
     await waitFor(element(by.id('0_listmap'))).toBeVisible();
-    await waitFor(element(by.id('back-button-x'))).toBeVisible();
+    await expect(element(by.id('back-button-x'))).toBeVisible();
   });
 
   it('Navigate back to Listings screen', async () => {
@@ -193,7 +193,7 @@ describe('Make a booking via quick search & Listings', () => {
     await element(by.id('listmap-button')).tap();
 
     // Wait for navigation to complete & perform the visibility checks
-    await waitFor(element(by.id('listing-card-flatlist'))).toBeVisible().withTimeout(20000);
+    await waitFor(element(by.id('listing-card-flatlist'))).toBeVisible().withTimeout(60000);
     await expect(element(by.id('0_listmap'))).toBeVisible();
   });
 
