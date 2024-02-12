@@ -197,7 +197,6 @@ describe('Make a booking via quick search & Listings', () => {
     // Wait for navigation to complete & perform the visibility checks
     await waitFor(element(by.id('listing-card-flatlist'))).toBeVisible();
     await waitFor(element(by.id('0_listmap'))).toBeVisible();
-    await expect(element(by.id('0_listmap'))).toBeVisible();
   });
 
   it('Navigate to Listing Details screen', async () => {
