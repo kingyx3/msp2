@@ -53,13 +53,7 @@ const AccountStack = ({ navigation, route }) => {
         name="Activity"
         component={ActivityTopTab}
         options={{
-          title: false,
-          headerBackTitleVisible: false,
-          headerBackImage: () => (
-            <IconWrapper>
-              <EvilIcons name="chevron-left" size={30} />
-            </IconWrapper>
-          ),
+          headerShown: false
         }}
       />
       <Stack.Screen
