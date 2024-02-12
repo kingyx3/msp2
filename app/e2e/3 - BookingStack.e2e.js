@@ -64,7 +64,7 @@ describe('Check a booking detail & send message to the host', () => {
     const currentDateTime = new Date()
     const cancelByDateTime = extractDateTime(cancellationPolicyLabel)
 
-    await element(by.id('booking-detail-scroll-view')).scroll(350, 'down');
+    await element(by.id('booking-title-price')).scroll(350, 'down');
 
     if (host) {
       // if (currentDateTime < bookingStartDateTime) {

@@ -290,9 +290,9 @@ const BookingDetails = (props) => {
                 <Button.BtnContain
                   testID="cancel-booking"
                   label={"Booking Cancelled"}
-                  color={loading ? colors.lightgray : colors.black}
+                  color={colors.lightgray}
                   size="small"
-                  disabled={loading}
+                  disabled={true}
                   onPress={cancelBookingBox} />
               </View>
             }

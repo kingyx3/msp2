@@ -72,6 +72,7 @@ const ReviewInput = (props) => {
             onChangeText={(text) => setReview(text)}
             maxLength={maxReview}
             multiline={true}
+            editable={!loading}
           />
           <Remaining>
             <P color={colors.gray}>{calcLengthReview()}/{maxReview}</P>

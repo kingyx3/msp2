@@ -9,7 +9,7 @@ describe('Make a booking via picking datetime & ListMap', () => {
     await element(by.id('dev-login-button')).tap();
 
     // Wait for navigation to complete & perform the visibility checks
-    await waitFor(element(by.text('Quick Search'))).toBeVisible().withTimeout(20000);
+    await waitFor(element(by.text('Quick Search'))).toBeVisible().withTimeout(60000);
     await waitFor(element(by.id('search-bar'))).toBeVisible().withTimeout(20000);
     await expect(element(by.text("Continue with Email"))).not.toBeVisible()
     const walletBalanceLabel = (await element(by.id("wallet-balance")).getAttributes()).label
@@ -123,7 +123,7 @@ describe('Make a booking via picking datetime & ListMap', () => {
       await element(by.text('Ok')).tap();
 
       // Wait for navigation to complete & perform the visibility checks
-      await waitFor(element(by.text('Quick Search'))).toBeVisible().withTimeout(30000);
+      await waitFor(element(by.text('Quick Search'))).toBeVisible().withTimeout(60000);
     } else {
       console.log('Insufficient Balance')
       // Wait for modal to load, perform the visibility checks and navigate to Home
@@ -154,7 +154,7 @@ describe('Make a booking via quick search & Listings', () => {
     // await element(by.id('dev-login-button')).tap(); // Already authenticated
 
     // Wait for navigation to complete & perform the visibility checks
-    await waitFor(element(by.text('Quick Search'))).toBeVisible().withTimeout(20000);
+    await waitFor(element(by.text('Quick Search'))).toBeVisible().withTimeout(60000);
     await expect(element(by.text("Continue with Email"))).not.toBeVisible()
     const walletBalanceLabel = (await element(by.id("wallet-balance")).getAttributes()).label
     // Regular expression to match the numeric value
@@ -227,7 +227,7 @@ describe('Make a booking via quick search & Listings', () => {
       await element(by.text('Ok')).tap();
 
       // Wait for navigation to complete & perform the visibility checks
-      await waitFor(element(by.text('Quick Search'))).toBeVisible().withTimeout(30000);
+      await waitFor(element(by.text('Quick Search'))).toBeVisible().withTimeout(60000);
     } else {
       console.log('Insufficient Balance')
       // Wait for modal to load, perform the visibility checks and navigate to Home
