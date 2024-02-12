@@ -179,6 +179,7 @@ describe('Make a booking via quick search & Listings', () => {
     // Wait for navigation to complete & perform the visibility checks
     await waitFor(element(by.id('listing-card-flatlist'))).toBeVisible();
     await waitFor(element(by.id('0_listmap'))).toBeVisible();
+    await waitFor(element(by.id('back-button-x'))).toBeVisible();
     await expect(element(by.id('back-button-x'))).toBeVisible();
   });
 
@@ -194,8 +195,8 @@ describe('Make a booking via quick search & Listings', () => {
     await element(by.id('listmap-button')).tap();
 
     // Wait for navigation to complete & perform the visibility checks
-    await waitFor(element(by.id('listing-card-flatlist'))).toBeVisible().withTimeout(60000);
-    await waitFor(element(by.id('0_listmap'))).toBeVisible().withTimeout(60000);
+    await waitFor(element(by.id('listing-card-flatlist'))).toBeVisible();
+    await waitFor(element(by.id('0_listmap'))).toBeVisible();
     await expect(element(by.id('0_listmap'))).toBeVisible();
   });
 
