@@ -20,88 +20,99 @@ export const testBookingDetail = async () => {
 
     await element(by.id('booking-detail-scroll-view')).scroll(350, 'down', NaN, 0.85);
 
-    if (host) {
-        // if (currentDateTime < bookingStartDateTime) {
-        //   // Booking havent start
+    const cancelledLabel = (await element(by.id("cancel-booking")).getAttributes()).label
 
-        //   // Can see contact host/user
-        //   // Can see/tap cancel booking
-        //   // Cannot see write review
-
-        // } else if (currentDateTime < bookingEndDateTime) {
-        //   // Booking started, but havent end
-
-        //   // Can see contact host/user
-        //   // Can see/tap cancel booking
-        //   // Cannot see write review
-
-        // } else if (currentDateTime > bookingEndDateTime && currentDateTime < bookingEndPlusTwo) {
-        //   // Booking ended less than 2 days ago
-
-        //   // Can see contact host/user
-        //   // Can see/tap cancel booking
-        //   // Cannot see write review
-
-        // } else if (currentDateTime > bookingEndDateTime && currentDateTime < bookingEndPlusFive) {
-        //   // Booking ended less than 5 days ago
-
-        //   // Cannot see contact host/user
-        //   // Can see/tap cancel booking
-        //   // Cannot see write review
-
-        // } else {
-        //   // Booking ended more than or equal to 5 days ago
-
-        //   // Cannot see contact host/user
-        //   // Can see, cannot tap cancel booking
-        //   // Cannot see write review
-
-        // }
+    if (cancelledLabel == 'Booking Cancelled') {
+        // Cannot see contact host/user
+        await expect(element(by.id("contact-host-or-user"))).not.toBeVisible()
+        // Can see cancel booking (as booking completed)
+        await expect(element(by.text("Booking Cancelled"))).toBeVisible() // Unable to test disabled status of buttons at the moment
+        // Cannot see write review
+        await expect(element(by.id("write-review"))).not.toBeVisible()
     } else {
-        if (currentDateTime < bookingStartDateTime) {
-            // Booking havent start
+        if (host) {
+            // if (currentDateTime < bookingStartDateTime) {
+            //   // Booking havent start
 
-            // Can see contact host/user
-            await expect(element(by.id("contact-host-or-user"))).toBeVisible()
-            // Can see cancel booking
-            await expect(element(by.id("cancel-booking"))).toBeVisible() // Comment out because of bugging testing issues not being able to see 100% despite scrolling
-            // Cannot see write review
-            await expect(element(by.id("write-review"))).not.toBeVisible()
+            //   // Can see contact host/user
+            //   // Can see/tap cancel booking
+            //   // Cannot see write review
 
-            await testCancelBooking(currentDateTime, cancelByDateTime, bookingPrice)
-            await testMessaging()
-        } else if (currentDateTime < bookingEndDateTime) {
-            // Booking started, but havent end
+            // } else if (currentDateTime < bookingEndDateTime) {
+            //   // Booking started, but havent end
 
-            // Can see contact host/user
-            await expect(element(by.id("contact-host-or-user"))).toBeVisible()
-            // Cannot see cancel booking
-            await expect(element(by.id("cancel-booking"))).not.toBeVisible()
-            // Cannot see write review
-            await expect(element(by.id("write-review"))).not.toBeVisible()
+            //   // Can see contact host/user
+            //   // Can see/tap cancel booking
+            //   // Cannot see write review
 
-            await testMessaging()
-        } else if (currentDateTime > bookingEndDateTime && currentDateTime < bookingEndPlusTwo) {
-            // Booking ended less than 2 days ago
+            // } else if (currentDateTime > bookingEndDateTime && currentDateTime < bookingEndPlusTwo) {
+            //   // Booking ended less than 2 days ago
 
-            // Can see contact host/user
-            await expect(element(by.id("contact-host-or-user"))).toBeVisible()
-            // Cannot see cancel booking
-            await expect(element(by.id("cancel-booking"))).not.toBeVisible()
-            // Can see write review
-            await expect(element(by.id("write-review"))).toBeVisible()
+            //   // Can see contact host/user
+            //   // Can see/tap cancel booking
+            //   // Cannot see write review
 
-            await testReview()
-            await testMessaging()
+            // } else if (currentDateTime > bookingEndDateTime && currentDateTime < bookingEndPlusFive) {
+            //   // Booking ended less than 5 days ago
+
+            //   // Cannot see contact host/user
+            //   // Can see/tap cancel booking
+            //   // Cannot see write review
+
+            // } else {
+            //   // Booking ended more than or equal to 5 days ago
+
+            //   // Cannot see contact host/user
+            //   // Can see, cannot tap cancel booking
+            //   // Cannot see write review
+
+            // }
         } else {
-            // Booking ended more than or equal to 2 days ago
+            if (currentDateTime < bookingStartDateTime) {
+                // Booking havent start
 
-            // Cannot see contact host/user
-            await expect(element(by.id("contact-host-or-user"))).not.toBeVisible()
-            // Cannot see cancel booking
-            await expect(element(by.id("cancel-booking"))).not.toBeVisible()
-            // Cannot see write review
-            await expect(element(by.id("write-review"))).not.toBeVisible()
+                // Can see contact host/user
+                await expect(element(by.id("contact-host-or-user"))).toBeVisible()
+                // Can see cancel booking (as cancel booking)
+                await expect(element(by.text("Cancel Booking"))).toBeVisible() //
+                // Cannot see write review
+                await expect(element(by.id("write-review"))).not.toBeVisible()
+
+                await testCancelBooking(currentDateTime, cancelByDateTime, bookingPrice)
+                await testMessaging()
+            } else if (currentDateTime < bookingEndDateTime) {
+                // Booking started, but havent end
+
+                // Can see contact host/user
+                await expect(element(by.id("contact-host-or-user"))).toBeVisible()
+                // Can see cancel booking (as cancel booking (disabled))
+                await expect(element(by.text("Cancel Booking"))).toBeVisible() // Unable to test disabled status of buttons at the moment
+                // Cannot see write review
+                await expect(element(by.id("write-review"))).not.toBeVisible()
+
+                await testMessaging()
+            } else if (currentDateTime > bookingEndDateTime && currentDateTime < bookingEndPlusTwo) {
+                // Booking ended less than 2 days ago
+
+                // Can see contact host/user
+                await expect(element(by.id("contact-host-or-user"))).toBeVisible()
+                // Can see cancel booking (as booking completed)
+                await expect(element(by.text("Booking Completed"))).toBeVisible() // Unable to test disabled status of buttons at the moment
+                // Can see write review
+                await expect(element(by.id("write-review"))).toBeVisible()
+
+                await testReview()
+                await testMessaging()
+            } else {
+                // Booking ended more than or equal to 2 days ago
+
+                // Cannot see contact host/user
+                await expect(element(by.id("contact-host-or-user"))).not.toBeVisible()
+                // Can see cancel booking (as booking completed)
+                await expect(element(by.text("Booking Completed"))).toBeVisible() // Unable to test disabled status of buttons at the moment
+                // Cannot see write review
+                await expect(element(by.id("write-review"))).not.toBeVisible()
+            }
         }
     }
 }

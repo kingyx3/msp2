@@ -44,6 +44,9 @@ const BookingDetails = (props) => {
   let cancelByTime = host ? moment(booking?.end).add(5, 'days') : moment(booking?.start).add(-1 * selectedSpace?.cancellationPolicy?.numberOfHours, 'hours')
   cancelByTimeFormatted = cancelByTime.format('DD MMM YYYY, ha')
   // -------------------
+  const isHostAbleToCancel = host && moment(booking?.end).add(5, 'days').valueOf() >= Date.now();
+  const isUserAbleToCancel = !host && booking.start >= Date.now();
+
   let refundAmount = 0
   let currentTime
   let cutOffTime
@@ -270,32 +273,19 @@ const BookingDetails = (props) => {
                   }} />
               </View>
             }
-            {// Require cancellation policy to charge/refund clients that cancel last minute
-              // Cancel Booking button
-              (host ? !(moment(booking?.end).add(5, 'days').valueOf() < Date.now()) : !(booking.start < Date.now())) && !(booking.cancelled) &&
-              <View style={{ margin: 10 }}>
-                <Button.BtnContain
-                  testID="cancel-booking"
-                  label={"Cancel Booking"}
-                  color={loading ? colors.lightgray : colors.black}
-                  size="small"
-                  disabled={loading}
-                  onPress={cancelBookingBox} />
-              </View>
-            }
-            {// Require cancellation policy to charge/refund clients that cancel last minute
-              // Booking Cancelled button
-              !!(booking.cancelled) &&
-              <View style={{ margin: 10 }}>
-                <Button.BtnContain
-                  testID="cancel-booking"
-                  label={"Booking Cancelled"}
-                  color={colors.lightgray}
-                  size="small"
-                  disabled={true}
-                  onPress={cancelBookingBox} />
-              </View>
-            }
+            <View style={{ margin: 10 }}>
+              <Button.BtnContain
+                testID="cancel-booking"
+                label={booking.cancelled ? "Booking Cancelled" :
+                  (isHostAbleToCancel || isUserAbleToCancel) ? "Cancel Booking" :
+                    "Booking Completed"}
+                color={(booking.cancelled ? true :
+                  loading || !(isHostAbleToCancel || isUserAbleToCancel)) ? colors.lightgray : colors.black}
+                size="small"
+                disabled={booking.cancelled ? true :
+                  loading || !(isHostAbleToCancel || isUserAbleToCancel)}
+                onPress={cancelBookingBox} />
+            </View>
           </Main2>
         </Main>
       </Container>
