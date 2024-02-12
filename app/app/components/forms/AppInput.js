@@ -118,10 +118,10 @@ export const NameInput = ({ initialName, onSave, ...otherProps }) => {
               value={name}
               {...otherProps}
             />
-            <TouchableOpacity onPress={handleSave}>
+            <TouchableOpacity testID="save-input" onPress={handleSave}>
               <Feather name="check-circle" size={30} color="green" />
             </TouchableOpacity>
-            <TouchableOpacity onPress={handleCancel}>
+            <TouchableOpacity testID="cancel-input" onPress={handleCancel}>
               <Feather name="x-circle" size={30} color="red" />
             </TouchableOpacity>
           </View>
@@ -129,10 +129,10 @@ export const NameInput = ({ initialName, onSave, ...otherProps }) => {
       ) : (
         <>
           <View style={{ flexDirection: 'row' }}>
-            <Sub1 numberOfLines={1}>
+            <Sub1 {...otherProps} numberOfLines={1}>
               {name?.substring(0, 25) + (name.length > 25 ? "...   " : "   ")}
             </Sub1>
-            <TouchableOpacity onPress={() => setEditing(true)}>
+            <TouchableOpacity testID="edit-input" onPress={() => setEditing(true)}>
               <Feather name="edit" size={20} color="black" />
             </TouchableOpacity>
           </View>

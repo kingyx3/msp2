@@ -129,6 +129,7 @@ const Accounts = (props) => {
               {userName == ''
                 ? null
                 : <NameInput
+                  testID="username-input"
                   initialName={userName}
                   onSave={handleSaveUsername}
                   style={{ backgroundColor: colors.faintgray, borderRadius: 10, width: 150, paddingHorizontal: 10, height: 36 }}

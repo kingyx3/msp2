@@ -29,11 +29,27 @@ describe('Check AccountStack & ensure navigation works across bookings & spaces'
     await waitFor(element(by.id('account-header-component'))).toBeVisible().withTimeout(10000);
   });
 
-  it('Change user name, avatar', async () => {
-    // await element(by.id('btm-nav-account')).tap();
+  it('Change user name', async () => {
+    const randomText = (Math.floor(1000 + Math.random() * 9000)).toString();
+
+    await element(by.id('edit-input')).tap();
+    await element(by.id('username-input')).typeText('new_username' + randomText);
+    await element(by.id('save-input')).tap();
+    // await element(by.id('cancel-input')).tap();
+
+    await waitFor(element(by.id('username-input'))).toHaveLabel('new_username' + randomText);
+  });
+
+  it('Change user avatar', async () => {
+    // const randomText = (Math.floor(1000 + Math.random() * 9000)).toString();
+
+    // await element(by.id('edit-input')).tap();
+    // await element(by.id('username-input')).typeText('new_username' + randomText);
+    // await element(by.id('save-input')).tap();
+    // // await element(by.id('cancel-input')).tap();
 
     // // Wait for navigation to complete & perform the visibility checks
-    // await waitFor(element(by.id('account-header-component'))).toBeVisible().withTimeout(10000);
+    // await waitFor(element(by.id('username-input'))).toHaveLabel('new_username' + randomText);
   });
 
   it('Navigate to Activity screen (user)', async () => {
