@@ -47,7 +47,7 @@ describe('Check AccountStack & ensure navigation works across bookings & spaces'
   it('Attempt user log tap', async () => {
     await element(by.id('user-top-tab')).tap(); // Not always necessary
     const userLogLabel = (await element(by.id("0_user_log")).getAttributes()).label
-    console.log(userLogLabel + "CONSOLE_LOG_OUTPUT")
+    console.log(userLogLabel + "USER_CONSOLE_LOG_OUTPUT")
 
     if (userLogLabel == 'Top up') {
       null
@@ -71,7 +71,7 @@ describe('Check AccountStack & ensure navigation works across bookings & spaces'
   it('Attempt host log tap', async () => {
     await element(by.id('host-top-tab')).tap(); // Not always necessary
     const hostLogLabel = (await element(by.id("0_host_log")).getAttributes()).label
-    console.log(hostLogLabel + "CONSOLE_LOG_OUTPUT")
+    console.log(hostLogLabel + "HOST_CONSOLE_LOG_OUTPUT")
 
     const spaceLogTypeArray = ['Create Space', 'Update Space', 'Delete Space']
 
