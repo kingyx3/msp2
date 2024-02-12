@@ -118,5 +118,5 @@ jobs:
         if: failure()
         uses: actions/upload-artifact@v3
         with:
-          name: detox-artifacts
+          name: detox-artifacts-${{ env.DETOX_CONFIGURATION }}
           path: app/artifacts

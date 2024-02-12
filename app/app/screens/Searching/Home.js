@@ -202,7 +202,7 @@ const Home = (props) => {
                   keyExtractor={(item, index) => index.toString()}
                   renderItem={({ item, index }) =>
                     <Cards.QuickSearch
-                      testID={index.toString()}
+                      testID={index.toString() + "_quick_search"}
                       title={"Space Type : " + item.spaceType} //item.city
                       secondary={"Date/Time : " + moment(item.start).format('D MMM yyyy (ddd), hA') + " to " + moment(item.end).format('hA')} //item.title
                       onPress={async () => onNavigate(item.start, item.end, item.spaceType)}

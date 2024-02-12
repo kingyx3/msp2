@@ -273,7 +273,7 @@ const Details = ({ navigation, route, state, setSelectedSpace, clearSelectedSpac
             */}
           <BtnContainer>
             <Button.BtnContain
-              testID="submit-button"
+              testID="confirm-details-button"
               label="Make a reservation"
               color={colors.red}
               onPress={() => navigation.navigate("Reserve_1", { selectedSpace, periodPrice, periodAvailabilityArray, hours, periodPriceExclFees, fees })}
