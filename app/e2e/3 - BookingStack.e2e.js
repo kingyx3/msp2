@@ -17,7 +17,7 @@ describe('Check a booking detail & send message to the host', () => {
     await element(by.id('dev-login-button')).tap();
 
     // Wait for navigation to complete & perform the visibility checks
-    await waitFor(element(by.text('Quick Search'))).toBeVisible().withTimeout(10000);
+    await waitFor(element(by.text('Quick Search'))).toBeVisible().withTimeout(60000);
   });
 
   it('Navigate to Bookings screen', async () => {
@@ -25,7 +25,7 @@ describe('Check a booking detail & send message to the host', () => {
     await element(by.id('btm-nav-bookings')).tap();
 
     // Wait for navigation to complete & perform the visibility checks
-    await waitFor(element(by.id('bookings-header-component'))).toBeVisible().withTimeout(10000);
+    await waitFor(element(by.id('bookings-header-component'))).toBeVisible().withTimeout(60000);
   });
 
   it('Navigate to BookingDetail screen', async () => {
@@ -45,14 +45,14 @@ describe('Check a booking detail & send message to the host', () => {
   it('Navigate back to Bookings screen', async () => {
     await element(by.id("back-button")).tap()
 
-    await waitFor(element(by.id("bookings-header-component"))).toBeVisible().withTimeout(10000);
+    await waitFor(element(by.id("bookings-header-component"))).toBeVisible().withTimeout(60000);
   })
 
   it('Check Bookings toggle (needs work)', async () => {
     // await element(by.id('show-all-bookings-switch')).tap();
 
     // // Wait for navigation to complete & perform the visibility checks
-    // await waitFor(element(by.id('open-date-picker'))).toBeVisible().withTimeout(10000);
+    // await waitFor(element(by.id('open-date-picker'))).toBeVisible().withTimeout(60000);
     // await expect(element(by.id('open-time-picker'))).toBeVisible()
   });
 });

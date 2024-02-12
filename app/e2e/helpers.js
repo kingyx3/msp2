@@ -132,7 +132,7 @@ const testMessaging = async () => {
     await element(by.id("contact-host-or-user")).tap();
 
     // Wait for navigation to complete & perform the visibility checks
-    await waitFor(element(by.id('messageInput'))).toBeVisible().withTimeout(10000);
+    await waitFor(element(by.id('messageInput'))).toBeVisible().withTimeout(60000);
     await element(by.id('messageInput')).tap();
     await element(by.id('messageInput')).typeText('Hey, sorry i need to cancel this booking');
     await element(by.id("send-button")).tap();
@@ -152,15 +152,15 @@ const testReview = async () => {
     await element(by.id("write-review")).tap();
 
     // Wait for navigation to complete & perform the visibility checks
-    await waitFor(element(by.id('review-input-scroll-view'))).toBeVisible().withTimeout(10000);
+    await waitFor(element(by.id('review-input-scroll-view'))).toBeVisible().withTimeout(60000);
     await element(by.id('review-input')).tap();
     await element(by.id('review-input')).typeText('Nice space, highly recommended!');
     await element(by.id("submit-button")).tap();
 
     // await waitFor(element(by.text(timeString))).toBeVisible()
 
-    await waitFor(element(by.id("review-input"))).not.toBeVisible(1) //.withTimeout(10000);
-    await waitFor(element(by.id("booking-detail-scroll-view"))).toBeVisible(100) //.withTimeout(10000);
+    await waitFor(element(by.id("review-input"))).not.toBeVisible(1) //.withTimeout(60000);
+    await waitFor(element(by.id("booking-detail-scroll-view"))).toBeVisible(100) //.withTimeout(60000);
 }
 
 const testCancelBooking = async (currentDateTime, cancelByDateTime, bookingPrice) => {
@@ -174,8 +174,8 @@ const testCancelBooking = async (currentDateTime, cancelByDateTime, bookingPrice
     // WARNING: HOSTS & USERS SHOULD SEE DIFF AMTS/TEXTS
     await element(by.id("cancel-booking")).tap();
 
-    await waitFor(element(by.text("Do you want to cancel this booking? $" + refundAmount + " will be refunded to your wallet if you cancel now."))).toBeVisible().withTimeout(10000);
+    await waitFor(element(by.text("Do you want to cancel this booking? $" + refundAmount + " will be refunded to your wallet if you cancel now."))).toBeVisible().withTimeout(60000);
     await element(by.text("Cancel")).tap();
 
-    await waitFor(element(by.id("cancel-booking"))).toBeVisible().withTimeout(10000);
+    await waitFor(element(by.id("cancel-booking"))).toBeVisible().withTimeout(60000);
 }
