@@ -74,6 +74,7 @@ const UserActivity = (props) => {
   const renderItem = ({ item, index }) =>
     <List.LogsList
       title={item?.title}
+      testID={index.toString() + "_" + (host ? 'host' : 'user') + "_log"}
       created={moment(item?.created).format('DD MMM YYYY hh:mm A')}
       message={item?.message}
       positive={host

@@ -18,8 +18,20 @@ const ActivityTopTab = (props) => {
   // const { spaceId } = props.route.params
   return (
     <Tab.Navigator>
-      <Tab.Screen name="Booking" component={Activity} initialParams={{ host: false }} />
-      <Tab.Screen name="Hosting" component={Activity} initialParams={{ host: true }} />
+      <Tab.Screen
+        name="Booking"
+        component={Activity}
+        initialParams={{ host: false }}
+        options={{
+          tabBarTestID: 'user-top-tab'
+        }} />
+      <Tab.Screen
+        name="Hosting"
+        component={Activity}
+        initialParams={{ host: true }}
+        options={{
+          tabBarTestID: 'host-top-tab'
+        }} />
     </Tab.Navigator>
   );
 }

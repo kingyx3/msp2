@@ -1,0 +1,2 @@
+Wallet must have enough money to make bookings, otherwise you may experience a lack of current/upcoming booking
+e2e tests are still quite flaky, sometimes it may fail unexpectedly

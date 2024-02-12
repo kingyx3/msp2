@@ -147,7 +147,7 @@ const Accounts = (props) => {
         stickySectionHeadersEnabled={false}
         renderItem={({ item, index }) => (
           <List.Default
-            testID={'account' + index.toString()}
+            testID={item.title + "_account"}
             title={item.title}
             icon={item.icon}
             iconcolor={colors.darkgray}

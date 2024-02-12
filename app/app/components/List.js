@@ -128,13 +128,14 @@ export const LogsList = ({
   message,
   logType,
   amount,
-  positive
+  positive,
+  testID
 }) => {
   return (
     <TouchableHighlight underlayColor={colors.faintgray} onPress={onPress}>
       <View style={styles.item2}>
         <View style={styles.header}>
-          <Typography.H4 bold>{title}</Typography.H4>
+          <Typography.H4 testID={testID} bold>{title}</Typography.H4>
           <Typography.Cap>{created}</Typography.Cap>
         </View>
         <View style={styles.details}>
