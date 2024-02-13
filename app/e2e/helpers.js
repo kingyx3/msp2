@@ -18,6 +18,9 @@ export const testBookingDetail = async () => {
     const currentDateTime = new Date()
     const cancelByDateTime = extractDateTime(cancellationPolicyLabel)
 
+    console.log('bookingDateLabel: ', bookingDateLabel)
+    console.log('bookingTimeLabel: ', bookingTimeLabel)
+
     console.log('Current time: ', currentDateTime)
     console.log('Cancel by time: ', cancelByDateTime)
     console.log('Booking start: ', bookingStartDateTime)
