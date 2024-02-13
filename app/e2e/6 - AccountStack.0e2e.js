@@ -112,8 +112,8 @@ const testBookingDetailFromActivity = async (host) => {
   // navigate to BookingDetail screen
   await element(by.id('0_' + (host ? "host" : "user") + '_log')).tap();
 
-  await waitFor(element(by.id("booking-detail-scroll-view"))).toBeVisible().withTimeout(60000) // Not visible for past bookings, visible up to booking start (user), visible up to 2 days after booking end (host)
-  await waitFor(element(by.id("booking-title-price"))).toBeVisible().withTimeout(60000) // Not visible for past bookings, visible up to booking start (user), visible up to 2 days after booking end (host)
+  await waitFor(element(by.id("booking-detail-scroll-view"))).toBeVisible().withTimeout(60000)
+  await waitFor(element(by.id("booking-title-price"))).toBeVisible().withTimeout(60000)
 
   await testBookingDetail()
 

@@ -26,6 +26,7 @@ export const testBookingDetail = async () => {
     console.log('Booking end + 5: ', bookingEndPlusFive)
     console.log('Host?: ', host)
     console.log('Booking Price: ', bookingPrice)
+    console.log('bookingTitleLabel', bookingTitleLabel)
 
     await element(by.id('booking-detail-scroll-view')).scroll(350, 'down', NaN, 0.85);
 
