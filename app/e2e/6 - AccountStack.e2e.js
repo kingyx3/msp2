@@ -31,15 +31,23 @@ describe('Check AccountStack & ensure navigation works across bookings & spaces'
 
   it('Change user name', async () => {
     const randomText = (Math.floor(1000 + Math.random() * 9000)).toString();
+    const newUserName = 'newUserName' + randomText
+    const oldUserNameLabel = (await element(by.id('username-input')).getAttributes()).label
 
     await element(by.id('edit-input')).tap();
     await element(by.id('username-input')).clearText();
-    await element(by.id('username-input')).typeText('new_username' + randomText);
+    await element(by.id('username-input')).typeText(newUserName);
     await element(by.id('save-input')).tap(); // Closes keyboard
     await element(by.id('save-input')).tap(); // Saves username
     // await element(by.id('cancel-input')).tap();
 
-    await expect(element(by.id('username-input'))).toHaveLabel('new_username' + randomText);
+    const newUserNameLabel = (await element(by.id('username-input')).getAttributes()).label
+
+    console.log("oldUserNameLabel", "|" + oldUserNameLabel + "|")
+    console.log("newUserNameLabel", "|" + newUserNameLabel + "|")
+    console.log("newUserName", "|" + newUserName + "|")
+
+    await expect(element(by.id('username-input'))).toHaveLabel(newUserName);
   });
 
   it('Change user avatar (needs work)', async () => {

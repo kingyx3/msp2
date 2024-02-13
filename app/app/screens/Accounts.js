@@ -133,6 +133,7 @@ const Accounts = (props) => {
                   initialName={userName}
                   onSave={handleSaveUsername}
                   style={{ backgroundColor: colors.faintgray, borderRadius: 10, width: 150, paddingHorizontal: 10, height: 36 }}
+                  maxLength={+(process.env.EXPO_PUBLIC_USERNAME_MAX_LENGTH)}
                 />
               }
             </View>

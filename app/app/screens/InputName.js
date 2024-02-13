@@ -38,6 +38,7 @@ const InputName = ({ navigation }) => {
               keyboardType="default"
               clearButtonMode="always"
               textContentType="name"
+              maxLength={+(process.env.EXPO_PUBLIC_USERNAME_MAX_LENGTH)}
             />
           </Input>
           <SubmitBtn
