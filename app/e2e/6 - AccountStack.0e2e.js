@@ -42,11 +42,7 @@ describe('Check AccountStack & ensure navigation works across bookings & spaces'
 
   it('Change user avatar (needs work)', async () => {
     // const randomText = (Math.floor(1000 + Math.random() * 9000)).toString();
-
     // await element(by.id('edit-input')).tap();
-    // await element(by.id('username-input')).typeText('new_username' + randomText);
-    // await element(by.id('save-input')).tap();
-    // // await element(by.id('cancel-input')).tap();
 
     // // Wait for navigation to complete & perform the visibility checks
     // await waitFor(element(by.id('username-input'))).toHaveLabel('new_username' + randomText);
