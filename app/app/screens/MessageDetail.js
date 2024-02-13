@@ -1,5 +1,4 @@
 import React, { useEffect, useState, useRef, useCallback } from "react";
-import { useIsFocused } from '@react-navigation/native';
 import {
   StyleSheet,
   View
@@ -21,7 +20,6 @@ import { NavBarChat } from "../components/NavBar";
 import { GiftedChat, Send } from 'react-native-gifted-chat';
 
 const MessageDetail = (props) => {
-  const isFocused = useIsFocused();
   const user = auth.currentUser;
   const [messages, setMessages] = useState([]);
   const [otherUserName, setOtherUserName] = useState("");
@@ -40,9 +38,7 @@ const MessageDetail = (props) => {
       };
       const unsubscribe = onValue(messagesRef, messagesCallback);
 
-      if (isFocused) {
-        getUserName(selectedChat.otherUserId, setOtherUserName);
-      }
+      getUserName(selectedChat.otherUserId, setOtherUserName);
 
       return () => {
         // Cleanup function to unsubscribe from Firebase listener
@@ -51,7 +47,7 @@ const MessageDetail = (props) => {
     }
     fetchData();
     return () => setMessages([]);
-  }, [isFocused, selectedChat]);
+  }, [selectedChat]);
 
   const onSend = useCallback(async (messages = []) => {
     const networkState = await Network.getNetworkStateAsync();
