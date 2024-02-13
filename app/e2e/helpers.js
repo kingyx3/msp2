@@ -18,6 +18,15 @@ export const testBookingDetail = async () => {
     const currentDateTime = new Date()
     const cancelByDateTime = extractDateTime(cancellationPolicyLabel)
 
+    console.log('Current time: ', currentDateTime)
+    console.log('Cancel by time: ', cancelByDateTime)
+    console.log('Booking start: ', bookingStartDateTime)
+    console.log('Booking end: ', bookingEndDateTime)
+    console.log('Booking end + 2: ', bookingEndPlusTwo)
+    console.log('Booking end + 5: ', bookingEndPlusFive)
+    console.log('Host?: ', host)
+    console.log('Booking Price: ', bookingPrice)
+
     await element(by.id('booking-detail-scroll-view')).scroll(350, 'down', NaN, 0.85);
 
     const cancelledLabel = (await element(by.id("cancel-booking")).getAttributes()).label
