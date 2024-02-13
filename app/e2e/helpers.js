@@ -168,6 +168,7 @@ const testMessaging = async () => {
     await element(by.id("back-button4")).tap();
 
     await waitFor(element(by.id("messageInput"))).not.toBeVisible(1).withTimeout(60000);
+    await waitFor(element(by.id("back-button4"))).not.toBeVisible(1).withTimeout(60000);
     await waitFor(element(by.id("contact-host-or-user"))).toBeVisible(100) //.withTimeout(60000);
     await waitFor(element(by.id("cancel-booking"))).toBeVisible(100) //.withTimeout(60000);
 }
