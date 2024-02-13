@@ -33,6 +33,7 @@ describe('Check AccountStack & ensure navigation works across bookings & spaces'
     const randomText = (Math.floor(1000 + Math.random() * 9000)).toString();
 
     await element(by.id('edit-input')).tap();
+    await element(by.id('username-input')).clearText();
     await element(by.id('username-input')).typeText('new_username' + randomText);
     await element(by.id('save-input')).tap(); // Closes keyboard
     await element(by.id('save-input')).tap(); // Saves username
