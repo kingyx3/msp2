@@ -203,7 +203,7 @@ const testCancelBooking = async (host, currentDateTime, cancelByDateTime, bookin
     } else {
         refundAmount = bookingPrice
     }
-    // WARNING: HOSTS & USERS SHOULD SEE DIFF AMTS/TEXTS
+
     await element(by.id("cancel-booking")).tap();
 
     const bookingCancellationText = host

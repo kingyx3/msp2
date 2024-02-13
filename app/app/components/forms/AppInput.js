@@ -130,7 +130,7 @@ export const NameInput = ({ initialName, onSave, ...otherProps }) => {
         <>
           <View style={{ flexDirection: 'row' }}>
             <Sub1 {...otherProps} numberOfLines={1}>
-              {name?.substring(0, 25) + (name.length > 25 ? "...   " : "   ")}
+              {name?.substring(0, 15) + (name.length > 15 ? "...   " : "   ")}
             </Sub1>
             <TouchableOpacity testID="edit-input" onPress={() => setEditing(true)}>
               <Feather name="edit" size={20} color="black" />
