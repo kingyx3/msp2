@@ -29,13 +29,13 @@ export const NavBar = ({ nav, title, action, onPress, testID }) => {
   );
 };
 
-export const NavBar2 = ({ nav, title, action, onPress }) => {
+export const NavBar2 = ({ nav, title, action, onPress, testID }) => {
   return (
     <Container2>
       <Bar>
         <BackBtn>
           <Btn.BtnCircle
-            testID='back-button2'
+            testID={testID || 'back-button2'}
             iconName="chevron-left"
             size={24}
             onPress={onPress}
@@ -48,12 +48,15 @@ export const NavBar2 = ({ nav, title, action, onPress }) => {
   );
 };
 
-export const NolineNavBar = ({ nav, title, action, onPress }) => {
+export const NolineNavBar = ({ nav, title, action, onPress, testID }) => {
   return (
     <NolineContainer>
       <Bar>
         <Back>
-          <TouchableWithoutFeedback testID='back-button3' onPress={onPress}>
+          <TouchableWithoutFeedback
+            testID={testID || 'back-button3'}
+            onPress={onPress}
+          >
             <EvilIcons name={nav} size={30} />
           </TouchableWithoutFeedback>
         </Back>
@@ -64,13 +67,13 @@ export const NolineNavBar = ({ nav, title, action, onPress }) => {
   );
 };
 
-export const NavBarChat = ({ nav, avatar, name, onPress }) => {
+export const NavBarChat = ({ nav, avatar, name, onPress, testID }) => {
   return (
     <Container >
       <OtherUserInfo>
         <View style={{ left: 10 }}>
           <Btn.BtnCircle
-            testID='back-button4'
+            testID={testID || 'back-button4'}
             iconName={nav}
             color={'white'}
             size={30}

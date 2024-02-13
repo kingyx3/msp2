@@ -153,7 +153,7 @@ const BookingDetails = (props) => {
   } else {
     return (
       <Container>
-        <NavBar nav="chevron-left" onPress={() => props.navigation.goBack()} />
+        <NavBar testID="back-button-booking-detail" nav="chevron-left" onPress={() => props.navigation.goBack()} />
         <Main testID="booking-detail-scroll-view">
           <MapView
             provider={PROVIDER_GOOGLE}

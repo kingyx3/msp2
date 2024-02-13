@@ -124,7 +124,7 @@ export const testBookingDetail = async () => {
             }
         }
     }
-    await expect(element(by.id("back-button"))).toBeVisible()
+    await expect(element(by.id("back-button-booking-detail"))).toBeVisible()
 }
 
 const extractDateTime = text => {

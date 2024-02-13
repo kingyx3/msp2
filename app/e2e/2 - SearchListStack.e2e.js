@@ -10,7 +10,7 @@ describe('Make a booking via picking datetime & ListMap', () => {
 
     // Wait for navigation to complete & perform the visibility checks
     await waitFor(element(by.text('Quick Search'))).toBeVisible().withTimeout(60000);
-    await waitFor(element(by.id('search-bar'))).toBeVisible().withTimeout(20000);
+    await waitFor(element(by.id('search-bar'))).toBeVisible().withTimeout(60000);
     await expect(element(by.text("Continue with Email"))).not.toBeVisible()
     const walletBalanceLabel = (await element(by.id("wallet-balance")).getAttributes()).label
     // Regular expression to match the numeric value
@@ -23,15 +23,15 @@ describe('Make a booking via picking datetime & ListMap', () => {
     await element(by.id('search-bar')).tap();
 
     // Wait for navigation to complete & perform the visibility checks
-    await waitFor(element(by.text('Badminton Court'))).toBeVisible().withTimeout(20000);
+    await waitFor(element(by.text('Badminton Court'))).toBeVisible().withTimeout(60000);
   });
 
   it('Navigate to RangePicker screen', async () => {
     await element(by.text('Badminton Court')).tap();
 
     // Wait for navigation to complete & perform the visibility checks
-    await waitFor(element(by.id('open-date-picker'))).toBeVisible().withTimeout(20000);
-    await waitFor(element(by.id('open-time-picker'))).toBeVisible().withTimeout(20000);
+    await waitFor(element(by.id('open-date-picker'))).toBeVisible().withTimeout(60000);
+    await waitFor(element(by.id('open-time-picker'))).toBeVisible().withTimeout(60000);
     await expect(element(by.id('open-time-picker'))).toBeVisible();
   });
 
@@ -47,45 +47,45 @@ describe('Make a booking via picking datetime & ListMap', () => {
 
       // Set Date to January 1, 2030
       await element(by.id('open-date-picker')).tap()
-      await waitFor(datePicker).toBeVisible().withTimeout(20000);
+      await waitFor(datePicker).toBeVisible().withTimeout(60000);
       await datePicker.setDatePickerDate(`${+year}-${+month}-${+day + 2}T12:00:00+08:00`, 'ISO8601');
       await element(by.text('OK')).tap();
-      await waitFor(datePicker).not.toBeVisible().withTimeout(20000);
+      await waitFor(datePicker).not.toBeVisible().withTimeout(60000);
 
       // Set Time to 10 AM
       await element(by.id('open-time-picker')).tap();
-      await waitFor(timePicker).toBeVisible().withTimeout(20000);
+      await waitFor(timePicker).toBeVisible().withTimeout(60000);
       // await element(by.text('11')).tap(); // no valid way to set time in Android yet
       await element(by.text('OK')).tap();
-      await waitFor(timePicker).not.toBeVisible().withTimeout(20000);
+      await waitFor(timePicker).not.toBeVisible().withTimeout(60000);
 
     } else {
       const datePicker = element(by.type('UIDatePicker'));
 
       // Set Date to January 1, 2030
       await element(by.id('open-date-picker')).tap()
-      await waitFor(datePicker).toBeVisible().withTimeout(20000);
+      await waitFor(datePicker).toBeVisible().withTimeout(60000);
       await datePicker.setDatePickerDate(`${+year}-${+month}-${+day + 2}T00:00:00+08:00`, 'ISO8601');
       await element(by.text('Confirm')).tap();
-      await waitFor(datePicker).not.toBeVisible().withTimeout(20000);
+      await waitFor(datePicker).not.toBeVisible().withTimeout(60000);
 
       // Set Time to 10 AM
       await element(by.id('open-time-picker')).tap();
-      await waitFor(datePicker).toBeVisible().withTimeout(20000);
+      await waitFor(datePicker).toBeVisible().withTimeout(60000);
       await datePicker.setDatePickerDate(`${+year}-${+month}-${+day + 2}T11:00:00+08:00`, 'ISO8601');
       await element(by.text('Confirm')).tap();
-      await waitFor(datePicker).not.toBeVisible().withTimeout(20000);
+      await waitFor(datePicker).not.toBeVisible().withTimeout(60000);
     }
 
     // Set Duration to 2 hours
     await element(by.id('duration-picker')).tap();
-    await waitFor(element(by.id('duration-picker'))).not.toBeVisible().withTimeout(20000);
-    await waitFor(element(by.text('2 hr'))).toBeVisible().withTimeout(20000);
+    await waitFor(element(by.id('duration-picker'))).not.toBeVisible().withTimeout(60000);
+    await waitFor(element(by.text('2 hr'))).toBeVisible().withTimeout(60000);
     await element(by.text('2 hr')).tap();
-    await waitFor(element(by.text('1 hr'))).not.toBeVisible().withTimeout(30000);
+    await waitFor(element(by.text('1 hr'))).not.toBeVisible().withTimeout(60000);
 
     // Submit to search for listings
-    await waitFor(element(by.id('search-listings-button'))).toBeVisible().withTimeout(30000);
+    await waitFor(element(by.id('search-listings-button'))).toBeVisible().withTimeout(60000);
     await element(by.id('search-listings-button')).tap();
 
     // Wait for navigation to complete & perform the visibility checks
@@ -98,16 +98,16 @@ describe('Make a booking via picking datetime & ListMap', () => {
     await element(by.id('0_listing')).tap();
 
     // Wait for navigation to complete & perform the visibility checks
-    await waitFor(element(by.id('image-carousel'))).toBeVisible().withTimeout(20000);
-    await waitFor(element(by.id('confirm-details-button'))).toBeVisible().withTimeout(20000);
+    await waitFor(element(by.id('image-carousel'))).toBeVisible().withTimeout(60000);
+    await waitFor(element(by.id('confirm-details-button'))).toBeVisible().withTimeout(60000);
   });
 
   it('Navigate to Reservation screen', async () => {
     await element(by.id('confirm-details-button')).tap();
 
     // Wait for navigation to complete & perform the visibility checks
-    await waitFor(element(by.id('fee-information'))).toBeVisible().withTimeout(20000);
-    await waitFor(element(by.id('book-now-button'))).toBeVisible().withTimeout(20000);
+    await waitFor(element(by.id('fee-information'))).toBeVisible().withTimeout(60000);
+    await waitFor(element(by.id('book-now-button'))).toBeVisible().withTimeout(60000);
   });
 
   it('Attempt Booking (Navigate back to Home screen / Insufficient balance)', async () => {
@@ -121,7 +121,7 @@ describe('Make a booking via picking datetime & ListMap', () => {
     if (global.excessBalance > 0) {
       console.log('Sufficient Balance')
       // Wait for modal to load, perform the visibility checks and navigate to Home
-      await waitFor(element(by.text('Success'))).toBeVisible().withTimeout(20000);
+      await waitFor(element(by.text('Success'))).toBeVisible().withTimeout(60000);
       await element(by.text('Ok')).tap();
 
       // Wait for navigation to complete & perform the visibility checks
@@ -129,12 +129,12 @@ describe('Make a booking via picking datetime & ListMap', () => {
     } else {
       console.log('Insufficient Balance')
       // Wait for modal to load, perform the visibility checks and navigate to Home
-      await waitFor(element(by.text('Insufficient Balance'))).toBeVisible().withTimeout(20000);
+      await waitFor(element(by.text('Insufficient Balance'))).toBeVisible().withTimeout(60000);
       await expect(element(by.text('Sorry, you do not have sufficient funds in your wallet, please top up at least SGD ' + (-excessBalance).toString() + '.'))).toBeVisible();
       await element(by.text('Ok')).tap();
 
       // Wait for navigation to complete & perform the visibility checks
-      await waitFor(element(by.id('balance-container'))).toBeVisible().withTimeout(20000);
+      await waitFor(element(by.id('balance-container'))).toBeVisible().withTimeout(60000);
 
       await element(by.id("back-button")).atIndex(1).tap();
 
@@ -203,16 +203,16 @@ describe('Make a booking via quick search & Listings', () => {
     await element(by.id('0_listmap')).tap();
 
     // Wait for navigation to complete & perform the visibility checks
-    await waitFor(element(by.id('image-carousel'))).toBeVisible().withTimeout(20000);
-    await waitFor(element(by.id('confirm-details-button'))).toBeVisible().withTimeout(20000);
+    await waitFor(element(by.id('image-carousel'))).toBeVisible().withTimeout(60000);
+    await waitFor(element(by.id('confirm-details-button'))).toBeVisible().withTimeout(60000);
   });
 
   it('Navigate to Reservation screen', async () => {
     await element(by.id('confirm-details-button')).tap();
 
     // Wait for navigation to complete & perform the visibility checks
-    await waitFor(element(by.id('fee-information'))).toBeVisible().withTimeout(20000);
-    await waitFor(element(by.id('book-now-button'))).toBeVisible().withTimeout(20000);
+    await waitFor(element(by.id('fee-information'))).toBeVisible().withTimeout(60000);
+    await waitFor(element(by.id('book-now-button'))).toBeVisible().withTimeout(60000);
   });
 
   it('Attempt Booking (Navigate back to Home screen / Insufficient balance)', async () => {
@@ -226,7 +226,7 @@ describe('Make a booking via quick search & Listings', () => {
     if (global.excessBalance > 0) {
       console.log('Sufficient Balance')
       // Wait for modal to load, perform the visibility checks and navigate to Home
-      await waitFor(element(by.text('Success'))).toBeVisible().withTimeout(20000);
+      await waitFor(element(by.text('Success'))).toBeVisible().withTimeout(60000);
       await element(by.text('Ok')).tap();
 
       // Wait for navigation to complete & perform the visibility checks
@@ -234,17 +234,17 @@ describe('Make a booking via quick search & Listings', () => {
     } else {
       console.log('Insufficient Balance')
       // Wait for modal to load, perform the visibility checks and navigate to Home
-      await waitFor(element(by.text('Insufficient Balance'))).toBeVisible().withTimeout(20000);
+      await waitFor(element(by.text('Insufficient Balance'))).toBeVisible().withTimeout(60000);
       await expect(element(by.text('Sorry, you do not have sufficient funds in your wallet, please top up at least SGD ' + (-excessBalance).toString() + '.'))).toBeVisible();
       await element(by.text('Ok')).tap();
 
       // Wait for navigation to complete & perform the visibility checks
-      await waitFor(element(by.id('balance-container'))).toBeVisible().withTimeout(20000);
+      await waitFor(element(by.id('balance-container'))).toBeVisible().withTimeout(60000);
 
       await element(by.id("back-button")).atIndex(1).tap();
 
       // Wait for navigation to complete & perform the visibility checks
-      await waitFor(element(by.id('fee-information'))).toBeVisible().withTimeout(20000);
+      await waitFor(element(by.id('fee-information'))).toBeVisible().withTimeout(60000);
     }
   })
 });

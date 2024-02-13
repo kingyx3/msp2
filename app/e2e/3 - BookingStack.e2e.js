@@ -43,7 +43,7 @@ describe('Check a booking detail & send message to the host', () => {
   })
 
   it('Navigate back to Bookings screen', async () => {
-    await element(by.id("back-button")).tap()
+    await element(by.id("back-button-booking-detail")).tap()
 
     await waitFor(element(by.id("bookings-header-component"))).toBeVisible().withTimeout(60000);
   })

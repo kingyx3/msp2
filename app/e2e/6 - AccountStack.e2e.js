@@ -78,7 +78,7 @@ describe('Check AccountStack & ensure navigation works across bookings & spaces'
       await testBookingDetail()
 
       // navigate back to Activity screen (user)
-      await element(by.id("back-button")).tap();
+      await element(by.id("back-button-booking-detail")).tap();
     }
 
     await waitFor(element(by.id('activity-header-component'))).toBeVisible().withTimeout(60000);
@@ -108,7 +108,7 @@ describe('Check AccountStack & ensure navigation works across bookings & spaces'
       await testBookingDetail()
 
       // navigate back to Activity screen (host)
-      await element(by.id("back-button")).tap();
+      await element(by.id("back-button-booking-detail")).tap();
     }
 
     await waitFor(element(by.id('activity-header-component'))).toBeVisible().withTimeout(60000);
