@@ -50,7 +50,7 @@ export const testBookingDetail = async () => {
                 // Cannot see write review
                 await expect(element(by.id("write-review"))).not.toBeVisible()
 
-                await testCancelBooking(currentDateTime, cancelByDateTime, bookingPrice)
+                await testCancelBooking(host, currentDateTime, cancelByDateTime, bookingPrice)
                 await testMessaging()
             } else {
                 // Booking ended more than or equal to 5 days ago
@@ -75,7 +75,7 @@ export const testBookingDetail = async () => {
                 // Cannot see write review
                 await expect(element(by.id("write-review"))).not.toBeVisible()
 
-                await testCancelBooking(currentDateTime, cancelByDateTime, bookingPrice)
+                await testCancelBooking(host, currentDateTime, cancelByDateTime, bookingPrice)
                 await testMessaging()
             } else if (currentDateTime < bookingEndDateTime) {
                 // Booking started, but havent end
@@ -178,7 +178,7 @@ const testReview = async () => {
     await waitFor(element(by.id("write-review"))).toBeVisible(100) //.withTimeout(60000);}
 }
 
-const testCancelBooking = async (currentDateTime, cancelByDateTime, bookingPrice) => {
+const testCancelBooking = async (host, currentDateTime, cancelByDateTime, bookingPrice) => {
     console.log('Cancel a booking and confirm the refund amount is correct')
     let refundAmount
     if (currentDateTime > cancelByDateTime) {
@@ -189,7 +189,12 @@ const testCancelBooking = async (currentDateTime, cancelByDateTime, bookingPrice
     // WARNING: HOSTS & USERS SHOULD SEE DIFF AMTS/TEXTS
     await element(by.id("cancel-booking")).tap();
 
-    await waitFor(element(by.text("Do you want to cancel this booking? $" + refundAmount + " will be refunded to your wallet if you cancel now."))).toBeVisible().withTimeout(60000);
+    if (host) {
+        await waitFor(element(by.text("Do you want to cancel this booking? Your potential earnings will be reduced by $" + refundAmount + " if you cancel now."))).toBeVisible().withTimeout(60000);
+    } else {
+        await waitFor(element(by.text("Do you want to cancel this booking? $" + refundAmount + " will be refunded to your wallet if you cancel now."))).toBeVisible().withTimeout(60000);
+    }
+
     await element(by.text("Cancel")).tap();
 
     await waitFor(element(by.id("cancel-booking"))).toBeVisible().withTimeout(60000);

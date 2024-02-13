@@ -101,7 +101,7 @@ const BookingDetails = (props) => {
       return Alert.alert(
         "Cancel Booking",
         host
-          ? `Do you want to cancel this booking? Your potential earnings will be reduce by $${(Math.round((booking?.price?.hostEarnings + Number.EPSILON) * 100) / 100)} if you cancel now.`
+          ? `Do you want to cancel this booking? Your potential earnings will be reduced by $${(Math.round((booking?.price?.hostEarnings + Number.EPSILON) * 100) / 100)} if you cancel now.`
           : `Do you want to cancel this booking? $${refundAmount / 100} will be refunded to your wallet if you cancel now.`,
         [
           {
