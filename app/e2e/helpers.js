@@ -6,8 +6,8 @@ export const testBookingDetail = async () => {
     const bookingTimeLabel = (await element(by.id("booking-time")).getAttributes()).label
 
     const host = hostOrUserLabel.includes('Hosted by') ? false : true
-    const bookingStartDateTime = extractDateTime(bookingDateLabel.slice(0, -1) + ", " + bookingTimeLabel.slice(0, 4))
-    const bookingEndDateTime = extractDateTime(bookingDateLabel.slice(0, -1) + ", " + bookingTimeLabel.slice(8, 12))
+    const bookingStartDateTime = extractDateTime(bookingDateLabel.slice(0, -1) + ", " + bookingTimeLabel.split(" to ")[0])
+    const bookingEndDateTime = extractDateTime(bookingDateLabel.slice(0, -1) + ", " + bookingTimeLabel.split(" to ")[1])
 
     const bookingEndPlusTwo = new Date(bookingEndDateTime);
     bookingEndPlusTwo.setDate(bookingEndPlusTwo.getDate() + 2);
@@ -20,8 +20,8 @@ export const testBookingDetail = async () => {
 
     console.log('bookingDateLabel: ', bookingDateLabel)
     console.log('bookingTimeLabel: ', bookingTimeLabel)
-    console.log('bookingTimeLabel.slice(0, 4): ', '|' + bookingTimeLabel.slice(0, 4) + '|')
-    console.log('bookingTimeLabel.slice(8, 12): ', '|' + bookingTimeLabel.slice(8, 12) + '|')
+    console.log('bookingTimeLabel.split(" to ")[0]: ', '|' + bookingTimeLabel.split(" to ")[0] + '|')
+    console.log('bookingTimeLabel.split(" to ")[1]: ', '|' + bookingTimeLabel.split(" to ")[1] + '|')
 
     console.log('Current time: ', currentDateTime)
     console.log('Cancel by time: ', cancelByDateTime)
