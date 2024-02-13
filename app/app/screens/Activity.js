@@ -23,7 +23,6 @@ import { connect } from 'react-redux';
 //import styles and assets
 import styled from 'styled-components/native';
 import * as List from "../components/List";
-import { NavBar } from '../components/NavBar';
 import colors from '../config/colors';
 import { H, P } from "../config/Typography";
 import { useIsFocused } from '@react-navigation/native';
@@ -108,7 +107,6 @@ const UserActivity = (props) => {
 
   return (
     <Container>
-      <NavBar testID={'back-button-activity'} nav="chevron-left" onPress={() => props.navigation.goBack()} />
       <FlatList
         ListHeaderComponent={
           <Header testID='activity-header-component'>

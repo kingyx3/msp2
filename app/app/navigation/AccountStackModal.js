@@ -46,18 +46,24 @@ const AccountStack = ({ navigation, route }) => {
   }
   return (
     <Stack.Navigator>
-      <Stack.Screen
+      {/* <Stack.Screen
         name="Accounts"
         component={Accounts}
         options={{
           headerShown: false
         }}
-      />
+      /> */}
       <Stack.Screen
         name="Activity"
         component={ActivityTopTab}
         options={{
-          headerShown: false
+          title: false,
+          headerBackTitleVisible: false,
+          headerBackImage: () => (
+            <IconWrapper testID="back-button-activity">
+              <EvilIcons name="chevron-left" size={30} />
+            </IconWrapper>
+          )
         }}
       />
       <Stack.Screen
