@@ -71,7 +71,7 @@ describe('Check AccountStack & ensure navigation works across bookings & spaces'
       null
     } else {
       // Booking (CD)
-      testBookingDetailFromActivity(false)
+      await testBookingDetailFromActivity(false)
     }
   });
 
@@ -88,7 +88,7 @@ describe('Check AccountStack & ensure navigation works across bookings & spaces'
       null
     } else {
       // Booking (CD)
-      testBookingDetailFromActivity(true)
+      await testBookingDetailFromActivity(true)
     }
   });
 
