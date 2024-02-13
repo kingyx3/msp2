@@ -20,6 +20,8 @@ export const testBookingDetail = async () => {
 
     console.log('bookingDateLabel: ', bookingDateLabel)
     console.log('bookingTimeLabel: ', bookingTimeLabel)
+    console.log('bookingTimeLabel.slice(0, 4): ', '|' + bookingTimeLabel.slice(0, 4) + '|')
+    console.log('bookingTimeLabel.slice(8, 12): ', '|' + bookingTimeLabel.slice(8, 12) + '|')
 
     console.log('Current time: ', currentDateTime)
     console.log('Cancel by time: ', cancelByDateTime)
