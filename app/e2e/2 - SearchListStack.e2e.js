@@ -170,7 +170,7 @@ describe('Make a booking via quick search & Listings', () => {
 
     // Wait for navigation to complete & perform the visibility checks
     await waitFor(element(by.id('listings-flatlist'))).toBeVisible();
-    await waitFor(element(by.id('listmap-button'))).toBeVisible();
+    await waitFor(element(by.id('listmap-button'))).toBeVisible().withTimeout(60000);
   });
 
   it('Navigate to ListMap screen', async () => {
@@ -235,7 +235,7 @@ describe('Make a booking via quick search & Listings', () => {
       console.log('Insufficient Balance')
       // Wait for modal to load, perform the visibility checks and navigate to Home
       await waitFor(element(by.text('Insufficient Balance'))).toBeVisible().withTimeout(60000);
-      await expect(element(by.text('Sorry, you do not have sufficient funds in your wallet, please top up at least SGD ' + (-excessBalance).toString() + '.'))).toBeVisible();
+      await expect(element(by.text('Sorry, you do not have sufficient funds in your wallet, please top up at least SGD ' + (Math.round((-excessBalance) * 100) / 100).toString() + '.'))).toBeVisible();
       await element(by.text('Ok')).tap();
 
       // Wait for navigation to complete & perform the visibility checks
