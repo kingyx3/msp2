@@ -152,7 +152,7 @@ const extractDateTime = text => {
     let [, day, month, year, hour, ampm] = match;
     hour = (ampm.toLowerCase() === 'pm' && hour < 12) ? parseInt(hour) + 12 : (ampm.toLowerCase() === 'am' && hour === '12') ? 0 : hour;
 
-    console log('start, end, cancelby')
+    console.log('start, end, cancelby')
     console.log('text', text)
     console.log('match', match)
     console.log('hour', hour)
