@@ -1,5 +1,5 @@
 import React from "react";
-import { createStackNavigator } from "@react-navigation/stack";
+import { createStackNavigator, TransitionPresets } from "@react-navigation/stack";
 import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs';
 import { Platform } from "react-native";
 //import screens
@@ -70,21 +70,24 @@ const AccountStack = ({ navigation, route }) => {
         name="BookingDetail"
         component={BookingDetail}
         options={{
-          headerShown: false
+          headerShown: false,
+          ...TransitionPresets.SlideFromRightIOS,
         }}
       />
       <Stack.Screen
         name="MessageDetail"
         component={MessageDetail}
         options={{
-          headerShown: false
+          headerShown: false,
+          ...TransitionPresets.SlideFromRightIOS,
         }}
       />
       <Stack.Screen
         name="ReviewInput"
         component={ReviewInput}
         options={{
-          headerShown: false
+          headerShown: false,
+          ...TransitionPresets.SlideFromRightIOS,
         }}
       />
     </Stack.Navigator>
