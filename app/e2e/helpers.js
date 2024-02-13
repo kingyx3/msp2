@@ -189,11 +189,12 @@ const testCancelBooking = async (host, currentDateTime, cancelByDateTime, bookin
     // WARNING: HOSTS & USERS SHOULD SEE DIFF AMTS/TEXTS
     await element(by.id("cancel-booking")).tap();
 
-    if (host) {
-        await waitFor(element(by.text("Do you want to cancel this booking? Your potential earnings will be reduced by $" + refundAmount + " if you cancel now."))).toBeVisible().withTimeout(60000);
-    } else {
-        await waitFor(element(by.text("Do you want to cancel this booking? $" + refundAmount + " will be refunded to your wallet if you cancel now."))).toBeVisible().withTimeout(60000);
-    }
+    const bookingCancellationText = host
+        ? ("Do you want to cancel this booking? Your potential earnings will be reduced by $" + refundAmount + " if you cancel now.")
+        : ("Do you want to cancel this booking? $" + refundAmount + " will be refunded to your wallet if you cancel now.")
+
+    console.log('bookingCancellationText', "|" + bookingCancellationText + "|")
+    await waitFor(element(by.text(bookingCancellationText))).toBeVisible().withTimeout(60000);
 
     await element(by.text("Cancel")).tap();
 
