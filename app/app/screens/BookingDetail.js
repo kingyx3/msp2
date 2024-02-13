@@ -237,9 +237,9 @@ const BookingDetails = (props) => {
                 image={host ? getAvatarLink(booking.userId) : getAvatarLink(selectedSpace.userId)}
               />
             </Host>
-            {!(booking.cancelled) && (Math.floor((Date.now() - booking.end) / (1000 * 60 * 60 * 24)) < 2) &&
+            {!(booking.cancelled) && (Math.floor((Date.now() - booking.end) / (1000 * 60 * 60 * 24)) < 5) &&
               <View style={{ margin: 10 }}>
-                {/* can only contact host/user up to 24 hr after booking ends, existing chat need to hide? */}
+                {/* can only contact host/user up to 5 days after booking ends, existing chat need to hide? */}
                 <Button.BtnContain
                   testID="contact-host-or-user"
                   label={host ? "Contact User" : "Contact Host"}

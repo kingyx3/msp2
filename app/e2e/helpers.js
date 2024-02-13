@@ -40,42 +40,30 @@ export const testBookingDetail = async () => {
         await expect(element(by.id("write-review"))).not.toBeVisible()
     } else {
         if (host) {
-            // if (currentDateTime < bookingStartDateTime) {
-            //   // Booking havent start
+            if (currentDateTime < bookingEndPlusFive) {
+                // Booking ended less than 5 days ago
 
-            //   // Can see contact host/user
-            //   // Can see/tap cancel booking
-            //   // Cannot see write review
+                // Can see contact host/user
+                await expect(element(by.id("contact-host-or-user"))).toBeVisible()
+                // Can see cancel booking (as cancel booking)
+                await expect(element(by.id("cancel-booking"))).toHaveLabel("Cancel Booking")
+                // Cannot see write review
+                await expect(element(by.id("write-review"))).not.toBeVisible()
 
-            // } else if (currentDateTime < bookingEndDateTime) {
-            //   // Booking started, but havent end
+                await testCancelBooking(currentDateTime, cancelByDateTime, bookingPrice)
+                await testMessaging()
+            } else {
+                // Booking ended more than or equal to 5 days ago
 
-            //   // Can see contact host/user
-            //   // Can see/tap cancel booking
-            //   // Cannot see write review
+                // Cannot see contact host/user
+                await expect(element(by.id("contact-host-or-user"))).not.toBeVisible()
+                // Can see cancel booking (as booking completed)
+                await expect(element(by.id("cancel-booking"))).toHaveLabel("Booking Completed")
+                // Cannot see write review
+                await expect(element(by.id("write-review"))).not.toBeVisible()
 
-            // } else if (currentDateTime > bookingEndDateTime && currentDateTime < bookingEndPlusTwo) {
-            //   // Booking ended less than 2 days ago
-
-            //   // Can see contact host/user
-            //   // Can see/tap cancel booking
-            //   // Cannot see write review
-
-            // } else if (currentDateTime > bookingEndDateTime && currentDateTime < bookingEndPlusFive) {
-            //   // Booking ended less than 5 days ago
-
-            //   // Cannot see contact host/user
-            //   // Can see/tap cancel booking
-            //   // Cannot see write review
-
-            // } else {
-            //   // Booking ended more than or equal to 5 days ago
-
-            //   // Cannot see contact host/user
-            //   // Can see, cannot tap cancel booking
-            //   // Cannot see write review
-
-            // }
+                // expect booking cancellation to fail
+            }
         } else {
             if (currentDateTime < bookingStartDateTime) {
                 // Booking havent start
@@ -100,6 +88,7 @@ export const testBookingDetail = async () => {
                 await expect(element(by.id("write-review"))).not.toBeVisible()
 
                 await testMessaging()
+                // expect booking cancellation to fail
             } else if (currentDateTime > bookingEndDateTime && currentDateTime < bookingEndPlusTwo) {
                 // Booking ended less than 2 days ago
 
@@ -112,8 +101,21 @@ export const testBookingDetail = async () => {
 
                 await testReview()
                 await testMessaging()
+                // expect booking cancellation to fail
+            } else if (currentDateTime > bookingEndDateTime && currentDateTime < bookingEndPlusFive) {
+                // Booking ended less than 5 days ago
+
+                // Can see contact host/user
+                await expect(element(by.id("contact-host-or-user"))).toBeVisible()
+                // Can see cancel booking (as booking completed)
+                await expect(element(by.id("cancel-booking"))).toHaveLabel("Booking Completed") // Unable to test disabled status of buttons at the moment
+                // Can see write review
+                await expect(element(by.id("write-review"))).not.toBeVisible()
+
+                await testMessaging()
+                // expect booking cancellation to fail
             } else {
-                // Booking ended more than or equal to 2 days ago
+                // Booking ended more than or equal to 5 days ago
 
                 // Cannot see contact host/user
                 await expect(element(by.id("contact-host-or-user"))).not.toBeVisible()
@@ -121,6 +123,8 @@ export const testBookingDetail = async () => {
                 await expect(element(by.id("cancel-booking"))).toHaveLabel("Booking Completed") // Unable to test disabled status of buttons at the moment
                 // Cannot see write review
                 await expect(element(by.id("write-review"))).not.toBeVisible()
+
+                // expect booking cancellation to fail
             }
         }
     }
