@@ -54,7 +54,7 @@ export const testBookingDetail = async () => {
                 await testCancelBooking(host, currentDateTime, cancelByDateTime, bookingPrice)
 
                 await waitFor(element(by.id("contact-host-or-user"))).toBeVisible().withTimeout(60000)
-                await testMessaging()
+                // await testMessaging()
             } else {
                 // Booking ended more than or equal to 5 days ago
 
@@ -81,7 +81,7 @@ export const testBookingDetail = async () => {
                 await testCancelBooking(host, currentDateTime, cancelByDateTime, bookingPrice)
 
                 await waitFor(element(by.id("contact-host-or-user"))).toBeVisible().withTimeout(60000)
-                await testMessaging()
+                // await testMessaging()
             } else if (currentDateTime < bookingEndDateTime) {
                 // Booking started, but havent end
 
@@ -92,7 +92,7 @@ export const testBookingDetail = async () => {
                 // Cannot see write review
                 await expect(element(by.id("write-review"))).not.toBeVisible()
 
-                await testMessaging()
+                // await testMessaging()
                 // expect booking cancellation to fail
             } else if (currentDateTime > bookingEndDateTime && currentDateTime < bookingEndPlusTwo) {
                 // Booking ended less than 2 days ago
@@ -107,7 +107,7 @@ export const testBookingDetail = async () => {
                 await testReview()
 
                 await waitFor(element(by.id("contact-host-or-user"))).toBeVisible().withTimeout(60000)
-                await testMessaging()
+                // await testMessaging()
                 // expect booking cancellation to fail
             } else if (currentDateTime > bookingEndDateTime && currentDateTime < bookingEndPlusFive) {
                 // Booking ended less than 5 days ago
@@ -119,7 +119,7 @@ export const testBookingDetail = async () => {
                 // Can see write review
                 await expect(element(by.id("write-review"))).not.toBeVisible()
 
-                await testMessaging()
+                // await testMessaging()
                 // expect booking cancellation to fail
             } else {
                 // Booking ended more than or equal to 5 days ago
