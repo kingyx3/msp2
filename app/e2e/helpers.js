@@ -115,6 +115,7 @@ export const testBookingDetail = async () => {
             }
         }
     }
+    await expect(element(by.id("back-button"))).toBeVisible()
 }
 
 const extractDateTime = text => {
@@ -145,6 +146,7 @@ const testMessaging = async () => {
     await element(by.id("back-button4")).tap();
 
     await waitFor(element(by.id("messageInput"))).not.toBeVisible(1).withTimeout(60000);
+    await waitFor(element(by.id("contact-host-or-user"))).toBeVisible(100) //.withTimeout(60000);
 }
 
 const testReview = async () => {
@@ -159,8 +161,8 @@ const testReview = async () => {
 
     // await waitFor(element(by.text(timeString))).toBeVisible()
 
-    await waitFor(element(by.id("review-input"))).not.toBeVisible(1) //.withTimeout(60000);
-    await waitFor(element(by.id("booking-detail-scroll-view"))).toBeVisible(100) //.withTimeout(60000);
+    await waitFor(element(by.id("review-input"))).not.toBeVisible(1).withTimeout(60000);
+    await waitFor(element(by.id("write-review"))).toBeVisible(100) //.withTimeout(60000);}
 }
 
 const testCancelBooking = async (currentDateTime, cancelByDateTime, bookingPrice) => {
