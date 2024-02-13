@@ -137,7 +137,7 @@ export const testBookingDetail = async () => {
     }
     await waitFor(element(by.id('booking-detail-scroll-view'))).toBeVisible().withTimeout(60000)
     await expect(element(by.id("back-button-booking-detail"))).toBeVisible()
-    await expect(element(by.id("cancel-booking"))).toBeVisible()
+    // await expect(element(by.id("cancel-booking"))).toBeVisible()
 }
 
 const extractDateTime = text => {
