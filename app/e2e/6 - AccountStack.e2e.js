@@ -40,6 +40,8 @@ describe('Check AccountStack & ensure navigation works across bookings & spaces'
     await element(by.id('save-input')).tap(); // Closes keyboard
     await element(by.id('save-input')).tap(); // Saves username
     // await element(by.id('cancel-input')).tap();
+    await waitFor(element(by.id('save-input'))).not.toBeVisible().withTimeout(60000); // Saves username
+    await waitFor(element(by.id('edit-input'))).toBeVisible().withTimeout(60000); // Saves username
 
     const newUserNameLabel = (await element(by.id('username-input')).getAttributes()).label
 
