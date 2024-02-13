@@ -51,6 +51,8 @@ export const testBookingDetail = async () => {
                 await expect(element(by.id("write-review"))).not.toBeVisible()
 
                 await testCancelBooking(host, currentDateTime, cancelByDateTime, bookingPrice)
+
+                await waitFor(element(by.id("contact-host-or-user"))).toBeVisible()
                 await testMessaging()
             } else {
                 // Booking ended more than or equal to 5 days ago
@@ -76,6 +78,8 @@ export const testBookingDetail = async () => {
                 await expect(element(by.id("write-review"))).not.toBeVisible()
 
                 await testCancelBooking(host, currentDateTime, cancelByDateTime, bookingPrice)
+
+                await waitFor(element(by.id("contact-host-or-user"))).toBeVisible()
                 await testMessaging()
             } else if (currentDateTime < bookingEndDateTime) {
                 // Booking started, but havent end
@@ -100,6 +104,8 @@ export const testBookingDetail = async () => {
                 await expect(element(by.id("write-review"))).toBeVisible()
 
                 await testReview()
+
+                await waitFor(element(by.id("contact-host-or-user"))).toBeVisible()
                 await testMessaging()
                 // expect booking cancellation to fail
             } else if (currentDateTime > bookingEndDateTime && currentDateTime < bookingEndPlusFive) {

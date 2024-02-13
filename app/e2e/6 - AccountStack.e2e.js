@@ -67,22 +67,12 @@ describe('Check AccountStack & ensure navigation works across bookings & spaces'
     console.log(userLogLabel + "USER_CONSOLE_LOG_OUTPUT")
 
     if (userLogLabel == 'Top up') {
+      // Top up
       null
     } else {
-      // navigate to BookingDetail screen
-      await element(by.id('0_user_log')).tap();
-
-      await waitFor(element(by.id("booking-detail-scroll-view"))).toBeVisible().withTimeout(60000) // Not visible for past bookings, visible up to booking start (user), visible up to 2 days after booking end (host)
-      await waitFor(element(by.id("booking-title-price"))).toBeVisible().withTimeout(60000) // Not visible for past bookings, visible up to booking start (user), visible up to 2 days after booking end (host)
-
-      await testBookingDetail()
-
-      // navigate back to Activity screen (user)
-      await element(by.id("back-button-booking-detail")).tap();
+      // Booking (CD)
+      testBookingDetailFromActivity(false)
     }
-
-    await waitFor(element(by.id('activity-header-component'))).toBeVisible().withTimeout(60000);
-    await waitFor(element(by.text('Booking activity'))).toBeVisible().withTimeout(60000);
   });
 
   it('Attempt host log tap (needs work)', async () => {
@@ -98,21 +88,8 @@ describe('Check AccountStack & ensure navigation works across bookings & spaces'
       null
     } else {
       // Booking (CD)
-
-      // navigate to BookingDetail screen
-      await element(by.id('0_host_log')).tap();
-
-      await waitFor(element(by.id("booking-detail-scroll-view"))).toBeVisible().withTimeout(60000) // Not visible for past bookings, visible up to booking start (host), visible up to 2 days after booking end (host)
-      await waitFor(element(by.id("booking-title-price"))).toBeVisible().withTimeout(60000) // Not visible for past bookings, visible up to booking start (host), visible up to 2 days after booking end (host)
-
-      await testBookingDetail()
-
-      // navigate back to Activity screen (host)
-      await element(by.id("back-button-booking-detail")).tap();
+      testBookingDetailFromActivity(true)
     }
-
-    await waitFor(element(by.id('activity-header-component'))).toBeVisible().withTimeout(60000);
-    await waitFor(element(by.text('Hosting activity'))).toBeVisible().withTimeout(60000);
   });
 
   it('Navigate back to Account screen', async () => {
@@ -130,3 +107,19 @@ describe('Check AccountStack & ensure navigation works across bookings & spaces'
 // HostStackModal
 // MessageStackModal
 // AccountStackModal
+
+const testBookingDetailFromActivity = async (host) => {
+  // navigate to BookingDetail screen
+  await element(by.id('0_' + (host ? "host" : "user") + '_log')).tap();
+
+  await waitFor(element(by.id("booking-detail-scroll-view"))).toBeVisible().withTimeout(60000) // Not visible for past bookings, visible up to booking start (user), visible up to 2 days after booking end (host)
+  await waitFor(element(by.id("booking-title-price"))).toBeVisible().withTimeout(60000) // Not visible for past bookings, visible up to booking start (user), visible up to 2 days after booking end (host)
+
+  await testBookingDetail()
+
+  // navigate back to Activity screen
+  await element(by.id("back-button-booking-detail")).tap();
+
+  await waitFor(element(by.id('activity-header-component'))).toBeVisible().withTimeout(60000);
+  await waitFor(element(by.text((host ? 'Hosting' : 'Booking') + ' activity'))).toBeVisible().withTimeout(60000);
+}
