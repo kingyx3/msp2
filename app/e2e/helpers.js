@@ -1,5 +1,4 @@
 export const testBookingDetail = async () => {
-    const bookingTitleLabel = (await element(by.id("booking-title-price")).getAttributes()).label
     const cancellationPolicyLabel = (await element(by.id("cancellation-policy")).getAttributes()).label
     const hostOrUserLabel = (await element(by.id("host-or-user")).getAttributes()).label
     const bookingDateLabel = (await element(by.id("booking-date")).getAttributes()).label
@@ -14,7 +13,13 @@ export const testBookingDetail = async () => {
     const bookingEndPlusFive = new Date(bookingEndDateTime);
     bookingEndPlusFive.setDate(bookingEndPlusFive.getDate() + 5);
 
-    const bookingPrice = parseFloat(bookingTitleLabel.match(/([0-9]+(\.[0-9]+)?)/));
+    let bookingTitleLabel
+    let bookingPrice
+    while (isNaN(bookingPrice)) {
+        bookingTitleLabel = (await element(by.id("booking-title-price")).getAttributes()).label
+        bookingPrice = parseFloat(bookingTitleLabel.match(/([0-9]+(\.[0-9]+)?)/));
+    }
+
     const currentDateTime = new Date()
     const cancelByDateTime = extractDateTime(cancellationPolicyLabel)
 
