@@ -44,6 +44,7 @@ describe('Check AccountStack & ensure navigation works across bookings & spaces'
     // const randomText = (Math.floor(1000 + Math.random() * 9000)).toString();
     // await element(by.id('edit-input')).tap();
 
+
     // // Wait for navigation to complete & perform the visibility checks
     // await waitFor(element(by.id('username-input'))).toHaveLabel('new_username' + randomText);
   });
