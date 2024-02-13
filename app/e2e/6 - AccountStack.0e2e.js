@@ -95,21 +95,12 @@ describe('Check AccountStack & ensure navigation works across bookings & spaces'
   })
 });
 
-// // Dont need specific testing
-// RootStack
-// HomeTab
-// AuthStack
-
-// HostStackModal
-// MessageStackModal
-// AccountStackModal
-
 const testBookingDetailFromActivity = async (host) => {
   // navigate to BookingDetail screen
   await element(by.id('0_' + (host ? "host" : "user") + '_log')).tap();
 
-  await waitFor(element(by.id("booking-detail-scroll-view"))).toBeVisible().withTimeout(60000)
-  await waitFor(element(by.id("booking-title-price"))).toBeVisible().withTimeout(60000)
+  await waitFor(element(by.id("booking-detail-scroll-view"))).toBeVisible(100).withTimeout(60000)
+  await waitFor(element(by.id("booking-title-price"))).toBeVisible(100).withTimeout(60000)
 
   await testBookingDetail()
 
@@ -119,3 +110,12 @@ const testBookingDetailFromActivity = async (host) => {
   await waitFor(element(by.id('activity-header-component'))).toBeVisible().withTimeout(60000);
   await waitFor(element(by.text((host ? 'Hosting' : 'Booking') + ' activity'))).toBeVisible().withTimeout(60000);
 }
+
+// // Dont need specific testing
+// RootStack
+// HomeTab
+// AuthStack
+
+// HostStackModal
+// MessageStackModal
+// AccountStackModal
