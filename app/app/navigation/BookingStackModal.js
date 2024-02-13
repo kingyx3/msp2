@@ -34,15 +34,18 @@ const BookingStack = ({ navigation, route }) => {
         }}
       />
       <Stack.Screen
-        name="ReviewInput"
-        component={ReviewInput}
+        name="MessageDetail"
+        component={MessageDetail}
         options={{
           headerShown: false
         }}
       />
       <Stack.Screen
-        name="MessageDetail"
-        component={MessageDetail}
+        name="ReviewInput"
+        component={ReviewInput}
+        options={{
+          headerShown: false
+        }}
       />
     </Stack.Navigator>
   );

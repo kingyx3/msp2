@@ -247,11 +247,9 @@ const BookingDetails = (props) => {
                   size="small"
                   disabled={loading} //
                   onPress={() => {
-                    props.navigation.navigate("MessageStackModal", {
-                      screen: 'MessageDetail', params: {
-                        selectedChat: {
-                          otherUserId: host ? booking.userId : selectedSpace.userId
-                        }
+                    props.navigation.navigate("MessageDetail", {
+                      selectedChat: {
+                        otherUserId: host ? booking.userId : selectedSpace.userId
                       }
                     })
                   }} />

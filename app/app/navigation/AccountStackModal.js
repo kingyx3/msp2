@@ -6,6 +6,8 @@ import { Platform } from "react-native";
 import Accounts from "../screens/Accounts";
 import Activity from "../screens/Activity";
 import BookingDetail from "../screens/BookingDetail";
+import ReviewInput from "../screens/ReviewInput";
+import MessageDetail from "../screens/MessageDetail";
 
 //import syltes and assets
 import { EvilIcons } from "@expo/vector-icons";
@@ -47,7 +49,9 @@ const AccountStack = ({ navigation, route }) => {
       <Stack.Screen
         name="Accounts"
         component={Accounts}
-        options={{ headerShown: false }}
+        options={{
+          headerShown: false
+        }}
       />
       <Stack.Screen
         name="Activity"
@@ -59,6 +63,20 @@ const AccountStack = ({ navigation, route }) => {
       <Stack.Screen
         name="BookingDetail"
         component={BookingDetail}
+        options={{
+          headerShown: false
+        }}
+      />
+      <Stack.Screen
+        name="MessageDetail"
+        component={MessageDetail}
+        options={{
+          headerShown: false
+        }}
+      />
+      <Stack.Screen
+        name="ReviewInput"
+        component={ReviewInput}
         options={{
           headerShown: false
         }}
