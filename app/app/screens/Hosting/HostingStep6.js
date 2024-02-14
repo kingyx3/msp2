@@ -25,7 +25,7 @@ const HostingStep6 = (props) => {
   const { editMode, selectedSpace } = props.route.params
   const [searchTerm, setSearchTerm] = useState('')
   const [loading, setLoading] = useState(true)
-  const googleMapsApiKey = Platform.OS === 'ios' ? process.env.EXPO_PUBLIC_GOOGLE_PLACES_API_KEY_IOS : process.env.EXPO_PUBLIC_GOOGLE_PLACES_API_KEY_ANDROID
+  const googleMapsApiKey = process.env.EXPO_PUBLIC_GOOGLE_PLACES_API_KEY
 
   useEffect(() => {
     if (location == props.state.location) {
