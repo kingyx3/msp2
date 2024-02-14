@@ -42,6 +42,7 @@ const TopUp = (props) => {
 
   // console.log(userWalletSGD, requiredAmt)
   useEffect(() => {
+    setLoading(false);
     // From reserve_1
     if (requiredAmt) {
       if (requiredAmt < userWalletSGD) {
@@ -82,9 +83,8 @@ const TopUp = (props) => {
     } else {
       //  Should wait till db says wallet amount is updated
       // props.navigation.goBack()
+      setPaymentSheetEnabled(false);
     }
-    setPaymentSheetEnabled(false);
-    setLoading(false);
   };
 
   const initialisePaymentSheet = async () => {
