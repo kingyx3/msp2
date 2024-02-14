@@ -44,7 +44,7 @@
         "applinks:makeshiftplans-dev.firebaseapp.com"
       ],
       "config": {
-        "googleMapsApiKey": ""
+        "googleMapsApiKey": "AIzaSyCDI30Mk3uP4kvyNTVvNXj4UjaG_UBjNnk"
       }
     },
     "userInterfaceStyle": "automatic",
@@ -58,7 +58,7 @@
       "softwareKeyboardLayoutMode": "resize",
       "config": {
         "googleMaps": {
-          "apiKey": ""
+          "apiKey": "AIzaSyCDI30Mk3uP4kvyNTVvNXj4UjaG_UBjNnk"
         }
       },
       "intentFilters": [
