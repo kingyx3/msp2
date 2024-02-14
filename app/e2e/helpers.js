@@ -194,6 +194,7 @@ const testReview = async () => {
     await element(by.id('review-input')).typeText('Nice space, highly recommended!');
     await element(by.id('review-input-scroll-view')).tap(); // Close keyboard
     await element(by.id("submit-button")).tap();
+    await waitFor(element(by.text("OK"))).toBeVisible().withTimeout(60000);
     await element(by.text("OK")).tap();
 
     await waitFor(element(by.id("review-input"))).not.toBeVisible(1).withTimeout(60000);
