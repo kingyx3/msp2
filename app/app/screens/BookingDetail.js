@@ -46,6 +46,7 @@ const BookingDetails = (props) => {
   // -------------------
   const isHostAbleToCancel = host && moment(booking?.end).add(5, 'days').valueOf() >= Date.now();
   const isUserAbleToCancel = !host && booking.start >= Date.now();
+  const isBookingInProgress = booking.start <= Date.now() && booking.end > Date.now();
 
   let refundAmount = 0
   let currentTime
@@ -275,7 +276,7 @@ const BookingDetails = (props) => {
               <Button.BtnContain
                 testID="cancel-booking"
                 label={booking.cancelled ? "Booking Cancelled" :
-                  (isHostAbleToCancel || isUserAbleToCancel) ? "Cancel Booking" :
+                  (isHostAbleToCancel || isUserAbleToCancel || isBookingInProgress) ? "Cancel Booking" :
                     "Booking Completed"}
                 color={(booking.cancelled ? true :
                   loading || !(isHostAbleToCancel || isUserAbleToCancel)) ? colors.lightgray : colors.black}

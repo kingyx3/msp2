@@ -43,9 +43,6 @@ jobs:
       - name: Downgrade (workaround) to fix CocoaPods issue
         run: sudo gem uninstall cocoapods && sudo gem install cocoapods -v 1.14.3
 
-      # - name: Clean CocoaPods cache
-      #   run: pod cache clean --all
-
       - name: Install Yarn dependencies
         run: yarn
 
@@ -55,10 +52,6 @@ jobs:
         with:
           path: app/ios/build
           key: ${{ runner.os }}-detox-build-${{ env.DETOX_CONFIGURATION }}
-
-      # - name: Prebuild Expo
-      #   if: steps.detox-build-cache-get.outputs.cache-hit != 'true'
-      #   run: npx expo prebuild --platform ios --clean
 
       - name: Prebuild Expo cache (get)
         id: prebuild-expo-cache-get
