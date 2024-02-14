@@ -70,23 +70,24 @@ jobs:
         uses: actions/cache/restore@v3
         with:
           path: app/android/app/build
-          key: ${{ runner.os }}-detox-build-${{ env.DETOX_CONFIGURATION }}
+          key: ${{ runner.os }}-detox-build-${{ env.DETOX_CONFIGURATION }}-${{ hashFiles('app/app/**', 'app/patches/**', 'app/App.js', 'app/app.json', 'app/package.json', 'app/yarn.lock') }}
 
       - name: Prebuild Expo
         if: steps.detox-build-cache-get.outputs.cache-hit != 'true'
         run: npx expo prebuild --platform android --clean
 
       - name: Detox build
+        id: detox-build
         if: steps.detox-build-cache-get.outputs.cache-hit != 'true'
         run: yarn detox build --configuration ${{ env.DETOX_CONFIGURATION }}
 
       - name: Detox build cache (set)
         id: detox-build-cache-set
         uses: actions/cache/save@v3
-        if: always() && steps.detox-build-cache-get.outputs.cache-hit != 'true'
+        if: always() && steps.detox-build-cache-get.outputs.cache-hit != 'true' && steps.detox-build.outcome == 'success'
         with:
           path: app/android/app/build
-          key: ${{ runner.os }}-detox-build-${{ env.DETOX_CONFIGURATION }}
+          key: ${{ steps.detox-build-cache-get.outputs.cache-primary-key }}
 
       - name: Clean up disk space
         if: steps.detox-build-cache-get.outputs.cache-hit != 'true'

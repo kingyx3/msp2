@@ -51,43 +51,28 @@ jobs:
         uses: actions/cache/restore@v3
         with:
           path: app/ios/build
-          key: ${{ runner.os }}-detox-build-${{ env.DETOX_CONFIGURATION }}
-
-      - name: Prebuild Expo cache (get)
-        id: prebuild-expo-cache-get
-        uses: actions/cache/restore@v3
-        if: steps.detox-build-cache-get.outputs.cache-hit != 'true'
-        with:
-          path: app/ios
-          key: ${{ runner.os }}-prebuild-expo-${{ env.DETOX_CONFIGURATION }}-${{ hashFiles('app/app.json') }}
+          key: ${{ runner.os }}-detox-build-${{ env.DETOX_CONFIGURATION }}-${{ hashFiles('app/app/**', 'app/patches/**', 'app/App.js', 'app/app.json', 'app/package.json', 'app/yarn.lock') }}
 
       - name: Prebuild Expo
-        if: steps.detox-build-cache-get.outputs.cache-hit != 'true' && steps.prebuild-expo-cache-get.outputs.cache-hit != 'true'
+        if: steps.detox-build-cache-get.outputs.cache-hit != 'true'
         run: npx expo prebuild --platform ios --clean
-
-      - name: Prebuild Expo cache (set)
-        id: prebuild-expo-cache-set
-        uses: actions/cache/save@v3
-        if: always() && steps.detox-build-cache-get.outputs.cache-hit != 'true' && steps.prebuild-expo-cache-get.outputs.cache-hit != 'true'
-        with:
-          path: app/ios
-          key: ${{ runner.os }}-prebuild-expo-${{ env.DETOX_CONFIGURATION }}-${{ hashFiles('app/app.json') }}
 
       - name: Detox rebuild framework cache
         if: steps.detox-build-cache-get.outputs.cache-hit != 'true'
         run: yarn detox rebuild-framework-cache
 
       - name: Detox build
+        id: detox-build
         if: steps.detox-build-cache-get.outputs.cache-hit != 'true'
         run: yarn detox build --configuration ${{ env.DETOX_CONFIGURATION }}
 
       - name: Detox build cache (set)
         id: detox-build-cache-set
         uses: actions/cache/save@v3
-        if: always() && steps.detox-build-cache-get.outputs.cache-hit != 'true'
+        if: always() && steps.detox-build-cache-get.outputs.cache-hit != 'true' && steps.detox-build.outcome == 'success'
         with:
           path: app/ios/build
-          key: ${{ runner.os }}-detox-build-${{ env.DETOX_CONFIGURATION }}
+          key: ${{ steps.detox-build-cache-get.outputs.cache-primary-key }}
 
       - name: Detox test
         run: yarn detox test --configuration ${{ env.DETOX_CONFIGURATION }} --cleanup --headless
