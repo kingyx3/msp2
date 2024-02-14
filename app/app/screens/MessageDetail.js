@@ -30,20 +30,20 @@ const MessageDetail = (props) => {
   useEffect(() => {
     async function fetchData() {
       if (!user || !selectedChat) return;
-      const messagesRef = ref(database, `messages/${chatId}`);
-      const messagesCallback = (snapshot) => {
-        readMessage(selectedChat.otherUserId);
-        let msgList = Object.values(snapshot.val() || {});
-        setMessages(msgList);
-      };
-      const unsubscribe = onValue(messagesRef, messagesCallback);
-
-      getUserName(selectedChat.otherUserId, setOtherUserName);
-
-      return () => {
-        // Cleanup function to unsubscribe from Firebase listener
-        unsubscribe();
-      };
+      await getUserName(selectedChat.otherUserId, setOtherUserName);
+      if (process.env.EXPO_PUBLIC_TYPE !== 'TEST') {
+        const messagesRef = ref(database, `messages/${chatId}`);
+        const messagesCallback = (snapshot) => {
+          readMessage(selectedChat.otherUserId);
+          let msgList = Object.values(snapshot.val() || {});
+          setMessages(msgList);
+        };
+        const unsubscribe = onValue(messagesRef, messagesCallback);
+        return () => {
+          // Cleanup function to unsubscribe from Firebase listener
+          unsubscribe();
+        };
+      }
     }
     fetchData();
     return () => setMessages([]);
@@ -52,8 +52,12 @@ const MessageDetail = (props) => {
   const onSend = useCallback(async (messages = []) => {
     const networkState = await Network.getNetworkStateAsync();
     if (networkState.isConnected) {
-      const { _id, text } = messages[0];
-      createMessage(selectedChat.otherUserId, _id, text);
+      if (process.env.EXPO_PUBLIC_TYPE !== 'TEST') {
+        const { _id, text } = messages[0];
+        createMessage(selectedChat.otherUserId, _id, text);
+      } else {
+        setMessages([...messages]);
+      }
     } else {
       showOfflineAlert();
     }
