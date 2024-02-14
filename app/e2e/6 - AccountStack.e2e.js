@@ -31,7 +31,7 @@ describe('Check AccountStack & ensure navigation works across bookings & spaces'
 
   it('Change user name', async () => {
     const randomText = (Math.floor(1000 + Math.random() * 9000)).toString();
-    const newUserName = 'newUserName' + randomText
+    const newUserName = 'newUserName' + randomText + "   "
     const oldUserNameLabel = (await element(by.id('username-input')).getAttributes()).label
 
     await element(by.id('edit-input')).tap();
