@@ -3,7 +3,7 @@ describe('Check a booking detail & send message to the host', () => {
   beforeAll(async () => {
     await device.launchApp({
       permissions: {
-        location: 'always', // inuse||never||unset
+        // location: 'always', // inuse||never||unset
         photos: 'YES',
         medialibrary: 'YES',
       }
@@ -16,11 +16,51 @@ describe('Check a booking detail & send message to the host', () => {
 
     // Wait for navigation to complete & perform the visibility checks
     await waitFor(element(by.text('Quick Search'))).toBeVisible().withTimeout(60000);
-    const attributes = await element(by.text('Quick Search')).getAttributes()
-    console.log(attributes)
-    console.log(attributes.text)
   });
+
+  it('Navigate to Hosting screen', async () => {
+    await element(by.id('btm-nav-hosting')).tap();
+
+    // Wait for navigation to complete & perform the visibility checks
+    await waitFor(element(by.id('hosting-header-component'))).toBeVisible().withTimeout(60000);
+  });
+
   // set up stripe (if not setup yet)
-  // list now
-  // manage my spaces (calendar, booking history, edit space, disable/enable space)
+  it('Setup Payments / List Now', async () => {
+    const listNowLabel = (await element(by.id('list-now')).getAttributes()).label
+
+    if (listNowLabel == "List Now") {
+      null
+    } else {
+      // "Setup Payments"
+      null
+    }
+
+    // Wait for navigation to complete & perform the visibility checks
+    await waitFor(element(by.id('hosting-header-component'))).toBeVisible().withTimeout(60000);
+  });
+
+  it('Navigate to SpaceDetail screen', async () => {
+
+  });
+
+  it('Navigate to Manage Space screen', async () => {
+
+  });
+
+  it('Test Manage Calender feature', async () => {
+
+  });
+
+  it('Test View Booking History feature', async () => {
+
+  });
+
+  it('Test Edit Space Details feature', async () => {
+
+  });
+
+  it('Test Disable Space feature', async () => {
+
+  });
 });

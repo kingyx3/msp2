@@ -41,7 +41,7 @@ const Hosting = (props) => {
   const headerComponent = () => {
     return (
       <Top>
-        <Header>
+        <Header testID="hosting-header-component">
           <Typography.H color={colors.red}>List your space</Typography.H>
           <View style={{ marginTop: 14, marginBottom: 20 }}>
             <Typography.P colors={colors.gray}>
@@ -51,6 +51,7 @@ const Hosting = (props) => {
           </View>
           <BtnContainer>
             <Button.BtnContain
+              testID={'list-now'}
               label={props.state.user.onboarded ? "List Now" : "Setup Payments"}
               color={loading ? colors.lightgray : colors.red}
               disabled={loading}
