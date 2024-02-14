@@ -36,6 +36,7 @@ export const testBookingDetail = async () => {
     await element(by.id('booking-detail-scroll-view')).scroll(350, 'down', NaN, 0.85);
 
     const cancelledLabel = (await element(by.id("cancel-booking")).getAttributes()).label
+    console.log('Label (cancel-booking): ', "|" + cancelledLabel + "|")
 
     if (cancelledLabel == 'Booking Cancelled') {
         // Cannot see contact host/user
@@ -153,10 +154,9 @@ const extractDateTime = text => {
     let [, day, month, year, hour, ampm] = match;
     hour = (ampm.toLowerCase() === 'pm' && hour < 12) ? parseInt(hour) + 12 : (ampm.toLowerCase() === 'am' && hour === '12') ? 0 : hour;
 
-    console.log('start, end, cancelby')
-    console.log('text', text)
-    console.log('match', match)
-    console.log('hour', hour)
+    console.log('dateText: ', "|" + text + "|")
+    // console.log('match', match)
+    // console.log('hour', hour)
 
     return new Date(`${day} ${month} ${year} ${hour}:00:00`);
 };
