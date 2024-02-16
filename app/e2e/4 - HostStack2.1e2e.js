@@ -88,8 +88,8 @@ describe('Hosting - Manage Space', () => {
   });
 
   it('Test Disable Space feature', async () => {
-    await expect(element(by.id('4_manage_space_item'))).toBeVisible();
-    await element(by.id('4_manage_space_item')).tap();
+    await expect(element(by.id('3_manage_space_item'))).toBeVisible();
+    await element(by.id('3_manage_space_item')).tap();
 
     // Add more tests
 
