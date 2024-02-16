@@ -101,7 +101,7 @@ describe('Hosting - Manage Space', () => {
       await element(by.text('Cancel')).tap()
     } catch {
       // If space is inactive
-      await waitFor(element(by.text('Enable Space'))).toBeVisible().withTimeout(30000);
+      await expect(element(by.text('Enable Space'))).toBeVisible();
       console.log('Space is inactive! Leaving it as inactive!')
       // await element(by.text('OK')).tap()
       await element(by.text('Cancel')).tap()
