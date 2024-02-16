@@ -54,7 +54,7 @@ const HostStackModal = ({ navigation, route }) => {
                     title: false,
                     headerBackTitleVisible: false,
                     headerBackImage: () => (
-                        <IconWrapper>
+                        <IconWrapper testID="hosting-step1-back-button">
                             <EvilIcons name="chevron-left" size={30} />
                         </IconWrapper>
                     ),
@@ -67,7 +67,7 @@ const HostStackModal = ({ navigation, route }) => {
                     title: false,
                     headerBackTitleVisible: false,
                     headerBackImage: () => (
-                        <IconWrapper>
+                        <IconWrapper testID="hosting-edit2-back-button">
                             <EvilIcons name="chevron-left" size={30} />
                         </IconWrapper>
                     ),
@@ -80,7 +80,7 @@ const HostStackModal = ({ navigation, route }) => {
                     title: false,
                     headerBackTitleVisible: false,
                     headerBackImage: () => (
-                        <IconWrapper>
+                        <IconWrapper testID="hosting-step3-back-button">
                             <EvilIcons name="chevron-left" size={30} />
                         </IconWrapper>
                     ),
@@ -93,7 +93,7 @@ const HostStackModal = ({ navigation, route }) => {
                     title: false,
                     headerBackTitleVisible: false,
                     headerBackImage: () => (
-                        <IconWrapper>
+                        <IconWrapper testID="hosting-edit4-back-button">
                             <EvilIcons name="chevron-left" size={30} />
                         </IconWrapper>
                     ),
@@ -106,7 +106,7 @@ const HostStackModal = ({ navigation, route }) => {
                     title: false,
                     headerBackTitleVisible: false,
                     headerBackImage: () => (
-                        <IconWrapper>
+                        <IconWrapper testID="hosting-edit5-back-button">
                             <EvilIcons name="chevron-left" size={30} />
                         </IconWrapper>
                     ),
@@ -119,7 +119,7 @@ const HostStackModal = ({ navigation, route }) => {
                     title: false,
                     headerBackTitleVisible: false,
                     headerBackImage: () => (
-                        <IconWrapper>
+                        <IconWrapper testID="hosting-step6-back-button">
                             <EvilIcons name="chevron-left" size={30} />
                         </IconWrapper>
                     ),
@@ -132,7 +132,7 @@ const HostStackModal = ({ navigation, route }) => {
                     title: false,
                     headerBackTitleVisible: false,
                     headerBackImage: () => (
-                        <IconWrapper>
+                        <IconWrapper testID="hosting-edit7-back-button">
                             <EvilIcons name="chevron-left" size={30} />
                         </IconWrapper>
                     ),
@@ -145,7 +145,7 @@ const HostStackModal = ({ navigation, route }) => {
                     title: false,
                     headerBackTitleVisible: false,
                     headerBackImage: () => (
-                        <IconWrapper>
+                        <IconWrapper testID="hosting-edit8-back-button">
                             <EvilIcons name="chevron-left" size={30} />
                         </IconWrapper>
                     ),
@@ -158,7 +158,7 @@ const HostStackModal = ({ navigation, route }) => {
                     title: false,
                     headerBackTitleVisible: false,
                     headerBackImage: () => (
-                        <IconWrapper>
+                        <IconWrapper testID="space-detail-back-button">
                             <EvilIcons name="chevron-left" size={30} />
                         </IconWrapper>
                     ),
@@ -171,7 +171,7 @@ const HostStackModal = ({ navigation, route }) => {
                     title: false,
                     headerBackTitleVisible: false,
                     headerBackImage: () => (
-                        <IconWrapper>
+                        <IconWrapper testID="manage-space-back-button">
                             <EvilIcons name="chevron-left" size={30} />
                         </IconWrapper>
                     ),
@@ -184,7 +184,7 @@ const HostStackModal = ({ navigation, route }) => {
                     title: false,
                     headerBackTitleVisible: false,
                     headerBackImage: () => (
-                        <IconWrapper>
+                        <IconWrapper testID="manage-calendar-back-button">
                             <EvilIcons name="chevron-left" size={30} />
                         </IconWrapper>
                     ),
@@ -197,7 +197,7 @@ const HostStackModal = ({ navigation, route }) => {
                     title: false,
                     headerBackTitleVisible: false,
                     headerBackImage: () => (
-                        <IconWrapper>
+                        <IconWrapper testID="view-bookings-back-button">
                             <EvilIcons name="chevron-left" size={30} />
                         </IconWrapper>
                     ),

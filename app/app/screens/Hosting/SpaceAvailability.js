@@ -57,7 +57,7 @@ const SpaceAvailability = (props) => {
   return (
     <Container>
       <Flex>
-        <Typography.H2 >
+        <Typography.H2 testID={'space-calendar-header'}>
           Total: {spaceCount} space(s)
         </Typography.H2>
       </Flex>
@@ -67,6 +67,7 @@ const SpaceAvailability = (props) => {
       />
       <Step>
         <Button.BtnContain
+          testID={'space-calendar-confirm-button'}
           label="Confirm Changes"
           color={disabled ? colors.lightgray : colors.red}
           disabled={disabled}

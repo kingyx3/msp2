@@ -49,7 +49,7 @@ const HostingEdit2 = (props) => {
   };
   return (
     <Container>
-      <Main>
+      <Main testID='hosting-edit2-scroll-view'>
         <Typography.H>Set your price</Typography.H>
         <Step style={{ paddingTop: 20 }}>
           <Typography.Sub1>Price</Typography.Sub1>

@@ -13,24 +13,10 @@ import {
   TouchableWithoutFeedback,
 } from 'react-native';
 import moment from 'moment'
-// import { Icon } from 'react-native-elements';
-// import MapView, { PROVIDER_GOOGLE, Marker } from 'react-native-maps';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
-// import { Calendar } from 'react-native-big-calendar'
-// import WeekView from 'react-native-week-view';
-// const _ = require('lodash');
-// const lodashDeepClone = require('lodash.clonedeep');
 
 //import components
-// import ImgCarousel from '../../components/ImgCarousel';
-// import * as Highlights from '../../components/Highlights';
-// import * as Button from '../../components/Button';
-// import Counter from '../../components/Counter';
-// import * as List from '../../components/List';
-// import * as IconLabel from '../../components/IconLabel';
-// import { NavBar2 } from '../../components/NavBar';
-// import * as Card from '../../components/Cards';
 import { camelToFlat, fetchSpaceBookings } from '../../components/Firebase/firebase';
 
 //import screens
@@ -39,13 +25,10 @@ import styled from 'styled-components/native';
 import * as List from "../../components/List";
 import colors from '../../config/colors';
 import { H, P } from "../../config/Typography";
-// import { useIsFocused } from '@react-navigation/native';
 
 const { width, height } = Dimensions.get('window');
 
 const SpaceBookings = (props) => {
-  // let ref = useRef(null);
-  // let isFocused = useIsFocused();
   const { spaceId, history } = props.route.params
   const spaceBookingsArray = (props.state.spaceBookings)
     .filter((spaceBooking) => history ? spaceBooking.end < Date.now() : spaceBooking.end > Date.now())
@@ -89,6 +72,7 @@ const SpaceBookings = (props) => {
   return (
     <Container>
       <FlatList
+        testID='space-bookings-flatlist'
         ListHeaderComponent={
           <Header>
             <H color={colors.red}>Bookings</H>

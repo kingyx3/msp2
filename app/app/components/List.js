@@ -13,9 +13,9 @@ import * as Typography from "../config/Typography";
 import colors from "../config/colors";
 import ImgSliderItems from "./ImgSliderItems";
 
-export const Default = ({ containedicon, icon, secondary, meta, title, onPress, ...otherProps }) => {
+export const Default = ({ containedicon, icon, secondary, meta, title, onPress, testID, ...otherProps }) => {
   return (
-    <TouchableHighlight {...otherProps} underlayColor={colors.lightgray} onPress={onPress}>
+    <TouchableHighlight {...otherProps} testID={testID} underlayColor={colors.lightgray} onPress={onPress}>
       <Container >
         {containedicon && (
           <IconContainer >

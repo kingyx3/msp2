@@ -1,5 +1,5 @@
-// BookingStackModal
-describe('Check a booking detail & send message to the host', () => {
+// HostingStackModal
+describe('Hosting - Setup payments & Create a new Space', () => {
   beforeAll(async () => {
     await device.launchApp({
       permissions: {
@@ -29,8 +29,13 @@ describe('Check a booking detail & send message to the host', () => {
   it('Setup Payments / List Now', async () => {
     const listNowLabel = (await element(by.id('list-now')).getAttributes()).label
 
+    console.log('listNowLabel: ', listNowLabel)
+
     if (listNowLabel == "List Now") {
-      null
+      await element(by.id('list-now')).tap()
+
+      await waitFor(element(by.id('hosting-step1-scroll-view'))).toBeVisible().withTimeout(60000);
+      await element(by.id('hosting-step1-back-button')).tap();
     } else {
       // "Setup Payments"
       null
@@ -38,29 +43,5 @@ describe('Check a booking detail & send message to the host', () => {
 
     // Wait for navigation to complete & perform the visibility checks
     await waitFor(element(by.id('hosting-header-component'))).toBeVisible().withTimeout(60000);
-  });
-
-  it('Navigate to SpaceDetail screen', async () => {
-
-  });
-
-  it('Navigate to Manage Space screen', async () => {
-
-  });
-
-  it('Test Manage Calender feature', async () => {
-
-  });
-
-  it('Test View Booking History feature', async () => {
-
-  });
-
-  it('Test Edit Space Details feature', async () => {
-
-  });
-
-  it('Test Disable Space feature', async () => {
-
   });
 });

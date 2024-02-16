@@ -109,6 +109,7 @@ const SpaceDetails = ({ navigation, route, state }) => {
         <Animated.View style={headerStyle}></Animated.View>
       </View>
       <ScrollView
+        testID="space-detail-scroll-view"
         style={{ flex: 1 }}
         // onScroll={handleScroll}
         scrollEventThrottle={16}
@@ -270,6 +271,7 @@ const SpaceDetails = ({ navigation, route, state }) => {
         </View>
         <BtnContainer>
           <Button.BtnContain
+            testID={'manage-space-button'}
             label="Manage Space"
             color={loading ? colors.lightgray : colors.red}
             disabled={loading}

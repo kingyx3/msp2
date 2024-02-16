@@ -91,6 +91,7 @@ const Hosting = (props) => {
   return (
     <Container>
       <FlatList
+        testID="hosting-flatlist"
         ListHeaderComponent={
           headerComponent
         }
@@ -98,9 +99,10 @@ const Hosting = (props) => {
         data={userSpaces}
         extraData={userSpaces}
         keyExtractor={item => item.id}
-        renderItem={({ item }) =>
+        renderItem={({ item, index }) =>
           <View style={{ padding: 24 }}>
             <Cards.Default
+              testID={index.toString() + '_space'}
               image={item.images}
               // sub={handleDate(item)}
               title={item.title} //item.city

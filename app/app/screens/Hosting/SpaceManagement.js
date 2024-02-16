@@ -46,6 +46,7 @@ const SpaceManagement = (props) => {
   const renderItem = ({ item, index }) =>
     <List.Default
       title={item.title}
+      testID={index.toString() + "_manage_space_item"}
       icon={item.icon}
       onPress={async () => {
         const networkState = await Network.getNetworkStateAsync();
@@ -91,6 +92,7 @@ const SpaceManagement = (props) => {
   return (
     <Container>
       <FlatList
+        testID='manage-space-flatlist'
         ListHeaderComponent={
           <Header>
             <H color={colors.red}>Manage Space</H>

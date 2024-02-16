@@ -35,7 +35,7 @@ const HostingStep1 = (props) => {
 
   return (
     <Container>
-      <KeyboardAwareScrollView>
+      <KeyboardAwareScrollView testID="hosting-step1-scroll-view">
         <Main>
           <Typography.H>Shall we start listing your space?</Typography.H>
           <Step style={{ paddingTop: 20 }}>
