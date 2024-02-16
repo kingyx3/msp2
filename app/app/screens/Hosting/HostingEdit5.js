@@ -63,6 +63,7 @@ const HostingEdit5 = (props) => {
         <Left></Left>
         <BtnContainer>
           <Button.BtnContain
+            testID={'hosting-edit5-next-button'}
             label="Next"
             size="small"
             disabled={imageUris.length > 0 ? false : true}

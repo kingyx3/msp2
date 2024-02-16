@@ -88,6 +88,7 @@ const HostingEdit4 = (props) => {
         <Left></Left>
         <BtnContainer>
           <Button.BtnContain
+            testID={'hosting-edit7-next-button'}
             label="Next"
             color={!(title.length > 0 && description.length > 0 && (editMode || props.state.location == location)) ? colors.lightgray : colors.red}
             disabled={!(title.length > 0 && description.length > 0 && (editMode || props.state.location == location))}

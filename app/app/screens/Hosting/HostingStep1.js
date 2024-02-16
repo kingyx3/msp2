@@ -72,6 +72,7 @@ const HostingStep1 = (props) => {
         <Left></Left>
         <BtnContainer>
           <Button.BtnContain
+            testID={'hosting-step1-next-button'}
             label="Next"
             size="small"
             color={category != "" ? colors.red : colors.lightgray}

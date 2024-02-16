@@ -186,6 +186,7 @@ const HostingStep6 = (props) => {
           <Left></Left>
           <BtnContainer>
             <Button.BtnContain
+              testID={'hosting-step6-next-button'}
               label="Next"
               // color={colors.red}
               size="small"

@@ -87,7 +87,7 @@ describe('Hosting - Manage Space', () => {
     await waitFor(element(by.id('manage-space-flatlist'))).toBeVisible().withTimeout(60000);
   });
 
-  it('Test Disable Space feature', async () => {
+  it('Enable/Disable Space feature', async () => {
     await expect(element(by.id('3_manage_space_item'))).toBeVisible();
     await element(by.id('3_manage_space_item')).tap();
 
@@ -108,5 +108,9 @@ describe('Hosting - Manage Space', () => {
     }
 
     await waitFor(element(by.id('manage-space-flatlist'))).toBeVisible().withTimeout(60000);
+
+    await element(by.id('manage-space-back-button')).tap()
+
+    await waitFor(element(by.id("space-detail-scroll-view"))).toBeVisible().withTimeout(60000);
   });
 });

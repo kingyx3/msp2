@@ -35,7 +35,8 @@ describe('Hosting - Setup payments & Create a new Space', () => {
       await element(by.id('list-now')).tap()
 
       await waitFor(element(by.id('hosting-step1-scroll-view'))).toBeVisible().withTimeout(60000);
-      await waitFor(element(by.id('hosting-step1-back-button'))).toBeVisible().withTimeout(60000);
+      await waitFor(element(by.id('hosting-step1-next-button'))).toBeVisible().withTimeout(60000);
+      await expect(element(by.id('hosting-step1-back-button'))).toBeVisible()
       await element(by.id('hosting-step1-back-button')).tap();
     } else {
       // "Setup Payments"

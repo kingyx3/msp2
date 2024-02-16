@@ -131,6 +131,7 @@ const HostingEdit12 = (props) => {
         <Left></Left>
         <BtnContainer>
           <MyButton.BtnContain
+            testID={'hosting-step3-next-button'}
             label="Next"
             size="small"
             color={colors.red}

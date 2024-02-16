@@ -148,6 +148,7 @@ const HostingEdit8 = (props) => {
         <Left></Left>
         <BtnContainer>
           <Button.BtnContain
+            testID={'hosting-edit8-next-button'}
             label={editMode ? "Update" : "List"}
             color={loading ? colors.lightgray : colors.red}
             disabled={loading}
