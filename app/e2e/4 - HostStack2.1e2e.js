@@ -95,14 +95,14 @@ describe('Hosting - Manage Space', () => {
 
     try {
       // If space is active
+      await waitFor(element(by.text('Disable Space'))).toBeVisible().withTimeout(30000);
       console.log('Space is active! Leaving it as active!')
-      await waitFor(element(by.text('Disable Space'))).toBeVisible().withTimeout(60000);
       // await element(by.text('OK')).tap()
       await element(by.text('Cancel')).tap()
     } catch {
       // If space is inactive
+      await waitFor(element(by.text('Enable Space'))).toBeVisible().withTimeout(30000);
       console.log('Space is inactive! Leaving it as inactive!')
-      await waitFor(element(by.text('Enable Space'))).toBeVisible().withTimeout(60000);
       // await element(by.text('OK')).tap()
       await element(by.text('Cancel')).tap()
     }
