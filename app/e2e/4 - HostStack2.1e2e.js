@@ -92,23 +92,25 @@ describe('Hosting - Manage Space', () => {
     await element(by.id('3_manage_space_item')).tap();
 
     // Add more tests
-
+    let active
     try {
       // If space is active
       await waitFor(element(by.text('Are you sure you want to disable this space? No new bookings can be made until it is re-enabled. Existing bookings will remain active unless cancelled individually.'))).toBeVisible().withTimeout(30000);
-      console.log('Space is active! Leaving it as active!')
-      // await element(by.text('OK')).tap()
-      await element(by.text('Cancel')).tap()
+      active = true
     } catch {
       // If space is inactive
       await expect(element(by.text('Are you sure you want to enable this space?'))).toBeVisible();
-      console.log('Space is inactive! Leaving it as inactive!')
-      // await element(by.text('OK')).tap()
-      await element(by.text('Cancel')).tap()
+      active = false
     }
 
-    await waitFor(element(by.id('manage-space-flatlist'))).toBeVisible().withTimeout(60000);
+    console.log('Space is ' + (active ? 'active' : 'inactive') + '!')
 
+    // await element(by.text('OK')).tap()
+    // console.log('Changing it to ' + (active ? 'inactive' : 'active') + '!')
+
+    await element(by.text('Cancel')).tap()
+    console.log('Leaving it as ' + (active ? 'active' : 'inactive') + '!')
+    await waitFor(element(by.id('manage-space-flatlist'))).toBeVisible().withTimeout(60000);
     await element(by.id('manage-space-back-button')).tap()
 
     await waitFor(element(by.id("space-detail-scroll-view"))).toBeVisible().withTimeout(60000);
