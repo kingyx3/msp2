@@ -9,7 +9,8 @@ export function createSpaceTestSuite() {
         // Choose space type
         await element(by.id('open-space-picker-modal')).tap()
         await waitFor(element(by.id('2_picker_item'))).toBeVisible().withTimeout(60000);
-        await element(by.id('2_picker_item')).tap()
+        await waitFor(element(by.text('Badminton Court'))).toBeVisible().withTimeout(60000);
+        await element(by.text('Badminton Court')).tap()
         await waitFor(element(by.id('hosting-step1-next-button'))).toBeVisible().withTimeout(60000);
     })
     it('Navigate to HostingEdit2', async () => {
@@ -92,6 +93,14 @@ export function updateSpaceTestSuite() {
 
         await waitFor(element(by.id('hosting-edit8-next-button'))).toBeVisible().withTimeout(60000);
         await expect(element(by.id('hosting-edit8-back-button'))).toBeVisible()
+    })
+    it('Navigate to Hosting', async () => {
+        await element(by.id('hosting-edit8-next-button')).tap()
+
+        await waitFor(element(by.text('Space Updated!'))).toBeVisible().withTimeout(60000);
+        await element(by.text('OK')).tap()
+
+        await waitFor(element(by.id('hosting-header-component'))).toBeVisible().withTimeout(60000);
     })
 }
 

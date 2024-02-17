@@ -79,7 +79,6 @@ describe('Hosting - Manage Space', () => {
       await expect(element(by.id('2_manage_space_item'))).toBeVisible();
 
     });
-
     updateSpaceTestSuite()
   })
 
