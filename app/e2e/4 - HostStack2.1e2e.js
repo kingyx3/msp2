@@ -74,15 +74,6 @@ describe('Hosting - Manage Space', () => {
     await element(by.id('view-bookings-back-button')).tap();
     await waitFor(element(by.id('manage-space-flatlist'))).toBeVisible().withTimeout(60000);
   });
-  describe('Hosting - Update Space', () => {
-    it('Navigate to Edit Space Details screen/feature', async () => {
-      await expect(element(by.id('2_manage_space_item'))).toBeVisible();
-
-    });
-    updateSpaceTestSuite()
-  })
-
-
 
   it('Enable/Disable Space feature', async () => {
     await expect(element(by.id('3_manage_space_item'))).toBeVisible();
@@ -108,8 +99,14 @@ describe('Hosting - Manage Space', () => {
     await element(by.text('Cancel')).tap()
     console.log('Leaving it as ' + (active ? 'active' : 'inactive') + '!')
     await waitFor(element(by.id('manage-space-flatlist'))).toBeVisible().withTimeout(60000);
-    await element(by.id('manage-space-back-button')).tap()
-
-    await waitFor(element(by.id("space-detail-scroll-view"))).toBeVisible().withTimeout(60000);
   });
+
+  describe('Hosting - Update Space', () => {
+    it('Navigate to Edit Space Details screen/feature', async () => {
+      await expect(element(by.id('2_manage_space_item'))).toBeVisible();
+
+    });
+    updateSpaceTestSuite()
+    // Ends by navigating back to Hosting screen after space updated
+  })
 });
