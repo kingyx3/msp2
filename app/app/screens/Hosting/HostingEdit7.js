@@ -58,6 +58,7 @@ const HostingEdit4 = (props) => {
           <P>Title</P>
           <DefaultInput
             name="title"
+            testID={"title-input"}
             value={title}
             onChangeText={(text) => setTitle(text)}
             maxLength={maxTitle}

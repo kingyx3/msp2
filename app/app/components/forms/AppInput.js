@@ -10,11 +10,12 @@ import colors from "../../config/colors";
 import { EvilIcons, Feather } from "@expo/vector-icons";
 import { heading2FontSize, heading2FontSizeIOS, Sub1 } from "../../config/Typography";
 
-export const Default = ({ name, ...otherProps }) => {
+export const Default = ({ name, testID, ...otherProps }) => {
   const { setFieldTouched, handleChange, errors, touched } = useFormikContext();
   return (
     <Container>
       <Inputfield
+        testID={testID}
         onBlur={() => setFieldTouched(name)}
         onChangeText={handleChange(name)}
         {...otherProps}
@@ -24,39 +25,40 @@ export const Default = ({ name, ...otherProps }) => {
   );
 };
 
-export const Pw = ({ name, ...otherProps }) => {
-  const { setFieldTouched, handleChange, errors, touched } = useFormikContext();
-  const [hide, setHide] = useState(true);
+// export const Pw = ({ name, ...otherProps }) => {
+//   const { setFieldTouched, handleChange, errors, touched } = useFormikContext();
+//   const [hide, setHide] = useState(true);
 
-  const TogglePw = () => {
-    setHide((hide) => !hide);
-  };
+//   const TogglePw = () => {
+//     setHide((hide) => !hide);
+//   };
 
-  return (
-    <Container>
-      <InputLine>
-        <Input
-          secureTextEntry={hide}
-          onBlur={() => setFieldTouched(name)}
-          onChangeText={handleChange(name)}
-          {...otherProps}
-        ></Input>
-        <TouchableOpacity onPress={TogglePw}>
-          {hide === true ? <Text>Show</Text> : <Text>Hide</Text>}
-        </TouchableOpacity>
-      </InputLine>
-      {<ErrorMessage error={errors[name]} visible={touched[name]} />}
-    </Container>
-  );
-};
+//   return (
+//     <Container>
+//       <InputLine>
+//         <Input
+//           secureTextEntry={hide}
+//           onBlur={() => setFieldTouched(name)}
+//           onChangeText={handleChange(name)}
+//           {...otherProps}
+//         ></Input>
+//         <TouchableOpacity onPress={TogglePw}>
+//           {hide === true ? <Text>Show</Text> : <Text>Hide</Text>}
+//         </TouchableOpacity>
+//       </InputLine>
+//       {<ErrorMessage error={errors[name]} visible={touched[name]} />}
+//     </Container>
+//   );
+// };
 
-export const DefaultInput = ({ name, value, onChangeText, ...otherProps }) => {
+export const DefaultInput = ({ name, value, onChangeText, testID, ...otherProps }) => {
   return (
     <Container>
       <Inputfield
         name={name}
         value={value}
         onChangeText={onChangeText}
+        testID={testID}
         // autoCapitalize="sentences" //enum('none', 'sentences', 'words', 'characters')
         // autoCorrect={false}
         // multiline={true}
@@ -67,19 +69,20 @@ export const DefaultInput = ({ name, value, onChangeText, ...otherProps }) => {
   );
 };
 
-export const SearchInput = ({ ...otherProps }) => {
+export const SearchInput = ({ testID, ...otherProps }) => {
   return (
     <SearchSpace>
       <EvilIcons name="search" size={Platform.OS == 'ios' ? 20 : 14} color={colors.black} />
-      <SearchInputText autoFocus={true} {...otherProps} />
+      <SearchInputText testID={testID} autoFocus={true} {...otherProps} />
     </SearchSpace>
   );
 };
 
-export const TopUpInput = ({ ...otherProps }) => {
+export const TopUpInput = ({ testID, ...otherProps }) => {
   return (
     <TopUpSpace>
       <TopUpInputText
+        testID={testID}
         keyboardType="numeric"
         maxLength={3}
         multiline={false}
@@ -88,7 +91,7 @@ export const TopUpInput = ({ ...otherProps }) => {
   );
 };
 
-export const NameInput = ({ initialName, onSave, ...otherProps }) => {
+export const NameInput = ({ initialName, onSave, testID, ...otherProps }) => {
   const [name, setName] = useState(initialName);
   const [editing, setEditing] = useState(false);
 
@@ -114,6 +117,7 @@ export const NameInput = ({ initialName, onSave, ...otherProps }) => {
         <>
           <View style={{ flexDirection: 'row' }}>
             <Input
+              testID={testID}
               onChangeText={text => setName(text)}
               value={name}
               {...otherProps}
@@ -129,7 +133,7 @@ export const NameInput = ({ initialName, onSave, ...otherProps }) => {
       ) : (
         <>
           <View style={{ flexDirection: 'row' }}>
-            <Sub1 {...otherProps} numberOfLines={1}>
+            <Sub1 testID={testID} {...otherProps} numberOfLines={1}>
               {name?.substring(0, 15) + (name.length > 15 ? "...   " : "   ")}
             </Sub1>
             <TouchableOpacity testID="edit-input" onPress={() => setEditing(true)}>

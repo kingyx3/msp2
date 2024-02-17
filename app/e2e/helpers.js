@@ -31,36 +31,44 @@ export function createSpaceTestSuite() {
         await waitFor(element(by.id('hosting-edit4-next-button'))).toBeVisible().withTimeout(60000);
         await expect(element(by.id('hosting-edit4-back-button'))).toBeVisible()
     })
-    // it('Navigate to HostingEdit5', async () => {
-    //     await element(by.id('hosting-edit4-next-button')).tap()
+    it('Navigate to HostingEdit5', async () => {
+        await element(by.id('hosting-edit4-next-button')).tap()
 
-    //     await waitFor(element(by.id('hosting-edit5-next-button'))).toBeVisible().withTimeout(60000);
-    //     await expect(element(by.id('hosting-edit5-back-button'))).toBeVisible()
+        await waitFor(element(by.id('hosting-edit5-next-button'))).toBeVisible().withTimeout(60000);
+        await expect(element(by.id('hosting-edit5-back-button'))).toBeVisible()
 
-    //     // Choose photo
-    // })
-    // it('Navigate to HostingStep6', async () => {
-    //     await element(by.id('hosting-edit5-next-button')).tap()
+        // Choose photo
+        // Dont need to choose photo, have skipped by providing a default image ("Shitting is prohibited" sign)
+    })
+    it('Navigate to HostingStep6', async () => {
+        await element(by.id('hosting-edit5-next-button')).tap()
 
-    //     await waitFor(element(by.id('hosting-step6-next-button'))).toBeVisible().withTimeout(60000);
-    //     await expect(element(by.id('hosting-step6-back-button'))).toBeVisible()
+        await waitFor(element(by.id('hosting-step6-next-button'))).toBeVisible().withTimeout(60000);
+        await expect(element(by.id('hosting-step6-back-button'))).toBeVisible()
 
-    //     // Choose address/location
-    // })
-    // it('Navigate to HostingEdit7', async () => {
-    //     await element(by.id('hosting-step6-next-button')).tap()
+        // Choose address/location
+        await element(by.id("address-input")).typeText('78 ');
+        await element(by.id("78 Shenton Way, Singapore")).tap();
 
-    //     await waitFor(element(by.id('hosting-edit7-next-button'))).toBeVisible().withTimeout(60000);
-    //     await expect(element(by.id('hosting-edit7-back-button'))).toBeVisible()
+    })
+    it('Navigate to HostingEdit7', async () => {
+        await element(by.id('hosting-step6-next-button')).tap()
 
-    //     // Write title/description
-    // })
-    // it('Navigate to HostingEdit8', async () => {
-    //     await element(by.id('hosting-edit7-next-button')).tap()
+        await waitFor(element(by.id('hosting-edit7-next-button'))).toBeVisible().withTimeout(60000);
+        await expect(element(by.id('hosting-edit7-back-button'))).toBeVisible()
 
-    //     await waitFor(element(by.id('hosting-edit8-next-button'))).toBeVisible().withTimeout(60000);
-    //     await expect(element(by.id('hosting-edit8-back-button'))).toBeVisible()
-    // })
+        // Write title
+        await element(by.id("title-input")).typeText('Happy place');
+
+        // Write description
+        await element(by.id("title-input")).typeText('Come & be happy!');
+    })
+    it('Navigate to HostingEdit8', async () => {
+        await element(by.id('hosting-edit7-next-button')).tap()
+
+        await waitFor(element(by.id('hosting-edit8-next-button'))).toBeVisible().withTimeout(60000);
+        await expect(element(by.id('hosting-edit8-back-button'))).toBeVisible()
+    })
 }
 
 export function updateSpaceTestSuite() {

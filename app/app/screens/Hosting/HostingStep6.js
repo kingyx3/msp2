@@ -25,7 +25,6 @@ const HostingStep6 = (props) => {
   const { editMode, selectedSpace } = props.route.params
   const [searchTerm, setSearchTerm] = useState('')
   const [loading, setLoading] = useState(true)
-  const googleMapsApiKey = process.env.EXPO_PUBLIC_GOOGLE_PLACES_API_KEY
 
   useEffect(() => {
     if (location == props.state.location) {
@@ -91,6 +90,7 @@ const HostingStep6 = (props) => {
                 }
               }}
               textInputProps={{
+                testID: "address-input",
                 onChangeText: (text) => setSearchTerm(text)
               }}
               styles={{
@@ -109,7 +109,7 @@ const HostingStep6 = (props) => {
                 },
               }}
               query={{
-                key: googleMapsApiKey,
+                key: process.env.EXPO_PUBLIC_GOOGLE_PLACES_API_KEY,
                 language: 'en', // language of the results
                 components: 'country:SGP',
                 type: 'address', // geocode, address, establishment

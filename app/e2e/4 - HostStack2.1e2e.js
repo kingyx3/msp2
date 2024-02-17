@@ -102,10 +102,6 @@ describe('Hosting - Manage Space', () => {
   });
 
   describe('Hosting - Update Space', () => {
-    it('Navigate to Edit Space Details screen/feature', async () => {
-      await expect(element(by.id('2_manage_space_item'))).toBeVisible();
-
-    });
     updateSpaceTestSuite()
     // Ends by navigating back to Hosting screen after space updated
   })

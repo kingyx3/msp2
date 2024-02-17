@@ -17,9 +17,10 @@ import { connect } from "react-redux";
 import { setImages } from "../../store/host";
 
 const HostingEdit5 = (props) => {
-  const [imageUris, setImageUris] = useState([]);
-  const [count, setCount] = useState(0)
+  // const [imageUris, setImageUris] = useState([]);
   const { editMode, selectedSpace } = props.route.params
+  const [imageUris, setImageUris] = (process.env.EXPO_PUBLIC_TYPE == "TEST" && !editMode) ? useState(["https://firebasestorage.googleapis.com/v0/b/makeshiftplans-dev.appspot.com/o/users%2Fcus_ONRdG4eD3KWx5k%2Fspaces%2F6E8HGU8ZY24K3PMQ66VLBD%2Fimages%2F0?alt=media"]) : useState([]);
+  const [count, setCount] = useState(0)
 
   useEffect(() => { // used to set initial value to state
     if (selectedSpace && !count) {
