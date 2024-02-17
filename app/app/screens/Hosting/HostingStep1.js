@@ -42,6 +42,7 @@ const HostingStep1 = (props) => {
             <Typography.Sub1>What type of space do you have?</Typography.Sub1>
             <InputWrapper>
               <AppPicker
+                testID={'open-space-picker-modal'}
                 selectedItem={category}
                 onSelectItem={(item) => setCategory(item)}
                 items={spaceTypes}

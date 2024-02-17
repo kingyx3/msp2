@@ -1,3 +1,100 @@
+export function createSpaceTestSuite() {
+    it('Navigate to HostingStep1', async () => {
+        await element(by.id('list-now')).tap()
+
+        await waitFor(element(by.id('hosting-step1-scroll-view'))).toBeVisible().withTimeout(60000);
+        await waitFor(element(by.id('hosting-step1-next-button'))).toBeVisible().withTimeout(60000);
+        await expect(element(by.id('hosting-step1-back-button'))).toBeVisible()
+
+        // Choose space type
+        await element(by.id('open-space-picker-modal')).tap()
+        await waitFor(element(by.id('2_picker_item'))).toBeVisible().withTimeout(60000);
+        await element(by.id('2_picker_item')).tap()
+        await waitFor(element(by.id('hosting-step1-next-button'))).toBeVisible().withTimeout(60000);
+    })
+    it('Navigate to HostingEdit2', async () => {
+        element(by.id('hosting-step1-next-button')).tap()
+
+        await waitFor(element(by.id('hosting-edit2-next-button'))).toBeVisible().withTimeout(60000);
+        await expect(element(by.id('hosting-edit2-back-button'))).toBeVisible()
+    })
+    it('Navigate to HostingStep3', async () => {
+        element(by.id('hosting-edit2-next-button')).tap()
+
+        await waitFor(element(by.id('hosting-step3-next-button'))).toBeVisible().withTimeout(60000);
+        await expect(element(by.id('hosting-step3-back-button'))).toBeVisible()
+    })
+    it('Navigate to HostingEdit4', async () => {
+        element(by.id('hosting-step3-next-button')).tap()
+
+        await waitFor(element(by.id('hosting-edit4-next-button'))).toBeVisible().withTimeout(60000);
+        await expect(element(by.id('hosting-edit4-back-button'))).toBeVisible()
+    })
+    // it('Navigate to HostingEdit5', async () => {
+    //     element(by.id('hosting-edit4-next-button')).tap()
+
+    //     await waitFor(element(by.id('hosting-edit5-next-button'))).toBeVisible().withTimeout(60000);
+    //     await expect(element(by.id('hosting-edit5-back-button'))).toBeVisible()
+
+    //     // Choose photo
+    // })
+    // it('Navigate to HostingStep6', async () => {
+    //     element(by.id('hosting-edit5-next-button')).tap()
+
+    //     await waitFor(element(by.id('hosting-step6-next-button'))).toBeVisible().withTimeout(60000);
+    //     await expect(element(by.id('hosting-step6-back-button'))).toBeVisible()
+
+    //     // Choose address/location
+    // })
+    // it('Navigate to HostingEdit7', async () => {
+    //     element(by.id('hosting-step6-next-button')).tap()
+
+    //     await waitFor(element(by.id('hosting-edit7-next-button'))).toBeVisible().withTimeout(60000);
+    //     await expect(element(by.id('hosting-edit7-back-button'))).toBeVisible()
+
+    //     // Write title/description
+    // })
+    // it('Navigate to HostingEdit8', async () => {
+    //     element(by.id('hosting-edit7-next-button')).tap()
+
+    //     await waitFor(element(by.id('hosting-edit8-next-button'))).toBeVisible().withTimeout(60000);
+    //     await expect(element(by.id('hosting-edit8-back-button'))).toBeVisible()
+    // })
+}
+
+export function updateSpaceTestSuite() {
+    it('Navigate to HostingEdit2', async () => {
+        await element(by.id('2_manage_space_item')).tap()
+
+        await waitFor(element(by.id('hosting-edit2-next-button'))).toBeVisible().withTimeout(60000);
+        await expect(element(by.id('hosting-edit2-back-button'))).toBeVisible()
+    })
+    it('Navigate to HostingEdit4', async () => {
+        await element(by.id('hosting-edit2-next-button')).tap()
+
+        await waitFor(element(by.id('hosting-edit4-next-button'))).toBeVisible().withTimeout(60000);
+        await expect(element(by.id('hosting-edit4-back-button'))).toBeVisible()
+    })
+    it('Navigate to HostingEdit5', async () => {
+        await element(by.id('hosting-edit4-next-button')).tap()
+
+        await waitFor(element(by.id('hosting-edit5-next-button'))).toBeVisible().withTimeout(60000);
+        await expect(element(by.id('hosting-edit5-back-button'))).toBeVisible()
+    })
+    it('Navigate to HostingEdit7', async () => {
+        await element(by.id('hosting-edit5-next-button')).tap()
+
+        await waitFor(element(by.id('hosting-edit7-next-button'))).toBeVisible().withTimeout(60000);
+        await expect(element(by.id('hosting-edit7-back-button'))).toBeVisible()
+    })
+    it('Navigate to HostingEdit8', async () => {
+        await element(by.id('hosting-edit7-next-button')).tap()
+
+        await waitFor(element(by.id('hosting-edit8-next-button'))).toBeVisible().withTimeout(60000);
+        await expect(element(by.id('hosting-edit8-back-button'))).toBeVisible()
+    })
+}
+
 export const testBookingDetail = async () => {
     const cancellationPolicyLabel = (await element(by.id("cancellation-policy")).getAttributes()).label
     const hostOrUserLabel = (await element(by.id("host-or-user")).getAttributes()).label

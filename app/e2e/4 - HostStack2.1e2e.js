@@ -1,4 +1,6 @@
 // HostingStackModal
+import { updateSpaceTestSuite } from "./helpers";
+
 describe('Hosting - Manage Space', () => {
   beforeAll(async () => {
     await device.launchApp({
@@ -75,9 +77,11 @@ describe('Hosting - Manage Space', () => {
 
   it('Navigate to Edit Space Details screen/feature', async () => {
     await expect(element(by.id('2_manage_space_item'))).toBeVisible();
-    await element(by.id('2_manage_space_item')).tap();
 
-    await waitFor(element(by.id('hosting-edit2-scroll-view'))).toBeVisible().withTimeout(60000);;
+    updateSpaceTestSuite()
+    // await element(by.id('2_manage_space_item')).tap();
+
+    // await waitFor(element(by.id('hosting-edit2-scroll-view'))).toBeVisible().withTimeout(60000);;
     // await expect(element(by.id('space-calendar-confirm-button'))).toBeVisible();
     // await element(by.id('space-calendar-confirm-button')).tap();
 

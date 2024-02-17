@@ -5,9 +5,9 @@ import { TouchableOpacity, Text } from "react-native";
 import styled from "styled-components/native";
 import * as Typography from '../config/Typography'
 
-const PickerItem = ({ label, onPress, icon }) => {
+const PickerItem = ({ label, onPress, icon, testID }) => {
   return (
-    <TouchableOpacity onPress={onPress}>
+    <TouchableOpacity testID={testID} onPress={onPress}>
       {/* <Typography.H2>{label}</Typography.H2> */}
       <Item>{label}</Item>
     </TouchableOpacity>

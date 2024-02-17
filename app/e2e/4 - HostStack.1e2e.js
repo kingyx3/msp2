@@ -1,5 +1,9 @@
 // HostingStackModal
+import { createSpaceTestSuite } from "./helpers";
+
 describe('Hosting - Setup payments & Create a new Space', () => {
+  let create
+
   beforeAll(async () => {
     await device.launchApp({
       permissions: {
@@ -32,18 +36,18 @@ describe('Hosting - Setup payments & Create a new Space', () => {
     console.log('listNowLabel: ', listNowLabel)
 
     if (listNowLabel == "List Now") {
-      await element(by.id('list-now')).tap()
-
-      await waitFor(element(by.id('hosting-step1-scroll-view'))).toBeVisible().withTimeout(60000);
-      await waitFor(element(by.id('hosting-step1-next-button'))).toBeVisible().withTimeout(60000);
-      await expect(element(by.id('hosting-step1-back-button'))).toBeVisible()
-      await element(by.id('hosting-step1-back-button')).tap();
+      create = true
     } else {
       // "Setup Payments"
       null
     }
 
-    // Wait for navigation to complete & perform the visibility checks
-    await waitFor(element(by.id('hosting-header-component'))).toBeVisible().withTimeout(60000);
   });
+
+  if (create) {
+    console.log('Creating Space')
+    createSpaceTestSuite()
+  } else {
+    console.log('Setup Payments (Stripe)')
+  }
 });

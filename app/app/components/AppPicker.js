@@ -27,13 +27,14 @@ const AppPicker = ({
   onSelectItem,
   selectedItem,
   center,
-  disabled
+  disabled,
+  testID
 }) => {
   const [openOptions, setOpenoptions] = useState(false);
 
   return (
     <>
-      <TouchableWithoutFeedback onPress={() => {
+      <TouchableWithoutFeedback testID={testID} onPress={() => {
         if (disabled) {
           null
         } else {
@@ -64,8 +65,9 @@ const AppPicker = ({
             contentContainerStyle={{ flexGrow: 1 }}
             data={items}
             keyExtractor={(_, index) => index.toString()}
-            renderItem={({ item }) => (
+            renderItem={({ item, index }) => (
               <PickerItem
+                testID={index.toString() + "_picker_item"}
                 label={item.label}
                 icon={item.icon}
                 onPress={() => {
