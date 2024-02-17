@@ -44,12 +44,12 @@ describe('Hosting - Setup payments & Create a new Space', () => {
 
   });
 
-  console.log('create: ', create)
-  if (create) {
-    describe('Hosting - Creating Space', () => {
-      createSpaceTestSuite()
-    })
-  } else {
-    console.log('Setup Payments (Stripe)')
-  }
+  // console.log('create: ', create)
+  // if (create) {
+  describe('Hosting - Creating Space', () => {
+    createSpaceTestSuite()
+  })
+  // } else {
+  //   console.log('Setup Payments (Stripe)')
+  // }
 });
