@@ -44,9 +44,11 @@ describe('Hosting - Setup payments & Create a new Space', () => {
 
   });
 
+  console.log('create: ', create)
   if (create) {
-    console.log('Creating Space')
-    createSpaceTestSuite()
+    describe('Hosting - Creating Space', () => {
+      createSpaceTestSuite()
+    })
   } else {
     console.log('Setup Payments (Stripe)')
   }
