@@ -48,12 +48,7 @@ export function createSpaceTestSuite() {
 
         // Choose address/location
         await element(by.id("address-input")).typeText('78 ');
-        try {
-            await element(by.id("autocomplete-item")).tap();
-        } catch (e) {
-            console.log(e)
-            await element(by.text("78 Shenton Way, Singapore")).tap();
-        }
+        await element(by.text("78 Shenton Way, Singapore")).tap();
     })
     it('Navigate to HostingEdit7', async () => {
         await element(by.id('hosting-step6-next-button')).tap()
@@ -65,7 +60,7 @@ export function createSpaceTestSuite() {
         await element(by.id("title-input")).typeText('Happy place');
 
         // Write description
-        await element(by.id("title-input")).typeText('Come & be happy!');
+        await element(by.id("description-input")).typeText('Come & be happy!');
     })
     it('Navigate to HostingEdit8', async () => {
         await element(by.id('hosting-edit7-next-button')).tap()
