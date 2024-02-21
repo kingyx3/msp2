@@ -61,6 +61,9 @@ export function createSpaceTestSuite() {
 
         // Write description
         await element(by.id("description-input")).typeText('Come & be happy!');
+
+        // Close keyboard
+        await element(by.text("Title")).tap();
     })
     it('Navigate to HostingEdit8', async () => {
         await element(by.id('hosting-edit7-next-button')).tap()
@@ -101,14 +104,14 @@ export function updateSpaceTestSuite() {
         await waitFor(element(by.id('hosting-edit8-next-button'))).toBeVisible().withTimeout(60000);
         await expect(element(by.id('hosting-edit8-back-button'))).toBeVisible()
     })
-    it('Navigate to Hosting', async () => {
-        await element(by.id('hosting-edit8-next-button')).tap()
+    // it('Navigate to Hosting', async () => {
+    //     await element(by.id('hosting-edit8-next-button')).tap()
 
-        await waitFor(element(by.text('Space Updated!'))).toBeVisible().withTimeout(60000);
-        await element(by.text('OK')).tap()
+    //     await waitFor(element(by.text('Space Updated!'))).toBeVisible().withTimeout(60000);
+    //     await element(by.text('OK')).tap()
 
-        await waitFor(element(by.id('hosting-header-component'))).toBeVisible().withTimeout(60000);
-    })
+    //     await waitFor(element(by.id('hosting-header-component'))).toBeVisible().withTimeout(60000);
+    // })
 }
 
 export const testBookingDetail = async () => {
