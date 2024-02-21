@@ -48,8 +48,12 @@ export function createSpaceTestSuite() {
 
         // Choose address/location
         await element(by.id("address-input")).typeText('78 ');
-        await element(by.id("78 Shenton Way, Singapore")).tap();
-
+        try {
+            await element(by.id("autocomplete-item")).tap();
+        } catch (e) {
+            console.log(e)
+            await element(by.text("78 Shenton Way, Singapore")).tap();
+        }
     })
     it('Navigate to HostingEdit7', async () => {
         await element(by.id('hosting-step6-next-button')).tap()
