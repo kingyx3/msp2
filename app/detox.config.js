@@ -16,7 +16,7 @@ module.exports = {
       log: 'failing',
       // log: process.env.CI ? 'failing' : undefined,
       screenshot: 'failing',
-      // video: 'failing',
+      video: 'failing',
       // uiHierarchy: 'enabled'
     },
   },
