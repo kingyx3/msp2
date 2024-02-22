@@ -75,6 +75,15 @@ export function createSpaceTestSuite() {
         await waitFor(element(by.id('hosting-edit8-next-button'))).toBeVisible().withTimeout(60000);
         await expect(element(by.id('hosting-edit8-back-button'))).toBeVisible()
     })
+    // To be commented out for regular runs
+    it('Create new Space', async () => {
+        await element(by.id('hosting-edit8-next-button')).tap()
+
+        await waitFor(element(by.text('Space Created!'))).toBeVisible().withTimeout(60000);
+        await element(by.text('OK')).tap()
+
+        await waitFor(element(by.id('hosting-header-component'))).toBeVisible().withTimeout(60000);
+    })
 }
 
 export function updateSpaceTestSuite() {
@@ -108,14 +117,14 @@ export function updateSpaceTestSuite() {
         await waitFor(element(by.id('hosting-edit8-next-button'))).toBeVisible().withTimeout(60000);
         await expect(element(by.id('hosting-edit8-back-button'))).toBeVisible()
     })
-    // it('Navigate to Hosting', async () => {
-    //     await element(by.id('hosting-edit8-next-button')).tap()
+    it('Update Space & Navigate to Hosting', async () => {
+        await element(by.id('hosting-edit8-next-button')).tap()
 
-    //     await waitFor(element(by.text('Space Updated!'))).toBeVisible().withTimeout(60000);
-    //     await element(by.text('OK')).tap()
+        await waitFor(element(by.text('Space Updated!'))).toBeVisible().withTimeout(60000);
+        await element(by.text('OK')).tap()
 
-    //     await waitFor(element(by.id('hosting-header-component'))).toBeVisible().withTimeout(60000);
-    // })
+        await waitFor(element(by.id('hosting-header-component'))).toBeVisible().withTimeout(60000);
+    })
 }
 
 export const testBookingDetail = async () => {
