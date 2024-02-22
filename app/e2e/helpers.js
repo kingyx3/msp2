@@ -46,6 +46,9 @@ export function createSpaceTestSuite() {
         await waitFor(element(by.id('hosting-step6-next-button'))).toBeVisible().withTimeout(60000);
         await expect(element(by.id('hosting-step6-back-button'))).toBeVisible()
 
+        // Scroll down (first) to see address options later
+        await element(by.id("hosting-step6-scroll-view")).scroll(350, 'down', NaN, 0.85);
+
         // Choose address/location
         await element(by.id("address-input")).typeText('78 ');
         await waitFor(element(by.text("78 Shenton Way, Singapore"))).toBeVisible().withTimeout(60000);

@@ -19,6 +19,8 @@ import { setCurrLocation, setRevGeoCode } from "../../store/host";
 import { GooglePlacesAutocomplete } from 'react-native-google-places-autocomplete';
 import { subtitle1FontSize, subtitle1FontSizeIOS } from "../../config/Typography";
 
+let height = Dimensions.get('window').height;
+
 const HostingStep6 = (props) => {
   const initialState = { user: { unit: "" }, latitude: 999, longitude: 999, geoapify: {}, checked: false }
   const [location, setLocation] = useState(initialState)
@@ -45,7 +47,10 @@ const HostingStep6 = (props) => {
   return (
     <TouchableWithoutFeedback onPress={Keyboard.dismiss} accessible={false}>
       <Container>
-        <Main>
+        <Main
+          testID="hosting-step6-scroll-view"
+          keyboardShouldPersistTaps={'handled'}
+          contentContainerStyle={{ height }}>
           <H>Where is your space?</H>
           <Step>
             <H4>Apartment, unit, suite, or floor #</H4>
@@ -71,6 +76,7 @@ const HostingStep6 = (props) => {
               minLength={3} // minimum length of text to search
               listViewDisplayed={null}    // 'auto'/null after place selection
               // fetchDetails={true}
+              disableScroll
               enablePoweredByContainer={false}
               preProcess={(text) => {
                 // // Clears geoapify object
@@ -206,7 +212,7 @@ const Container = styled.View`
   background-color: white;
 `;
 
-const Main = styled.View`
+const Main = styled.ScrollView`
   flex: 1;
   padding: 24px;
 `;
