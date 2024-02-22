@@ -50,6 +50,7 @@ export function createSpaceTestSuite() {
         await element(by.id("address-input")).typeText('78 ');
         await waitFor(element(by.text("78 Shenton Way, Singapore"))).toBeVisible().withTimeout(60000);
         await element(by.text("78 Shenton Way, Singapore")).tap();
+
     })
     it('Navigate to HostingEdit7', async () => {
         await element(by.id('hosting-step6-next-button')).tap()
