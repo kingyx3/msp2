@@ -18,6 +18,7 @@ USER
 HOST
 - Can create space
 - Can update space
+    Price changes will only affect new booking slots (booking slots up to x months from now will have the price remain as the previously set price).
 - Can disable space
 - Can enable space
 - Can cancel bookings (full refund for user, cancel by T+5)
