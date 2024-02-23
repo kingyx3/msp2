@@ -52,7 +52,17 @@ export function createSpaceTestSuite() {
         // Choose address/location
         await element(by.id("address-input")).typeText('78 ');
         await waitFor(element(by.text("78 Shenton Way, Singapore"))).toBeVisible().withTimeout(60000);
-        await element(by.text("78 Shenton Way, Singapore")).tap();
+        let x = true
+        while (x) {
+            await element(by.text("78 Shenton Way, Singapore")).tap();
+            try {
+                await expect(element(by.text("78 Shenton Way, Singapore"))).toBeVisible()
+                await expect(element(by.text("78 "))).not.toBeVisible()
+                x = false
+            } catch (e) {
+                console.log(e)
+            }
+        }
     })
     it('Navigate to HostingEdit7', async () => {
         await element(by.id('hosting-step6-next-button')).tap()
