@@ -101,7 +101,7 @@ describe('Hosting - Manage Space', () => {
     await waitFor(element(by.id('manage-space-flatlist'))).toBeVisible().withTimeout(60000);
   });
 
-  describe('Hosting - Update Space', () => {
+  describe('Update Space', () => {
     updateSpaceTestSuite()
     // Ends by navigating back to Hosting screen after space updated
   })

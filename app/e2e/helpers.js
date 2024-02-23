@@ -59,10 +59,13 @@ export function createSpaceTestSuite() {
                 await expect(element(by.text("78 Shenton Way, Singapore"))).toBeVisible()
                 await expect(element(by.text("78 "))).not.toBeVisible()
                 x = false
+                console.log('Looping in while loop')
             } catch (e) {
                 console.log(e)
             }
         }
+        await waitFor(element(by.id('hosting-step6-next-button'))).toBeVisible().withTimeout(60000);
+        console.log('HostingStep6 - Exited while loop')
     })
     it('Navigate to HostingEdit7', async () => {
         await element(by.id('hosting-step6-next-button')).tap()
