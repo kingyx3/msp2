@@ -63,9 +63,10 @@ export function createSpaceTestSuite() {
             } catch (e) {
                 console.log(e)
             }
-
         }
         await waitFor(element(by.id('hosting-step6-next-button'))).toBeVisible().withTimeout(60000);
+        const hostingStep6ButtonAttributes = (await element(by.id("cancellation-policy")).getAttributes())
+        console.log('hostingStep6ButtonAttributes', hostingStep6ButtonAttributes)
         console.log('HostingStep6 - Exited while loop')
     })
     it('Navigate to HostingEdit7', async () => {
