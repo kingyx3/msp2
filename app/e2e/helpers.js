@@ -63,6 +63,7 @@ export function createSpaceTestSuite() {
             } catch (e) {
                 console.log(e)
             }
+
         }
         await waitFor(element(by.id('hosting-step6-next-button'))).toBeVisible().withTimeout(60000);
         console.log('HostingStep6 - Exited while loop')

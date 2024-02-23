@@ -161,7 +161,6 @@ const Container = styled.View`
 const Main = styled.ScrollView``;
 
 const Top = styled.View`
-  flex: 1;
   padding: 24px;
   background-color: white;
 `;
