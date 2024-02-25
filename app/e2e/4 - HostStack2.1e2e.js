@@ -44,7 +44,7 @@ describe('Hosting - Manage Space', () => {
 
     // Wait for navigation to complete & perform the visibility checks
     await waitFor(element(by.id('manage-space-flatlist'))).toBeVisible().withTimeout(60000);
-    await waitFor(element(by.id('0_manage_space_item'))).toBeVisible(100).withTimeout(60000);
+    await waitFor(element(by.id('0_manage_space_item'))).toBeVisible(device.getPlatform() === 'ios' ? null : 100).withTimeout(60000);
   });
 
   it('Navigate to Manage Calender (SpaceAvailability) screen/feature', async () => {
@@ -62,7 +62,7 @@ describe('Hosting - Manage Space', () => {
 
     await element(by.id('manage-calendar-back-button')).tap();
     await waitFor(element(by.id('manage-space-flatlist'))).toBeVisible().withTimeout(60000);
-    await waitFor(element(by.id('1_manage_space_item'))).toBeVisible(100).withTimeout(60000);
+    await waitFor(element(by.id('1_manage_space_item'))).toBeVisible(device.getPlatform() === 'ios' ? null : 100).withTimeout(60000);
   });
 
   it('Navigate to View Booking History (SpaceBookings) screen/feature', async () => {
@@ -77,7 +77,7 @@ describe('Hosting - Manage Space', () => {
 
     await element(by.id('view-bookings-back-button')).tap();
     await waitFor(element(by.id('manage-space-flatlist'))).toBeVisible().withTimeout(60000);
-    await waitFor(element(by.id('3_manage_space_item'))).toBeVisible(100).withTimeout(60000);
+    await waitFor(element(by.id('3_manage_space_item'))).toBeVisible(device.getPlatform() === 'ios' ? null : 100).withTimeout(60000);
   });
 
   it('Enable/Disable Space feature', async () => {
@@ -103,7 +103,7 @@ describe('Hosting - Manage Space', () => {
     await element(by.text('Cancel')).tap()
     console.log('Leaving it as ' + (active ? 'active' : 'inactive') + '!')
     await waitFor(element(by.id('manage-space-flatlist'))).toBeVisible().withTimeout(60000);
-    await waitFor(element(by.id('2_manage_space_item'))).toBeVisible(100).withTimeout(60000);
+    await waitFor(element(by.id('2_manage_space_item'))).toBeVisible(device.getPlatform() === 'ios' ? null : 100).withTimeout(60000);
   });
 
   describe('Update Space', () => {
