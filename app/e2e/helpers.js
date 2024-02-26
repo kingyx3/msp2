@@ -82,7 +82,7 @@ export function createSpaceTestSuite() {
         console.log('HostingStep6 - Exited while loop2')
     })
     it('Navigate to HostingEdit7', async () => {
-        await element(by.id('hosting-step6-next-button')).tap()
+        // await element(by.id('hosting-step6-next-button')).tap()
 
         await waitFor(element(by.id('hosting-edit7-next-button'))).toBeVisible().withTimeout(60000);
         await expect(element(by.id('hosting-edit7-back-button'))).toBeVisible()
