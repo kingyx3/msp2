@@ -83,7 +83,6 @@ describe('Hosting - Manage Space', () => {
   it('Enable/Disable Space feature', async () => {
     await element(by.id('3_manage_space_item')).tap();
 
-    // Add more tests
     let active
     try {
       // If space is active
