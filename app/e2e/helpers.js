@@ -90,6 +90,9 @@ export function createSpaceTestSuite() {
         // Write title
         await element(by.id("title-input")).typeText('Happy place');
 
+        // Close keyboard
+        await element(by.text("Title")).tap();
+
         // Write description
         await element(by.id("description-input")).typeText('Come & be happy!');
 
