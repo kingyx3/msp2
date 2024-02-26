@@ -59,15 +59,27 @@ export function createSpaceTestSuite() {
                 await expect(element(by.text("78 Shenton Way, Singapore"))).toBeVisible()
                 await expect(element(by.text("78 "))).not.toBeVisible()
                 x = false
-                console.log('Looping in while loop')
+                console.log('Looping in while loop1')
             } catch (e) {
                 console.log(e)
             }
         }
         await waitFor(element(by.id('hosting-step6-next-button'))).toBeVisible().withTimeout(60000);
-        const hostingStep6ButtonAttributes = (await element(by.id("hosting-step6-next-button")).getAttributes())
-        console.log('hostingStep6ButtonAttributes', hostingStep6ButtonAttributes)
-        console.log('HostingStep6 - Exited while loop')
+        // const hostingStep6ButtonAttributes = (await element(by.id("hosting-step6-next-button")).getAttributes())
+        // console.log('hostingStep6ButtonAttributes', hostingStep6ButtonAttributes)
+        console.log('HostingStep6 - Exited while loop1')
+        let y = true
+        while (y) {
+            await element(by.id('hosting-step6-next-button')).tap();
+            try {
+                await waitFor(element(by.id('hosting-edit7-next-button'))).toBeVisible().withTimeout(60000);
+                y = false
+                console.log('Looping in while loop2')
+            } catch (e) {
+                console.log(e)
+            }
+        }
+        console.log('HostingStep6 - Exited while loop2')
     })
     it('Navigate to HostingEdit7', async () => {
         await element(by.id('hosting-step6-next-button')).tap()
