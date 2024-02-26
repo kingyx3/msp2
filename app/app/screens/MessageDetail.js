@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useRef, useCallback } from "react";
+import React, { useEffect, useState, useCallback } from "react";
 import {
   StyleSheet,
   View
@@ -22,15 +22,12 @@ import { GiftedChat, Send } from 'react-native-gifted-chat';
 const MessageDetail = (props) => {
   const user = auth.currentUser;
   const [messages, setMessages] = useState([]);
-  const [otherUserName, setOtherUserName] = useState("");
   let selectedChat = props.route.params.selectedChat;
   let chatId = getChatId(user?.uid, selectedChat?.otherUserId);
-  const flat = useRef();
 
   useEffect(() => {
     async function fetchData() {
       if (!user || !selectedChat) return;
-      await getUserName(selectedChat.otherUserId, setOtherUserName);
       if (process.env.EXPO_PUBLIC_TYPE !== 'TEST') {
         const messagesRef = ref(database, `messages/${chatId}`);
         const messagesCallback = (snapshot) => {
@@ -68,7 +65,7 @@ const MessageDetail = (props) => {
       <NavBarChat
         nav="chevron-left"
         avatar={getAvatarLink(selectedChat?.otherUserId)}
-        name={otherUserName}
+        name={selectedChat?.otherUserName}
         onPress={() => props.navigation.goBack()} />
       <GiftedChat
         messages={messages.sort((a, b) => b.createdAt - a.createdAt)}

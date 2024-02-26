@@ -250,7 +250,8 @@ const BookingDetails = (props) => {
                   onPress={() => {
                     props.navigation.navigate("MessageDetail", {
                       selectedChat: {
-                        otherUserId: host ? booking.userId : selectedSpace.userId
+                        otherUserId: host ? booking.userId : selectedSpace.userId,
+                        otherUserName: host ? userName : hostName
                       }
                     })
                   }} />
