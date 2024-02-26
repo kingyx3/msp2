@@ -105,6 +105,7 @@ export function createSpaceTestSuite() {
         await waitFor(element(by.id('hosting-edit8-next-button'))).toBeVisible().withTimeout(60000);
         await expect(element(by.id('hosting-edit8-back-button'))).toBeVisible()
     })
+
     // To be commented out for regular runs
     // it('Create new Space', async () => {
     //     await element(by.id('hosting-edit8-next-button')).tap()

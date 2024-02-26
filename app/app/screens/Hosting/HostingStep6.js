@@ -207,10 +207,17 @@ const HostingStep6 = (props) => {
   );
 };
 
-const Container = styled.View`
+
+
+const Container = Platform.OS === 'ios'
+  ? styled.View`
+  flex: 1;
+  background-color: white;
+  `
+  : styled.View`
   height: ${height - 50}px; /* instead of flex:1 */
   background-color: white;
-`;
+  `;
 
 const Main = styled.ScrollView`
   flex: 1;
