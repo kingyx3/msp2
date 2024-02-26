@@ -10,7 +10,6 @@ import {
   readMessage,
   getChatId,
   getAvatarLink,
-  getUserName,
   showOfflineAlert,
 } from "../components/Firebase/firebase";
 import { auth, database } from "../components/Firebase/firebaseConfig"

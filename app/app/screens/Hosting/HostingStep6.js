@@ -208,7 +208,7 @@ const HostingStep6 = (props) => {
 };
 
 const Container = styled.View`
-  flex: 1;
+  height: ${height - 50}px; /* instead of flex:1 */
   background-color: white;
 `;
 

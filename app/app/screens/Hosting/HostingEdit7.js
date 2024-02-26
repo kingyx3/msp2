@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Text, View } from "react-native";
+import { Text, View, Dimensions } from "react-native";
 
 //import components
 import { DefaultInput } from "../../components/forms/AppInput";
@@ -13,6 +13,8 @@ import * as Button from "../../components/Button";
 //import redux
 import { connect } from "react-redux";
 import { setTitle, setDescription } from "../../store/host";
+
+let height = Dimensions.get('window').height;
 
 const HostingEdit4 = (props) => {
   const [title, setTitle] = useState("");
@@ -104,7 +106,7 @@ const HostingEdit4 = (props) => {
 };
 
 const Container = styled.View`
-  flex: 1;
+  height: ${height - 50}px; /* instead of flex:1 */
   background-color: white;
 `;
 
