@@ -5,7 +5,7 @@ on:
       - "**"
     paths:
       - "app/e2e/**"
-      - ".github/workflows/e2e_android.yml"
+      - ".github/workflows/app_e2e_android.yml"
 defaults:
   run:
     working-directory: app
