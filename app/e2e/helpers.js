@@ -161,12 +161,16 @@ export function updateSpaceTestSuite() {
 }
 
 export const testBookingDetail = async () => {
-    const cancellationPolicyLabel = (await element(by.id("cancellation-policy")).getAttributes()).label
-    const hostOrUserLabel = (await element(by.id("host-or-user")).getAttributes()).label
+    let bookingTitleLabel
+    let bookingPrice
+    while (isNaN(bookingPrice)) {
+        bookingTitleLabel = (await element(by.id("booking-title-price")).getAttributes()).label
+        bookingPrice = parseFloat(bookingTitleLabel.match(/([0-9]+(\.[0-9]+)?)/));
+    }
+
     const bookingDateLabel = (await element(by.id("booking-date")).getAttributes()).label
     const bookingTimeLabel = (await element(by.id("booking-time")).getAttributes()).label
 
-    const host = hostOrUserLabel.includes('Hosted by') ? false : true
     const bookingStartDateTime = extractDateTime(bookingDateLabel.slice(0, -1) + ", " + bookingTimeLabel.split(" to ")[0])
     const bookingEndDateTime = extractDateTime(bookingDateLabel.slice(0, -1) + ", " + bookingTimeLabel.split(" to ")[1])
 
@@ -175,13 +179,10 @@ export const testBookingDetail = async () => {
     const bookingEndPlusFive = new Date(bookingEndDateTime);
     bookingEndPlusFive.setDate(bookingEndPlusFive.getDate() + 5);
 
-    let bookingTitleLabel
-    let bookingPrice
-    while (isNaN(bookingPrice)) {
-        bookingTitleLabel = (await element(by.id("booking-title-price")).getAttributes()).label
-        bookingPrice = parseFloat(bookingTitleLabel.match(/([0-9]+(\.[0-9]+)?)/));
-    }
-
+    await element(by.id('booking-detail-scroll-view')).scroll(350, 'down', NaN, 0.85);
+    const cancellationPolicyLabel = (await element(by.id("cancellation-policy")).getAttributes()).label
+    const hostOrUserLabel = (await element(by.id("host-or-user")).getAttributes()).label
+    const host = hostOrUserLabel.includes('Hosted by') ? false : true
     const currentDateTime = new Date()
     const cancelByDateTime = extractDateTime(cancellationPolicyLabel)
 
@@ -194,8 +195,6 @@ export const testBookingDetail = async () => {
     console.log('Host?: ', host)
     console.log('Booking Price: ', bookingPrice)
     console.log('bookingTitleLabel', bookingTitleLabel)
-
-    await element(by.id('booking-detail-scroll-view')).scroll(350, 'down', NaN, 0.85);
 
     const cancelledLabel = (await element(by.id("cancel-booking")).getAttributes()).label
     console.log('Label (cancel-booking): ', "|" + cancelledLabel + "|")
