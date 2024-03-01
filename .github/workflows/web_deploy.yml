@@ -10,7 +10,7 @@ on:
       - web/**
 defaults:
   run:
-    working-directory: app
+    working-directory: web
 jobs:
   build_and_deploy:
     runs-on: ubuntu-latest
