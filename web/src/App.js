@@ -37,6 +37,8 @@ const styles = {
 
 export default LandingPage;
 
+
 // After editing the react files in /src
+// Run "npm ci" to install dependencies
 // Run "npm run build" to build into html/css in the build folder
 // Run "firebase deploy" to deploy to website
