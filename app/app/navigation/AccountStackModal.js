@@ -66,30 +66,6 @@ const AccountStack = ({ navigation, route }) => {
           )
         }}
       />
-      <Stack.Screen
-        name="BookingDetail"
-        component={BookingDetail}
-        options={{
-          headerShown: false,
-          ...TransitionPresets.SlideFromRightIOS,
-        }}
-      />
-      <Stack.Screen
-        name="MessageDetail"
-        component={MessageDetail}
-        options={{
-          headerShown: false,
-          ...TransitionPresets.SlideFromRightIOS,
-        }}
-      />
-      <Stack.Screen
-        name="ReviewInput"
-        component={ReviewInput}
-        options={{
-          headerShown: false,
-          ...TransitionPresets.SlideFromRightIOS,
-        }}
-      />
     </Stack.Navigator>
   );
 };

@@ -34,13 +34,6 @@ const BookingStack = ({ navigation, route }) => {
         }}
       />
       <Stack.Screen
-        name="MessageDetail"
-        component={MessageDetail}
-        options={{
-          headerShown: false
-        }}
-      />
-      <Stack.Screen
         name="ReviewInput"
         component={ReviewInput}
         options={{

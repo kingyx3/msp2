@@ -152,7 +152,7 @@ const HostStackModal = ({ navigation, route }) => {
                 }}
             />
             <Stack.Screen
-                name="SpaceDetails"
+                name="SpaceDetail"
                 component={SpaceDetails}
                 options={{
                     title: false,
@@ -201,13 +201,6 @@ const HostStackModal = ({ navigation, route }) => {
                             <EvilIcons name="chevron-left" size={30} />
                         </IconWrapper>
                     ),
-                }}
-            />
-            <Stack.Screen
-                name="BookingDetail"
-                component={BookingDetail}
-                options={{
-                    headerShown: false
                 }}
             />
         </Stack.Navigator>

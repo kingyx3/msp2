@@ -86,17 +86,19 @@ const UserActivity = (props) => {
       onPress={() => {
         if (item.logType == "createBooking" || item.logType == "cancelBooking") {
           // Navigate to bookingDetail with props
-          props.navigation.navigate("AccountStackModal", {
+          props.navigation.navigate('BookingStackModal', {
             screen: 'BookingDetail',
             params: {
               bookingId: item.bookingId,
               spaceId: item.spaceId,
               host
             }
-          })
+          });
         } else if (item.logType == "createSpace" || item.logType == "updateSpace" || item.logType == "enableSpace" || item.logType == "disableSpace") {
           // Navigate to spaceDetail with props
-          props.navigation.navigate('HostStackModal', { screen: 'SpaceDetails' });
+          props.navigation.navigate('HostStackModal', {
+            screen: 'SpaceDetail'
+          });
         } else {
           // For no navigation logTypes i.e. topup etc
           null

@@ -60,7 +60,7 @@ const SpaceBookings = (props) => {
         (moment(item?.start).format("DD MMM YYYY h A"))
         + ' to '
         + (moment(item?.end).format("h A"))}
-      onPress={() => props.navigation.navigate("HostStackModal", {
+      onPress={() => props.navigation.navigate("BookingStackModal", {
         screen: 'BookingDetail',
         params: {
           bookingId: item.id,

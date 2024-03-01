@@ -157,6 +157,7 @@ export function updateSpaceTestSuite() {
 
     //     await waitFor(element(by.id('hosting-header-component'))).toBeVisible().withTimeout(60000);
     // })
+
 }
 
 export const testBookingDetail = async () => {

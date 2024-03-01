@@ -116,7 +116,7 @@ const Hosting = (props) => {
                   // Device is connected to the internet
                   props.clearSelectedSpace()
                   props.setSelectedSpace(item.id)
-                  props.navigation.navigate('HostStackModal', { screen: 'SpaceDetails' });
+                  props.navigation.navigate('HostStackModal', { screen: 'SpaceDetail' });
                 } else {
                   // Device is not connected to the internet
                   showOfflineAlert()
