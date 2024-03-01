@@ -8,6 +8,7 @@ on:
       - "**"
     paths:
       - web/**
+      - ".github/workflows/web_deploy.yml"
 defaults:
   run:
     working-directory: web
