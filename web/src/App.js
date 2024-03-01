@@ -5,7 +5,7 @@ import React from 'react';
 const LandingPage = () => {
   return (
     <div style={styles.container}>
-      <img src="/adaptive-icon.png" alt="Makeshiftplans" style={styles.logo} />
+      <img src="/icon.png" alt="Makeshiftplans" style={styles.logo} />
       <h1>Welcome to Makeshiftplans</h1>
       <p>Find the perfect space for your needs</p>
       <div style={styles.downloadLinks}>
