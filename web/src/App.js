@@ -1,11 +1,13 @@
 import React from 'react';
 
+import React from 'react';
+
 const LandingPage = () => {
   return (
     <div style={styles.container}>
+      <img src="/adaptive-icon.png" alt="Makeshiftplans" style={styles.logo} />
       <h1>Welcome to Makeshiftplans</h1>
       <p>Find the perfect space for your needs</p>
-
       <div style={styles.downloadLinks}>
         <a href="https://play.google.com/store/apps/details?id=com.makeshiftplans.android">
           <img src="google-play-icon.png" alt="Download on Google Play" style={styles.appStoreBadge} />
@@ -22,6 +24,10 @@ const styles = {
   container: {
     textAlign: 'center',
     marginTop: '100px',
+  },
+  logo: {
+    width: '200px', // Adjust the width as needed
+    marginBottom: '20px', // Add some space below the logo
   },
   downloadLinks: {
     marginTop: '50px',
