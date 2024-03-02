@@ -1,48 +1,21 @@
 import React from 'react';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 
-const LandingPage = () => {
+import Home from './screens/Home';
+import ContactUs from './screens/ContactUs';
+
+const App = () => {
   return (
-    <div style={styles.container}>
-      <img src="/icon.png" alt="Makeshiftplans" style={styles.logo} />
-      <h1>Welcome to Makeshiftplans</h1>
-      <p>Find the perfect space for your needs</p>
-      <div style={styles.downloadLinks}>
-        <a href="https://play.google.com/store/apps/details?id=com.makeshiftplans.android">
-          <img src="google-play-icon.png" alt="Download on Google Play" style={styles.appStoreBadge} />
-        </a>
-        {/* <a href="https://apps.apple.com/app/yourapp">
-          <img src="apple-store-icon.png" alt="Download on the App Store" style={styles.appStoreBadge} />
-        </a> */}
+    <Router>
+      <div>
+        <Routes>
+          <Route path="/" element={<Home />} />
+          <Route path="/contact-us" element={<ContactUs />} />
+          {/* Other routes can be defined here */}
+        </Routes>
       </div>
-    </div>
+    </Router>
   );
 };
 
-const styles = {
-  container: {
-    textAlign: 'center',
-    marginTop: '100px',
-  },
-  logo: {
-    width: '200px', // Adjust the width as needed
-    marginBottom: '20px', // Add some space below the logo
-  },
-  downloadLinks: {
-    marginTop: '50px',
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  appStoreBadge: {
-    width: '150px',
-    marginRight: '20px',
-  },
-};
-
-export default LandingPage;
-
-
-// After editing the react files in /src
-// Run "npm ci" to install dependencies
-// Run "npm run build" to build into html/css in the build folder
-// Run "firebase deploy" to deploy to website
+export default App;
