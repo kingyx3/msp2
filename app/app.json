@@ -50,7 +50,7 @@
     "userInterfaceStyle": "automatic",
     "android": {
       "package": "com.makeshiftplans.android",
-      "versionCode": 30,
+      "versionCode": 32,
       "adaptiveIcon": {
         "foregroundImage": "./app/assets/adaptive-icon.png",
         "backgroundColor": "#ffffff"
