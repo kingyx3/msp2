@@ -5,6 +5,7 @@ on:
       - "**"
     paths:
       - web/**
+      - web/src/**
       - ".github/workflows/web_deploy.yml"
 defaults:
   run:
