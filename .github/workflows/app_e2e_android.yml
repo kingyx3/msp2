@@ -3,6 +3,7 @@ on:
   push:
     branches:
       - "**"
+      - "!dependabot/**" # Exclude branches starting with 'dependabot'
     paths:
       - "app/e2e/**"
       - ".github/workflows/app_e2e_android.yml"

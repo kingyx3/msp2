@@ -2,7 +2,7 @@ name: EAS Build & Submit to Google Playstore (Android)
 on:
   push:
     branches:
-      - "**"
+      - main
     paths:
       - app/app.json
 defaults:

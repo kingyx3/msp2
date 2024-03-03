@@ -3,6 +3,7 @@ on:
   push:
     branches:
       - "**"
+      - "!dependabot/**" # Exclude branches starting with 'dependabot'
     paths:
       - "app/**"
       - "!app/e2e/**"
