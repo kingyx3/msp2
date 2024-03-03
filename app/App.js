@@ -153,6 +153,7 @@ const wait = (msec) => new Promise((resolve, _) => {
 // eas build -p android -e development --auto-submit (For EAS Build + Google Play Submission (.aab))
 
 
+
 // Old / Others
 // eas update --branch production --message "Updating the app"
 // eas submit -p android --latest
