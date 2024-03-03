@@ -44,6 +44,7 @@ const ContactForm = () => {
                     <select value={category} onChange={(e) => setCategory(e.target.value)} style={styles.input}>
                         <option value="general">General Enquiry</option>
                         <option value="partnership">Partnership (Hosts)</option>
+                        <option value="feature-request">Request for New Features</option>
                         <option value="delete-account">Request to Delete Account</option>
                     </select>
                 </label>
