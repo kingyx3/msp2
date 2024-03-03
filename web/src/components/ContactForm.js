@@ -14,10 +14,10 @@ const ContactForm = () => {
                 const createFeedbackLog = httpsCallable(functions, 'createFeedbackLog');
                 const response = await createFeedbackLog({ email, category, comments });
                 console.log('Response:', response.data);
-                // alert('Email sent successfully!');
+                alert('Successful!');
             } catch (error) {
                 console.error('Error sending email:', error);
-                // alert('Failed to send email. Please try again later.');
+                alert('Failed. Please try again later.');
             }
             setComments('')
         } else {
