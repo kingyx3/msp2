@@ -85,7 +85,7 @@ const Login = ({ navigation }) => {
           </Input>
           <SubmitBtn
             testID="submit-email-button"
-            title={process.env.EXPO_PUBLIC_TYPE} //"Continue with Email"
+            title="Continue with Email" //{process.env.EXPO_PUBLIC_TYPE}
             disabled={disabled}
           />
           {/* <Text style={styles.errorText}>{loginError}</Text> */}
