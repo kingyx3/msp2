@@ -188,6 +188,7 @@ export const testBookingDetail = async () => {
 
 
 
+
     console.log('Current time: ', currentDateTime)
     console.log('Cancel by time: ', cancelByDateTime)
     console.log('Booking start: ', bookingStartDateTime)
