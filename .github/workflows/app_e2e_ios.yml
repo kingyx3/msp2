@@ -7,6 +7,13 @@ on:
     paths:
       - "app/e2e/**"
       - ".github/workflows/app_e2e_ios.yml"
+      - "app/app/**"
+      - "app/patches/**"
+      - "app/App.js"
+      - "app/yarn.lock"
+      - "app/.env*"
+      - "app/*.json"
+      - "app/*config.js"
 defaults:
   run:
     working-directory: app
