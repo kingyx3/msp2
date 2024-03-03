@@ -30,13 +30,13 @@ module.exports = {
     'ios.release': {
       type: 'ios.app',
       build:
-        'xcodebuild -workspace ios/MSP.xcworkspace -scheme MSP -configuration Release -sdk iphonesimulator -arch x86_64 -derivedDataPath ios/build',
+        'ENVFILE=.env.test xcodebuild -workspace ios/MSP.xcworkspace -scheme MSP -configuration Release -sdk iphonesimulator -arch x86_64 -derivedDataPath ios/build',
       binaryPath: 'ios/build/Build/Products/Release-iphonesimulator/MSP.app',
     },
     'android.debug': {
       type: 'android.apk',
       build:
-        'cd android && ./gradlew :app:assembleDebug :app:assembleAndroidTest -DtestBuildType=debug && cd ..',
+        'cd android && ENVFILE=.env.test && ./gradlew :app:assembleDebug :app:assembleAndroidTest -DtestBuildType=debug && cd ..',
       binaryPath: 'android/app/build/outputs/apk/debug/app-debug.apk',
     },
     'android.release': {
