@@ -30,7 +30,7 @@ module.exports = {
     'ios.release': {
       type: 'ios.app',
       build:
-        'xcodebuild -workspace ios/MSP.xcworkspace -scheme MSP -configuration Release -sdk iphonesimulator -arch x86_64 -derivedDataPath ios/build',
+        'NODE_ENV=development xcodebuild -workspace ios/MSP.xcworkspace -scheme MSP -configuration Release -sdk iphonesimulator -arch x86_64 -derivedDataPath ios/build',
       binaryPath: 'ios/build/Build/Products/Release-iphonesimulator/MSP.app',
     },
     // 'android.debug': {
@@ -42,7 +42,7 @@ module.exports = {
     'android.release': {
       type: 'android.apk',
       build:
-        'cd android && ./gradlew :app:assembleRelease :app:assembleAndroidTest -DtestBuildType=release && cd ..',
+        'cd android && NODE_ENV=development ./gradlew :app:assembleRelease :app:assembleAndroidTest -DtestBuildType=release && cd ..',
       binaryPath: 'android/app/build/outputs/apk/release/app-release.apk',
     },
   },
