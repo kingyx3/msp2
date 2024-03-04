@@ -9,7 +9,7 @@ export default {
   "plugins": [
     "@config-plugins/detox"
   ],
-  "version": "1.0.3",
+  "version": "1.0.0",
   "orientation": "portrait",
   "icon": "./app/assets/icon.png",
   "splash": {
@@ -49,7 +49,7 @@ export default {
   "userInterfaceStyle": "automatic",
   "android": {
     "package": process.env.EXPO_PUBLIC_ANDROID_ID,
-    "versionCode": 32,
+    "versionCode": 33,
     "adaptiveIcon": {
       "foregroundImage": "./app/assets/adaptive-icon.png",
       "backgroundColor": "#ffffff"
