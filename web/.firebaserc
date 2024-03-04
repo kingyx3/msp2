@@ -1,6 +1,0 @@
-{
-  "projects": {
-    "dev": "makeshiftplans-dev",
-    "prod": "makeshiftplans-prod"
-  }
-}
