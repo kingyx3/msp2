@@ -61,7 +61,7 @@ const Login = ({ navigation }) => {
       <Main>
         <Header>
           <Logo source={require("../../assets/icon.png")}></Logo>
-          <Typography.H1 color={colors.red}>Welcome to {process.env.EXPO_PUBLIC_APP_NAME}</Typography.H1>
+          <Typography.H1 testID={'welcome-text'} color={colors.red}>Welcome to {process.env.EXPO_PUBLIC_APP_NAME}</Typography.H1>
           <Typography.Sub1 color={colors.red}>Find and rent spaces on an hourly basis</Typography.Sub1>
         </Header>
         <AppForm

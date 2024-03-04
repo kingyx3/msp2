@@ -63,7 +63,7 @@ jobs:
 
       - name: Prebuild Expo
         if: steps.detox-build-cache-get.outputs.cache-hit != 'true'
-        run: npx expo prebuild --platform ios --clean
+        run: NODE_ENV=test npx expo prebuild --platform ios --clean
 
       - name: Detox rebuild framework cache
         if: steps.detox-build-cache-get.outputs.cache-hit != 'true'

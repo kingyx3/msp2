@@ -13,7 +13,7 @@ describe('AuthStack & Home Stack', () => {
 
   it('Login screen displays correctly', async () => {
     await waitFor(element(by.id('email-input'))).toBeVisible().withTimeout(60000);
-    await expect(element(by.text('Welcome to MakeShiftPlans'))).toBeVisible();
+    await expect(element(by.id('welcome-text'))).toBeVisible();
     await expect(element(by.text('Continue with Email'))).toBeVisible();
   });
 
@@ -30,7 +30,7 @@ describe('AuthStack & Home Stack', () => {
     await element(by.id("back-button")).tap();
 
     // Wait for navigation to complete & perform the visibility checks
-    await waitFor(element(by.text('Welcome to MakeShiftPlans'))).toBeVisible().withTimeout(60000);
+    await waitFor(element(by.id('welcome-text'))).toBeVisible().withTimeout(60000);
     await expect(element(by.id('dev-login-button'))).toBeVisible()
   });
 
