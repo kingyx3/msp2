@@ -30,8 +30,8 @@ module.exports = {
     'ios.release': {
       type: 'ios.app',
       build:
-        'NODE_ENV=test xcodebuild -workspace ios/MSPTEST.xcworkspace -scheme MSP -configuration Release -sdk iphonesimulator -arch x86_64 -derivedDataPath ios/build',
-      binaryPath: 'ios/build/Build/Products/Release-iphonesimulator/MSP.app',
+        'NODE_ENV=test xcodebuild -workspace ios/MSPTEST.xcworkspace -scheme MSPTEST -configuration Release -sdk iphonesimulator -arch x86_64 -derivedDataPath ios/build',
+      binaryPath: 'ios/build/Build/Products/Release-iphonesimulator/MSPTEST.app',
     },
     // 'android.debug': {
     //   type: 'android.apk',
