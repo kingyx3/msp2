@@ -1,6 +1,6 @@
 {
   "projects": {
-    "default": "makeshiftplans-dev",
-    "production": "makeshiftplans-prod"
+    "dev": "makeshiftplans-dev",
+    "prod": "makeshiftplans-prod"
   }
 }
