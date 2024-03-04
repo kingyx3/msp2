@@ -4,7 +4,7 @@ on:
     branches:
       - main
     paths:
-      - app/app.json
+      - app/app.config.js
 defaults:
   run:
     working-directory: app

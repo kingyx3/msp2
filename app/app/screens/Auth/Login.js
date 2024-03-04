@@ -22,8 +22,6 @@ const validationSchema = Yup.object().shape({
     .label('Email'),
 });
 
-const app_name = 'MakeShiftPlans'
-
 const Login = ({ navigation }) => {
   const [disabled, setDisabled] = useState(false);
 
@@ -63,7 +61,7 @@ const Login = ({ navigation }) => {
       <Main>
         <Header>
           <Logo source={require("../../assets/icon.png")}></Logo>
-          <Typography.H1 color={colors.red}>Welcome to {app_name}</Typography.H1>
+          <Typography.H1 color={colors.red}>Welcome to {process.env.EXPO_PUBLIC_APP_NAME}</Typography.H1>
           <Typography.Sub1 color={colors.red}>Find and rent spaces on an hourly basis</Typography.Sub1>
         </Header>
         <AppForm
@@ -85,13 +83,13 @@ const Login = ({ navigation }) => {
           </Input>
           <SubmitBtn
             testID="submit-email-button"
-            title="Continue with Email" //{process.env.EXPO_PUBLIC_TYPE}
+            title="Continue with Email"
             disabled={disabled}
           />
           {/* <Text style={styles.errorText}>{loginError}</Text> */}
         </AppForm>
         <Btn>
-          {(process.env.EXPO_PUBLIC_TYPE == 'TEST') &&
+          {(process.env.EXPO_PUBLIC_TYPE == 'DEV' || process.env.EXPO_PUBLIC_TYPE == 'TEST') &&
             <Button.BtnOutline
               testID="dev-login-button"
               label="Dev Login"
