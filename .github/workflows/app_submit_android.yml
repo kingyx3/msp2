@@ -42,4 +42,4 @@ jobs:
           echo "$SERVICE_ACCOUNT_JSON" | base64 --decode > pc-api-6795295579632533760-300-d0f297d14ac0.json
 
       - name: EAS Build & Submit to Google Playstore (Android)
-        run: eas build -p android -e development --auto-submit --no-wait #--non-interactive
+        run: NODE_ENV=development eas build -p android -e development --auto-submit --non-interactive --no-wait

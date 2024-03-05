@@ -40,4 +40,4 @@ jobs:
         run: yarn testFinal
 
       - name: EAS Update Production Apps
-        run: eas update --branch development --auto
+        run: NODE_ENV=development eas update --branch development --auto
