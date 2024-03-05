@@ -21,8 +21,8 @@
     "development": {
       "channel": "development",
       "env": {
-        "IOS_ID": "com.makeshiftplans.ios.dev",
-        "ANDROID_ID": "com.makeshiftplans.android.dev"
+        "IOS_ID": "com.makeshiftplans.ios",
+        "ANDROID_ID": "com.makeshiftplans.android"
       }
     },
     "production": {
