@@ -49,7 +49,7 @@ const Bookings = (props) => {
                 />
               </View>
             </View>
-            <Typography.P color={colors.black}>{userBookings.length == 0 ? 'You have no bookings yet' : null}</Typography.P>
+            <Typography.P color={colors.black}>{userBookings.length == 0 ? 'You have no upcoming bookings' : null}</Typography.P>
           </Header>
         }
         stickyHeaderIndices={[0]}
