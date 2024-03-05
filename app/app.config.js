@@ -1,4 +1,4 @@
-// 
+//
 module.exports = {
   "name": process.env.EXPO_PUBLIC_APP_SHORT_NAME,
   "scheme": "msp",
@@ -10,7 +10,7 @@ module.exports = {
   "plugins": [
     "@config-plugins/detox"
   ],
-  "version": "1.0.1",
+  "version": "1.0.0",
   "orientation": "portrait",
   "icon": "./app/assets/icon.png",
   "splash": {
