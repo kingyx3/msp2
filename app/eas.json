@@ -19,10 +19,18 @@
       "distribution": "internal"
     },
     "development": {
-      "channel": "development"
+      "channel": "development",
+      "env": {
+        "IOS_ID": "com.makeshiftplans.ios.dev",
+        "ANDROID_ID": "com.makeshiftplans.android.dev"
+      }
     },
     "production": {
-      "channel": "production"
+      "channel": "production",
+      "env": {
+        "IOS_ID": "com.makeshiftplans.ios",
+        "ANDROID_ID": "com.makeshiftplans.android"
+      }
     }
   },
   "submit": {

@@ -32,7 +32,7 @@ module.exports = {
       ]
     },
     "supportsTablet": false,
-    "bundleIdentifier": process.env.EXPO_PUBLIC_IOS_ID,
+    "bundleIdentifier": process.env.IOS_ID,
     "buildNumber": "1.0.0",
     "associatedDomains": [
       "applinks:expo.dev",
@@ -48,7 +48,7 @@ module.exports = {
   },
   "userInterfaceStyle": "automatic",
   "android": {
-    "package": process.env.EXPO_PUBLIC_ANDROID_ID,
+    "package": process.env.ANDROID_ID,
     "versionCode": 33,
     "adaptiveIcon": {
       "foregroundImage": "./app/assets/adaptive-icon.png",
