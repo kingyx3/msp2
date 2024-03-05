@@ -27,7 +27,14 @@ import moment from 'moment';
 import styled from "styled-components/native";
 import colors from "../../config/colors";
 import * as Typography from "../../config/Typography";
-import { getUserName, getAvatarLink } from "../../components/Firebase/firebase";
+import { bindActionCreators } from 'redux'
+import {
+  getUserName,
+  getAvatarLink,
+  setSelectedSpace,
+  clearSelectedSpace,
+  showOfflineAlert
+} from "../../components/Firebase/firebase";
 //import data
 import { review } from "../../data/detailreview";
 
@@ -38,26 +45,20 @@ const CARD_WIDTH = Math.floor(width * widthPct);
 const CARD_INSET = (width - CARD_WIDTH) / 2;
 const CARD_ADJ = Math.floor(CARD_INSET / 2)
 //
-const SpaceDetails = ({ navigation, route, state }) => {
+const SpaceDetail = (props) => {
   const [loading, setLoading] = useState(false)
   const [userName, setUserName] = useState('')
-  const selectedSpace = _.cloneDeep(state.selectedSpace)
-  const spaceId = route.params
+  const selectedSpace = _.cloneDeep(props.state.selectedSpace)
+  const spaceId = props.route.params.spaceId
   const editMode = true
-  // console.log(userName)
-  // const selectedSpaceFromProps = state.selectedSpaces.filter((space) => space.id == spaceId)[0]
-  // let start = new Date(state.startDay)
-  // let end = new Date(state.endDay)
-  // var hours = duration.asHours();
   const opacityValue = new Animated.Value(0);
   const [headerOpacity, setHeaderOpacity] = useState(opacityValue);
 
   useEffect(() => {
-    // console.log(selectedSpace.id, '-', spaceId)
-    // console.log(selectedSpace.userId)
-    // console.log(1, selectedSpace.userId)
+    props.clearSelectedSpace()
+    props.setSelectedSpace(spaceId)
     getUserName(selectedSpace.userId, setUserName)
-  }, [selectedSpace])
+  }, [])
 
   const renderItem = ({ item, index }) =>
     <View style={{ width: CARD_WIDTH + CARD_ADJ }}>
@@ -160,7 +161,7 @@ const SpaceDetails = ({ navigation, route, state }) => {
               <Button.BtnTxtUnderline
                 label="View more"
                 color={colors.gray}
-                onPress={() => navigation.navigate("Description", selectedSpace.description)}
+                onPress={() => props.navigation.navigate("Description", selectedSpace.description)}
               />
               : null}
           </Section>
@@ -276,7 +277,7 @@ const SpaceDetails = ({ navigation, route, state }) => {
             color={loading ? colors.lightgray : colors.red}
             disabled={loading}
             // size="small"
-            onPress={() => navigation.navigate("SpaceManagement", { selectedSpace, editMode })}
+            onPress={() => props.navigation.navigate("SpaceManagement", { selectedSpace, editMode })}
           />
         </BtnContainer>
         {/* <BtnContainer>
@@ -377,5 +378,6 @@ const mapStateToProps = (state) => {
     state: state.search,
   };
 };
+const mapDispatchProps = (dispatch) => bindActionCreators({ setSelectedSpace, clearSelectedSpace }, dispatch);
 
-export default connect(mapStateToProps)(SpaceDetails);
+export default connect(mapStateToProps, mapDispatchProps)(SpaceDetail);

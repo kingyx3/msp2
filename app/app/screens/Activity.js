@@ -97,7 +97,9 @@ const UserActivity = (props) => {
         } else if (item.logType == "createSpace" || item.logType == "updateSpace" || item.logType == "enableSpace" || item.logType == "disableSpace") {
           // Navigate to spaceDetail with props
           props.navigation.navigate('HostStackModal', {
-            screen: 'SpaceDetail'
+            screen: 'SpaceDetail', params: {
+              spaceId: item.spaceId
+            }
           });
         } else {
           // For no navigation logTypes i.e. topup etc

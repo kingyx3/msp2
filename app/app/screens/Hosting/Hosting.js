@@ -114,9 +114,13 @@ const Hosting = (props) => {
                 const networkState = await Network.getNetworkStateAsync();
                 if (networkState.isConnected) {
                   // Device is connected to the internet
-                  props.clearSelectedSpace()
-                  props.setSelectedSpace(item.id)
-                  props.navigation.navigate('HostStackModal', { screen: 'SpaceDetail' });
+                  // props.clearSelectedSpace()
+                  // props.setSelectedSpace(item.id)
+                  props.navigation.navigate('HostStackModal', {
+                    screen: 'SpaceDetail', params: {
+                      spaceId: item.id
+                    }
+                  });
                 } else {
                   // Device is not connected to the internet
                   showOfflineAlert()
@@ -221,5 +225,5 @@ const mapStateToProps = (state) => {
   };
 };
 
-const mapDispatchProps = (dispatch) => bindActionCreators({ setSelectedSpace, clearSelectedSpace, clearHostData }, dispatch);
+const mapDispatchProps = (dispatch) => bindActionCreators({ clearHostData }, dispatch);
 export default connect(mapStateToProps, mapDispatchProps)(Hosting);

@@ -6,9 +6,9 @@ import { createMaterialTopTabNavigator } from '@react-navigation/material-top-ta
 import { Platform } from "react-native";
 //import screens
 import Hosting from "../screens/Hosting/Hosting";
-import SpaceDetails from "../screens/Hosting/SpaceDetails";
+import SpaceDetail from "../screens/Hosting/SpaceDetail";
 import SpaceManagement from "../screens/Hosting/SpaceManagement";
-import SpaceBookings from "../screens/Hosting/SpaceBookings";
+import SpaceBooking from "../screens/Hosting/SpaceBooking";
 import SpaceAvailability from "../screens/Hosting/SpaceAvailability";
 import Description from "../screens/Hosting/details/Description";
 import BookingDetail from "../screens/BookingDetail";
@@ -28,12 +28,12 @@ import styled from "styled-components/native";
 const Stack = createStackNavigator();
 const Tab = createMaterialTopTabNavigator();
 
-const SpaceBookingsTopTab = (props) => {
+const SpaceBookingTopTab = (props) => {
     const { spaceId } = props.route.params
     return (
         <Tab.Navigator>
-            <Tab.Screen name="Booking History" component={SpaceBookings} initialParams={{ spaceId, history: true }} />
-            <Tab.Screen name="Upcoming Bookings" component={SpaceBookings} initialParams={{ spaceId, history: false }} />
+            <Tab.Screen name="Booking History" component={SpaceBooking} initialParams={{ spaceId, history: true }} />
+            <Tab.Screen name="Upcoming Bookings" component={SpaceBooking} initialParams={{ spaceId, history: false }} />
         </Tab.Navigator>
     );
 }
@@ -153,7 +153,7 @@ const HostStackModal = ({ navigation, route }) => {
             />
             <Stack.Screen
                 name="SpaceDetail"
-                component={SpaceDetails}
+                component={SpaceDetail}
                 options={{
                     title: false,
                     headerBackTitleVisible: false,
@@ -191,8 +191,8 @@ const HostStackModal = ({ navigation, route }) => {
                 }}
             />
             <Stack.Screen
-                name="SpaceBookings"
-                component={SpaceBookingsTopTab}
+                name="SpaceBooking"
+                component={SpaceBookingTopTab}
                 options={{
                     title: false,
                     headerBackTitleVisible: false,
