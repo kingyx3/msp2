@@ -1,3 +1,4 @@
+// 
 module.exports = {
   "name": process.env.EXPO_PUBLIC_APP_SHORT_NAME,
   "scheme": "msp",
@@ -95,7 +96,7 @@ module.exports = {
   },
   "extra": {
     "eas": {
-      "projectId": "8483e452-5b47-4c58-bc8d-ff820a0be9e1" // 
+      "projectId": "8483e452-5b47-4c58-bc8d-ff820a0be9e1"
     }
   },
   "runtimeVersion": {
