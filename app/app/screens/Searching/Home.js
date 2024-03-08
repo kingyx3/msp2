@@ -50,7 +50,7 @@ const Home = (props) => {
   userBookings = userBookings.map(({ start, end, spaceType }) => ({ start: addWeekToDate(start), end: addWeekToDate(end), spaceType }));
   userBookings = Array.from(new Set(userBookings.map(JSON.stringify))).map(JSON.parse); // Get unique spacetype/datetime objects
   userBookings = userBookings.sort((a, b) => new Date(a.start) - new Date(b.start)); //latest appear on top
-  userBookings = userBookings.slice(0, 5) // load only the first 3
+  userBookings = userBookings.slice(0, 3) // load only the first 3
   const quickSearches = userBookings
 
   // // For expo notifications
@@ -313,7 +313,14 @@ function addWeekToDate(startMs) {
   const startDate = new Date(startMs);
   const currentMs = Date.now();
 
-  while (startDate.getTime() <= currentMs) {
+  if (startDate.getTime() <= currentMs) {
+    while (startDate.getTime() <= currentMs) {
+      startDate.setTime(startDate.getTime() + 604800000);
+    }
+  } else {
+    while (startDate.getTime() >= currentMs) {
+      startDate.setTime(startDate.getTime() - 604800000);
+    }
     startDate.setTime(startDate.getTime() + 604800000);
   }
 
