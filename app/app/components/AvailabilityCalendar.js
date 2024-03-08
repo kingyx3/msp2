@@ -15,10 +15,13 @@ const { width, height } = Dimensions.get('window');
 const ITEM_HEIGHT = 93
 
 const AvailabilityCalendar = ({ data, setDatedEvents }) => {
-    let sortedData = data ? Object.keys(data).sort((a, b) => new Date(a) - new Date(b)) : null
-    const startingDate = moment().format('YYYY-MM-DD')
-    const startingIndex = sortedData.findIndex(item => item === startingDate);
-    sortedData = sortedData.slice(startingIndex)
+    const today = moment().format('YYYY-MM-DD')
+    let sortedData = data
+        ? Object.keys(data)
+            .filter((a) => new Date(a) >= new Date(today))
+            .sort((a, b) => new Date(a) - new Date(b))
+        : null
+    const firstDate = sortedData[0]
     const [selectedDate, setSelectedDate] = useState(null);
     const [selectedTimeslot, setSelectedTimeslot] = useState(null)
     const [price, setPrice] = useState(0)
@@ -27,8 +30,8 @@ const AvailabilityCalendar = ({ data, setDatedEvents }) => {
     const selectedDayData = data[selectedDate] ? Object.entries(data[selectedDate]).sort((a, b) => a[0] - b[0]) : null
 
     useEffect(() => {
-        setSelectedDate(startingDate)
-    }, [])
+        setSelectedDate(firstDate)
+    }, [firstDate])
 
     const handleTimeslotPress = (item) => {
         const timeSlot = item[0]
