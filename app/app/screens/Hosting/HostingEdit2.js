@@ -40,6 +40,31 @@ const HostingEdit2 = (props) => {
     }
   }, [selectedSpace])
 
+  const onChangeText = (item, type) => {
+    if (+item >= 5) {
+      if (type === 'price') {
+        setPrice(+item);
+      } else if (type === 'peak') {
+        setPeakPrice(+item);
+      } else if (type === 'offpeak') {
+        setOffPeakPrice(+item);
+      } else {
+        // Handle unknown type
+        console.error('Unknown type:', type);
+      }
+    } else {
+      if (type === 'price') {
+        setPrice(5);
+      } else if (type === 'peak') {
+        setPeakPrice(5);
+      } else if (type === 'offpeak') {
+        setOffPeakPrice(5);
+      } else {
+        // Handle unknown type
+        console.error('Unknown type:', type);
+      }
+    }
+  };
 
   const onNavigate = () => {
     props.setPrice(price);
@@ -67,7 +92,7 @@ const HostingEdit2 = (props) => {
                   width: 35,
                   fontSize: Platform.OS == 'ios' ? paragraphFontSizeIOS : paragraphFontSize,
                 }}
-                onChangeText={(item) => setPrice(+item)}
+                onChangeText={(item) => onChangeText(item, 'price')}
                 value={price.toString()}
                 // placeholder={price.toString()}
                 keyboardType="number-pad"
@@ -97,7 +122,7 @@ const HostingEdit2 = (props) => {
                   width: 35,
                   fontSize: Platform.OS == 'ios' ? paragraphFontSizeIOS : paragraphFontSize,
                 }}
-                onChangeText={(item) => setPeakPrice(+item)}
+                onChangeText={(item) => onChangeText(item, 'peak')}
                 value={peakPrice.toString()}
                 // placeholder={peakPrice.toString()}
                 keyboardType="number-pad"
@@ -127,7 +152,7 @@ const HostingEdit2 = (props) => {
                   width: 35,
                   fontSize: Platform.OS == 'ios' ? paragraphFontSizeIOS : paragraphFontSize,
                 }}
-                onChangeText={(item) => setOffPeakPrice(+item)}
+                onChangeText={(item) => onChangeText(item, 'offpeak')}
                 value={offPeakPrice.toString()}
                 // placeholder={offPeakPrice.toString()}
                 keyboardType="number-pad"

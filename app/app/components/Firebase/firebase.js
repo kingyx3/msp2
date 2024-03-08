@@ -866,7 +866,10 @@ const uploadImage = async (uri, spaceId, i) => {
       contentType: 'image/png',
     })
       .then(() => console.log(`Image ${i + 1} uploaded`, uri))
-      .catch((e) => console.log(`Image ${i + 1} failed to be uploaded`, e));
+      .catch((e) => {
+        console.log(`Image ${i + 1} failed to be uploaded`, e)
+        return Promise.reject(`Image ${i + 1} failed to be uploaded.` + e)
+      });
   } else {
     const deletePath = storageRef(storage, childPath);
     return deleteObject(deletePath);

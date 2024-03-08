@@ -88,7 +88,6 @@ const HostingEdit13 = (props) => {
     props.setSundayRule(sundayRule);
     props.setMonthsAhead(monthsAhead)
     props.setCancellationPolicy(cancellationPolicy)
-    console.log(monthsAhead)
     props.navigation.navigate('HostingEdit5', { editMode, selectedSpace });
   };
   return (
