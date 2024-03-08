@@ -9,7 +9,8 @@ import {
   StyleSheet,
   Modal,
   Alert,
-  Platform
+  Platform,
+  Dimensions
 } from 'react-native';
 //import components
 
@@ -26,6 +27,8 @@ import {
   setOffPeakPrice,
 } from '../../store/host';
 
+let height = Dimensions.get('window').height;
+
 const HostingEdit2 = (props) => {
   const { editMode, selectedSpace } = props.route.params
   const [price, setPrice] = useState(20);
@@ -41,36 +44,28 @@ const HostingEdit2 = (props) => {
   }, [selectedSpace])
 
   const onChangeText = (item, type) => {
-    if (+item >= 5) {
-      if (type === 'price') {
-        setPrice(+item);
-      } else if (type === 'peak') {
-        setPeakPrice(+item);
-      } else if (type === 'offpeak') {
-        setOffPeakPrice(+item);
-      } else {
-        // Handle unknown type
-        console.error('Unknown type:', type);
-      }
+    item = item.replace(/\D/g, '');
+    if (type === 'price') {
+      setPrice(+item);
+    } else if (type === 'peak') {
+      setPeakPrice(+item);
+    } else if (type === 'offpeak') {
+      setOffPeakPrice(+item);
     } else {
-      if (type === 'price') {
-        setPrice(5);
-      } else if (type === 'peak') {
-        setPeakPrice(5);
-      } else if (type === 'offpeak') {
-        setOffPeakPrice(5);
-      } else {
-        // Handle unknown type
-        console.error('Unknown type:', type);
-      }
+      // Handle unknown type
+      console.error('Unknown type:', type);
     }
   };
 
   const onNavigate = () => {
-    props.setPrice(price);
-    props.setPeakPrice(peakPrice);
-    props.setOffPeakPrice(offPeakPrice);
-    props.navigation.navigate(editMode ? 'HostingEdit4' : 'HostingStep3', { editMode, selectedSpace });
+    if (price == peakPrice || price == offPeakPrice || peakPrice == offPeakPrice || price < 5 || peakPrice < 5 || offPeakPrice < 5) {
+      Alert.alert('Error', 'Prices cannot be the same, and must be more than $5');
+    } else {
+      props.setPrice(price);
+      props.setPeakPrice(peakPrice);
+      props.setOffPeakPrice(offPeakPrice);
+      props.navigation.navigate(editMode ? 'HostingEdit4' : 'HostingStep3', { editMode, selectedSpace });
+    }
   };
   return (
     <Container>
@@ -186,10 +181,15 @@ const HostingEdit2 = (props) => {
   );
 };
 
-const Container = styled.View`
+const Container = Platform.OS === 'ios'
+  ? styled.View`
   flex: 1;
   background-color: white;
-`;
+  `
+  : styled.View`
+  height: ${height - 50}px; /* instead of flex:1 */
+  background-color: white;
+  `;
 
 const Main = styled.ScrollView`
   flex: 1;

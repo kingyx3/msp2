@@ -80,6 +80,7 @@ const TopUp = (props) => {
 
     if (error) {
       console.log(error)
+      setLoading(false)
     } else {
       //  Should wait till db says wallet amount is updated
       // props.navigation.goBack()
