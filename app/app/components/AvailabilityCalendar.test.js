@@ -10,7 +10,7 @@ import AvailabilityCalendar from './AvailabilityCalendar';
 describe('AvailabilityCalendar', () => {
     it('renders correctly with initial data', () => {
         const testData = {
-            '2021-01-01': {
+            '3021-01-01': {
                 '09:00': [50, '', '', 'blocked'],
                 // ... other timeslots
             },
@@ -18,7 +18,7 @@ describe('AvailabilityCalendar', () => {
         };
         const { getByText } = render(<AvailabilityCalendar data={testData} />);
         expect(getByText('01/01/21')).toBeTruthy();
-        expect(getByText('(Friday)')).toBeTruthy();
+        expect(getByText('(Monday)')).toBeTruthy();
         // Add more assertions as needed
     });
 
@@ -26,16 +26,16 @@ describe('AvailabilityCalendar', () => {
     it('handles date selection', async () => {
         const setDatedEvents = jest.fn()
         const testData = {
-            "2023-12-12": {
+            "3023-12-12": {
                 "1702342800000": [20, ""],
                 "1702346400000": [20, ""],
-            }, "2023-12-13": {
+            }, "3023-12-13": {
                 "1702425600000": [20, ""],
                 "1702429200000": [20, ""],
-            }, "2023-12-14": {
+            }, "3023-12-14": {
                 "1702512000000": [20, ""],
                 "1702515600000": [20, ""],
-            }, "2023-12-15": {
+            }, "3023-12-15": {
                 "1702598400000": [20, ""],
                 "1702602000000": [20, ""],
             }
@@ -54,7 +54,7 @@ describe('AvailabilityCalendar', () => {
 
         // Simulate pressing a date
         const dateItems = getAllByTestId('date-item');
-        fireEvent.press(dateItems[0]);
+        fireEvent.press(dateItems[1]);
 
         // Simulate pressing a timeslot
         const timeslotItems = getAllByTestId('timeslot-item');
