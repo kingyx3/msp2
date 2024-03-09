@@ -2,8 +2,8 @@ name: EAS Update Production Apps
 on:
   push:
     branches:
-      - "**"
-      - "!dependabot/**" # Exclude branches starting with 'dependabot'
+      - main
+      - develop
     paths:
       - "app/**"
       - "!app/e2e/**"
@@ -39,5 +39,10 @@ jobs:
       - name: Run Jest tests
         run: yarn testFinal
 
-      - name: EAS Update Production Apps
-        run: NODE_ENV=development eas update --branch development --auto
+      - name: EAS Update Production Apps (Production)
+        if: github.ref == 'refs/heads/main'
+        run: NODE_ENV=production eas update --branch production --auto # Closed testing track (Alpha)
+
+      - name: EAS Update Production Apps (Development)
+        if: github.ref == 'refs/heads/develop'
+        run: NODE_ENV=development eas update --branch development --auto # Internal track

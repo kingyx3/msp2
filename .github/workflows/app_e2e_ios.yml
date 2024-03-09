@@ -2,8 +2,8 @@ name: e2e-ios
 on:
   push:
     branches:
-      - "**"
-      - "!dependabot/**" # Exclude branches starting with 'dependabot'
+      - main
+      - develop
     paths:
       - "app/e2e/**"
       - ".github/workflows/app_e2e_ios.yml"
