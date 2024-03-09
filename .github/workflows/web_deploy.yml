@@ -15,8 +15,12 @@ jobs:
   build_and_deploy:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
-      - run: npm ci && npm run build
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Install dependencies & build
+        run: npm ci && npm run build
+
       - name: Deploy to Firebase (Production)
         if: github.ref == 'refs/heads/main'
         uses: FirebaseExtended/action-hosting-deploy@v0
@@ -26,6 +30,7 @@ jobs:
           projectId: makeshiftplans-prod
           entryPoint: web
           channelId: live
+
       - name: Deploy to Firebase (Development)
         if: github.ref == 'refs/heads/develop'
         uses: FirebaseExtended/action-hosting-deploy@v0
