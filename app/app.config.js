@@ -50,7 +50,7 @@ module.exports = {
   "userInterfaceStyle": "automatic",
   "android": {
     "package": process.env.ANDROID_ID,
-    "versionCode": 35,
+    "versionCode": 36,
     "adaptiveIcon": {
       "foregroundImage": "./app/assets/adaptive-icon.png",
       "backgroundColor": "#ffffff"
