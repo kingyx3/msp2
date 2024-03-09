@@ -52,7 +52,7 @@ const HostingEdit8 = (props) => {
           })
           .catch((e) => {
             setLoading(false)
-            Alert.alert("Space Updating Error!", "Error", [
+            Alert.alert("Space Updating Error!", "Please check your connection & try again later", [
               { text: "OK", onPress: () => props.navigation.navigate("Hosting") },
             ]);
           })

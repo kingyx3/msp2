@@ -3,6 +3,7 @@ on:
   push:
     branches:
       - main
+      - develop
     paths:
       - web/**
       - web/src/**
@@ -16,10 +17,21 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - run: npm ci && npm run build
-      - uses: FirebaseExtended/action-hosting-deploy@v0
+      - name: Deploy to Firebase (Production)
+        if: github.ref == 'refs/heads/main'
+        uses: FirebaseExtended/action-hosting-deploy@v0
         with:
           repoToken: "${{ secrets.GITHUB_TOKEN }}"
           firebaseServiceAccount: "${{ secrets.FIREBASE_SERVICE_ACCOUNT_MAKESHIFTPLANS_PROD }}"
           projectId: makeshiftplans-prod
+          entryPoint: web
+          channelId: live
+      - name: Deploy to Firebase (Development)
+        if: github.ref == 'refs/heads/develop'
+        uses: FirebaseExtended/action-hosting-deploy@v0
+        with:
+          repoToken: "${{ secrets.GITHUB_TOKEN }}"
+          firebaseServiceAccount: "${{ secrets.FIREBASE_SERVICE_ACCOUNT_MAKESHIFTPLANS_DEV }}"
+          projectId: makeshiftplans-dev
           entryPoint: web
           channelId: live
