@@ -823,7 +823,7 @@ export async function getPaymentSheet(topUpAmount) {
 }
 
 export async function getPublicKey() {
-  const CFgetPublicKey = httpsCallable(functions, 'getPublicKey');
+  const CFgetPublicKey = httpsCallable(functions, 'getPublicKey', { limitedUseAppCheckTokens: true });
   return CFgetPublicKey()
     .then((result) => {
       console.log("PUBLIC KEY OBTAINED SUCCESSFULLY!");
