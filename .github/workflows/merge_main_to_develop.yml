@@ -1,0 +1,21 @@
+name: Merge Main into Develop
+
+on:
+  pull_request:
+    types:
+      - closed
+
+jobs:
+  merge_main_into_develop:
+    if: github.event.pull_request.merged && github.event.pull_request.base.ref == 'main'
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out code
+        uses: actions/checkout@v2
+
+      - name: Merge Main into Develop
+        run: |
+          git checkout develop
+          git pull origin develop
+          git merge --no-ff main -m "Merge main into develop"
+          git push origin develop
