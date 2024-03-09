@@ -68,11 +68,11 @@ module.exports = {
         "data": [
           {
             "scheme": "https",
-            "host": "mspdev.page.link",
+            "host": "makeshiftplans.com",
             "pathPrefix": "/"
           },
           {
-            "scheme": "http",
+            "scheme": "https",
             "host": "mspdev.page.link",
             "pathPrefix": "/"
           },
@@ -82,10 +82,10 @@ module.exports = {
             "pathPrefix": "/"
           },
           {
-            "scheme": "http",
-            "host": "makeshiftplans-dev.firebaseapp.com",
+            "scheme": "https",
+            "host": "makeshiftplans-prod.firebaseapp.com",
             "pathPrefix": "/"
-          }
+          },
         ],
         "category": [
           "BROWSABLE",
