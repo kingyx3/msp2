@@ -10,7 +10,7 @@ module.exports = {
   "plugins": [
     "@config-plugins/detox"
   ],
-  "version": process.env.nativeApplicationVersion,
+  "version": process.env.EXPO_PUBLIC_nativeApplicationVersion,
   "orientation": "portrait",
   "icon": "./app/assets/icon.png",
   "splash": {
