@@ -29,6 +29,6 @@ const firestore = getFirestore(app);
 const auth = getAuth(app)
 const database = getDatabase(app);
 const storage = getStorage(app)
-const functions = getFunctions(app);
+const functions = getFunctions(app, "asia-southeast1");
 
 export { firestore, auth, database, functions, storage, app };
