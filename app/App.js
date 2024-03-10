@@ -16,8 +16,8 @@ import InputName from "./app/screens/InputName";
 import { auth, database } from './app/components/Firebase/firebaseConfig'
 import { isSignInWithEmailLink, signInWithEmailLink, onAuthStateChanged } from "firebase/auth";
 import { onValue, ref } from 'firebase/database';
-import * as Updates from 'expo-updates';
-import VersionCheck from 'react-native-version-check-expo'
+// import * as Updates from 'expo-updates';
+// import VersionCheck from 'react-native-version-check-expo'
 
 SplashScreen.preventAutoHideAsync();
 
