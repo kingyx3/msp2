@@ -1,26 +1,3 @@
-# name: Build App
-# on:
-#   workflow_dispatch:
-#     inputs:
-#       os:
-#         type: choice
-#         description: OS to build on. Ubuntu is faster, MacOS supports iOS builds, Windows is unsupported
-#         options:
-#           - macos-latest
-#           - ubuntu-latest
-#       platform:
-#         type: choice
-#         description: Platform to build for
-#         options:
-#           - android
-#           - ios
-#       profile:
-#         type: choice
-#         description: Build profile to use
-#         options:
-#           - development
-#           - preview
-#           - production
 name: EAS Build (Android) Local
 on:
   push:
@@ -73,10 +50,16 @@ jobs:
             --platform=android \
             --profile=development
 
-      - name: 👷 Submit app
+      - name: Decode Google Play Service Account
+        env:
+          SERVICE_ACCOUNT_JSON: ${{ secrets.GOOGLE_PLAY_SERVICE_ACCOUNT }}
+        run: |
+          echo "$SERVICE_ACCOUNT_JSON" | base64 --decode > pc-api-6795295579632533760-300-d0f297d14ac0.json
+
+      - name: Submit app
         run: |
           eas submit \
-            -platform=android \
+            --platform=android \
             --profile=development \
             --path=./app-build \
             --non-interactive \
