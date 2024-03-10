@@ -10,7 +10,7 @@ module.exports = {
   "plugins": [
     "@config-plugins/detox"
   ],
-  "version": "1.0.2",
+  "version": process.env.nativeApplicationVersion,
   "orientation": "portrait",
   "icon": "./app/assets/icon.png",
   "splash": {
@@ -34,7 +34,7 @@ module.exports = {
     },
     "supportsTablet": false,
     "bundleIdentifier": process.env.IOS_ID,
-    "buildNumber": "1.0.0",
+    "buildNumber": 40,
     "associatedDomains": [
       "applinks:makeshiftplans.com",
       "applinks:mspdev.page.link",
@@ -49,7 +49,7 @@ module.exports = {
   "userInterfaceStyle": "automatic",
   "android": {
     "package": process.env.ANDROID_ID,
-    "versionCode": 39,
+    "versionCode": 40,
     "adaptiveIcon": {
       "foregroundImage": "./app/assets/adaptive-icon.png",
       "backgroundColor": "#ffffff"
