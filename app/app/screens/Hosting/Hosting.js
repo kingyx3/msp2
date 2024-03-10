@@ -1,8 +1,7 @@
-import React, { useState, useEffect, useCallback } from "react";
+import React, { useState, useCallback } from "react";
 import { View, FlatList } from "react-native";
 import { connect } from "react-redux";
 import { useFocusEffect } from '@react-navigation/native';
-import * as Linking from 'expo-linking';
 import * as WebBrowser from 'expo-web-browser';
 import * as Network from 'expo-network';
 
@@ -20,8 +19,6 @@ import * as Cards from "../../components/Cards";
 import { bindActionCreators } from 'redux'
 import { clearHostData } from '../../store/host'
 import {
-  setSelectedSpace,
-  clearSelectedSpace,
   getAccountLink,
   showOfflineAlert
 } from "../../components/Firebase/firebase";
@@ -65,7 +62,6 @@ const Hosting = (props) => {
                   } else {
                     let accountLink = await getAccountLink()
                     if (accountLink.url) {
-                      // Linking.openURL(accountLink.url)
                       let browserParams
                       WebBrowser.openBrowserAsync(accountLink.url, browserParams)
                     } // else {
