@@ -43,7 +43,7 @@ export const loginWithEmailz = async (email) => {
       installApp: true,
       minimumVersion: '15'
     },
-    dynamicLinkDomain: 'mspdev.page.link' // need custom domain, then link in dynamics in firebase console
+    dynamicLinkDomain: process.env.EXPO_PUBLIC_TYPE == 'PROD' ? 'mspprod.page.link' : 'mspdev.page.link' // need custom domain, then link in dynamics in firebase console
   };
   return sendSignInLinkToEmail(auth, email, actionCodeSettings)
     .then(async () => {
