@@ -44,8 +44,8 @@ jobs:
 
       - name: EAS Build & Submit to Google Playstore (Android) (Production)
         if: github.ref == 'refs/heads/main'
-        run: NODE_ENV=production eas build -p android -e production --auto-submit --non-interactive --no-wait
+        run: export NODE_ENV=production && eas build -p android -e production --auto-submit --non-interactive --no-wait
 
       - name: EAS Build & Submit to Google Playstore (Android) (Development)
         if: github.ref == 'refs/heads/develop'
-        run: NODE_ENV=development eas build -p android -e development --auto-submit --non-interactive --no-wait
+        run: export NODE_ENV=development && eas build -p android -e development --auto-submit --non-interactive --no-wait

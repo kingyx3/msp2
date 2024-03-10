@@ -38,6 +38,7 @@ module.exports = {
     "associatedDomains": [
       "applinks:makeshiftplans.com",
       "applinks:mspdev.page.link",
+      "applinks:mspprod.page.link",
       "applinks:makeshiftplans-dev.firebaseapp.com",
       "applinks:makeshiftplans-prod.firebaseapp.com"
     ],
@@ -48,7 +49,7 @@ module.exports = {
   "userInterfaceStyle": "automatic",
   "android": {
     "package": process.env.ANDROID_ID,
-    "versionCode": 37,
+    "versionCode": 38,
     "adaptiveIcon": {
       "foregroundImage": "./app/assets/adaptive-icon.png",
       "backgroundColor": "#ffffff"
@@ -72,6 +73,11 @@ module.exports = {
           {
             "scheme": "https",
             "host": "mspdev.page.link",
+            "pathPrefix": "/"
+          },
+          {
+            "scheme": "https",
+            "host": "mspprod.page.link",
             "pathPrefix": "/"
           },
           {

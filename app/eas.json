@@ -19,10 +19,6 @@
       "distribution": "internal"
     },
     "development": {
-      "android": {
-        "gradleCommand": "bundleRelease -PenvFile=.env.development",
-        "withoutCredentials": true
-      },
       "channel": "development",
       "env": {
         "IOS_ID": "com.makeshiftplans.ios",
