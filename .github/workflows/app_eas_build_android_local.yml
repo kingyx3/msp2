@@ -73,6 +73,12 @@ jobs:
             --platform=android \
             --profile=development
 
+      - name: 👷 Submit app
+        run: |
+          eas submit -p android \
+            --profile development \
+            --path app/app-build
+
       - name: 📱 Upload binary
         uses: actions/upload-artifact@v4
         with:
