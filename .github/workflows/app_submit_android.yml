@@ -5,7 +5,8 @@ on:
       - main
       - develop
     paths:
-      - app/app.config.js
+      - app/abc # prevent runs
+      # - app/app.config.js
 defaults:
   run:
     working-directory: app

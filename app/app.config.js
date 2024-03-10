@@ -10,7 +10,7 @@ module.exports = {
   "plugins": [
     "@config-plugins/detox"
   ],
-  "version": "1.0.2",
+  "version": "1.0.0",
   "orientation": "portrait",
   "icon": "./app/assets/icon.png",
   "splash": {
