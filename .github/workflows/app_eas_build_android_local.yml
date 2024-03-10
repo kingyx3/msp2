@@ -75,8 +75,9 @@ jobs:
 
       - name: 👷 Submit app
         run: |
-          eas submit -p android \
-            --profile development \
+          eas submit \
+            -platform=android \
+            --profile=development \
             --path=./app-build \
             --non-interactive \
             --no-wait
