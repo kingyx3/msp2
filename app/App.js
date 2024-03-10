@@ -29,35 +29,35 @@ export default function App() {
   // ---------------
   const useUrl = Linking.useURL();
 
-  useEffect(() => {
-    async function checkForExpoUpdates() {
-      const update = await Updates.checkForUpdateAsync();
-      console.log(update.isAvailable)
-      if (update.isAvailable) {
-        await Updates.fetchUpdateAsync();
-        // // Optionally, you can prompt the user to update here
-        // // For example, show a modal or a banner
-        // // Then reload the app to apply the update
-        // // Without reloading, the update will be applied on the next app cold start.
-        Alert.alert(
-          'New version available',
-          'Kindly reload to start using it',
-          [
-            {
-              text: 'OK', onPress: () => Updates.reloadAsync()
-            }, // open store if update is needed.
-            { text: 'Cancel', onPress: () => console.log('OK Pressed') }
-          ],
-          { cancelable: false }
-        );
-      }
-    }
-    try {
-      checkForExpoUpdates();
-    } catch (e) {
-      console.log(e)
-    }
-  }, []);
+  // useEffect(() => {
+  //   async function checkForExpoUpdates() {
+  //     const update = await Updates.checkForUpdateAsync();
+  //     console.log(update.isAvailable)
+  //     if (update.isAvailable) {
+  //       await Updates.fetchUpdateAsync();
+  //       // // Optionally, you can prompt the user to update here
+  //       // // For example, show a modal or a banner
+  //       // // Then reload the app to apply the update
+  //       // // Without reloading, the update will be applied on the next app cold start.
+  //       Alert.alert(
+  //         'New version available',
+  //         'Kindly reload to start using it',
+  //         [
+  //           {
+  //             text: 'OK', onPress: () => Updates.reloadAsync()
+  //           }, // open store if update is needed.
+  //           { text: 'Cancel', onPress: () => console.log('OK Pressed') }
+  //         ],
+  //         { cancelable: false }
+  //       );
+  //     }
+  //   }
+  //   try {
+  //     checkForExpoUpdates();
+  //   } catch (e) {
+  //     console.log(e)
+  //   }
+  // }, []);
 
   useEffect(() => {
     async function checkForAppStoreUpdates() {
