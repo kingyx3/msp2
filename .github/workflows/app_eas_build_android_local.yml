@@ -71,11 +71,10 @@ jobs:
             --non-interactive \
             --output=./app-build \
             --platform=android \
-            --profile=development \
-            --auto-submit
+            --profile=development
 
       - name: 📱 Upload binary
         uses: actions/upload-artifact@v4
         with:
           name: app-android
-          path: app-build
+          path: app/app-build
