@@ -67,7 +67,7 @@ jobs:
 
       - name: 👷 Build app
         run: |
-          eas build --local \
+          NODE_ENV=development eas build --local \
             --non-interactive \
             --output=./app-build \
             --platform=android \
