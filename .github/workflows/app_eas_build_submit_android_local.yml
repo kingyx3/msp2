@@ -42,7 +42,14 @@ jobs:
       - name: 📋 Test project
         run: yarn testFinal
 
-      - name: 👷 Build app
+      - name: Decode Google Play Service Account
+        env:
+          SERVICE_ACCOUNT_JSON: ${{ secrets.GOOGLE_PLAY_SERVICE_ACCOUNT }}
+        run: |
+          echo "$SERVICE_ACCOUNT_JSON" | base64 --decode > pc-api-6795295579632533760-300-d0f297d14ac0.json
+
+      - name: 👷 Build app (Development)
+        if: github.ref == 'refs/heads/develop'
         run: |
           NODE_ENV=development eas build --local \
             --non-interactive \
@@ -50,17 +57,31 @@ jobs:
             --platform=android \
             --profile=development
 
-      - name: Decode Google Play Service Account
-        env:
-          SERVICE_ACCOUNT_JSON: ${{ secrets.GOOGLE_PLAY_SERVICE_ACCOUNT }}
-        run: |
-          echo "$SERVICE_ACCOUNT_JSON" | base64 --decode > pc-api-6795295579632533760-300-d0f297d14ac0.json
-
-      - name: Submit app
+      - name: Submit app (Development)
+        if: github.ref == 'refs/heads/develop'
         run: |
           eas submit \
             --platform=android \
             --profile=development \
+            --path=./app-build \
+            --non-interactive \
+            --no-wait
+
+      - name: 👷 Build app (Production)
+        if: github.ref == 'refs/heads/main'
+        run: |
+          NODE_ENV=production eas build --local \
+            --non-interactive \
+            --output=./app-build \
+            --platform=android \
+            --profile=production
+
+      - name: Submit app (Production)
+        if: github.ref == 'refs/heads/main'
+        run: |
+          eas submit \
+            --platform=android \
+            --profile=production \
             --path=./app-build \
             --non-interactive \
             --no-wait

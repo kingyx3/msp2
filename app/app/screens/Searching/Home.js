@@ -36,10 +36,8 @@ import { initStripe } from "@stripe/stripe-react-native";
 import * as Typography from "../../config/Typography";
 import { StatusBar } from "expo-status-bar";
 import moment from 'moment'
-import { auth } from '../../../app/components/Firebase/firebaseConfig'
 
 const Home = (props) => {
-  console.log(auth.currentUser.uid)
   const [initLoading, setInitLoading] = useState(true)
   const [loading, setLoading] = useState(false)
   let userBookings = Object.values(props.userBookings)
