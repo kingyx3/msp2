@@ -16,6 +16,8 @@ import InputName from "./app/screens/InputName";
 import { auth, database } from './app/components/Firebase/firebaseConfig'
 import { isSignInWithEmailLink, signInWithEmailLink, onAuthStateChanged } from "firebase/auth";
 import { onValue, ref } from 'firebase/database';
+import * as Updates from 'expo-updates';
+import VersionCheck from 'react-native-version-check-expo'
 
 SplashScreen.preventAutoHideAsync();
 
@@ -26,6 +28,56 @@ export default function App() {
 
   // ---------------
   const useUrl = Linking.useURL();
+
+  useEffect(() => {
+    async function checkForExpoUpdates() {
+      const update = await Updates.checkForUpdateAsync();
+      console.log(update.isAvailable)
+      if (update.isAvailable) {
+        await Updates.fetchUpdateAsync();
+        // // Optionally, you can prompt the user to update here
+        // // For example, show a modal or a banner
+        // // Then reload the app to apply the update
+        // // Without reloading, the update will be applied on the next app cold start.
+        Alert.alert(
+          'New version available',
+          'Kindly reload to start using it',
+          [
+            {
+              text: 'OK', onPress: () => Updates.reloadAsync()
+            }, // open store if update is needed.
+            { text: 'Cancel', onPress: () => console.log('OK Pressed') }
+          ],
+          { cancelable: false }
+        );
+      }
+    }
+    try {
+      checkForExpoUpdates();
+    } catch (e) {
+      console.log(e)
+    }
+  }, []);
+
+  useEffect(() => {
+    async function checkForAppStoreUpdates() {
+      // Check for updates using your custom logic
+      const res = await VersionCheck.needUpdate()
+      // console.log(res);    // true
+      if (res.isNeeded) {
+        Alert.alert(
+          'Update available',
+          'Kindly update to the newest version',
+          [
+            { text: 'OK', onPress: () => Linking.openURL(res.storeUrl) }, // open store if update is needed.
+            { text: 'Cancel', onPress: () => console.log('OK Pressed') }
+          ],
+          { cancelable: false }
+        );
+      }
+    }
+    checkForAppStoreUpdates();
+  }, []);
 
   useEffect(() => {
     // declare the data fetching function
