@@ -34,7 +34,7 @@ module.exports = {
     },
     "supportsTablet": false,
     "bundleIdentifier": process.env.IOS_ID,
-    "buildNumber": "40",
+    "buildNumber": process.env.nativeBuildVersionIOS,
     "associatedDomains": [
       "applinks:makeshiftplans.com",
       "applinks:mspdev.page.link",
@@ -49,7 +49,7 @@ module.exports = {
   "userInterfaceStyle": "automatic",
   "android": {
     "package": process.env.ANDROID_ID,
-    "versionCode": "40",
+    "versionCode": process.env.nativeBuildVersionAndroid,
     "adaptiveIcon": {
       "foregroundImage": "./app/assets/adaptive-icon.png",
       "backgroundColor": "#ffffff"
