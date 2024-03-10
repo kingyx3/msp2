@@ -31,6 +31,10 @@ on:
       - app/app.config.js
       - .github/workflows/app_eas_build_android_local.yml
 
+defaults:
+  run:
+    working-directory: app
+
 jobs:
   build:
     runs-on: ubuntu-latest
