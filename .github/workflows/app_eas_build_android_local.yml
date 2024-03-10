@@ -29,22 +29,21 @@ on:
       - develop
     paths:
       - app/app.config.js
+      - .github/workflows/app_eas_build_android_local.yml
 
 jobs:
   build:
     runs-on: ubuntu-latest
-    strategy:
-      matrix:
-        node: [16.x]
     steps:
       - name: 🏗 Setup repo
-        uses: actions/checkout@v2
+        uses: actions/checkout@v4
 
       - name: 🏗 Setup Node
-        uses: actions/setup-node@v2
+        uses: actions/setup-node@v4
         with:
-          node-version: ${{ matrix.node }}
+          node-version: 20.x
           cache: yarn
+          cache-dependency-path: ./app/yarn.lock
 
       - name: 🏗 Setup Expo and EAS
         uses: expo/expo-github-action@v7
@@ -60,7 +59,7 @@ jobs:
         run: yarn
 
       - name: 📋 Test project
-        run: yarn test
+        run: yarn testFinal
 
       - name: 👷 Build app
         run: |
