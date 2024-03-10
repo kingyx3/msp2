@@ -31,7 +31,7 @@ export default function App() {
   useEffect(() => {
     async function checkForAppStoreUpdates() {
       // Check for updates using your custom logic (checks for 1.0.2 number only not the version code etc)
-      if (Application.nativeApplicationVersion != process.env.nativeApplicationVersion) {
+      if (Application.nativeApplicationVersion != process.env.EXPO_PUBLIC_nativeApplicationVersion) {
         Alert.alert(
           'Update available',
           'Please update the app for a better experience' + " | " + Application.nativeApplicationVersion + ', ' + process.env.EXPO_PUBLIC_nativeApplicationVersion,
