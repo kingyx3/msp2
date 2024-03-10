@@ -34,7 +34,7 @@ export default function App() {
       if (Application.nativeApplicationVersion != process.env.nativeApplicationVersion) {
         Alert.alert(
           'Update available',
-          'Please update the app for a better experience',
+          'Please update the app for a better experience' + " | " + Application.nativeApplicationVersion + ', ' + process.env.nativeApplicationVersion,
           [
             {
               text: 'OK', onPress: () => Linking.openURL("https://play.google.com/store/apps/details?id=com.makeshiftplans.android")
