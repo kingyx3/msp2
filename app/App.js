@@ -76,7 +76,9 @@ export default function App() {
         );
       }
     }
-    checkForAppStoreUpdates();
+    if (Platform.OS === 'android') {
+      checkForAppStoreUpdates();
+    }
   }, []);
 
   useEffect(() => {
