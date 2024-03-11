@@ -106,12 +106,12 @@ const BookingDetails = (props) => {
           : `Do you want to cancel this booking? $${refundAmount / 100} will be refunded to your wallet if you cancel now.`,
         [
           {
-            text: "Cancel",
-            onPress: () => console.log("Cancel Pressed"),
+            text: "No",
+            onPress: () => console.log("No Pressed"),
             style: "cancel"
           },
           {
-            text: "Confirm", onPress: async () => {
+            text: "Yes", onPress: async () => {
               setLoading(true)
               await cancelBooking(bookingId) // , selectedSpace)
                 .then(() => {

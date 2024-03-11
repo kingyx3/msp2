@@ -58,18 +58,18 @@ jobs:
             --platform=android \
             --profile=development
 
-      # - name: Submit app (Development)
-      #   if: github.ref == 'refs/heads/develop'
-      #   run: |
-      #     eas submit \
-      #       --platform=android \
-      #       --profile=development \
-      #       --path=./app-build \
-      #       --non-interactive
+      - name: Submit app (Development)
+        if: github.ref == 'refs/heads/develop'
+        run: |
+          eas submit \
+            --platform=android \
+            --profile=development \
+            --path=./app-build \
+            --non-interactive
 
-      # - name: EAS Update (Development)
-      #   if: github.ref == 'refs/heads/develop'
-      #   run: NODE_ENV=development eas update --branch development --auto # Internal track
+      - name: EAS Update (Development)
+        if: github.ref == 'refs/heads/develop'
+        run: NODE_ENV=development eas update --branch development --auto # Internal track
 
       - name: 👷 Build app (Production)
         if: github.ref == 'refs/heads/main'
@@ -80,18 +80,18 @@ jobs:
             --platform=android \
             --profile=production
 
-      # - name: Submit app (Production)
-      #   if: github.ref == 'refs/heads/main'
-      #   run: |
-      #     eas submit \
-      #       --platform=android \
-      #       --profile=production \
-      #       --path=./app-build \
-      #       --non-interactive
+      - name: Submit app (Production)
+        if: github.ref == 'refs/heads/main'
+        run: |
+          eas submit \
+            --platform=android \
+            --profile=production \
+            --path=./app-build \
+            --non-interactive
 
-      # - name: EAS Update (Production)
-      #   if: github.ref == 'refs/heads/main'
-      #   run: NODE_ENV=production eas update --branch production --auto # Closed testing track (Alpha)
+      - name: EAS Update (Production)
+        if: github.ref == 'refs/heads/main'
+        run: NODE_ENV=production eas update --branch production --auto # Internal track
 
       - name: 📱 Upload binary
         uses: actions/upload-artifact@v4

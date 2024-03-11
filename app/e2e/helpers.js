@@ -381,7 +381,7 @@ const testCancelBooking = async (host, currentDateTime, cancelByDateTime, bookin
     console.log('bookingCancellationText', "|" + bookingCancellationText + "|")
     await waitFor(element(by.text(bookingCancellationText))).toBeVisible().withTimeout(60000);
 
-    await element(by.text("Cancel")).tap();
+    await element(by.text("No")).tap(); // Yes
 
     await waitFor(element(by.id("cancel-booking"))).toBeVisible().withTimeout(60000);
 }
