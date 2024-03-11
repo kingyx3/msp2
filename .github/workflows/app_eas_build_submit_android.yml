@@ -93,8 +93,8 @@ jobs:
       #   if: github.ref == 'refs/heads/main'
       #   run: NODE_ENV=production eas update --branch production --auto # Closed testing track (Alpha)
 
-      # - name: 📱 Upload binary
-      #   uses: actions/upload-artifact@v4
-      #   with:
-      #     name: app-android
-      #     path: app/app-build
+      - name: 📱 Upload binary
+        uses: actions/upload-artifact@v4
+        with:
+          name: app-android
+          path: app/app-build
