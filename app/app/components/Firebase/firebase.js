@@ -44,7 +44,6 @@ export const loginWithEmailz = async (email) => {
     },
     dynamicLinkDomain: process.env.EXPO_PUBLIC_DLINK // need custom domain, then link in dynamics in firebase console
   };
-  console.log(process.env.EXPO_PUBLIC_DLINK)
   return sendSignInLinkToEmail(auth, email, actionCodeSettings)
     .then(async () => {
       // The link was successfully sent. Inform the user.

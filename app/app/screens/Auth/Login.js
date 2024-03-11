@@ -36,15 +36,15 @@ const Login = ({ navigation }) => {
         await registerWithEmail(email);
         // console.log("Registering user with registerWithEmail")
       } catch (e1) {
-        console.log('Error: ', e1)
         // Existing user
-        try {
-          await loginWithEmailz(email)
-          navigation.navigate('Email Link Sent', email)
-          // console.log("Email link sent")
-        } catch (e2) {
-          console.log('Error: ', e2)
-        }
+        console.log('Sign Up Error: ', e1)
+      }
+      try {
+        await loginWithEmailz(email)
+        navigation.navigate('Email Link Sent', email)
+        // console.log("Email link sent")
+      } catch (e2) {
+        console.log('Email Link Error: ', e2)
       }
       setDisabled(false)
     } else {
