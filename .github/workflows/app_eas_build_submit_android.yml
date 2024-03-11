@@ -7,7 +7,7 @@ on:
     paths:
       - app/app.config.js
       - app/.env*
-      - .github/workflows/app_eas_build_android.yml
+      - .github/workflows/app_eas_build_submit_android.yml
 
 defaults:
   run:
