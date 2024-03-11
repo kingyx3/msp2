@@ -21,8 +21,8 @@
     "development": {
       "channel": "development",
       "env": {
-        "IOS_ID": "com.makeshiftplans.ios",
-        "ANDROID_ID": "com.makeshiftplans.android"
+        "IOS_ID": "com.makeshiftplans.ios.dev",
+        "ANDROID_ID": "com.makeshiftplans.android.dev"
       }
     },
     "production": {
@@ -43,7 +43,7 @@
     "production": {
       "android": {
         "serviceAccountKeyPath": "pc-api-6795295579632533760-300-d0f297d14ac0.json",
-        "track": "alpha"
+        "track": "internal"
       }
     }
   }
