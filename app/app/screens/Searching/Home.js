@@ -93,16 +93,18 @@ const Home = (props) => {
   useEffect(() => {
     // createStaticData()
     async function initialize() {
-      const publishableKey = await getPublicKey();
-      // console.log(publishableKey, 'lolol')
-      if (publishableKey) {
-        await initStripe({
-          publishableKey,
-          merchantIdentifier: 'makeshiftplans.com',
-          urlScheme: 'makeshiftplans',
-        });
-        setInitLoading(false);
-      } else {
+      try {
+        const publishableKey = await getPublicKey();
+        console.log(publishableKey, 'lolol')
+        if (publishableKey) {
+          await initStripe({
+            publishableKey,
+            merchantIdentifier: 'makeshiftplans.com',
+            urlScheme: 'makeshiftplans',
+          });
+          setInitLoading(false);
+        }
+      } catch (e) {
         // If publishableKey is not set, call initialize again after a minute
         setTimeout(initialize, 60000); // 60000 mils = 1 minute
       }

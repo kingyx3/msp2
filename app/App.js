@@ -37,9 +37,9 @@ export default function App() {
           'Please update the app for a better experience' + " | " + Application.nativeApplicationVersion + ', ' + process.env.EXPO_PUBLIC_nativeApplicationVersion,
           [
             {
-              text: 'OK', onPress: () => Linking.openURL("https://play.google.com/store/apps/details?id=com.makeshiftplans.android")
+              text: 'Update', onPress: () => Linking.openURL("https://play.google.com/store/apps/details?id=com.makeshiftplans.android")
             }, // open store if update is needed.
-            { text: 'Cancel', onPress: () => console.log('OK Pressed') }
+            { text: 'Later', onPress: () => console.log('Later Pressed') }
           ],
           { cancelable: false }
         );
