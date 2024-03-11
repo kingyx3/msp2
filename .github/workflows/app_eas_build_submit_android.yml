@@ -54,7 +54,7 @@ jobs:
         run: |
           NODE_ENV=development eas build --local \
             --non-interactive \
-            --output=./app-build.aab \
+            --output=./app-build \
             --platform=android \
             --profile=development
 
@@ -76,7 +76,7 @@ jobs:
         run: |
           NODE_ENV=production eas build --local \
             --non-interactive \
-            --output=./app-build.aab \
+            --output=./app-build \
             --platform=android \
             --profile=production
 

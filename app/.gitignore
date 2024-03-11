@@ -13,6 +13,7 @@ coverage/
 artifacts/
 android/
 ios/
+.env.local*
 
 # macOS
 .DS_Store

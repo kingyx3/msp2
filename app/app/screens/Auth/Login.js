@@ -92,7 +92,7 @@ const Login = ({ navigation }) => {
               label="Dev Login"
               color={colors.red}
               labelcolor={colors.red}
-              onPress={() => loginWithEmail('kingyx3@hotmail.com', 'C2gUEXH!W7T537N')}
+              onPress={() => loginWithEmail('kingyx3@hotmail.com', 'QnIVZ-ke7c3_nGcU$QkMFi@iFftsOT!497M-QBq8EdY2b7bdrJHETZVS8SrL-Iop')}
             />}
         </Btn>
       </Main>
