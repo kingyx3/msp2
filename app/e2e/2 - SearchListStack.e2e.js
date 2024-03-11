@@ -15,7 +15,7 @@ describe('Make a booking via picking datetime & ListMap', () => {
     const walletBalanceLabel = (await element(by.id("wallet-balance")).getAttributes()).label
     // Regular expression to match the numeric value
     const match = walletBalanceLabel.match(/(\d+\.\d+)/);
-    console.log('Wallet Balance: ', match)
+    console.log('Wallet Balance: ', walletBalanceLabel, match)
     // Parsing the string to a float
     global.beginWalletBalance = match ? parseFloat(match[0]) : 0;
   });
@@ -168,7 +168,7 @@ describe('Make a booking via quick search & Listings', () => {
     const walletBalanceLabel = (await element(by.id("wallet-balance")).getAttributes()).label
     // Regular expression to match the numeric value
     const match = walletBalanceLabel.match(/(\d+\.\d+)/);
-    console.log('Wallet Balance: ', match)
+    console.log('Wallet Balance: ', walletBalanceLabel, match)
     // Parsing the string to a float
     global.beginWalletBalance = match ? parseFloat(match[0]) : 0;
   });
