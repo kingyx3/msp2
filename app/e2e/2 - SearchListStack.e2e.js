@@ -51,6 +51,7 @@ describe('Make a booking via picking datetime & ListMap', () => {
       await datePicker.setDatePickerDate(`${+year}-${+month}-${+day + 2}T12:00:00+08:00`, 'ISO8601');
       await element(by.text('OK')).tap();
       await waitFor(datePicker).not.toBeVisible().withTimeout(60000);
+      await waitFor(element(by.id('open-time-picker'))).toBeVisible().withTimeout(60000);
 
       // Set Time to 10 AM
       await element(by.id('open-time-picker')).tap();
@@ -58,6 +59,7 @@ describe('Make a booking via picking datetime & ListMap', () => {
       // await element(by.text('11')).tap(); // no valid way to set time in Android yet
       await element(by.text('OK')).tap();
       await waitFor(timePicker).not.toBeVisible().withTimeout(60000);
+      await waitFor(element(by.id('duration-picker'))).toBeVisible().withTimeout(60000);
 
     } else {
       const datePicker = element(by.type('UIDatePicker'));
@@ -68,6 +70,7 @@ describe('Make a booking via picking datetime & ListMap', () => {
       await datePicker.setDatePickerDate(`${+year}-${+month}-${+day + 2}T00:00:00+08:00`, 'ISO8601');
       await element(by.text('Confirm')).tap();
       await waitFor(datePicker).not.toBeVisible().withTimeout(60000);
+      await waitFor(element(by.id('open-time-picker'))).toBeVisible().withTimeout(60000);
 
       // Set Time to 10 AM
       await element(by.id('open-time-picker')).tap();
@@ -75,6 +78,7 @@ describe('Make a booking via picking datetime & ListMap', () => {
       await datePicker.setDatePickerDate(`${+year}-${+month}-${+day + 2}T11:00:00+08:00`, 'ISO8601');
       await element(by.text('Confirm')).tap();
       await waitFor(datePicker).not.toBeVisible().withTimeout(60000);
+      await waitFor(element(by.id('duration-picker'))).toBeVisible().withTimeout(60000);
     }
 
     // Set Duration to 2 hours
