@@ -32,21 +32,18 @@ const Login = ({ navigation }) => {
       setDisabled(true)
       const { email } = values;
       try {
-        await loginWithEmail(email, 'bh6%&#YR76*8Sn24!COu^KkwtOxLddFdg$&jLISMI4$b$bcyq&TeUKdpvz4T*vJ#WW5ZSv5Mq*W76yyL93%jlaxSrEMLHEqbga1');
-        //navigation.navigate("HomeStack")
-        // console.log("Logged in with loginWithEmail")
-      } catch (error) {
-        console.log('error.message', error.message)
-        if (error.message.includes("auth/user-not-found")) {
-          await registerWithEmail(email);
-          // console.log("Registering user with registerWithEmail")
-        }
+        // New user?
+        await registerWithEmail(email);
+        // console.log("Registering user with registerWithEmail")
+      } catch (e1) {
+        console.log('Error: ', e1)
+        // Existing user
         try {
           await loginWithEmailz(email)
           navigation.navigate('Email Link Sent', email)
-          // console.log("Logged in with loginWithEmailz")
-        } catch (e) {
-          console.log('e', e)
+          // console.log("Email link sent")
+        } catch (e2) {
+          console.log('Error: ', e2)
         }
       }
       setDisabled(false)
@@ -95,8 +92,7 @@ const Login = ({ navigation }) => {
               label="Dev Login"
               color={colors.red}
               labelcolor={colors.red}
-              onPress={() => loginWithEmail('kingyx3@hotmail.com', 'tester')}
-            // onPress={() => loginWithEmail('b0sskay@hotmail.com', 'bh6%&#YR76*8Sn24!COu^KkwtOxLddFdg$&jLISMI4$b$bcyq&TeUKdpvz4T*vJ#WW5ZSv5Mq*W76yyL93%jlaxSrEMLHEqbga1')}
+              onPress={() => loginWithEmail('kingyx3@hotmail.com', 'C2gUEXH!W7T537N')}
             />}
         </Btn>
       </Main>

@@ -19,11 +19,10 @@ import { activesgSpaceSummary } from '../../config/appConfig';
 import * as SecureStore from 'expo-secure-store';
 import { Alert } from 'react-native';
 
-export const hostFeeRate = 0.08 // 8% of total volume
-export const minBookerFeeRate = 0.03 // Min 3% of total volume rounded up to nearest $
+export const hostFeeRate = process.env.EXPO_PUBLIC_hostFeeRate
+export const minBookerFeeRate = process.env.EXPO_PUBLIC_minBookerFeeRate
 
 const deepmerge = require('deepmerge')
-const firebaseProjectName = 'makeshiftplans-dev'
 
 // Email link Auth
 export const loginWithEmailz = async (email) => {
@@ -45,6 +44,7 @@ export const loginWithEmailz = async (email) => {
     },
     dynamicLinkDomain: process.env.EXPO_PUBLIC_DLINK // need custom domain, then link in dynamics in firebase console
   };
+  console.log(process.env.EXPO_PUBLIC_DLINK)
   return sendSignInLinkToEmail(auth, email, actionCodeSettings)
     .then(async () => {
       // The link was successfully sent. Inform the user.
@@ -1522,7 +1522,7 @@ export async function getCancelByHours(setCancelByHours, spaceCancellationPolicy
 }
 
 export function getAvatarLink(userId) {
-  return `https://firebasestorage.googleapis.com/v0/b/${firebaseProjectName}.appspot.com/o/users%2F${userId}%2Favatar%2F0?alt=media`
+  return `https://firebasestorage.googleapis.com/v0/b/${process.env.EXPO_PUBLIC_FB_projectId}.appspot.com/o/users%2F${userId}%2Favatar%2F0?alt=media`
 }
 
 export const showOfflineAlert = () => {

@@ -36,7 +36,6 @@ const TopUp = (props) => {
   const [paymentSheetEnabled, setPaymentSheetEnabled] = useState(false);
   // const [clientSecret, setClientSecret] = useState("");
   const [loading, setLoading] = useState(false)
-  const image = require('../../assets/logo.png') //{ uri: "https://reactjs.org/logo-og.png" };
   const [amount, setAmount] = useState("10");
   const [count, setCount] = useState(0);
 
