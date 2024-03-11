@@ -1,4 +1,4 @@
-name: EAS Build & Submit to Google Playstore (Android)
+name: ZZZ - EAS Build & Submit to Google Playstore (Android)
 on:
   push:
     branches:

@@ -1,10 +1,11 @@
-name: EAS Build & Detox Test (Android)
+name: ZZZ - EAS Build & Detox Test (Android)
 on:
   push:
     branches:
-      - "**"
+      - main
+      - develop
     paths:
-      - app1/App.js
+      - app/abc # prevent runs
       # - app/App.js
 defaults:
   run:
