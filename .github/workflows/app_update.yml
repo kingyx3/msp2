@@ -5,9 +5,8 @@ on:
       - main
       - develop
     paths:
-      - "app/**"
-      - "!app/e2e/**"
-      - "!app/eas-hooks/**"
+      - "app/app/**"
+      - "app/App.js"
 
 defaults:
   run:
