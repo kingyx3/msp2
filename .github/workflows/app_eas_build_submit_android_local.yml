@@ -6,6 +6,7 @@ on:
       - develop
     paths:
       - app/app.config.js
+      - app/.env*
       - .github/workflows/app_eas_build_android_local.yml
 
 defaults:
