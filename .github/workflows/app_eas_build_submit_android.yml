@@ -1,4 +1,4 @@
-name: EAS Build (Android) Local
+name: EAS Build & Submit (Android)
 on:
   push:
     branches:
@@ -7,7 +7,7 @@ on:
     paths:
       - app/app.config.js
       - app/.env*
-      - .github/workflows/app_eas_build_android_local.yml
+      - .github/workflows/app_eas_build_android.yml
 
 defaults:
   run:
@@ -43,7 +43,7 @@ jobs:
       - name: 📋 Test project
         run: yarn testFinal
 
-      - name: Decode Google Play Service Account
+      - name: Decode Google Play Service Account (Production)
         env:
           SERVICE_ACCOUNT_JSON: ${{ secrets.GOOGLE_PLAY_SERVICE_ACCOUNT }}
         run: |
@@ -54,7 +54,7 @@ jobs:
         run: |
           NODE_ENV=development eas build --local \
             --non-interactive \
-            --output=./app-build \
+            --output=./app-build.aab \
             --platform=android \
             --profile=development
 
@@ -65,15 +65,18 @@ jobs:
             --platform=android \
             --profile=development \
             --path=./app-build \
-            --non-interactive \
-            --no-wait
+            --non-interactive
+
+      - name: EAS Update (Development)
+        if: github.ref == 'refs/heads/develop'
+        run: NODE_ENV=development eas update --branch development --auto # Internal track
 
       - name: 👷 Build app (Production)
         if: github.ref == 'refs/heads/main'
         run: |
           NODE_ENV=production eas build --local \
             --non-interactive \
-            --output=./app-build \
+            --output=./app-build.aab \
             --platform=android \
             --profile=production
 
@@ -84,8 +87,11 @@ jobs:
             --platform=android \
             --profile=production \
             --path=./app-build \
-            --non-interactive \
-            --no-wait
+            --non-interactive
+
+      - name: EAS Update (Production)
+        if: github.ref == 'refs/heads/main'
+        run: NODE_ENV=production eas update --branch production --auto # Closed testing track (Alpha)
 
       - name: 📱 Upload binary
         uses: actions/upload-artifact@v4
