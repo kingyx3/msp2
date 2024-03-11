@@ -15,6 +15,7 @@ describe('Make a booking via picking datetime & ListMap', () => {
     const walletBalanceLabel = (await element(by.id("wallet-balance")).getAttributes()).label
     // Regular expression to match the numeric value
     const match = walletBalanceLabel.match(/(\d+\.\d+)/);
+    console.log('Wallet Balance: ', match)
     // Parsing the string to a float
     global.beginWalletBalance = match ? parseFloat(match[0]) : 0;
   });
@@ -118,7 +119,9 @@ describe('Make a booking via picking datetime & ListMap', () => {
     // Test changing of court number before booking
     const reservationCostLabel = (await element(by.id("reservation-cost")).getAttributes()).label
     const reservationCost = parseFloat(reservationCostLabel.replace(/[^0-9.]/g, ''));
+    console.log('reservationCost: ', reservationCost)
     global.excessBalance = global.beginWalletBalance - reservationCost
+    console.log('Ending Balance: ', global.excessBalance)
 
     await element(by.id('book-now-button')).tap();
 
@@ -165,6 +168,7 @@ describe('Make a booking via quick search & Listings', () => {
     const walletBalanceLabel = (await element(by.id("wallet-balance")).getAttributes()).label
     // Regular expression to match the numeric value
     const match = walletBalanceLabel.match(/(\d+\.\d+)/);
+    console.log('Wallet Balance: ', match)
     // Parsing the string to a float
     global.beginWalletBalance = match ? parseFloat(match[0]) : 0;
   });
@@ -223,7 +227,9 @@ describe('Make a booking via quick search & Listings', () => {
     // Test changing of court number before booking
     const reservationCostLabel = (await element(by.id("reservation-cost")).getAttributes()).label
     const reservationCost = parseFloat(reservationCostLabel.replace(/[^0-9.]/g, ''));
+    console.log('reservationCost: ', reservationCost)
     global.excessBalance = global.beginWalletBalance - reservationCost
+    console.log('Ending Balance: ', global.excessBalance)
 
     await element(by.id('book-now-button')).tap();
 
