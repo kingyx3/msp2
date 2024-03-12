@@ -2,7 +2,6 @@ name: e2e-android
 on:
   push:
     branches:
-      - main
       - develop
     paths:
       - "app/e2e/**"

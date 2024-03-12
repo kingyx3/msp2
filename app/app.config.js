@@ -1,5 +1,3 @@
-//
-
 module.exports = {
   "name": process.env.EXPO_PUBLIC_APP_SHORT_NAME,
   "scheme": "msp",
