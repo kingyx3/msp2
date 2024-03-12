@@ -19,8 +19,19 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
 
-      - name: Install dependencies & build
-        run: npm ci && npm run build
+      - name: Install dependencies & build (Development)
+        if: github.ref == 'refs/heads/develop'
+        run: npm ci && REACT_APP_ENV=development npm run build
+
+      - name: Deploy to Firebase (Development)
+        if: github.ref == 'refs/heads/develop'
+        run: firebase use makeshiftplans-dev && firebase deploy --only hosting
+        env:
+          FIREBASE_TOKEN: ${{ secrets.FIREBASE_TOKEN }}
+
+      - name: Install dependencies & build (Production)
+        if: github.ref == 'refs/heads/main'
+        run: npm ci && REACT_APP_ENV=production npm run build
 
       - name: Deploy to Firebase (Production)
         if: github.ref == 'refs/heads/main'
@@ -41,9 +52,3 @@ jobs:
       #     projectId: makeshiftplans-dev
       #     entryPoint: web
       #     channelId: live
-
-      - name: Deploy to Firebase (Development)
-        if: github.ref == 'refs/heads/develop'
-        run: firebase use makeshiftplans-dev && firebase deploy --only hosting
-        env:
-          FIREBASE_TOKEN: ${{ secrets.FIREBASE_TOKEN }}
