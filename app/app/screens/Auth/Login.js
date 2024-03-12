@@ -40,15 +40,14 @@ const Login = ({ navigation }) => {
           await registerWithEmail(email);
         } else if (error.message.includes("auth/wrong-password")) {
           // User exists
-          try {
-            await loginWithEmailz(email)
-            navigation.navigate('Email Link Sent', email)
-            // console.log("Email link sent")
-          } catch (e) {
-            console.log('Email Link Error: ', e)
-          }
         } else {
           console.log('error.message', error.message)
+        }
+        try {
+          await loginWithEmailz(email)
+          navigation.navigate('Email Link Sent', email)
+        } catch (e) {
+          console.log('Email Link Error: ', e)
         }
       }
       setDisabled(false)
@@ -90,16 +89,6 @@ const Login = ({ navigation }) => {
           />
           {/* <Text style={styles.errorText}>{loginError}</Text> */}
         </AppForm>
-        {/* <Btn>
-          {(process.env.EXPO_PUBLIC_TYPE == 'DEV' || process.env.EXPO_PUBLIC_TYPE == 'TEST') &&
-            <Button.BtnOutline
-              testID="dev-login-button"
-              label="Dev Login"
-              color={colors.red}
-              labelcolor={colors.red}
-              onPress={() => loginWithEmail('kingyx3@hotmail.com',)}
-            />}
-        </Btn> */}
       </Main>
     </Container>
   );
