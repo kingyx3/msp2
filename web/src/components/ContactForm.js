@@ -25,7 +25,7 @@ const ContactForm = () => {
                 setComments('');
             }
         } else {
-            // alert('Please add a comment!');
+            alert('Please add a comment!');
         }
     };
 
