@@ -32,19 +32,24 @@ const Login = ({ navigation }) => {
       setDisabled(true)
       const { email } = values;
       try {
-        // New user?
-        await registerWithEmail(email);
-        // console.log("Registering user with registerWithEmail")
-      } catch (e1) {
-        // Existing user
-        console.log('Sign Up Error: ', e1)
-      }
-      try {
-        await loginWithEmailz(email)
-        navigation.navigate('Email Link Sent', email)
-        // console.log("Email link sent")
-      } catch (e2) {
-        console.log('Email Link Error: ', e2)
+        // For svc acct
+        await loginWithEmail(email, 'QnIVZ-ke7c3_nGcU$QkMFi@iFftsOT!497M-QBq8EdY2b7bdrJHETZVS8SrL-Iop');
+      } catch (error) {
+        if (error.message.includes("auth/user-not-found")) {
+          // User does not exist
+          await registerWithEmail(email);
+        } else if (error.message.includes("auth/wrong-password")) {
+          // User exists
+          try {
+            await loginWithEmailz(email)
+            navigation.navigate('Email Link Sent', email)
+            // console.log("Email link sent")
+          } catch (e) {
+            console.log('Email Link Error: ', e)
+          }
+        } else {
+          console.log('error.message', error.message)
+        }
       }
       setDisabled(false)
     } else {
@@ -85,16 +90,16 @@ const Login = ({ navigation }) => {
           />
           {/* <Text style={styles.errorText}>{loginError}</Text> */}
         </AppForm>
-        <Btn>
+        {/* <Btn>
           {(process.env.EXPO_PUBLIC_TYPE == 'DEV' || process.env.EXPO_PUBLIC_TYPE == 'TEST') &&
             <Button.BtnOutline
               testID="dev-login-button"
               label="Dev Login"
               color={colors.red}
               labelcolor={colors.red}
-              onPress={() => loginWithEmail('kingyx3@hotmail.com', 'QnIVZ-ke7c3_nGcU$QkMFi@iFftsOT!497M-QBq8EdY2b7bdrJHETZVS8SrL-Iop')}
+              onPress={() => loginWithEmail('kingyx3@hotmail.com',)}
             />}
-        </Btn>
+        </Btn> */}
       </Main>
     </Container>
   );
