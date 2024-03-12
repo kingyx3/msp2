@@ -58,6 +58,21 @@ jobs:
             --platform=android \
             --profile=development
 
+      - name: 👷 Build app (Production)
+        if: github.ref == 'refs/heads/main'
+        run: |
+          NODE_ENV=production eas build --local \
+            --non-interactive \
+            --output=./app-build \
+            --platform=android \
+            --profile=production
+      #
+      - name: 📱 Upload binary
+        uses: actions/upload-artifact@v4
+        with:
+          name: app-android
+          path: app/app-build
+      #
       - name: Submit app (Development)
         if: github.ref == 'refs/heads/develop'
         run: |
@@ -70,16 +85,7 @@ jobs:
       - name: EAS Update (Development)
         if: github.ref == 'refs/heads/develop'
         run: NODE_ENV=development eas update --branch development --auto # Internal track
-
-      - name: 👷 Build app (Production)
-        if: github.ref == 'refs/heads/main'
-        run: |
-          NODE_ENV=production eas build --local \
-            --non-interactive \
-            --output=./app-build \
-            --platform=android \
-            --profile=production
-
+      #
       - name: Submit app (Production)
         if: github.ref == 'refs/heads/main'
         run: |
@@ -92,9 +98,3 @@ jobs:
       - name: EAS Update (Production)
         if: github.ref == 'refs/heads/main'
         run: NODE_ENV=production eas update --branch production --auto # Internal track
-
-      - name: 📱 Upload binary
-        uses: actions/upload-artifact@v4
-        with:
-          name: app-android
-          path: app/app-build
