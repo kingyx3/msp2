@@ -32,12 +32,18 @@ jobs:
           entryPoint: web
           channelId: live
 
+      # - name: Deploy to Firebase (Development)
+      #   if: github.ref == 'refs/heads/develop'
+      #   uses: FirebaseExtended/action-hosting-deploy@v0
+      #   with:
+      #     repoToken: "${{ secrets.GITHUB_TOKEN }}"
+      #     firebaseServiceAccount: "${{ secrets.FIREBASE_SERVICE_ACCOUNT_MAKESHIFTPLANS_DEV }}"
+      #     projectId: makeshiftplans-dev
+      #     entryPoint: web
+      #     channelId: live
+
       - name: Deploy to Firebase (Development)
         if: github.ref == 'refs/heads/develop'
-        uses: FirebaseExtended/action-hosting-deploy@v0
-        with:
-          repoToken: "${{ secrets.GITHUB_TOKEN }}"
-          firebaseServiceAccount: "${{ secrets.FIREBASE_SERVICE_ACCOUNT_MAKESHIFTPLANS_DEV }}"
-          projectId: makeshiftplans-dev
-          entryPoint: web
-          channelId: live
+        run: firebase use makeshiftplans-dev && firebase deploy --only hosting
+        env:
+          FIREBASE_TOKEN: ${{ secrets.FIREBASE_TOKEN }}
