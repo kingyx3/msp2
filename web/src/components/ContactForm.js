@@ -6,20 +6,24 @@ const ContactForm = () => {
     const [email, setEmail] = useState('');
     const [category, setCategory] = useState('general');
     const [comments, setComments] = useState('');
+    const [loading, setLoading] = useState(false);
 
     const handleSubmit = async (e) => {
         e.preventDefault();
         if (comments) {
             try {
+                setLoading(true); // Start loading
                 const createFeedbackLog = httpsCallable(functions, 'createFeedbackLog');
                 const response = await createFeedbackLog({ email, category, comments });
                 console.log('Response:', response.data);
-                alert('We have received your request, we will get back to you as soon as we can. ' + process.env.REACT_APP_SUPPORT_EMAIL);
+                alert('We have received your request, we will get back to you as soon as we can.' + process.env.REACT_APP_FB_databaseURL);
             } catch (error) {
                 console.error('Error sending email:', error);
                 alert('Unable to receive your request. Please try again later. Alternatively, you can email ' + process.env.REACT_APP_SUPPORT_EMAIL + 'directly, thank you.');
+            } finally {
+                setLoading(false); // Stop loading
+                setComments('');
             }
-            setComments('')
         } else {
             // alert('Please add a comment!');
         }
@@ -59,7 +63,9 @@ const ContactForm = () => {
                         style={styles.input}
                     />
                 </label>
-                <button type="submit" style={styles.button}>Submit</button>
+                <button type="submit" style={{ ...styles.button, backgroundColor: loading ? '#ccc' : '#4CAF50' }} disabled={loading}>
+                    {loading ? 'Loading...' : 'Submit'}
+                </button>
             </form>
         </div>
     );
@@ -88,7 +94,6 @@ const styles = {
         boxSizing: 'border-box', // Include padding and border in the total width
     },
     button: {
-        backgroundColor: '#4CAF50',
         color: 'white',
         padding: '12px 20px',
         border: 'none',

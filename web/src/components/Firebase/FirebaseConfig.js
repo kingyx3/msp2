@@ -9,14 +9,13 @@ import { getStorage } from 'firebase/storage';
 // Your web app's Firebase configuration
 // For Firebase JS SDK v7.20.0 and later, measurementId is optional
 const FIREBASE_CONFIG = {
-    apiKey: "AIzaSyCmMVqDNKg07ftVZwBGAAe8_6nuj0wo5Ho",
-    authDomain: "makeshiftplans-dev.firebaseapp.com",
-    databaseURL: "https://makeshiftplans-dev-default-rtdb.asia-southeast1.firebasedatabase.app",
-    projectId: "makeshiftplans-dev",
-    storageBucket: "makeshiftplans-dev.appspot.com",
-    messagingSenderId: "505686398711",
-    appId: "1:505686398711:web:2bdf7092493c5f0a5ae5f2",
-    measurementId: "G-ZW3HDVGHM1"
+    apiKey: process.env.REACT_APP_FB_apiKey,
+    authDomain: process.env.REACT_APP_FB_authDomain,
+    databaseURL: process.env.REACT_APP_FB_databaseURL,
+    projectId: process.env.REACT_APP_FB_projectId,
+    storageBucket: process.env.REACT_APP_FB_storageBucket,
+    messagingSenderId: process.env.REACT_APP_FB_messagingSenderId,
+    appId: process.env.REACT_APP_FB_appId
 };
 
 // Initialize Firebase
