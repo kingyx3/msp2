@@ -25,7 +25,6 @@ import styled from 'styled-components/native';
 import * as List from "../components/List";
 import colors from '../config/colors';
 import { H, P } from "../config/Typography";
-import { useIsFocused } from '@react-navigation/native';
 
 const { width, height } = Dimensions.get('window');
 

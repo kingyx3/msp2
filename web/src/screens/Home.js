@@ -3,8 +3,8 @@ import React from 'react';
 const Home = () => {
     return (
         <div style={styles.container}>
-            <img src="/icon.png" alt="Makeshiftplans" style={styles.logo} />
-            <h1>Welcome to Makeshiftplans</h1>
+            <img src="/icon.png" alt="MakeShiftPlans" style={styles.logo} />
+            <h1>Welcome to MakeShiftPlans</h1>
             <p>Find the perfect space for your needs</p>
             <div style={styles.downloadLinks}>
                 <a href="https://play.google.com/store/apps/details?id=com.makeshiftplans.android">
