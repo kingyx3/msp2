@@ -154,21 +154,21 @@ const AvailabilityCalendar = ({ data, setDatedEvents }) => {
                     <TouchableWithoutFeedback>
                         <ModalView>
                             <View style={{ marginBottom: 30 }}>
-                                <Typography.H1 bold >{'Edit Price & Availability'}</Typography.H1>
+                                <Typography.H2 bold >{'Edit Price & Availability'}</Typography.H2>
                             </View>
                             <View style={{ flex: 0.3, flexDirection: 'row', alignItems: 'center', marginBottom: 20 }}>
                                 <View style={{ flex: 1 }}>
                                     <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
-                                        <Typography.H2 style={{ marginBottom: 10 }}>{`Date:`}</Typography.H2>
-                                        <Typography.H2 style={{ marginBottom: 10 }}>{`${moment(+selectedTimeslot).format('DD/MM/yyyy')}`}</Typography.H2>
+                                        <Typography.H3 style={{ marginBottom: 10 }}>{`Date:`}</Typography.H3>
+                                        <Typography.H3 style={{ marginBottom: 10 }}>{`${moment(+selectedTimeslot).format('DD/MM/yyyy')}`}</Typography.H3>
                                     </View>
                                     <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
-                                        <Typography.H2>{`Time:`}</Typography.H2>
-                                        <Typography.H2>{`${moment(+selectedTimeslot).format('hA')}`}</Typography.H2>
+                                        <Typography.H3>{`Time:`}</Typography.H3>
+                                        <Typography.H3>{`${moment(+selectedTimeslot).format('hA')}`}</Typography.H3>
                                     </View>
                                     <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
                                         <View style={{ flex: 1, justifyContent: 'center' }}>
-                                            <Typography.H2 style={{ marginRight: 10 }}>{'Price:'}</Typography.H2>
+                                            <Typography.H3 style={{ marginRight: 10 }}>{'Price:'}</Typography.H3>
                                         </View>
                                         <View style={{ flex: 1 }}>
                                             <Counter result={price} onMinus={(newPrice) => setPrice(newPrice)} onPlus={(newPrice) => setPrice(newPrice)} max={100} />
@@ -177,7 +177,7 @@ const AvailabilityCalendar = ({ data, setDatedEvents }) => {
                                 </View>
                             </View>
                             <View style={{ flex: 0.7 }}>
-                                <Typography.H2 bold>{'Court Availability'}</Typography.H2>
+                                <Typography.H3 bold>{'Court Availability'}</Typography.H3>
                                 <FlatList
                                     data={bookingData}
                                     keyExtractor={(item, index) => `${item}${index}`}
