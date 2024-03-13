@@ -25,7 +25,6 @@ export default function App() {
   const [loggedIn, setLoggedIn] = useState(false);
   const [hasName, setHasName] = useState(false);
 
-  // ---------------
   const useUrl = Linking.useURL();
 
   useEffect(() => {
@@ -106,6 +105,7 @@ export default function App() {
   }, [useUrl])
 
   useEffect(() => {
+    setLoaded(true);
     // Subscribe to app state changes
     const subscription = AppState.addEventListener('change', handleAppStateChange);
 
@@ -138,7 +138,6 @@ export default function App() {
           setLoggedIn(false);
         }
       });
-      setLoaded(true);
       // Clean up the auth state listener when the component unmounts
       return () => unsubscribe();
     }
