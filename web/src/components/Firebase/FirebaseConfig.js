@@ -5,18 +5,18 @@ import { getAuth } from 'firebase/auth';
 import { getDatabase } from 'firebase/database';
 import { getFunctions } from 'firebase/functions';
 import { getStorage } from 'firebase/storage';
+import { envVars } from '../../envConfig';
 
 // Your web app's Firebase configuration
 // For Firebase JS SDK v7.20.0 and later, measurementId is optional
 const FIREBASE_CONFIG = {
-    apiKey: "AIzaSyCmMVqDNKg07ftVZwBGAAe8_6nuj0wo5Ho",
-    authDomain: "makeshiftplans-dev.firebaseapp.com",
-    databaseURL: "https://makeshiftplans-dev-default-rtdb.asia-southeast1.firebasedatabase.app",
-    projectId: "makeshiftplans-dev",
-    storageBucket: "makeshiftplans-dev.appspot.com",
-    messagingSenderId: "505686398711",
-    appId: "1:505686398711:web:2bdf7092493c5f0a5ae5f2",
-    measurementId: "G-ZW3HDVGHM1"
+    apiKey: envVars.REACT_APP_FB_apiKey,
+    authDomain: envVars.REACT_APP_FB_authDomain,
+    databaseURL: envVars.REACT_APP_FB_databaseURL,
+    projectId: envVars.REACT_APP_FB_projectId,
+    storageBucket: envVars.REACT_APP_FB_storageBucket,
+    messagingSenderId: envVars.REACT_APP_FB_messagingSenderId,
+    appId: envVars.REACT_APP_FB_appId
 };
 
 // Initialize Firebase
@@ -25,6 +25,6 @@ const firestore = getFirestore(app);
 const auth = getAuth(app)
 const database = getDatabase(app);
 const storage = getStorage(app)
-const functions = getFunctions(app);
+const functions = getFunctions(app, "asia-southeast1");
 
 export { firestore, auth, database, functions, storage, app };

@@ -14,7 +14,8 @@ describe('Check a booking detail & send message to the host', () => {
   });
 
   it('Navigate to Home screen (Dev Authentication)', async () => {
-    await element(by.id('dev-login-button')).tap();
+    await element(by.id('email-input')).typeText('kingyx3@hotmail.com');
+    await element(by.id('submit-email-button')).tap();
 
     // Wait for navigation to complete & perform the visibility checks
     await waitFor(element(by.text('Quick Search'))).toBeVisible().withTimeout(60000);
@@ -26,6 +27,7 @@ describe('Check a booking detail & send message to the host', () => {
 
     // Wait for navigation to complete & perform the visibility checks
     await waitFor(element(by.id('bookings-header-component'))).toBeVisible().withTimeout(60000);
+    await waitFor(element(by.id('0_booking_detail'))).toBeVisible().withTimeout(60000);
   });
 
   it('Navigate to BookingDetail screen', async () => {

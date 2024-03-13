@@ -161,12 +161,6 @@ const HostingEdit8 = (props) => {
   );
 };
 
-// Function to generate random lat/lng for random spaces
-function getRandomInRange(from, to, fixed) {
-  return (Math.random() * (to - from) + from).toFixed(fixed) * 1;
-  // .toFixed() returns string, so ' * 1' is a trick to convert to number
-}
-
 const Container = styled.View`
   flex: 1;
   background-color: white;

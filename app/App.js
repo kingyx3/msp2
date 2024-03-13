@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import useState from 'react-usestateref';
-import { Alert, Text, View, StatusBar, StyleSheet, Platform, ActivityIndicator } from "react-native";
+import { Alert, Text, View, StatusBar, StyleSheet, Platform, ActivityIndicator, AppState } from "react-native";
 import { NavigationContainer } from "@react-navigation/native";
 import { Provider } from "react-redux";
 import store from "./app/store/store";
@@ -25,7 +25,6 @@ export default function App() {
   const [loggedIn, setLoggedIn] = useState(false);
   const [hasName, setHasName] = useState(false);
 
-  // ---------------
   const useUrl = Linking.useURL();
 
   useEffect(() => {
@@ -34,7 +33,7 @@ export default function App() {
       if (Application.nativeApplicationVersion != process.env.EXPO_PUBLIC_nativeApplicationVersion) {
         Alert.alert(
           'Update available',
-          'Please update the app for a better experience' + " | " + Application.nativeApplicationVersion + ', ' + process.env.EXPO_PUBLIC_nativeApplicationVersion,
+          'Please update the app for a better experience.', // + " | " + Application.nativeApplicationVersion + ', ' + process.env.EXPO_PUBLIC_nativeApplicationVersion,
           [
             {
               text: 'Update', onPress: () => Linking.openURL("https://play.google.com/store/apps/details?id=com.makeshiftplans.android")
@@ -106,36 +105,71 @@ export default function App() {
   }, [useUrl])
 
   useEffect(() => {
-    const unsubscribe = onAuthStateChanged(auth, (user) => {
-      if (user) {
-        const userNameRef = ref(database, `users/${user.uid}`);
-        const userNameListener = onValue(userNameRef, (snapshot) => {
-          if (snapshot.exists()) {
-            setHasName(true);
-          } else {
-            setHasName(false);
-          }
-          setLoggedIn(true);
-        });
-
-        // Return a cleanup function to unsubscribe from the userNameListener
-        return () => {
-          userNameListener();
-        };
-      } else {
-        setLoggedIn(false);
-      }
-    });
-
     setLoaded(true);
+    // Subscribe to app state changes
+    const subscription = AppState.addEventListener('change', handleAppStateChange);
 
-    // Clean up the auth state listener when the component unmounts
+    // Clean up listeners
     return () => {
-      if (unsubscribe) {
-        unsubscribe();
-      }
+      subscription.remove();
     };
   }, []);
+
+  const handleAppStateChange = (nextAppState) => {
+    if (nextAppState === 'active') {
+      // App is foregrounded, execute desired code
+      console.log('App is foregrounded');
+      const unsubscribe = onAuthStateChanged(auth, (user) => {
+        if (user) {
+          const userNameRef = ref(database, `users/${user.uid}`);
+          const userNameListener = onValue(userNameRef, (snapshot) => {
+            if (snapshot.exists()) {
+              setHasName(true);
+            } else {
+              setHasName(false);
+            }
+            setLoggedIn(true);
+          });
+          // Return a cleanup function to unsubscribe from the userNameListener
+          return () => {
+            userNameListener();
+          };
+        } else {
+          setLoggedIn(false);
+        }
+      });
+      // Clean up the auth state listener when the component unmounts
+      return () => unsubscribe();
+    }
+  };
+
+  // useEffect(() => {
+  //   const unsubscribe = onAuthStateChanged(auth, (user) => {
+  //     if (user) {
+  //       const userNameRef = ref(database, `users/${user.uid}`);
+  //       const userNameListener = onValue(userNameRef, (snapshot) => {
+  //         if (snapshot.exists()) {
+  //           setHasName(true);
+  //         } else {
+  //           setHasName(false);
+  //         }
+  //         setLoggedIn(true);
+  //       });
+
+  //       // Return a cleanup function to unsubscribe from the userNameListener
+  //       return () => {
+  //         userNameListener();
+  //       };
+  //     } else {
+  //       setLoggedIn(false);
+  //     }
+  //   });
+
+  //   setLoaded(true);
+
+  //   // Clean up the auth state listener when the component unmounts
+  //   return () => unsubscribe();
+  // }, []);
 
   if (loaded) {
     wait(1000).then(() => SplashScreen.hideAsync())
