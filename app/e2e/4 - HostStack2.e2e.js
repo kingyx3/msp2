@@ -14,7 +14,8 @@ describe('Hosting - Manage Space', () => {
   });
 
   it('Navigate to Home screen (Dev Authentication)', async () => {
-    await element(by.id('email-input')).typeText('kingyx3@hotmail.com');
+    await element(by.id('email-input')).replaceText('kingyx3@hotmail.com');
+    await element(by.id('email-input')).tapReturnKey()
     await element(by.id('submit-email-button')).tap();
 
     // Wait for navigation to complete & perform the visibility checks

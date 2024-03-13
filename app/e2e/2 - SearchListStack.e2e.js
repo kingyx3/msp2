@@ -6,7 +6,8 @@ describe('Make a booking via picking datetime & ListMap', () => {
   });
 
   it('Navigate to Home screen (Dev Authentication)', async () => {
-    await element(by.id('email-input')).typeText('kingyx3@hotmail.com');
+    await element(by.id('email-input')).replaceText('kingyx3@hotmail.com');
+    await element(by.id('email-input')).tapReturnKey()
     await element(by.id('submit-email-button')).tap();
 
     // Wait for navigation to complete & perform the visibility checks
@@ -163,6 +164,7 @@ describe('Make a booking via quick search & Listings', () => {
   it('Navigate to Home screen (Dev Authentication)', async () => {
     // // Already authenticated
     // await element(by.id('email-input')).replaceText('kingyx3@hotmail.com');
+    // await element(by.id('email-input')).tapReturnKey()
     // await element(by.id('submit-email-button')).tap();
 
     // Wait for navigation to complete & perform the visibility checks

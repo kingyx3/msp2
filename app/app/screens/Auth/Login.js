@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Text, StyleSheet, View, TouchableOpacity, Platform } from "react-native";
+import { Text, StyleSheet, View, TouchableOpacity, Platform, KeyboardAvoidingView, ScrollView } from "react-native";
 import * as Yup from "yup";
 import * as Network from 'expo-network';
 
@@ -59,42 +59,50 @@ const Login = ({ navigation }) => {
 
   return (
     <Container>
-      <Main>
-        <Header>
-          <Logo source={require("../../assets/icon.png")}></Logo>
-          <Typography.H1 testID={'welcome-text'} color={colors.red}>Welcome to {process.env.EXPO_PUBLIC_APP_NAME}</Typography.H1>
-          <Typography.Sub1 color={colors.red}>Find and rent spaces on an hourly basis</Typography.Sub1>
-        </Header>
-        <AppForm
-          initialValues={{ email: "", password: "" }}
-          onSubmit={values => handleOnLogin(values)}//onSubmit={() => handleOnLogin} //navigation.navigate("HomeStack")}
-          validationSchema={validationSchema}
-        >
-          <Input>
-            <Text>Email</Text>
-            <TextInput.Default
-              testID="email-input"
-              name="email"
-              autoCapitalize="none"
-              autoCorrect={false}
-              keyboardType="email-address"
-              clearButtonMode="always"
-              textContentType="emailAddress"
+      <KeyboardAvoidingView
+        style={{ flex: 1 }}
+        behavior={Platform.OS === "ios" ? "padding" : null}
+        keyboardVerticalOffset={Platform.OS === "ios" ? 0 : 0}
+      >
+        <Input></Input>
+        <Input></Input>
+        <Main>
+          <Header>
+            <Logo source={require("../../assets/icon.png")}></Logo>
+            <Typography.H1 testID={'welcome-text'} color={colors.red}>Welcome to {process.env.EXPO_PUBLIC_APP_NAME}</Typography.H1>
+            <Typography.Sub1 color={colors.red}>Find and rent spaces on an hourly basis</Typography.Sub1>
+          </Header>
+          <AppForm
+            initialValues={{ email: "", password: "" }}
+            onSubmit={values => handleOnLogin(values)}//onSubmit={() => handleOnLogin} //navigation.navigate("HomeStack")}
+            validationSchema={validationSchema}
+          >
+            <Input>
+              <Text>Email</Text>
+              <TextInput.Default
+                testID="email-input"
+                name="email"
+                autoCapitalize="none"
+                autoCorrect={false}
+                keyboardType="email-address"
+                clearButtonMode="always"
+                textContentType="emailAddress"
+              />
+            </Input>
+            <SubmitBtn
+              testID="submit-email-button"
+              title="Continue with Email"
+              disabled={disabled}
             />
-          </Input>
-          <SubmitBtn
-            testID="submit-email-button"
-            title="Continue with Email"
-            disabled={disabled}
-          />
-          {/* <Text style={styles.errorText}>{loginError}</Text> */}
-        </AppForm>
-      </Main>
+            {/* <Text style={styles.errorText}>{loginError}</Text> */}
+          </AppForm>
+        </Main>
+      </KeyboardAvoidingView>
     </Container>
   );
 };
 
-const Container = styled.View`
+const Container = styled.ScrollView`
   flex: 1;
   background-color: white;
 `;
@@ -102,7 +110,7 @@ const Container = styled.View`
 const Main = styled.View`
   padding: 26px;
   flex: 1;
-  justify-content: center;
+  /* justify-content: center; */
 `;
 
 const Btn = styled.View`
