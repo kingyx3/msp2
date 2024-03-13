@@ -1,4 +1,4 @@
-export const envVars = process.env.REACT_APP_NODE_ENV == "PROD"
+export const envVars = process.env.REACT_APP_NODE_ENV === "PROD"
     ? {
         REACT_APP_TYPE: "PROD",
         REACT_APP_DLINK: "mspprod.page.link",
