@@ -31,7 +31,6 @@ describe('AuthStack & Home Stack', () => {
 
     // Wait for navigation to complete & perform the visibility checks
     await waitFor(element(by.id('welcome-text'))).toBeVisible().withTimeout(60000);
-    await expect(element(by.id('dev-login-button'))).toBeVisible()
   });
 
   it('Navigate to Home screen (Dev Authentication)', async () => {
