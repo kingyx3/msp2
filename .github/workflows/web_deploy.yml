@@ -21,7 +21,7 @@ jobs:
 
       - name: Install dependencies & build (Development)
         if: github.ref == 'refs/heads/develop'
-        run: npm ci && REACT_APP_ENV=development npm run build
+        run: npm ci && NODE_ENV=development npm run build
 
       - name: Install Firebase CLI
         run: npm install -g firebase-tools
@@ -34,7 +34,7 @@ jobs:
 
       - name: Install dependencies & build (Production)
         if: github.ref == 'refs/heads/main'
-        run: npm ci && REACT_APP_ENV=production npm run build
+        run: npm ci && NODE_ENV=production npm run build
 
       - name: Deploy to Firebase (Production)
         if: github.ref == 'refs/heads/main'
