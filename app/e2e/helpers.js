@@ -1,3 +1,4 @@
+
 export function createSpaceTestSuite() {
     it('Navigate to HostingStep1', async () => {
         await element(by.id('list-now')).tap()
