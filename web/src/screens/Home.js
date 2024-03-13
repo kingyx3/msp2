@@ -1,5 +1,5 @@
 import React from 'react';
-import { envVars } from '../../envConfig';
+import { envVars } from '../envConfig';
 
 const Home = () => {
     return (
