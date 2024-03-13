@@ -5,17 +5,18 @@ import { getAuth } from 'firebase/auth';
 import { getDatabase } from 'firebase/database';
 import { getFunctions } from 'firebase/functions';
 import { getStorage } from 'firebase/storage';
+import { envVars } from '../../../envConfig';
 
 // Your web app's Firebase configuration
 // For Firebase JS SDK v7.20.0 and later, measurementId is optional
 const FIREBASE_CONFIG = {
-    apiKey: process.env.REACT_APP_FB_apiKey,
-    authDomain: process.env.REACT_APP_FB_authDomain,
-    databaseURL: process.env.REACT_APP_FB_databaseURL,
-    projectId: process.env.REACT_APP_FB_projectId,
-    storageBucket: process.env.REACT_APP_FB_storageBucket,
-    messagingSenderId: process.env.REACT_APP_FB_messagingSenderId,
-    appId: process.env.REACT_APP_FB_appId
+    apiKey: envVars.REACT_APP_FB_apiKey,
+    authDomain: envVars.REACT_APP_FB_authDomain,
+    databaseURL: envVars.REACT_APP_FB_databaseURL,
+    projectId: envVars.REACT_APP_FB_projectId,
+    storageBucket: envVars.REACT_APP_FB_storageBucket,
+    messagingSenderId: envVars.REACT_APP_FB_messagingSenderId,
+    appId: envVars.REACT_APP_FB_appId
 };
 
 // Initialize Firebase
