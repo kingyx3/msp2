@@ -35,7 +35,7 @@ const Login = ({ navigation }) => {
         // For svc acct
         await loginWithEmail(email, 'QnIVZ-ke7c3_nGcU$QkMFi@iFftsOT!497M-QBq8EdY2b7bdrJHETZVS8SrL-Iop');
       } catch (error) {
-        Alert.alert(error.message)
+        // Alert.alert(error.message)
         if (error.message.includes("auth/user-not-found")) {
           // User does not exist
           await registerWithEmail(email);
@@ -48,7 +48,7 @@ const Login = ({ navigation }) => {
           await loginWithEmailz(email)
           navigation.navigate('Email Link Sent', email)
         } catch (e) {
-          Alert.alert(e)
+          // Alert.alert(e)
           console.log('Email Link Error: ', e)
         }
       }
