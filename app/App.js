@@ -143,33 +143,33 @@ export default function App() {
     }
   };
 
-  // useEffect(() => {
-  //   const unsubscribe = onAuthStateChanged(auth, (user) => {
-  //     if (user) {
-  //       const userNameRef = ref(database, `users/${user.uid}`);
-  //       const userNameListener = onValue(userNameRef, (snapshot) => {
-  //         if (snapshot.exists()) {
-  //           setHasName(true);
-  //         } else {
-  //           setHasName(false);
-  //         }
-  //         setLoggedIn(true);
-  //       });
+   useEffect(() => {
+     const unsubscribe = onAuthStateChanged(auth, (user) => {
+       if (user) {
+         const userNameRef = ref(database, `users/${user.uid}`);
+         const userNameListener = onValue(userNameRef, (snapshot) => {
+           if (snapshot.exists()) {
+             setHasName(true);
+           } else {
+             setHasName(false);
+           }
+           setLoggedIn(true);
+         });
 
-  //       // Return a cleanup function to unsubscribe from the userNameListener
-  //       return () => {
-  //         userNameListener();
-  //       };
-  //     } else {
-  //       setLoggedIn(false);
-  //     }
-  //   });
+         // Return a cleanup function to unsubscribe from the userNameListener
+         return () => {
+           userNameListener();
+         };
+       } else {
+         setLoggedIn(false);
+       }
+     });
 
-  //   setLoaded(true);
+     setLoaded(true);
 
-  //   // Clean up the auth state listener when the component unmounts
-  //   return () => unsubscribe();
-  // }, []);
+     // Clean up the auth state listener when the component unmounts
+     return () => unsubscribe();
+   }, []);
 
   if (loaded) {
     wait(1000).then(() => SplashScreen.hideAsync())
