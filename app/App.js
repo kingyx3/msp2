@@ -24,6 +24,9 @@ export default function App() {
   const [loaded, setLoaded] = useState(false);
   const [loggedIn, setLoggedIn] = useState(false);
   const [hasName, setHasName] = useState(false);
+  const [foregrounded, setForegrounded] = useState(false);
+
+  console.log('foregrounded: ', foregrounded)
 
   const useUrl = Linking.useURL();
 
@@ -107,69 +110,43 @@ export default function App() {
   useEffect(() => {
     setLoaded(true);
     // Subscribe to app state changes
-    const subscription = AppState.addEventListener('change', handleAppStateChange);
+    const subscription = AppState.addEventListener('change', (nextAppState) => {
+      if (nextAppState === 'active') {
+        setForegrounded(Math.random())
+      }
+    });
 
     // Clean up listeners
-    return () => {
-      subscription.remove();
-    };
+    return () => subscription.remove();
   }, []);
 
-  const handleAppStateChange = (nextAppState) => {
-    if (nextAppState === 'active') {
-      // App is foregrounded, execute desired code
-      console.log('App is foregrounded');
-      const unsubscribe = onAuthStateChanged(auth, (user) => {
-        if (user) {
-          const userNameRef = ref(database, `users/${user.uid}`);
-          const userNameListener = onValue(userNameRef, (snapshot) => {
-            if (snapshot.exists()) {
-              setHasName(true);
-            } else {
-              setHasName(false);
-            }
-            setLoggedIn(true);
-          });
-          // Return a cleanup function to unsubscribe from the userNameListener
-          return () => {
-            userNameListener();
-          };
-        } else {
-          setLoggedIn(false);
-        }
-      });
-      // Clean up the auth state listener when the component unmounts
-      return () => unsubscribe();
-    }
-  };
+  useEffect(() => {
+    const unsubscribe = onAuthStateChanged(auth, (user) => {
+      if (user) {
+        const userNameRef = ref(database, `users/${user.uid}`);
+        const userNameListener = onValue(userNameRef, (snapshot) => {
+          if (snapshot.exists()) {
+            setHasName(true);
+          } else {
+            setHasName(false);
+          }
+          setLoggedIn(true);
+        });
 
-   useEffect(() => {
-     const unsubscribe = onAuthStateChanged(auth, (user) => {
-       if (user) {
-         const userNameRef = ref(database, `users/${user.uid}`);
-         const userNameListener = onValue(userNameRef, (snapshot) => {
-           if (snapshot.exists()) {
-             setHasName(true);
-           } else {
-             setHasName(false);
-           }
-           setLoggedIn(true);
-         });
+        // Return a cleanup function to unsubscribe from the userNameListener
+        return () => {
+          userNameListener();
+        };
+      } else {
+        setLoggedIn(false);
+      }
+    });
 
-         // Return a cleanup function to unsubscribe from the userNameListener
-         return () => {
-           userNameListener();
-         };
-       } else {
-         setLoggedIn(false);
-       }
-     });
+    setLoaded(true);
 
-     setLoaded(true);
-
-     // Clean up the auth state listener when the component unmounts
-     return () => unsubscribe();
-   }, []);
+    // Clean up the auth state listener when the component unmounts
+    return () => unsubscribe();
+  }, [foregrounded]);
 
   if (loaded) {
     wait(1000).then(() => SplashScreen.hideAsync())

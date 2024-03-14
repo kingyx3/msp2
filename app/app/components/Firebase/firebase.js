@@ -89,12 +89,6 @@ export const loginAnonymously = () => {
 }
 
 export const logout = async () => signOut(auth);
-// {
-//   const CFnewAvail = httpsCallable(functions,'newAvail');
-//   return CFnewAvail()
-//     .then(() => console.log("AVAILABILITY UPDATED SUCCESSFULLY!"))
-//     .catch((e) => Promise.reject("AVAILABILITY UPDATE ERROR: " + e))
-// }
 
 export const passwordReset = (email) => {
   return sendPasswordResetEmail(auth, email);
