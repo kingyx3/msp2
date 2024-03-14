@@ -15,7 +15,7 @@ describe('Check AccountStack & ensure navigation works across bookings & spaces'
 
   it('Navigate to Home screen (Dev Authentication)', async () => {
     await element(by.id('email-input')).replaceText('kingyx3@hotmail.com');
-    await element(by.id('welcome-text')).tap();
+    await element(by.id('welcome-text')).multiTap(3);
     await element(by.id('submit-email-button')).tap();
 
     // Wait for navigation to complete & perform the visibility checks
@@ -97,10 +97,10 @@ describe('Check AccountStack & ensure navigation works across bookings & spaces'
     if (spaceLogTypeArray.includes(hostLogLabel)) {
       // Space (CUD)
       null
-    } else if (hostLogLabel==="Price/Availability Updated!") {
+    } else if (hostLogLabel === "Price/Availability Updated!") {
       // Price/Availability Updated!
       null
-    }else {
+    } else {
       // Booking (CD)
       await testBookingDetailFromActivity(true)
     }
