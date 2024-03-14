@@ -97,7 +97,10 @@ describe('Check AccountStack & ensure navigation works across bookings & spaces'
     if (spaceLogTypeArray.includes(hostLogLabel)) {
       // Space (CUD)
       null
-    } else {
+    } else if (hostLogLabel==="Price/Availability Updated!") {
+      // Price/Availability Updated!
+      null
+    }else {
       // Booking (CD)
       await testBookingDetailFromActivity(true)
     }
