@@ -26,8 +26,6 @@ export default function App() {
   const [hasName, setHasName] = useState(false);
   const [foregrounded, setForegrounded] = useState(false);
 
-  console.log('foregrounded: ', foregrounded)
-
   const useUrl = Linking.useURL();
 
   useEffect(() => {
@@ -41,7 +39,7 @@ export default function App() {
             {
               text: 'Update', onPress: () => Linking.openURL("https://play.google.com/store/apps/details?id=com.makeshiftplans.android")
             }, // open store if update is needed.
-            { text: 'Later', onPress: () => console.log('Later Pressed') }
+            { text: 'Later', onPress: () => null }
           ],
           { cancelable: false }
         );
@@ -132,7 +130,6 @@ export default function App() {
           }
           setLoggedIn(true);
         });
-
         // Return a cleanup function to unsubscribe from the userNameListener
         return () => {
           userNameListener();
@@ -141,9 +138,7 @@ export default function App() {
         setLoggedIn(false);
       }
     });
-
     setLoaded(true);
-
     // Clean up the auth state listener when the component unmounts
     return () => unsubscribe();
   }, [foregrounded]);

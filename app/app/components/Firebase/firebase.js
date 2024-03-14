@@ -160,7 +160,7 @@ export function fetchUser() {
     }
 
     const userDocRef = doc(firestore, 'users', user.uid);
-    onSnapshot(userDocRef, (snapshot) => {
+    const listener = onSnapshot(userDocRef, (snapshot) => {
       if (snapshot.exists()) {
         let userData = snapshot.data();
 
@@ -172,6 +172,7 @@ export function fetchUser() {
         console.log('User does not exist');
       }
     });
+    return listener
   };
 }
 
@@ -194,8 +195,10 @@ export function fetchIpLocation() {
 // Function to create an space (SPACE-C) (XR, 4W)
 export async function createSpace(spaceType, price, peakPrice, offPeakPrice, localImages, location, title, description, spaceCount, cancellationPolicy, monthsAhead, openingHours) { // TRANSACTION-ED
   const CFcreateSpace = httpsCallable(functions, 'createSpace');
-  let spaceId = Math.random().toString(36).substring(2) + Math.random().toString(36).substring(2);
-  spaceId = spaceId.toUpperCase()
+  let collectionRef = ''
+  const spacesCollectionRef = collection(firestore, 'spaces');
+  let spaceId = await generateUniqueId('spaces', 8)
+
   const inputs = { spaceId, spaceType, price, peakPrice, offPeakPrice, localImages, location, title, description, spaceCount, monthsAhead, cancellationPolicy, openingHours }
 
   const promises = localImages.map((image, index) => {
@@ -452,7 +455,7 @@ export function setSelectedSpace(selectedSpaceId) {
 
         dispatch({ type: "SET_SELECTED_SPACE", payload: { selectedSpace } });
       })
-      .catch((e) => console.log(e));
+      .catch((e) => console.log('Error selecting space: ' + e));
   };
 }
 // Function to fetch user's spaces (SPACE-R) - HOST (XR) => XR depends on userspaces (number of userspaces / 100)
@@ -465,7 +468,7 @@ export function fetchUserSpaces() {
     }
 
     const userSpacesRef = collection(firestore, 'users', user.uid, 'userspaces');
-    onSnapshot(userSpacesRef, (snapshot) => {
+    const listener = onSnapshot(userSpacesRef, (snapshot) => {
       console.log("NUMBER OF READS (fetchUserSpaces):", snapshot.docs.length);
       let userSpaces = {};
       snapshot.docs.forEach((doc) => {
@@ -475,6 +478,7 @@ export function fetchUserSpaces() {
       // console.log('userSpaces =>', userSpaces);
       dispatch({ type: "FETCH_USER_SPACES", payload: { userSpaces } });
     });
+    return listener
   };
 }
 
@@ -599,7 +603,7 @@ export function fetchUserBookings() {
     }
 
     const userBookingsRef = collection(firestore, 'users', userUid, 'userbookings');
-    onSnapshot(userBookingsRef, (snapshot) => {
+    const listener = onSnapshot(userBookingsRef, (snapshot) => {
       console.log("NUMBER OF READS (fetchUserBookings):", snapshot.docs.length);
       let userBookings = {};
       snapshot.docs.forEach((docSnapshot) => {
@@ -610,6 +614,7 @@ export function fetchUserBookings() {
       });
       dispatch({ type: "FETCH_USER_BOOKINGS", payload: { userBookings } });
     });
+    return listener
   };
 }
 
@@ -669,7 +674,7 @@ export function fetchBooking(bookingId) {
         console.log("selectedBooking is set", selectedBooking);
         dispatch({ type: "SET_SELECTED_BOOKING", payload: { selectedBooking } });
       })
-      .catch((e) => console.log(e));
+      .catch((e) => console.log('Error fetching bookings: ' + e));
   };
 }
 // Function to update booking (BOOKING-U)
@@ -805,7 +810,7 @@ export async function readMessage(senderId) {
 export async function getPaymentSheet(topUpAmount) {
   const CFgetPaymentSheet = httpsCallable(functions, 'getPaymentSheet');
   const inputs = { topUpAmount }
-  console.log(inputs)
+  // console.log(inputs)
   return CFgetPaymentSheet(inputs)
     .then((result) => {
       console.log("PAYMENT SHEET OBTAINED SUCCESSFULLY!")
@@ -1539,5 +1544,27 @@ function convertTimestampsToIsoStrings(obj) {
     );
   } else {
     return obj;
+  }
+}
+const generateUniqueId = async (collectionName, numOfChars) => {
+  // Max 10 chars
+  let generatedId;
+  let unique = false;
+  let docRef
+
+  while (!unique) {
+    generatedId = Math.random().toString(36).substring(2, numOfChars + 2).toUpperCase(); // Get 8 random characters
+    docRef = doc(firestore, collectionName, generatedId);
+    unique = await isUnique(docRef); // Assuming isUnique function checks uniqueness
+  }
+  return generatedId;
+}
+
+const isUnique = async (docRef) => {
+  let checkObj = await getDoc(docRef);
+  if (checkObj.exists()) {
+    return false
+  } else {
+    return true
   }
 }

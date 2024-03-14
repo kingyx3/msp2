@@ -38,7 +38,7 @@ const HostingStep6 = (props) => {
   }, [location, props.state.location])
 
   const onNavigate = () => {
-    console.log(location)
+    // console.log(location)
     props.setCurrLocation(location);
     // props.setRevGeoCode(address[0]);
     props.navigation.navigate("HostingEdit7", { editMode, selectedSpace, location });

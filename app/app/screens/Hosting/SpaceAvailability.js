@@ -63,6 +63,7 @@ const SpaceAvailability = (props) => {
       </Flex>
       <HourlyRentalComponent
         data={datedEvents}
+        disabled={disabled}
         setDatedEvents={setDatedEvents}
       />
       <Step>

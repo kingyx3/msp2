@@ -53,7 +53,7 @@ const HostingEdit8 = (props) => {
           .catch((e) => {
             setLoading(false)
             Alert.alert("Space Updating Error!", "Please check your connection & try again later", [
-              { text: "OK", onPress: () => props.navigation.navigate("Hosting") },
+              { text: "OK", onPress: () => console.log('Error! ' + e) } //props.navigation.navigate("Hosting") },
             ]);
           })
       } else {
@@ -68,7 +68,7 @@ const HostingEdit8 = (props) => {
             console.log(e)
             setLoading(false)
             Alert.alert("Space Creation Error!", "Please check your connection & try again later", [
-              { text: "OK", onPress: () => props.navigation.navigate("Hosting") },
+              { text: "OK", onPress: () => console.log('Error! ' + e) } //props.navigation.navigate("Hosting") },
             ]);
           })
       }

@@ -50,7 +50,7 @@ const Accounts = (props) => {
   let [imageUri, setImageUri] = useState(user.avatar)
   let [userName, setUserName] = useState('')
   // console.log(DEFAULTAVATAR)
-  console.log(imageUri)
+  // console.log(imageUri)
 
   useEffect(() => {
     getUserName(user.id, setUserName)

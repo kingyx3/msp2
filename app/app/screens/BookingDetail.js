@@ -68,7 +68,6 @@ const BookingDetails = (props) => {
     }
   } catch {
     console.log('Error in setting refundAmount')
-    null
   }
   // -------------------
 
@@ -125,8 +124,7 @@ const BookingDetails = (props) => {
                   ]);
                 })
                 .catch((e) => {
-                  console.log(e)
-                  Alert.alert("Booking Cancellation Error!", e, [
+                  Alert.alert("Booking Cancellation Error!", 'Please try again later.', [
                     {
                       text: "OK", onPress: () => {
                         setLoading(false)
@@ -271,7 +269,7 @@ const BookingDetails = (props) => {
                   disabled={loading} // only allow edits if review is alr written
                   onPress={() => {
                     // If-else for write new review or edit prior review
-                    console.log("Button for write review pressed!")
+                    // console.log("Button for write review pressed!")
                     props.navigation.navigate("ReviewInput", { selectedSpace })
                   }} />
               </View>

@@ -14,7 +14,7 @@ options = {
 const { width, height } = Dimensions.get('window');
 const ITEM_HEIGHT = 93
 
-const AvailabilityCalendar = ({ data, setDatedEvents }) => {
+const AvailabilityCalendar = ({ data, setDatedEvents, disabled }) => {
     const today = moment().format('YYYY-MM-DD')
     let sortedData = data
         ? Object.keys(data)
@@ -51,6 +51,7 @@ const AvailabilityCalendar = ({ data, setDatedEvents }) => {
                     { flex: 1, borderWidth: 1, borderColor: 'gray', padding: 10, margin: 4 },
                     { backgroundColor: isSelected ? 'black' : 'transparent' },
                 ]}
+                disabled={disabled}
                 onPress={() => setSelectedDate(isSelected ? null : item)}
             >
                 <Typography.P color={isSelected ? 'white' : 'black'} >{`${moment(item).format("DD/MM/YY")}`}</Typography.P>
@@ -71,6 +72,7 @@ const AvailabilityCalendar = ({ data, setDatedEvents }) => {
             <TouchableOpacity
                 testID="timeslot-item"
                 style={{ flex: 1, borderWidth: 1, borderColor: 'gray', padding: 10, margin: 5, justifyContent: 'center', alignItems: 'center' }}
+                disabled={disabled}
                 onPress={() => handleTimeslotPress(item)}
             >
                 <Text>{`${moment(+timeSlot).format('hA')} - $${price}`}</Text>
@@ -86,6 +88,7 @@ const AvailabilityCalendar = ({ data, setDatedEvents }) => {
         return (
             <TouchableHighlight
                 activeOpacity={1}
+                disabled={disabled}
                 onPress={() => {
                     let bookingDataCopy = [...bookingData]
                     if (bookingData[index] == "") {

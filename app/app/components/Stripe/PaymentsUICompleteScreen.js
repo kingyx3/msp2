@@ -44,7 +44,7 @@ export default function PaymentsUICompleteScreen() {
 
     const data = await response.json()
     const { paymentIntent, ephemeralKey, customer } = data
-    console.log(paymentIntent, ephemeralKey, customer)
+    // console.log(paymentIntent, ephemeralKey, customer)
     setClientSecret(paymentIntent);
 
     return {

@@ -69,11 +69,11 @@ const Bookings = (props) => {
                 const networkState = await Network.getNetworkStateAsync();
                 if (networkState.isConnected) {
                   // Device is connected to the internet
-                  console.log({
-                    bookingId: item.id,
-                    spaceId: item.spaceId,
-                    host: false
-                  })
+                  // console.log({
+                  //   bookingId: item.id,
+                  //   spaceId: item.spaceId,
+                  //   host: false
+                  // })
                   props.navigation.navigate("BookingStackModal", {
                     screen: 'BookingDetail',
                     params: {

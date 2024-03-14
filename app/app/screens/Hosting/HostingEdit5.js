@@ -38,7 +38,7 @@ const HostingEdit5 = (props) => {
   };
 
   const onNavigate = () => {
-    console.log(imageUris)
+    // console.log(imageUris)
     props.setImages(imageUris);
     props.navigation.navigate(editMode ? "HostingEdit7" : "HostingStep6", { editMode, selectedSpace });
   };
