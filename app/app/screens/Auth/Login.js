@@ -98,6 +98,12 @@ const Login = ({ navigation }) => {
             />
             {/* <Text style={styles.errorText}>{loginError}</Text> */}
           </AppForm>
+          <Terms>
+            <Typography.P color={colors.gray}>
+              By tapping Continue with Email, I agree to {process.env.EXPO_PUBLIC_APP_NAME}'s Terms of Service, Payments Terms of Service, Privacy Policy
+              and Nondiscrimination Policy.
+            </Typography.P>
+          </Terms>
         </Main>
       </KeyboardAvoidingView>
     </Container>
@@ -133,6 +139,10 @@ const Logo = styled.Image`
   height: 60px;
   resize-mode: contain;
   margin: 10px 0;
+`;
+
+const Terms = styled.View`
+  margin-top: 20px;
 `;
 
 const styles = StyleSheet.create({

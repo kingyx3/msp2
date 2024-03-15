@@ -51,7 +51,7 @@ export default function App() {
   }, []);
 
   useEffect(() => {
-    // declare the data fetching function
+    // Sign in via email link
     const checkAuth = async () => {
       const email = await SecureStore.getItemAsync('emailForSignIn');
       const latestRandomKey = await SecureStore.getItemAsync('latestRandomKey')
@@ -107,7 +107,7 @@ export default function App() {
 
   useEffect(() => {
     setLoaded(true);
-    // Subscribe to app state changes
+    // Check if app is foregrounded
     const subscription = AppState.addEventListener('change', (nextAppState) => {
       if (nextAppState === 'active') {
         setForegrounded(Math.random())

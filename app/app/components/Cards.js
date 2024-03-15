@@ -46,7 +46,7 @@ export const Default = ({
         <ImgSliderItems source={image} />
       </ImageContainer>
     )}
-    <View style={{ marginHorizontal: 16, marginVertical: 16 }}>
+    <View style={{ marginHorizontal: 16, marginVertical: 10 }}>
       {meta && <Typography.SP color={colors.gray}>{sub}</Typography.SP>}
       <Typography.Sub1 color={colors.black}>{title}</Typography.Sub1>
       {secondary && (
@@ -100,7 +100,7 @@ const ListCard = styled.View`
 
 const ImageContainer = styled.View`
   width: 100%;
-  height: 300px;
+  height: 350px;
   border-top-left-radius: 12px;
   border-top-right-radius: 12px;
   overflow: hidden;
