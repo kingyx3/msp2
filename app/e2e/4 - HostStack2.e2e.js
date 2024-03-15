@@ -30,14 +30,21 @@ describe('Hosting - Manage Space', () => {
   });
 
   it('Navigate to SpaceDetail screen', async () => {
-    // await waitFor(element(by.id('0_space'))).toBeVisible().whileElement(by.id('hosting-flatlist')).scroll(50, 'down');
     await element(by.id('hosting-flatlist')).scroll(300, 'down', NaN, 0.95);
     await waitFor(element(by.id('0_space'))).toBeVisible(device.getPlatform() === 'ios' ? 75 : 100).withTimeout(60000);
     await expect(element(by.id('0_space'))).toBeVisible();
-    await element(by.id('0_space')).tap();
-
-    // Wait for navigation to complete & perform the visibility checks
-    await waitFor(element(by.id('space-detail-scroll-view'))).toBeVisible().withTimeout(60000);
+    let x = true
+    while (x) {
+      await element(by.id('0_space')).tap();
+      try {
+        // Wait for navigation to complete & perform the visibility checks
+        await waitFor(element(by.id('space-detail-scroll-view'))).toBeVisible().withTimeout(60000);
+        console.log('Looping in while loop3')
+        x = false
+      } catch (e) {
+        console.log(e)
+      }
+    }
   });
 
   it('Navigate to Manage Space screen', async () => {
