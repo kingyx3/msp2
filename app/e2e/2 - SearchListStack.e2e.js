@@ -193,6 +193,7 @@ describe('Make a booking via quick search & Listings', () => {
     await waitFor(element(by.id('listing-card-flatlist'))).toBeVisible();
     await waitFor(element(by.id('0_listmap'))).toBeVisible();
     await waitFor(element(by.id('back-button-x'))).toBeVisible();
+    await waitFor(element(by.id('listmap-button'))).not.toBeVisible();
   });
 
   it('Navigate back to Listings screen', async () => {
@@ -201,6 +202,7 @@ describe('Make a booking via quick search & Listings', () => {
     // Wait for navigation to complete & perform the visibility checks
     await waitFor(element(by.id('listings-flatlist'))).toBeVisible();
     await waitFor(element(by.id('listmap-button'))).toBeVisible();
+    await waitFor(element(by.id('listing-card-flatlist'))).not.toBeVisible();
   });
 
   it('Navigate to ListMap screen again', async () => {
@@ -210,6 +212,7 @@ describe('Make a booking via quick search & Listings', () => {
     await waitFor(element(by.id('listing-card-flatlist'))).toBeVisible();
     await waitFor(element(by.id('0_listmap'))).toBeVisible(100);
     await waitFor(element(by.id('back-button-x'))).toBeVisible();
+    await waitFor(element(by.id('listmap-button'))).not.toBeVisible();
   });
 
   it('Navigate to Listing Details screen', async () => {

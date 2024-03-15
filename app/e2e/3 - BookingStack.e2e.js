@@ -37,8 +37,8 @@ describe('Check a booking detail & send message to the host', () => {
     await element(by.id('0_booking_detail')).tap();
 
     // Wait for navigation to complete & perform the visibility checks
-    await waitFor(element(by.id("booking-detail-scroll-view"))).toBeVisible(100) // Not visible for past bookings, visible up to booking start (user), visible up to 2 days after booking end (host)
-    await waitFor(element(by.id("booking-title-price"))).toBeVisible(100) // Not visible for past bookings, visible up to booking start (user), visible up to 2 days after booking end (host)
+    await waitFor(element(by.id("booking-detail-scroll-view"))).toBeVisible(100).withTimeout(60000); // Not visible for past bookings, visible up to booking start (user), visible up to 2 days after booking end (host)
+    await waitFor(element(by.id("booking-title-price"))).toBeVisible(100).withTimeout(60000); // Not visible for past bookings, visible up to booking start (user), visible up to 2 days after booking end (host)
   });
 
   it('Cancel the booking & check refund amount)', async () => {
