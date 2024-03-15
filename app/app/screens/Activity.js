@@ -93,7 +93,7 @@ const UserActivity = (props) => {
               host
             }
           });
-        } else if (item.logType == "createSpace" || item.logType == "updateSpace" || item.logType == "enableSpace" || item.logType == "disableSpace") {
+        } else if (item.logType == "createSpace" || item.logType == "updateSpace" || item.logType == "enableSpace" || item.logType == "disableSpace" || item.logType == "updateBlocked") {
           // Navigate to spaceDetail with props
           props.navigation.navigate('HostStackModal', {
             screen: 'SpaceDetail', params: {
