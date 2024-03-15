@@ -25,7 +25,7 @@ const app = initializeApp(FIREBASE_CONFIG);
 const auth = initializeAuth(app, {
   persistence: getReactNativePersistence(AsyncStorage)
 });
-const firestore = initializeFirestore(app);
+const firestore = getFirestore(app);
 const database = getDatabase(app);
 const storage = getStorage(app)
 const functions = getFunctions(app, "asia-southeast1");
