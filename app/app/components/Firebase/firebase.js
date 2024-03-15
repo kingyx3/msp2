@@ -161,12 +161,11 @@ export function fetchUser() {
 
     const userDocRef = doc(firestore, 'users', user.uid);
     const listener = onSnapshot(userDocRef, (snapshot) => {
+      console.log("NUMBER OF READS (fetchUser): 1")
       if (snapshot.exists()) {
         let userData = snapshot.data();
-
         // Convert all Timestamps, including nested ones, to ISO strings
         userData = convertTimestampsToIsoStrings(userData);
-
         dispatch({ type: "FETCH_USER", payload: { user: userData } });
       } else {
         console.log('User does not exist');
@@ -664,11 +663,11 @@ export function fetchBooking(bookingId) {
     const bookingRef = doc(collection(firestore, 'bookings'), bookingId);
     getDoc(bookingRef)
       .then((snapshot) => {
-        console.log("setting up selectedBooking");
+        // console.log("setting up selectedBooking");
         let selectedBooking = snapshot.data();
         // Convert the booking data to ensure all values are serializable
         selectedBooking = convertTimestampsToIsoStrings(selectedBooking);
-        console.log("selectedBooking is set", selectedBooking);
+        // console.log("selectedBooking is set", selectedBooking);
         dispatch({ type: "SET_SELECTED_BOOKING", payload: { selectedBooking } });
       })
       .catch((e) => console.log('Error fetching bookings: ' + e));

@@ -1,6 +1,6 @@
 // firebaseConfig.js
 import { initializeApp } from 'firebase/app';
-import { getFirestore } from 'firebase/firestore';
+import { getFirestore, initializeFirestore } from 'firebase/firestore';
 import { getAuth, initializeAuth, getReactNativePersistence } from 'firebase/auth';
 import { getDatabase } from 'firebase/database';
 import { getFunctions } from 'firebase/functions';
@@ -22,11 +22,12 @@ const FIREBASE_CONFIG = {
 
 // Initialize Firebase
 const app = initializeApp(FIREBASE_CONFIG);
-initializeAuth(app, {
+const auth = initializeAuth(app, {
   persistence: getReactNativePersistence(AsyncStorage)
 });
-const firestore = getFirestore(app);
-const auth = getAuth(app)
+const firestore = initializeFirestore(app, {
+  experimentalAutoDetectLongPolling: true
+});
 const database = getDatabase(app);
 const storage = getStorage(app)
 const functions = getFunctions(app, "asia-southeast1");
