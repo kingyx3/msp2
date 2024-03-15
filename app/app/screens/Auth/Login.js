@@ -42,7 +42,8 @@ const Login = ({ navigation }) => {
         } else if (error.message.includes("auth/wrong-password")) {
           // User exists
         } else {
-          console.log('error.message', error.message)
+          Alert.alert('Error: ', error.message)
+          // console.log('error.message', error.message)
         }
         try {
           await loginWithEmailz(email)
