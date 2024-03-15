@@ -92,13 +92,10 @@ describe('Check AccountStack & ensure navigation works across bookings & spaces'
     const hostLogLabel = (await element(by.id("0_host_log")).getAttributes()).label
     console.log(hostLogLabel + "HOST_CONSOLE_LOG_OUTPUT")
 
-    const spaceLogTypeArray = ['Space Created', 'Space Updated', 'Space Disabled', 'Space Enabled']
+    const spaceLogTypeArray = ['Space Created', 'Space Updated', 'Space Disabled', 'Space Enabled', 'Price/Availability Updated']
 
     if (spaceLogTypeArray.includes(hostLogLabel)) {
       // Space (CUD)
-      null
-    } else if (hostLogLabel === "Price/Availability Updated!") {
-      // Price/Availability Updated!
       null
     } else {
       // Booking (CD)
