@@ -19,7 +19,7 @@ describe('AuthStack & Home Stack', () => {
 
   it('Navigate to EmailLinkSent screen', async () => {
     await element(by.id('email-input')).replaceText('kingyx4@gmail.com');
-    await element(by.id('welcome-text')).tap();
+    await element(by.id('welcome-text')).multiTap(3);
     await element(by.id('submit-email-button')).tap();
 
     // Wait for navigation to complete & perform the visibility checks
