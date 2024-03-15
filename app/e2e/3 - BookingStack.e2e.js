@@ -32,7 +32,7 @@ describe('Check a booking detail & send message to the host', () => {
   });
 
   it('Navigate to BookingDetail screen', async () => {
-    // await element(by.id('bookings-scroll-view')).scroll(350, 'down');
+    await element(by.id('bookings-scroll-view')).scroll(150, 'down');
     // await element(by.id('1_booking_detail')).tap();
     await element(by.id('0_booking_detail')).tap();
 

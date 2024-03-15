@@ -40,7 +40,7 @@ jobs:
 
       - name: EAS Update Production Apps (Production)
         if: github.ref == 'refs/heads/main'
-        run: NODE_ENV=production eas update --branch production --auto # Closed testing track (Alpha)
+        run: NODE_ENV=production eas update --branch production --auto # Internal track
 
       - name: EAS Update Production Apps (Development)
         if: github.ref == 'refs/heads/develop'
