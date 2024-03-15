@@ -92,7 +92,7 @@ describe('Check AccountStack & ensure navigation works across bookings & spaces'
     const hostLogLabel = (await element(by.id("0_host_log")).getAttributes()).label
     console.log(hostLogLabel + "HOST_CONSOLE_LOG_OUTPUT")
 
-    const spaceLogTypeArray = ['Create Space', 'Update Space', 'Delete Space']
+    const spaceLogTypeArray = ['Space Created', 'Space Updated', 'Space Deleted']
 
     if (spaceLogTypeArray.includes(hostLogLabel)) {
       // Space (CUD)
