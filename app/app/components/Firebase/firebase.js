@@ -195,10 +195,7 @@ export function fetchIpLocation() {
 // Function to create an space (SPACE-C) (XR, 4W)
 export async function createSpace(spaceType, price, peakPrice, offPeakPrice, localImages, location, title, description, spaceCount, cancellationPolicy, monthsAhead, openingHours) { // TRANSACTION-ED
   const CFcreateSpace = httpsCallable(functions, 'createSpace');
-  let collectionRef = ''
-  const spacesCollectionRef = collection(firestore, 'spaces');
-  let spaceId = await generateUniqueId('spaces', 8)
-
+  let spaceId = await generateUniqueId('spaces', 8);
   const inputs = { spaceId, spaceType, price, peakPrice, offPeakPrice, localImages, location, title, description, spaceCount, monthsAhead, cancellationPolicy, openingHours }
 
   const promises = localImages.map((image, index) => {
