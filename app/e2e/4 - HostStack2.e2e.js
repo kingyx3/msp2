@@ -39,12 +39,13 @@ describe('Hosting - Manage Space', () => {
       try {
         // Wait for navigation to complete & perform the visibility checks
         await waitFor(element(by.id('space-detail-scroll-view'))).toBeVisible().withTimeout(60000);
-        console.log('Looping in while loop3')
+
         x = false
       } catch (e) {
-        console.log(e)
+        console.log('Looping in while loop3. ' + e)
       }
     }
+    console.log('SpaceDetail - Exited while loop3')
   });
 
   it('Navigate to Manage Space screen', async () => {

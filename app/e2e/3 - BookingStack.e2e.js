@@ -28,17 +28,26 @@ describe('Check a booking detail & send message to the host', () => {
 
     // Wait for navigation to complete & perform the visibility checks
     await waitFor(element(by.id('bookings-header-component'))).toBeVisible().withTimeout(60000);
-    await waitFor(element(by.id('0_booking_detail'))).toBeVisible().withTimeout(60000);
+    await waitFor(element(by.id('bookings-scroll-view'))).toBeVisible().withTimeout(60000);
   });
 
   it('Navigate to BookingDetail screen', async () => {
     await element(by.id('bookings-scroll-view')).scroll(150, 'down');
+    await waitFor(element(by.id('0_booking_detail'))).toBeVisible(100).withTimeout(60000);
     // await element(by.id('1_booking_detail')).tap();
-    await element(by.id('0_booking_detail')).tap();
-
-    // Wait for navigation to complete & perform the visibility checks
-    await waitFor(element(by.id("booking-detail-scroll-view"))).toBeVisible(100).withTimeout(60000); // Not visible for past bookings, visible up to booking start (user), visible up to 2 days after booking end (host)
-    await waitFor(element(by.id("booking-title-price"))).toBeVisible(100).withTimeout(60000); // Not visible for past bookings, visible up to booking start (user), visible up to 2 days after booking end (host)
+    let x = true
+    while (x) {
+      try {
+        await element(by.id('0_booking_detail')).tap();
+        // Wait for navigation to complete & perform the visibility checks
+        await waitFor(element(by.id("booking-detail-scroll-view"))).toBeVisible(100).withTimeout(60000); // Not visible for past bookings, visible up to booking start (user), visible up to 2 days after booking end (host)
+        await waitFor(element(by.id("booking-title-price"))).toBeVisible(100).withTimeout(60000); // Not visible for past bookings, visible up to booking start (user), visible up to 2 days after booking end (host)
+        x = false
+      } catch (e) {
+        console.log('Looping in while loop4. ' + e)
+      }
+    }
+    console.log('BookingDetail - Exited while loop4')
   });
 
   it('Cancel the booking & check refund amount)', async () => {
