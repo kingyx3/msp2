@@ -8,6 +8,7 @@ import styled from "styled-components/native";
 import * as Linking from 'expo-linking';
 import * as SecureStore from 'expo-secure-store';
 import * as SplashScreen from 'expo-splash-screen';
+import * as Updates from 'expo-updates';
 import navigationTheme from "./app/navigation/navigationTheme";
 import RootStack from "./app/navigation/RootStack";
 import AuthStack from "./app/navigation/AuthStack";
@@ -32,20 +33,40 @@ export default function App() {
     async function checkForAppStoreUpdates() {
       // Check for updates using your custom logic (checks for 1.0.2 number only not the version code etc)
       if (Application.nativeApplicationVersion != process.env.EXPO_PUBLIC_nativeApplicationVersion) {
-        Alert.alert(
-          'Update available',
-          'Please update the app for a better experience.', // + " | " + Application.nativeApplicationVersion + ', ' + process.env.EXPO_PUBLIC_nativeApplicationVersion,
-          [
-            {
-              text: 'Update', onPress: () => Linking.openURL("https://play.google.com/store/apps/details?id=com.makeshiftplans.android")
-            }, // open store if update is needed.
-            { text: 'Later', onPress: () => null }
-          ],
-          { cancelable: false }
-        );
+        if (Platform.OS === 'android') {
+          Alert.alert(
+            'Update available',
+            'Please update the app for a better experience.', // + " | " + Application.nativeApplicationVersion + ', ' + process.env.EXPO_PUBLIC_nativeApplicationVersion,
+            [
+              {
+                text: 'Update', onPress: () => Linking.openURL("https://play.google.com/store/apps/details?id=" + process.env.ANDROID_ID)
+              }, // open store if update is needed.
+            ],
+            { cancelable: false }
+          );
+        } else if (Platform.OS === 'ios') {
+        } else {
+        }
       }
     }
-    if (Platform.OS === 'android') {
+    async function checkForExpoUpdates() {
+      try {
+        const update = await Updates.checkForUpdateAsync();
+        if (update.isAvailable) {
+          await Updates.fetchUpdateAsync();
+          await Updates.reloadAsync();
+        }
+      } catch (error) {
+        // Doesnt work on Expo Go - will error out here.
+        // You can also add an alert() to see the error message in case of an error when fetching updates.
+        // alert(`Error fetching latest Expo update: ${error}`);
+        console.log('checkForExpoUpdates error: ', error)
+      }
+    }
+
+    if (process.env.EXPO_PUBLIC_EXPO_GO) {
+    } else {
+      checkForExpoUpdates();
       checkForAppStoreUpdates();
     }
   }, []);
@@ -105,6 +126,7 @@ export default function App() {
       .catch(console.error);
   }, [useUrl])
 
+  // Not very useful, doesnt really help to persist auth
   useEffect(() => {
     setLoaded(true);
     // Check if app is foregrounded
