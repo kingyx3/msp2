@@ -41,6 +41,9 @@ export default function App() {
               {
                 text: 'Update', onPress: () => Linking.openURL("https://play.google.com/store/apps/details?id=" + process.env.ANDROID_ID)
               }, // open store if update is needed.
+              {
+                text: 'Later', onPress: () => console.log('Later pressed!')
+              },
             ],
             { cancelable: false }
           );
