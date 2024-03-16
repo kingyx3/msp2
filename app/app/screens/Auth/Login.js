@@ -35,16 +35,7 @@ const Login = ({ navigation }) => {
         // For svc acct
         await loginWithEmail(email, 'QnIVZ-ke7c3_nGcU$QkMFi@iFftsOT!497M-QBq8EdY2b7bdrJHETZVS8SrL-Iop');
       } catch (error) {
-        // Alert.alert(error.message)
-        if (error.message.includes("auth/user-not-found")) {
-          // User does not exist
-          await registerWithEmail(email);
-        } else if (error.message.includes("auth/wrong-password")) {
-          // User exists
-        } else {
-          Alert.alert('Error: ', error.message)
-          // console.log('error.message', error.message)
-        }
+        await registerWithEmail(email);
         try {
           await loginWithEmailz(email)
           navigation.navigate('Email Link Sent', email)
@@ -83,6 +74,7 @@ const Login = ({ navigation }) => {
             <Input>
               <Text>Email</Text>
               <TextInput.Default
+                editable={!disabled}
                 testID="email-input"
                 name="email"
                 autoCapitalize="none"
