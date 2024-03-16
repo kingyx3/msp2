@@ -1,20 +1,21 @@
 import React from 'react';
 import styled from 'styled-components';
+import { envVars } from '../../envConfig';
 
 const PaymentsTermsOfService = () => {
     return (
         <Container>
             <Title>Payments Terms of Service</Title>
             <Paragraph>
-                Welcome to {process.env.REACT_APP_NAME} Payments, a service that facilitates payments between users and hosts on our platform. These Payments Terms of Service govern your use of our payment services, so please read them carefully. By using our payment services, you agree to be bound by these Payments Terms of Service.
+                Welcome to {envVars.REACT_APP_NAME} Payments, a service that facilitates payments between users and hosts on our platform. These Payments Terms of Service govern your use of our payment services, so please read them carefully. By using our payment services, you agree to be bound by these Payments Terms of Service.
             </Paragraph>
             <SectionTitle>1. Overview</SectionTitle>
             <Paragraph>
-                {process.env.REACT_APP_NAME} Payments provides payment processing services to users and hosts on our platform. These Payments Terms of Service, along with our general Terms of Service and Privacy Policy, constitute a legally binding agreement between you and {process.env.REACT_APP_NAME} regarding your use of our payment services.
+                {envVars.REACT_APP_NAME} Payments provides payment processing services to users and hosts on our platform. These Payments Terms of Service, along with our general Terms of Service and Privacy Policy, constitute a legally binding agreement between you and {envVars.REACT_APP_NAME} regarding your use of our payment services.
             </Paragraph>
             <SectionTitle>2. Payment Processing</SectionTitle>
             <Paragraph>
-                When you make a payment on our platform, {process.env.REACT_APP_NAME} Payments processes your payment using third-party payment processors. By using our payment services, you authorize us to process your payment on your behalf.
+                When you make a payment on our platform, {envVars.REACT_APP_NAME} Payments processes your payment using third-party payment processors. By using our payment services, you authorize us to process your payment on your behalf.
             </Paragraph>
             <SectionTitle>3. Payment Methods</SectionTitle>
             <Paragraph>
@@ -22,7 +23,7 @@ const PaymentsTermsOfService = () => {
             </Paragraph>
             <SectionTitle>4. Payment Authorization</SectionTitle>
             <Paragraph>
-                By making a payment on our platform, you authorize {process.env.REACT_APP_NAME} Payments to charge your chosen payment method for the total amount of the transaction, including any applicable fees or taxes.
+                By making a payment on our platform, you authorize {envVars.REACT_APP_NAME} Payments to charge your chosen payment method for the total amount of the transaction, including any applicable fees or taxes.
             </Paragraph>
             <SectionTitle>5. Payment Disputes</SectionTitle>
             <Paragraph>
@@ -34,7 +35,7 @@ const PaymentsTermsOfService = () => {
             </Paragraph>
             <SectionTitle>7. Payment Security</SectionTitle>
             <Paragraph>
-                {process.env.REACT_APP_NAME} Payments takes the security of your payment information seriously. We use industry-standard security measures to protect your payment information from unauthorized access or use.
+                {envVars.REACT_APP_NAME} Payments takes the security of your payment information seriously. We use industry-standard security measures to protect your payment information from unauthorized access or use.
             </Paragraph>
             <SectionTitle>8. Prohibited Activities</SectionTitle>
             <Paragraph>
@@ -47,15 +48,15 @@ const PaymentsTermsOfService = () => {
             </ul>
             <SectionTitle>9. Limitation of Liability</SectionTitle>
             <Paragraph>
-                To the fullest extent permitted by law, {process.env.REACT_APP_NAME} shall not be liable for any direct, indirect, incidental, special, or consequential damages arising out of or in any way connected with your use of our payment services.
+                To the fullest extent permitted by law, {envVars.REACT_APP_NAME} shall not be liable for any direct, indirect, incidental, special, or consequential damages arising out of or in any way connected with your use of our payment services.
             </Paragraph>
             <SectionTitle>10. Indemnification</SectionTitle>
             <Paragraph>
-                You agree to indemnify and hold {process.env.REACT_APP_NAME} and its officers, directors, employees, and agents harmless from any claims, liabilities, damages, losses, or expenses arising out of or in any way related to your use of our payment services or violation of these Payments Terms of Service.
+                You agree to indemnify and hold {envVars.REACT_APP_NAME} and its officers, directors, employees, and agents harmless from any claims, liabilities, damages, losses, or expenses arising out of or in any way related to your use of our payment services or violation of these Payments Terms of Service.
             </Paragraph>
             <SectionTitle>11. Modifications to Payments Terms of Service</SectionTitle>
             <Paragraph>
-                {process.env.REACT_APP_NAME} reserves the right to modify or update these Payments Terms of Service at any time, with or without prior notice. Any changes to these Payments Terms of Service will be effective immediately upon posting on our platform. Your continued use of our payment services after the posting of any revised Payments Terms of Service constitutes your acceptance of such changes.
+                {envVars.REACT_APP_NAME} reserves the right to modify or update these Payments Terms of Service at any time, with or without prior notice. Any changes to these Payments Terms of Service will be effective immediately upon posting on our platform. Your continued use of our payment services after the posting of any revised Payments Terms of Service constitutes your acceptance of such changes.
             </Paragraph>
             <SectionTitle>12. Governing Law</SectionTitle>
             <Paragraph>

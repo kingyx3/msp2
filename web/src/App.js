@@ -5,10 +5,10 @@ import Home from './screens/Home';
 import ContactUs from './screens/ContactUs';
 import Return from './screens/Return';
 import Navbar from './components/NavBar';
-import PrivacyPolicy from './screens/PrivacyPolicy';
-import TermsOfService from './screens/TermsOfService';
-import PaymentsTermsOfService from './screens/PaymentsTermsOfService';
-import NonDiscriminationPolicy from './screens/NonDiscriminationPolicy';
+import PrivacyPolicy from './screens/Policies/PrivacyPolicy';
+import TermsOfService from './screens/Policies/TermsOfService';
+import PaymentsTermsOfService from './screens/Policies/PaymentsTermsOfService';
+import NonDiscriminationPolicy from './screens/Policies/NonDiscriminationPolicy';
 
 const App = () => {
   return (

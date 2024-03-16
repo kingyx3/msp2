@@ -1,17 +1,18 @@
 import React from 'react';
 import styled from 'styled-components';
+import { envVars } from '../../envConfig';
 
 const TermsOfService = () => {
     return (
         <Container>
             <Title>Terms of Service</Title>
             <Paragraph>
-                Welcome to {process.env.REACT_APP_NAME}, a platform connecting hosts and users seeking to rent spaces on an hourly basis.
+                Welcome to {envVars.REACT_APP_NAME}, a platform connecting hosts and users seeking to rent spaces on an hourly basis.
                 These Terms of Service govern your use of our website and services, so please read them carefully. By accessing or using our platform, you agree to be bound by these Terms of Service.
             </Paragraph>
             <Heading>1. Overview</Heading>
             <Paragraph>
-                {process.env.REACT_APP_NAME} provides an online platform that connects hosts who have spaces available for rent on an hourly basis with users seeking to rent such spaces ("Services"). These Terms of Service, along with our Privacy Policy, constitute a legally binding agreement between you and {process.env.REACT_APP_NAME} regarding your use of the Services.
+                {envVars.REACT_APP_NAME} provides an online platform that connects hosts who have spaces available for rent on an hourly basis with users seeking to rent such spaces ("Services"). These Terms of Service, along with our Privacy Policy, constitute a legally binding agreement between you and {envVars.REACT_APP_NAME} regarding your use of the Services.
             </Paragraph>
             <Heading>2. User Eligibility</Heading>
             <Paragraph>
@@ -50,7 +51,7 @@ const TermsOfService = () => {
             <Paragraph>
                 Hosts may have their own cancellation policies, which will be clearly communicated to users at the time of booking.
                 Users may be entitled to a refund in accordance with the host's cancellation policy and our platform's refund procedures.
-                {process.env.REACT_APP_NAME} reserves the right to withhold refunds or charge cancellation fees in certain circumstances, such as fraudulent activity or violations of these Terms of Service.
+                {envVars.REACT_APP_NAME} reserves the right to withhold refunds or charge cancellation fees in certain circumstances, such as fraudulent activity or violations of these Terms of Service.
             </Paragraph>
             <Heading>7. Prohibited Activities</Heading>
             <Paragraph>
@@ -62,23 +63,23 @@ const TermsOfService = () => {
                 <li>Interfering with the proper functioning of our platform or attempting to circumvent any security measures.</li>
                 <li>Harassing, threatening, or otherwise harming other users or hosts.</li>
                 <li>Posting any false, misleading, or defamatory information on our platform.</li>
-                <li>Infringing upon the intellectual property rights of {process.env.REACT_APP_NAME} or any third party.</li>
+                <li>Infringing upon the intellectual property rights of {envVars.REACT_APP_NAME} or any third party.</li>
             </ul>
             <Heading>8. Intellectual Property</Heading>
             <Paragraph>
-                All content and materials on our platform, including but not limited to text, graphics, logos, images, and software, are owned by {process.env.REACT_APP_NAME} or its licensors and are protected by copyright and other intellectual property laws. You agree not to reproduce, distribute, or modify any such content without our prior written consent.
+                All content and materials on our platform, including but not limited to text, graphics, logos, images, and software, are owned by {envVars.REACT_APP_NAME} or its licensors and are protected by copyright and other intellectual property laws. You agree not to reproduce, distribute, or modify any such content without our prior written consent.
             </Paragraph>
             <Heading>9. Limitation of Liability</Heading>
             <Paragraph>
-                To the fullest extent permitted by law, {process.env.REACT_APP_NAME} shall not be liable for any direct, indirect, incidental, special, or consequential damages arising out of or in any way connected with your use of the Services, including but not limited to damages for loss of profits, goodwill, use, or data.
+                To the fullest extent permitted by law, {envVars.REACT_APP_NAME} shall not be liable for any direct, indirect, incidental, special, or consequential damages arising out of or in any way connected with your use of the Services, including but not limited to damages for loss of profits, goodwill, use, or data.
             </Paragraph>
             <Heading>10. Indemnification</Heading>
             <Paragraph>
-                You agree to indemnify and hold {process.env.REACT_APP_NAME} and its officers, directors, employees, and agents harmless from any claims, liabilities, damages, losses, or expenses, including reasonable attorneys' fees, arising out of or in any way related to your use of the Services or violation of these Terms of Service.
+                You agree to indemnify and hold {envVars.REACT_APP_NAME} and its officers, directors, employees, and agents harmless from any claims, liabilities, damages, losses, or expenses, including reasonable attorneys' fees, arising out of or in any way related to your use of the Services or violation of these Terms of Service.
             </Paragraph>
             <Heading>11. Modifications to Terms of Service</Heading>
             <Paragraph>
-                {process.env.REACT_APP_NAME} reserves the right to modify or update these Terms of Service at any time, with or without prior notice. Any changes to these Terms of Service will be effective immediately upon posting on our platform. Your continued use of the Services after the posting of any revised Terms of Service constitutes your acceptance of such changes.
+                {envVars.REACT_APP_NAME} reserves the right to modify or update these Terms of Service at any time, with or without prior notice. Any changes to these Terms of Service will be effective immediately upon posting on our platform. Your continued use of the Services after the posting of any revised Terms of Service constitutes your acceptance of such changes.
             </Paragraph>
             <Heading>12. Termination</Heading>
             <Paragraph>
