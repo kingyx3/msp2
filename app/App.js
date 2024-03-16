@@ -64,7 +64,7 @@ export default function App() {
       }
     }
 
-    if (process.env.EXPO_PUBLIC_EXPO_GO) {
+    if (process.env.EXPO_PUBLIC_SKIP_UPDATE_CHECK) {
     } else {
       checkForExpoUpdates();
       checkForAppStoreUpdates();
