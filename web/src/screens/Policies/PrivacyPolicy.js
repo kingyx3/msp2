@@ -103,4 +103,9 @@ const Paragraph = styled.p`
   }
 `;
 
+const Link = styled.a`
+  color: blue;
+  text-decoration: underline;
+`;
+
 export default PrivacyPolicyScreen;
