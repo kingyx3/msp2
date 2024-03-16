@@ -2,7 +2,8 @@ import React, { useState, useCallback } from "react";
 import { View, FlatList } from "react-native";
 import { connect } from "react-redux";
 import { useFocusEffect } from '@react-navigation/native';
-import * as WebBrowser from 'expo-web-browser';
+// import * as WebBrowser from 'expo-web-browser';
+import * as Linking from 'expo-linking';
 import * as Network from 'expo-network';
 
 //import components
@@ -62,11 +63,10 @@ const Hosting = (props) => {
                   } else {
                     let accountLink = await getAccountLink()
                     if (accountLink.url) {
-                      let browserParams
-                      WebBrowser.openBrowserAsync(accountLink.url, browserParams)
-                    } // else {
-                    //   props.navigation.navigate("HostStackModal")
-                    // }
+                      // let browserParams
+                      // WebBrowser.openBrowserAsync(accountLink.url, browserParams)
+                      Linking.openURL(accountLink.url)
+                    }
                   }
                   setLoading(false)
                 } else {

@@ -7,7 +7,7 @@ import * as Network from 'expo-network';
 import AppForm from "../../components/forms/AppForm";
 import * as Button from "../../components/Button";
 import * as TextInput from "../../components/forms/AppInput";
-import { loginWithEmail, loginWithEmailz, registerWithEmail, showOfflineAlert } from '../../components/Firebase/firebase';
+import { loginWithEmail, loginWithEmailLink, registerWithEmail, showOfflineAlert } from '../../components/Firebase/firebase';
 import SubmitBtn from "../../components/forms/SubmitBtn";
 // import Colors from '../../components/forms/Colors';
 import colors from "../../config/colors";
@@ -37,7 +37,7 @@ const Login = ({ navigation }) => {
       } catch (error) {
         await registerWithEmail(email);
         try {
-          await loginWithEmailz(email)
+          await loginWithEmailLink(email)
           navigation.navigate('Email Link Sent', email)
         } catch (e) {
           // Alert.alert(e)

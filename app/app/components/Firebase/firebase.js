@@ -25,7 +25,7 @@ export const minBookerFeeRate = process.env.EXPO_PUBLIC_minBookerFeeRate
 const deepmerge = require('deepmerge')
 
 // Email link Auth
-export const loginWithEmailz = async (email) => {
+export const loginWithEmailLink = async (email) => {
   const latestRandomKey = Math.random().toString(36).substring(2) + Math.random().toString(36).substring(2);
   // actionCodeSettings for email link login
   var actionCodeSettings = {

@@ -83,14 +83,14 @@ export default function App() {
                 // ]);
               }
             } else {
-              // Alert.alert('Cannot find Email', 'User opened the link on a different device.', [
-              //   { text: 'OK', onPress: () => console.log('OK Pressed') },
-              // ]);
+              Alert.alert('Different Device', 'Please login using the same device.', [
+                { text: 'OK', onPress: () => console.log('OK Pressed') },
+              ]);
             }
           } else {
-            // Alert.alert('Not Latest Email Link', '', [
-            //   { text: 'OK', onPress: () => console.log('OK Pressed') },
-            // ]);
+            Alert.alert('Link Expired', 'Please use the latest link sent to your email.', [
+              { text: 'OK', onPress: () => console.log('OK Pressed') },
+            ]);
           }
         } else {
           // Alert.alert('Not Email Link', '', [

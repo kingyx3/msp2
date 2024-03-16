@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { View, Text, Button } from 'react-native';
-import { loginWithEmailz } from '../../components/Firebase/firebase';
+import { loginWithEmailLink } from '../../components/Firebase/firebase';
 import styled from 'styled-components/native';
 import { H, H4, P } from '../../config/Typography';
 import { Ionicons } from '@expo/vector-icons';
@@ -24,7 +24,7 @@ const EmailLinkSentScreen = (props) => {
 
   const handleResend = async () => {
     // handle resend email link here
-    await loginWithEmailz(email)
+    await loginWithEmailLink(email)
     setTimer(30);
     setShowResend(false);
   };
