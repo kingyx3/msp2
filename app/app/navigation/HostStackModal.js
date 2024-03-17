@@ -32,8 +32,8 @@ const SpaceBookingTopTab = (props) => {
     const { spaceId } = props.route.params
     return (
         <Tab.Navigator>
-            <Tab.Screen name="Booking History" component={SpaceBooking} initialParams={{ spaceId, history: true }} />
             <Tab.Screen name="Upcoming Bookings" component={SpaceBooking} initialParams={{ spaceId, history: false }} />
+            <Tab.Screen name="Booking History" component={SpaceBooking} initialParams={{ spaceId, history: true }} />
         </Tab.Navigator>
     );
 }
