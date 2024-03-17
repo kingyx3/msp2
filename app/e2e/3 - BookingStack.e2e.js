@@ -50,7 +50,7 @@ describe('Check a booking detail & send message to the host', () => {
     console.log('BookingDetail - Exited while loop4')
   });
 
-  it('Cancel the booking & check refund amount)', async () => {
+  it('Cancel the booking & check refund amount', async () => {
     await testBookingDetail()
   })
 
@@ -60,13 +60,42 @@ describe('Check a booking detail & send message to the host', () => {
     await waitFor(element(by.id("bookings-header-component"))).toBeVisible().withTimeout(60000);
   })
 
-  it('Check Bookings toggle (needs work)', async () => {
-    // await element(by.id('show-all-bookings-switch')).tap();
+  it('Check Bookings toggle', async () => {
+    await element(by.id('show-all-bookings-switch')).tap();
 
-    // // Wait for navigation to complete & perform the visibility checks
-    // await waitFor(element(by.id('open-date-picker'))).toBeVisible().withTimeout(60000);
-    // await expect(element(by.id('open-time-picker'))).toBeVisible()
+    // Wait for toggle action to complete & perform the visibility checks
+    await waitFor(element(by.id('bookings-header-component'))).toBeVisible().withTimeout(60000);
+    await waitFor(element(by.id('bookings-scroll-view'))).toBeVisible().withTimeout(60000);
   });
+
+  it('Navigate to BookingDetail screen (toggled)', async () => {
+    await element(by.id('bookings-scroll-view')).scroll(150, 'down');
+    await waitFor(element(by.id('0_booking_detail'))).toBeVisible(100).withTimeout(60000);
+    // await element(by.id('1_booking_detail')).tap();
+    let x = true
+    while (x) {
+      try {
+        await element(by.id('0_booking_detail')).tap();
+        // Wait for navigation to complete & perform the visibility checks
+        await waitFor(element(by.id("booking-detail-scroll-view"))).toBeVisible(100).withTimeout(60000); // Not visible for past bookings, visible up to booking start (user), visible up to 2 days after booking end (host)
+        await waitFor(element(by.id("booking-title-price"))).toBeVisible(100).withTimeout(60000); // Not visible for past bookings, visible up to booking start (user), visible up to 2 days after booking end (host)
+        x = false
+      } catch (e) {
+        console.log('Looping in while loop5. ' + e)
+      }
+    }
+    console.log('BookingDetail - Exited while loop5')
+  });
+
+  it('Cancel the booking & check refund amount (toggled)', async () => {
+    await testBookingDetail()
+  })
+
+  it('Navigate back to Bookings screen (toggled)', async () => {
+    await element(by.id("back-button-booking-detail")).tap()
+
+    await waitFor(element(by.id("bookings-header-component"))).toBeVisible().withTimeout(60000);
+  })
 });
 
 // // Dont need specific testing
