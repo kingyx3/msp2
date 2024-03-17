@@ -38,8 +38,7 @@ describe('Hosting - Manage Space', () => {
       await element(by.id('0_space')).tap();
       try {
         // Wait for navigation to complete & perform the visibility checks
-        await waitFor(element(by.id('space-detail-scroll-view'))).toBeVisible().withTimeout(60000);
-
+        await waitFor(element(by.id('space-detail-scroll-view'))).toBeVisible().withTimeout(10000);
         x = false
       } catch (e) {
         console.log('Looping in while loop3. ' + e)

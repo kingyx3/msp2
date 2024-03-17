@@ -72,7 +72,7 @@ export function createSpaceTestSuite() {
         while (y) {
             await element(by.id('hosting-step6-next-button')).tap();
             try {
-                await waitFor(element(by.id('hosting-edit7-next-button'))).toBeVisible().withTimeout(60000);
+                await waitFor(element(by.id('hosting-edit7-next-button'))).toBeVisible().withTimeout(10000);
                 y = false
             } catch (e) {
                 console.log('Looping in while loop2. ' + e)
