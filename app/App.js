@@ -72,6 +72,7 @@ export default function App() {
       checkForExpoUpdates();
       checkForAppStoreUpdates();
     }
+    setLoaded(true);
   }, []);
 
   useEffect(() => {
@@ -131,7 +132,6 @@ export default function App() {
 
   // Not very useful, doesnt really help to persist auth
   useEffect(() => {
-    setLoaded(true);
     // Check if app is foregrounded
     const subscription = AppState.addEventListener('change', (nextAppState) => {
       if (nextAppState === 'active') {
@@ -163,7 +163,6 @@ export default function App() {
         setLoggedIn(false);
       }
     });
-    setLoaded(true);
     // Clean up the auth state listener when the component unmounts
     return () => unsubscribe();
   }, [foregrounded]);
