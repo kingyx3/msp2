@@ -65,14 +65,15 @@ export default function App() {
         // alert(`Error fetching latest Expo update: ${error}`);
         console.log('checkForExpoUpdates error: ', error)
       }
+      setLoaded(true);
     }
 
     if (process.env.EXPO_PUBLIC_SKIP_UPDATE_CHECK) {
+      setLoaded(true);
     } else {
       checkForExpoUpdates();
       checkForAppStoreUpdates();
     }
-    setLoaded(true);
   }, []);
 
   useEffect(() => {

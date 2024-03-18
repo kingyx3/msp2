@@ -26,7 +26,7 @@ const deepmerge = require('deepmerge')
 
 // Email link Auth
 export const loginWithEmailLink = async (email) => {
-  const latestRandomKey = Math.random().toString(36).substring(2) + Math.random().toString(36).substring(2);
+  const latestRandomKey = Math.random().toString(36).substring(2);
   // actionCodeSettings for email link login
   var actionCodeSettings = {
     // URL you want to redirect back to. The domain (www.example.com) for this
