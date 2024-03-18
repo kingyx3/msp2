@@ -32,7 +32,7 @@ module.exports = {
       ]
     },
     "supportsTablet": false,
-    "bundleIdentifier": process.env.IOS_ID,
+    "bundleIdentifier": process.env.EXPO_PUBLIC_IOS_ID,
     "buildNumber": process.env.nativeBuildVersionIOS,
     "associatedDomains": [
       "applinks:makeshiftplans.com",
@@ -47,7 +47,7 @@ module.exports = {
   },
   "userInterfaceStyle": "automatic",
   "android": {
-    "package": process.env.ANDROID_ID,
+    "package": process.env.EXPO_PUBLIC_ANDROID_ID,
     "versionCode": process.env.nativeBuildVersionAndroid,
     "adaptiveIcon": {
       "foregroundImage": "./app/assets/adaptive-icon.png",

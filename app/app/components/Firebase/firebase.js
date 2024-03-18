@@ -38,7 +38,7 @@ export const loginWithEmailLink = async (email) => {
       bundleId: 'host.exp.Exponent'
     },
     android: {
-      packageName: process.env.ANDROID_ID,
+      packageName: process.env.EXPO_PUBLIC_ANDROID_ID,
       installApp: true,
       minimumVersion: '15'
     },

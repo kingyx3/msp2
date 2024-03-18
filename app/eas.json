@@ -21,15 +21,15 @@
     "development": {
       "channel": "development",
       "env": {
-        "IOS_ID": "com.makeshiftplans.ios.dev",
-        "ANDROID_ID": "com.makeshiftplans.android.dev"
+        "EXPO_PUBLIC_IOS_ID": "com.makeshiftplans.ios.dev",
+        "EXPO_PUBLIC_ANDROID_ID": "com.makeshiftplans.android.dev"
       }
     },
     "production": {
       "channel": "production",
       "env": {
-        "IOS_ID": "com.makeshiftplans.ios",
-        "ANDROID_ID": "com.makeshiftplans.android"
+        "EXPO_PUBLIC_IOS_ID": "com.makeshiftplans.ios",
+        "EXPO_PUBLIC_ANDROID_ID": "com.makeshiftplans.android"
       }
     }
   },
