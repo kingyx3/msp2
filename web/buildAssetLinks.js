@@ -6,8 +6,12 @@ const fs = require('fs');
 const { envVars } = require('./envConfig');
 
 // Template assetlinks.json file
-const assetLinksTemplate = require('./assetlinksTemplate.json');
-
+try {
+    assetLinksTemplate = require('./assetlinksTemplate.json');
+    console.log('JSON file loaded successfully.');
+} catch (error) {
+    console.error('Error loading JSON file:', error);
+}
 // Replace placeholders with actual values
 assetLinksTemplate[0].target.package_name = envVars.packageName;
 assetLinksTemplate[0].target.sha256_cert_fingerprints = [envVars.sha256CertFingerprint];
