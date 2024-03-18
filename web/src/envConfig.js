@@ -10,8 +10,6 @@ export const envVars = process.env.REACT_APP_NODE_ENV === "PROD"
         REACT_APP_FB_storageBucket: "makeshiftplans-prod.appspot.com",
         REACT_APP_FB_messagingSenderId: 216928290796,
         REACT_APP_FB_appId: "1:216928290796:web:814c2544637cde605422c9",
-        packageName: "com.makeshiftplans.android",
-        sha256CertFingerprint: "23:D7:08:93:D5:EC:9F:0D:19:6F:3C:19:4C:E2:F9:B0:C6:88:72:50:85:F2:F2:DC:81:D2:01:37:32:CB:F8:36",
     } : {
         REACT_APP_NAME: "MakeShiftPlans (DEV)",
         REACT_APP_TYPE: "DEV",
@@ -23,6 +21,4 @@ export const envVars = process.env.REACT_APP_NODE_ENV === "PROD"
         REACT_APP_FB_storageBucket: "makeshiftplans-dev.appspot.com",
         REACT_APP_FB_messagingSenderId: 505686398711,
         REACT_APP_FB_appId: "1:505686398711:web:2bdf7092493c5f0a5ae5f2",
-        packageName: "com.makeshiftplans.android.dev",
-        sha256CertFingerprint: "1F:A3:B7:42:AA:FD:76:9B:7B:40:1B:C7:75:8D:F9:1A:8B:83:42:08:05:DB:53:EE:61:92:D8:AF:1D:58:71:7F",
     }

@@ -3,7 +3,7 @@
 const fs = require('fs');
 
 // Load environment-specific configuration
-import { envVars } from './src/envConfig';
+const { envVars } = require('./envConfig');
 
 // Template assetlinks.json file
 const assetLinksTemplate = require('./assetlinksTemplate.json');
