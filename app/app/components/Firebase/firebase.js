@@ -454,6 +454,25 @@ export function setSelectedSpace(selectedSpaceId) {
       .catch((e) => console.log('Error selecting space: ' + e));
   };
 }
+
+export async function fetchSpaceReviews(spaceId, setSpaceReviews) {
+  const spaceReviewsRef = collection(doc(firestore, 'spaces', spaceId), 'spacereviews');
+  try {
+    const snapshot = await getDocs(spaceReviewsRef);
+    console.log("NUMBER OF READS (fetchSpaceReviews):", snapshot.docs.length);
+
+    let spaceReviews = {};
+    snapshot.docs.forEach((doc) => {
+      spaceReviews = { ...spaceReviews, ...doc.data() };
+    });
+    const spaceReviewsArray = Object.values(spaceReviews);
+    return setSpaceReviews(spaceReviewsArray)
+  } catch (e) {
+    console.log('Error (fetchSpaceReviews)', e)
+    return {}
+  }
+}
+
 // Function to fetch user's spaces (SPACE-R) - HOST (XR) => XR depends on userspaces (number of userspaces / 100)
 export function fetchUserSpaces() {
   return (dispatch) => {

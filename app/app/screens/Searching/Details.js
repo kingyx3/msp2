@@ -28,7 +28,7 @@ import moment from 'moment';
 import styled from "styled-components/native";
 import colors from "../../config/colors";
 import * as Typography from "../../config/Typography";
-import { setSelectedSpace, clearSelectedSpace, getUserName, getAvatarLink } from "../../components/Firebase/firebase";
+import { setSelectedSpace, clearSelectedSpace, getUserName, getAvatarLink, fetchSpaceReviews } from "../../components/Firebase/firebase";
 
 //import data
 // import { reviews } from "../../config/appConfig";
@@ -50,6 +50,7 @@ const Details = ({ navigation, route, state, setSelectedSpace, clearSelectedSpac
   const duration = moment.duration(moment(state.end).diff(moment(state.start)));
   const hours = duration.asHours();
   const { userId: hostId } = selectedSpace
+  const [spaceReviews, setSpaceReviews] = useState({})
 
   const periodPrice = periodPriceExclFees + fees
   const opacityValue = new Animated.Value(0);
@@ -58,10 +59,13 @@ const Details = ({ navigation, route, state, setSelectedSpace, clearSelectedSpac
   useEffect(() => {
     if (selectedSpace.id != spaceId) {
       setSelectedSpace(spaceId)
-    } else {
-      getUserName(hostId, setHostName)
     }
   }, [spaceId, selectedSpace])
+
+  useEffect(() => {
+    getUserName(hostId, setHostName)
+    fetchSpaceReviews(spaceId, setSpaceReviews)
+  }, [])
 
   const renderItem = ({ item, index }) =>
     <View style={{ width: CARD_WIDTH + CARD_ADJ }}>
@@ -69,13 +73,12 @@ const Details = ({ navigation, route, state, setSelectedSpace, clearSelectedSpac
         <Card.Review
           imagexsmall={getAvatarLink(item.userId)}
           title={item.userName}
-          secondary={new Date(item.timestamp).toLocaleDateString('en-US', { month: 'short', year: 'numeric' })} // hh:mmA
+          secondary={new Date(item.created.seconds * 1000).toLocaleDateString('en-US', { month: 'short', year: 'numeric' })} // hh:mmA
           content={item.review}
           rating={item.rating}
         />
       </View>
     </View>
-
 
   const headerStyle = {
     height: 70,
@@ -211,12 +214,10 @@ const Details = ({ navigation, route, state, setSelectedSpace, clearSelectedSpac
             {/* Start of review section */}
             <Section>
               <Typography.H2>Reviews</Typography.H2>
-              {selectedSpace?.reviews?.spaceReviewDT
+              {spaceReviews.length > 0
                 ? <MarginContainer>
                   <FlatList
-                    data={Object.values(
-                      selectedSpace?.reviews?.spaceReviewDT
-                    ).sort((a, b) => new Date(b.timestamp) - new Date(a.timestamp))}
+                    data={spaceReviews}
                     keyExtractor={(item, index) => index.toString()} // {reviews.index}
                     horizontal
                     decelerationRate={0}

@@ -271,15 +271,6 @@ const firestoreCollectionFields = {
         // [2]: {}
     },
     spacereviews: {
-        id,
-        rating,
-        review,
-        spaceId,
-        timestamp_TO_CHANGE_TO_created,
-        userId,
-        userName_TO_REMOVE
-    },
-    spacereviews_NEW: {
         // [0]: {
         [userId_AND_spaceId]: {
             id,
@@ -347,15 +338,6 @@ const firestoreCollectionFields = {
         // [2]: {}
     },
     userreviews: {
-        id,
-        rating,
-        review,
-        spaceId,
-        timestamp,
-        userId,
-        userName
-    },
-    userreviews_NEW: {
         // [0]: {
         [userId_AND_spaceId]: {
             id,
@@ -392,7 +374,15 @@ const firestoreCollectionFields = {
         // },
         // [1]: {},
         // [2]: {}
-    }
+    },
+    // LOG TYPES
+    // createSpace => ID = spaceId
+    // updateSpace => ID = spaceId + "_" + random
+    // disableSpace => ID = spaceId + "_" + random
+    // enableSpace => ID = spaceId + "_" + random
+    // createBooking => ID = bookingId
+    // cancelBooking => ID = bookingId + "_cancel"
+    // topUpWallet => ID = userId + "_" + random
 }
 
 // // Potential Deprecations
