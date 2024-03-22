@@ -194,44 +194,49 @@ export function fetchIpLocation() {
 // Function to create an space (SPACE-C) (XR, 4W)
 export async function createSpace(spaceType, price, peakPrice, offPeakPrice, localImages, location, title, description, spaceCount, cancellationPolicy, monthsAhead, openingHours) { // TRANSACTION-ED
   const CFcreateSpace = httpsCallable(functions, 'createSpace');
-  let spaceId = await generateUniqueId('spaces', 8);
-  const inputs = { spaceId, spaceType, price, peakPrice, offPeakPrice, localImages, location, title, description, spaceCount, monthsAhead, cancellationPolicy, openingHours }
+  // let spaceId = await generateUniqueId('spaces', 8);
+  const inputs = { spaceType, price, peakPrice, offPeakPrice, localImages, location, title, description, spaceCount, monthsAhead, cancellationPolicy, openingHours }
 
-  const promises = localImages.map((image, index) => {
-    // console.log('Uploading image', index + 1, 'out of', localImages.length);
-    return uploadImage(image, spaceId, index)
-  });
+  return CFcreateSpace(inputs)
+    .then(async ({ data }) => {
+      const spaceId = data.spaceId
+      console.log("SPACE CREATED SUCCESSFULLY, UPLOADING IMAGES");
+      const promises = localImages.map((image, index) => {
+        // console.log('Uploading image', index + 1, 'out of', localImages.length);
+        return uploadImage(image, spaceId, index)
+      });
+      return Promise.all(promises)
+        .then(async () => {
+          console.log("SPACE IMAGES UPLOADED SUCCESSFULLY");
+          const userId = auth.currentUser.uid;
+          const imagePath = `users/${userId}/spaces/${spaceId}/images/`;
 
-  return Promise.all(promises)
-    .then(() => {
-      console.log("All images uploaded successfully");
-      return CFcreateSpace(inputs);
-    })
-    .then(async () => {
-      console.log("SPACE CREATED SUCCESSFULLY!");
-      const userId = auth.currentUser.uid;
-      const imagePath = `users/${userId}/spaces/${spaceId}/images/`;
+          const listRef = storageRef(storage, imagePath);
 
-      const listRef = storageRef(storage, imagePath);
-
-      return listAll(listRef)
-        .then((res) => {
-          res.items.forEach((itemRef, i) => {
-            // All the items under listRef.
-            const itemNum = itemRef.toString().split('images/')[1];
-            if (itemNum >= localImages.length) {
-              deleteObject(itemRef).then(() => {
-                console.log("IMAGE FILE @", itemRef, "DELETED!");
-              }).catch((e) => {
-                console.log("IMAGE FILE DELETION ERROR:", e);
+          return listAll(listRef)
+            .then((res) => {
+              res.items.forEach((itemRef, i) => {
+                // All the items under listRef.
+                const itemNum = itemRef.toString().split('images/')[1];
+                if (itemNum >= localImages.length) {
+                  deleteObject(itemRef)
+                    .then(() => {
+                      console.log("IMAGE FILE @ " + itemRef + " DELETED");
+                    })
+                    .catch((e) => {
+                      Promise.reject("IMAGE FILE DELETION ERROR: " + e);
+                    });
+                }
               });
-            }
-          });
+            })
+            .then(() => {
+              console.log('EXTRA IMAGE FILES DELETED');
+            })
+            .catch((e) => Promise.reject('FAILED TO DELETE EXTRA IMAGE FILES: ' + e));
         })
-        .then(() => {
-          console.log('Extra image files deleted!');
+        .catch((e) => {
+          Promise.reject("SPACE IMAGES UPLOADING ERROR: " + e);
         })
-        .catch((e) => console.log('Failed to delete extra image files!', e));
     })
     .catch((e) => Promise.reject("SPACE CREATION ERROR: " + e));
 }
@@ -1559,27 +1564,5 @@ function convertTimestampsToIsoStrings(obj) {
     );
   } else {
     return obj;
-  }
-}
-const generateUniqueId = async (collectionName, numOfChars) => {
-  // Max 10 chars
-  let generatedId;
-  let unique = false;
-  let docRef
-
-  while (!unique) {
-    generatedId = Math.random().toString(36).substring(2, numOfChars + 2).toUpperCase(); // Get 8 random characters
-    docRef = doc(firestore, collectionName, generatedId);
-    unique = await isUnique(docRef); // Assuming isUnique function checks uniqueness
-  }
-  return generatedId;
-}
-
-const isUnique = async (docRef) => {
-  let checkObj = await getDoc(docRef);
-  if (checkObj.exists()) {
-    return false
-  } else {
-    return true
   }
 }
