@@ -353,18 +353,7 @@ const firestoreCollectionFields = {
         // [1]: {},
         // [2]: {}
     },
-    userbookinglogs_NEW: {
-        // [0]: {
-        [logId]: {
-            logFields_VARIES
-        },
-        [logId2]: {},
-        [logId3]: {}
-        // },
-        // [1]: {},
-        // [2]: {}
-    },
-    userhostinglogs_NEW: {
+    userlogs_NEW: {
         // [0]: {
         [logId]: {
             logFields_VARIES

@@ -145,6 +145,18 @@ export default function App() {
   }, []);
 
   useEffect(() => {
+    if (auth.currentUser) {
+      // if foregrounded?]
+      auth.currentUser.getIdToken(true)
+        .then(function (idToken) {
+          console.log('idToken: ', idToken)
+        }).catch(function (error) {
+          console.log('idTokenError: ', error)
+        });
+    }
+  }, [foregrounded])
+
+  useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (user) => {
       if (user) {
         const userNameRef = ref(database, `users/${user.uid}`);
@@ -166,7 +178,7 @@ export default function App() {
     });
     // Clean up the auth state listener when the component unmounts
     return () => unsubscribe();
-  }, [foregrounded]);
+  }, []);
 
   if (loaded) {
     wait(1000).then(() => SplashScreen.hideAsync())
