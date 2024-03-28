@@ -35,6 +35,13 @@ import {
 } from '../../store/host';
 import { getTimingDiffFromUTC } from '../../components/Firebase/firebase';
 
+const cancellationPolicies = [
+{ label: 'Super Flex', numberOfHours: 72 },
+{ label: 'Flex', numberOfHours: 48 },
+{ label: 'Medium', numberOfHours: 24 },
+{ label: 'Strict', numberOfHours: 12 },
+{ label: 'Super Strict', numberOfHours: 0 }]
+
 const HostingEdit13 = (props) => {
   const { editMode, selectedSpace, defaultWeekday, defaultSaturday, defaultSunday } = props.route.params
   const [modalVisible, setModalVisible] = useState(false);
@@ -48,8 +55,7 @@ const HostingEdit13 = (props) => {
   const [weekdayRule, setWeekdayRule] = useState(defaultWeekday);
   const [saturdayRule, setSaturdayRule] = useState(defaultSaturday);
   const [sundayRule, setSundayRule] = useState(defaultSunday);
-  const [monthsAhead, setMonthsAhead] = useState(1)
-  const [cancellationPolicy, setCancellationPolicy] = useState({ label: 'Medium', numberOfHours: 12 })
+  const [monthsAhead, setMonthsAhead] = useState(1{ label: 'Medium', numberOfHours: 12 }  const [cancellationPolicy, setCancellationPolicy] = useState(cancellationPolicies[2])
   const [count, setCount] = useState(0)
 
   useEffect(() => { // used to set initial value to state
