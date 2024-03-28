@@ -2,11 +2,11 @@ import React from 'react';
 import styled from 'styled-components';
 
 const cancellationPolicies = [
-  { label: 'Super Flex - Free cancel up to 72 hours prior to booking start', numberOfHours: 72 },
-  { label: 'Flex - Free cancel up to 48 hours prior to booking start', numberOfHours: 48 },
-  { label: 'Medium - Free cancel up to 24 hours prior to booking start', numberOfHours: 24 },
-  { label: 'Strict - Free cancel up to 12 hours prior to booking start', numberOfHours: 12 },
-  { label: 'Super Strict - No free cancellation allowed', numberOfHours: 0 }
+  { label: 'Super Flex', numberOfHours: 72 },
+  { label: 'Flex', numberOfHours: 48 },
+  { label: 'Medium', numberOfHours: 24 },
+  { label: 'Strict', numberOfHours: 12 },
+  { label: 'Super Strict', numberOfHours: 0 }
 ];
 
 const CancellationPolicy = () => {
