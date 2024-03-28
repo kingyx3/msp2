@@ -168,18 +168,18 @@ const HostingEdit13 = (props) => {
             </View>
           </Flex>
         </Step>
-        {/* <Step>
+        <Step>
           <Typography.Sub1>
             Choose a cancellation policy
           </Typography.Sub1>
           <AppPicker
             selectedItem={cancellationPolicy}
             onSelectItem={(item) => setCancellationPolicy(item)}
-            items={[{ value: 1, label: 'Flex' }, { value: 2, label: 'Flex-Medium' }]}
+            items={cancellationPolicies}
             placeholder={"Choose one"}
             icon="chevron-down"
           />
-        </Step> */}
+        </Step>
         <Modal animationType="fade" visible={modalVisible}>
           <RuleMakerEditor
             ruleDays={ruleDays} //weekdays
