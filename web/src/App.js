@@ -9,6 +9,7 @@ import PrivacyPolicy from './screens/Policies/PrivacyPolicy';
 import TermsOfService from './screens/Policies/TermsOfService';
 import PaymentsTermsOfService from './screens/Policies/PaymentsTermsOfService';
 import NonDiscriminationPolicy from './screens/Policies/NonDiscriminationPolicy';
+import CancellationPolicy from './screens/Policies/CancellationPolicy';
 
 const App = () => {
   return (
@@ -22,6 +23,7 @@ const App = () => {
         <Route path="/terms-of-service" element={<TermsOfService />} />
         <Route path="/payments-terms-of-service" element={<PaymentsTermsOfService />} />
         <Route path="/non-discrimination-policy" element={<NonDiscriminationPolicy />} />
+        <Route path="/cancellation-policy" element={<CancellationPolicy />} />
         {/* Other routes can be defined here */}
       </Routes>
     </Router>
