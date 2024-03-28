@@ -55,7 +55,8 @@ const HostingEdit13 = (props) => {
   const [weekdayRule, setWeekdayRule] = useState(defaultWeekday);
   const [saturdayRule, setSaturdayRule] = useState(defaultSaturday);
   const [sundayRule, setSundayRule] = useState(defaultSunday);
-  const [monthsAhead, setMonthsAhead] = useState(1{ label: 'Medium', numberOfHours: 12 }  const [cancellationPolicy, setCancellationPolicy] = useState(cancellationPolicies[2])
+  const [monthsAhead, setMonthsAhead] = useState(1)
+  const [cancellationPolicy, setCancellationPolicy] = useState(cancellationPolicies[2])
   const [count, setCount] = useState(0)
 
   useEffect(() => { // used to set initial value to state
