@@ -173,14 +173,16 @@ const HostingEdit13 = (props) => {
           <Typography.Sub1>
             Choose a cancellation policy
           </Typography.Sub1>
-          <AppPicker
-            testID={'cancellation-policy-picker'}
-            selectedItem={cancellationPolicy}
-            onSelectItem={(item) => setCancellationPolicy(item)}
-            items={cancellationPolicies}
-            placeholder={"Choose one"}
-            icon="chevron-down"
-          />
+          <InputWrapper>
+            <AppPicker
+              testID={'cancellation-policy-picker'}
+              selectedItem={cancellationPolicy}
+              onSelectItem={(item) => setCancellationPolicy(item)}
+              items={cancellationPolicies}
+              placeholder={"Choose one"}
+              icon="chevron-down"
+            />
+          <InputWrapper>
         </Step>
         <Modal animationType="fade" visible={modalVisible}>
           <RuleMakerEditor
