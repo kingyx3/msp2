@@ -173,6 +173,7 @@ const HostingEdit13 = (props) => {
             Choose a cancellation policy
           </Typography.Sub1>
           <AppPicker
+            testID={'cancellation-policy-picker'}
             selectedItem={cancellationPolicy}
             onSelectItem={(item) => setCancellationPolicy(item)}
             items={cancellationPolicies}
