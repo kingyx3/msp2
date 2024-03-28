@@ -170,9 +170,7 @@ const HostingEdit13 = (props) => {
           </Flex>
         </Step>
         <Step>
-          <Typography.Sub1>
-            Choose a cancellation policy
-          </Typography.Sub1>
+          <Typography.Sub1>Choose a cancellation policy</Typography.Sub1>
           <InputWrapper>
             <AppPicker
               testID={'cancellation-policy-picker'}
@@ -182,7 +180,7 @@ const HostingEdit13 = (props) => {
               placeholder={"Choose one"}
               icon="chevron-down"
             />
-          <InputWrapper>
+          </InputWrapper>
         </Step>
         <Modal animationType="fade" visible={modalVisible}>
           <RuleMakerEditor
