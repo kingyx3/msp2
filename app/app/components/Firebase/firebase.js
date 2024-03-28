@@ -1097,94 +1097,117 @@ export function createStaticData() {
   set(spaceTypesRef, {
     "Badminton Court": {
       label: "Badminton Court",
+      unitLabel: "Court",
       active: true
     },
     "Tennis Court": {
       label: "Tennis Court",
+      unitLabel: "Court",
       active: false
     },
     "Pool Table": {
       label: "Pool Table",
+      unitLabel: "Table",
       active: false
     },
     "Soccer Field (11-a-side)": {
       label: "Soccer Field",
+      unitLabel: "Field",
       active: false
     },
     "Futsal Field (7-a-side)": {
       label: "Futsal Field (7-a-side)",
+      unitLabel: "Field",
       active: false
     },
     "Futsal Field (5-a-side)": {
       label: "Futsal Field (5-a-side)",
+      unitLabel: "Field",
       active: false
     },
     "Bowling Lane": {
       label: "Bowling Lane",
+      unitLabel: "Lane",
       active: true
     },
     "Mahjong Table": {
       label: "Mahjong Table",
+      unitLabel: "Table",
       active: false
     },
     "Loft": {
       label: "Loft",
+      unitLabel: "Loft",
       active: false
     },
     "House": {
       label: "House",
+      unitLabel: "House",
       active: false
     },
     "Squash Court": {
       label: "Squash Court",
+      unitLabel: "Court",
       active: false
     },
-    "Table Tennis Room": {
-      label: "Table Tennis Room",
+    "Table Tennis Table": {
+      label: "Table Tennis Table",
+      unitLabel: "Table",
       active: false
     },
     "Karaoke Room": {
       label: "Karaoke Room",
+      unitLabel: "Room",
       active: false
     },
     "Home Movie Theater": {
       label: "Home Movie Theater",
+      unitLabel: "Theater",
       active: false
     },
     "Study Room": {
       label: "Study Room",
+      unitLabel: "Room",
       active: false
     },
     "Art Room": {
       label: "Art Room",
+      unitLabel: "Room",
       active: true
     },
     "Music Room": {
       label: "Music Room",
+      unitLabel: "Room",
       active: false
     },
     "Dance Studio": {
       label: "Dance Studio",
+      unitLabel: "Studio",
       active: false
     },
     "Yoga Studio": {
       label: "Yoga Studio",
+      unitLabel: "Studio",
       active: false
     },
     "Meditation Room": {
       label: "Meditation Room",
+      unitLabel: "Room",
       active: false
     },
     "Conference Room": {
       label: "Conference Room",
+      unitLabel: "Room",
       active: false
     },
     "Lecture Hall": {
       label: "Lecture Hall",
+      unitLabel: "Hall",
       active: false
     },
     "Auditorium": {
       label: "Auditorium",
+      unitLabel: "Hall",
       active: true
     }
   })
