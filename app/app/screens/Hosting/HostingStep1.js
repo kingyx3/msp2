@@ -62,6 +62,7 @@ const HostingStep1 = (props) => {
                   result={numSpaces}
                   onMinus={(item) => item > 0 ? setNumSpaces(item) : null}
                   onPlus={(item) => setNumSpaces(item)}
+                  max={16}
                 />
               </View>
             </Flex>

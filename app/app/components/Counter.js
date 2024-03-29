@@ -7,14 +7,15 @@ import { AntDesign } from "@expo/vector-icons";
 import colors from "../config/colors";
 import * as Typography from "../config/Typography";
 
-const Counter = ({ result, onMinus, onPlus, max }) => {
-  const maxCount = (max >= 0) ? max : 16
+const Counter = ({ result, onMinus, onPlus, max, min }) => {
+  const maxCount = (max >= 0) ? max : 1000 // default max = 1000
+  const minCount = (min >= 0) ? min : 0 // default min = 0
   return (
     <Container>
       <BtnWrapper>
         <TouchableOpacity testID="minus-btn"
           onPress={() => {
-            if (result > 0) {
+            if (result > minCount) {
               onMinus(result - 1);
             }
           }}

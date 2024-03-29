@@ -174,7 +174,12 @@ const AvailabilityCalendar = ({ data, setDatedEvents, unitLabel, disabled }) => 
                                             <Typography.H3 style={{ marginRight: 10 }}>{'Price:'}</Typography.H3>
                                         </View>
                                         <View style={{ flex: 1 }}>
-                                            <Counter result={price} onMinus={(newPrice) => setPrice(newPrice)} onPlus={(newPrice) => setPrice(newPrice)} max={100} />
+                                            <Counter
+                                                result={price}
+                                                onMinus={(newPrice) => setPrice(newPrice)}
+                                                onPlus={(newPrice) => setPrice(newPrice)}
+                                                min={5}
+                                            />
                                         </View>
                                     </View>
                                 </View>

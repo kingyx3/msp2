@@ -36,11 +36,11 @@ import {
 import { getTimingDiffFromUTC } from '../../components/Firebase/firebase';
 
 const cancellationPolicies = [
-{ label: 'Super Flex', numberOfHours: 72 },
-{ label: 'Flex', numberOfHours: 48 },
-{ label: 'Medium', numberOfHours: 24 },
-{ label: 'Strict', numberOfHours: 12 },
-{ label: 'Super Strict', numberOfHours: 0 }]
+  { label: 'Super Flex', numberOfHours: 72 },
+  { label: 'Flex', numberOfHours: 48 },
+  { label: 'Medium', numberOfHours: 24 },
+  { label: 'Strict', numberOfHours: 12 },
+  { label: 'Super Strict', numberOfHours: 0 }]
 
 const HostingEdit13 = (props) => {
   const { editMode, selectedSpace, defaultWeekday, defaultSaturday, defaultSunday } = props.route.params
@@ -165,6 +165,7 @@ const HostingEdit13 = (props) => {
                 result={monthsAhead}
                 onMinus={(item) => item > 0 ? setMonthsAhead(item) : null}
                 onPlus={(item) => setMonthsAhead(item)}
+                max={12}
               />
             </View>
           </Flex>
