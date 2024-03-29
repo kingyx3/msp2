@@ -13,7 +13,7 @@ import navigationTheme from "./app/navigation/navigationTheme";
 import RootStack from "./app/navigation/RootStack";
 import AuthStack from "./app/navigation/AuthStack";
 import InputName from "./app/screens/InputName";
-// import { checkUserName } from "./app/components/Firebase/firebase";
+// import { createStaticData } from "./app/components/Firebase/firebase";
 import { auth, database } from './app/components/Firebase/firebaseConfig'
 import { isSignInWithEmailLink, signInWithEmailLink, onAuthStateChanged } from "firebase/auth";
 import { onValue, ref } from 'firebase/database';
@@ -26,7 +26,7 @@ export default function App() {
   const [loggedIn, setLoggedIn] = useState(false);
   const [hasName, setHasName] = useState(false);
   const [foregrounded, setForegrounded] = useState(false);
-
+  // createStaticData()
   const useUrl = Linking.useURL();
 
   useEffect(() => {

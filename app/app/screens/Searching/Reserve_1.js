@@ -27,6 +27,9 @@ const Reserve_1 = (props) => {
   // const [initLoading, setInitLoading] = useState(true)
   const [loading, setLoading] = useState(false)
   const { selectedSpace, periodPrice, periodAvailabilityArray, hours, periodPriceExclFees, fees } = props.route.params;
+  const spaceTypes = [...(props.spaceTypes)]
+  const selectedSpaceType = (spaceTypes.filter((spaceType) => spaceType.label === selectedSpace.spaceType))[0]
+
   const courts = periodAvailabilityArray.map(function (value, index) {
     if (value == hours) {
       return {
@@ -170,7 +173,7 @@ const Reserve_1 = (props) => {
           <HLine />*/}
           {/* -------------- */}
           <Flex>
-            <Typography.Sub1>Court Number</Typography.Sub1>
+            <Typography.Sub1>{selectedSpaceType.unitLabel} Number</Typography.Sub1>
             {/* <Text style={{ fontSize: 18 }}>Which Court?</Text> */}
             <View style={{ width: '25%' }}>
               <AppPicker
@@ -301,6 +304,7 @@ const mapStateToProps = (state) => {
   return {
     state: state.search,
     userBookings: state.user.userBookings,
+    spaceTypes: state.user.spaceTypes,
   };
 };
 
