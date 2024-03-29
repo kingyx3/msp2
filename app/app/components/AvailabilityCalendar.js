@@ -14,7 +14,7 @@ options = {
 const { width, height } = Dimensions.get('window');
 const ITEM_HEIGHT = 93
 
-const AvailabilityCalendar = ({ data, setDatedEvents, disabled }) => {
+const AvailabilityCalendar = ({ data, setDatedEvents, unitLabel, disabled }) => {
     const today = moment().format('YYYY-MM-DD')
     let sortedData = data
         ? Object.keys(data)
@@ -101,7 +101,7 @@ const AvailabilityCalendar = ({ data, setDatedEvents, disabled }) => {
                 underlayColor="transparent" // No underlay color for a cleaner look
             >
                 <View style={{ flexDirection: 'row' }}>
-                    <Typography.H3 color={item == "" ? 'green' : item == "blocked" ? 'red' : 'black'}>{`Court ${index + 1}. ${toggleText}`}</Typography.H3>
+                    <Typography.H3 color={item == "" ? 'green' : item == "blocked" ? 'red' : 'black'}>{`${unitLabel} ${index + 1}. ${toggleText}`}</Typography.H3>
                     {(item == "" || item == "blocked") &&
                         <FontAwesome
                             name={'refresh'}
@@ -180,7 +180,7 @@ const AvailabilityCalendar = ({ data, setDatedEvents, disabled }) => {
                                 </View>
                             </View>
                             <View style={{ flex: 0.7 }}>
-                                <Typography.H3 bold>{'Court Availability'}</Typography.H3>
+                                <Typography.H3 bold>{`${unitLabel} Availability`}</Typography.H3>
                                 <FlatList
                                     data={bookingData}
                                     keyExtractor={(item, index) => `${item}${index}`}

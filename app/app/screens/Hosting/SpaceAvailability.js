@@ -27,8 +27,10 @@ const { width, height } = Dimensions.get('window');
 
 const SpaceAvailability = (props) => {
   let isFocused = useIsFocused();
+  const { selectedSpace } = props.route.params
   let dbEvents = props.state.spaceAvailability
-  const { spaceId, spaceCount } = props.route.params
+  const spaceTypes = [...(props.spaceTypes)]
+  const selectedSpaceType = (spaceTypes.filter((spaceType) => spaceType.label === selectedSpace.spaceType))[0]
   const [datedEvents, setDatedEvents] = useState({})
   const [disabled, setDisabled] = useState(false)
   const [stateCount, setStateCount] = useState(0)
@@ -49,7 +51,7 @@ const SpaceAvailability = (props) => {
 
   useEffect(() => {
     if (isFocused && stateCount == 0) {
-      props.fetchSpaceAvailability(spaceId)
+      props.fetchSpaceAvailability(selectedSpace.id)
       setStateCount(1)
     }
   }, [isFocused, dbEvents]);
@@ -58,11 +60,12 @@ const SpaceAvailability = (props) => {
     <Container>
       <Flex>
         <Typography.H2 testID={'space-calendar-header'}>
-          Total: {spaceCount} space(s)
+          Total: {selectedSpace.spaceCount} space(s)
         </Typography.H2>
       </Flex>
       <HourlyRentalComponent
         data={datedEvents}
+        unitLabel={selectedSpaceType.unitLabel}
         disabled={disabled}
         setDatedEvents={setDatedEvents}
       />
@@ -76,7 +79,7 @@ const SpaceAvailability = (props) => {
             const networkState = await Network.getNetworkStateAsync();
             if (networkState.isConnected) {
               // Device is connected to the internet
-              // console.log('pressed', spaceId, spaceAvailabilityObj)
+              // console.log('pressed', selectedSpace.id, spaceAvailabilityObj)
               setDisabled(true)
 
               // Flatten the data while keeping the other data intact
@@ -106,7 +109,7 @@ const SpaceAvailability = (props) => {
               // console.log('dbEvents', dbEvents);
               console.log('updateDbEvents', updateDbEvents);
 
-              updateBlocked(spaceId, updateDbEvents)
+              updateBlocked(selectedSpace.id, updateDbEvents)
                 .then(() => {
                   Alert.alert("Updated successfully!", "Success", [
                     { text: "OK", onPress: () => props.navigation.goBack() },
@@ -159,6 +162,7 @@ const Step = styled.View`
 const mapStateToProps = (state) => {
   return {
     state: state.host,
+    spaceTypes: state.user.spaceTypes,
   };
 };
 

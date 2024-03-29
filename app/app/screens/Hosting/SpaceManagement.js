@@ -33,8 +33,7 @@ const SpaceManagement = (props) => {
   const SpaceManagementItems = [
     {
       title: "Manage Calendar", icon: "calendar-month", screen: "SpaceAvailability", data: {
-        spaceId: selectedSpace.id,
-        spaceCount: selectedSpace.spaceCount,
+        selectedSpace,
         rules: { startTime, endTime }
       }
     },
