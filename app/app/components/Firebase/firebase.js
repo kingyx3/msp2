@@ -192,10 +192,10 @@ export function fetchIpLocation() {
 // *Function to update user info (USER-U)
 // Function to delete user (USER-D)
 // Function to create an space (SPACE-C) (XR, 4W)
-export async function createSpace(spaceType, price, peakPrice, offPeakPrice, localImages, location, title, description, spaceCount, cancellationPolicy, monthsAhead, openingHours) { // TRANSACTION-ED
+export async function createSpace(spaceType, price, peakPrice, offPeakPrice, localImages, location, title, description, spaceCount, cancellationPolicy, monthsAhead, openingHours, needHostConfirm) { // TRANSACTION-ED
   const CFcreateSpace = httpsCallable(functions, 'createSpace');
   // let spaceId = await generateUniqueId('spaces', 8);
-  const inputs = { spaceType, price, peakPrice, offPeakPrice, localImages, location, title, description, spaceCount, monthsAhead, cancellationPolicy, openingHours }
+  const inputs = { spaceType, price, peakPrice, offPeakPrice, localImages, location, title, description, spaceCount, monthsAhead, cancellationPolicy, openingHours, needHostConfirm }
 
   return CFcreateSpace(inputs)
     .then(async ({ data }) => {
@@ -503,9 +503,9 @@ export function fetchUserSpaces() {
 }
 
 // Function to update an space (SPACE-U) (XW)
-export async function updateSpace(spaceId, newPrice, newPeakPrice, newOffPeakPrice, newImages, newTitle, newDescription, newCancellationPolicy, monthsAhead, newOpeningHours) {
+export async function updateSpace(spaceId, newPrice, newPeakPrice, newOffPeakPrice, newImages, newTitle, newDescription, newCancellationPolicy, monthsAhead, newOpeningHours, newNeedHostConfirm) {
   const CFupdateSpace = httpsCallable(functions, 'updateSpace');
-  const inputs = { spaceId, newPrice, newPeakPrice, newOffPeakPrice, newImages, newTitle, newDescription, monthsAhead, newCancellationPolicy, newOpeningHours }
+  const inputs = { spaceId, newPrice, newPeakPrice, newOffPeakPrice, newImages, newTitle, newDescription, monthsAhead, newCancellationPolicy, newOpeningHours, newNeedHostConfirm}
   const promises = newImages.map((image, index) => {
     console.log('Uploading image', index + 1, 'out of', newImages.length);
     return uploadImage(image, spaceId, index)
