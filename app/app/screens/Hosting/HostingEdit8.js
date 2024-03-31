@@ -18,6 +18,7 @@ import colors from "../../config/colors";
 import { connect } from "react-redux";
 
 const HostingEdit8 = (props) => {
+  const needHostConfirm = false
   const [loading, setLoading] = useState(false)
   const { editMode, selectedSpace } = props.route.params
   // const {selectedSpace} = props // from route
@@ -43,7 +44,7 @@ const HostingEdit8 = (props) => {
       openingHours = setPricesInOpeningHours(openingHours, price, peakPrice, offPeakPrice)
 
       if (editMode) {
-        updateSpace(selectedSpace.id, price, peakPrice, offPeakPrice, images, title, description, cancellationPolicy, monthsAhead, openingHours)
+        updateSpace(selectedSpace.id, price, peakPrice, offPeakPrice, images, title, description, cancellationPolicy, monthsAhead, openingHours, needHostConfirm)
           .then(async () => {
             setLoading(false)
             Alert.alert("Space Updated!", "Success", [
@@ -57,7 +58,7 @@ const HostingEdit8 = (props) => {
             ]);
           })
       } else {
-        createSpace(spaceType, price, peakPrice, offPeakPrice, images, location, title, description, numSpaces, cancellationPolicy, monthsAhead, openingHours)
+        createSpace(spaceType, price, peakPrice, offPeakPrice, images, location, title, description, numSpaces, cancellationPolicy, monthsAhead, openingHours, needHostConfirm)
           .then(() => {
             setLoading(false)
             Alert.alert("Space Created!", "Success", [
