@@ -141,6 +141,30 @@ export const getUserName = async (userId, setUserName) => {
   }
 };
 
+//  Fucntion to get cancellationPolicies
+export const getCancellationPolicies = async (setCancellationPolicies) => {
+  try {
+    const cancellationPolicyRef = ref(database, 'system/cancellationPolicy');
+    const snapshot = await get(cancellationPolicyRef);
+
+    if (snapshot.exists()) {
+      const data = snapshot.val();
+      const cancellationPolicy = Object.values(data)
+      setCancellationPolicies(cancellationPolicy);
+      // return cancellationPolicy
+      return
+    } else {
+      // Handle the case where the user data doesn't exist
+      setCancellationPolicies('Not Found');
+      // return 'Not Found'
+      return
+    }
+  } catch (error) {
+    console.error('Error fetching user data:', error);
+    // Handle the error gracefully, e.g., set a default name or show an error message
+  }
+};
+
 //Function to update expo token
 export const updateExpoPushToken = async (expoPushToken) => {
   const CFupdateExpoPushToken = httpsCallable(functions, 'updateExpoPushToken');
@@ -505,7 +529,7 @@ export function fetchUserSpaces() {
 // Function to update an space (SPACE-U) (XW)
 export async function updateSpace(spaceId, newPrice, newPeakPrice, newOffPeakPrice, newImages, newTitle, newDescription, newCancellationPolicy, monthsAhead, newOpeningHours, newNeedHostConfirm) {
   const CFupdateSpace = httpsCallable(functions, 'updateSpace');
-  const inputs = { spaceId, newPrice, newPeakPrice, newOffPeakPrice, newImages, newTitle, newDescription, monthsAhead, newCancellationPolicy, newOpeningHours, newNeedHostConfirm}
+  const inputs = { spaceId, newPrice, newPeakPrice, newOffPeakPrice, newImages, newTitle, newDescription, monthsAhead, newCancellationPolicy, newOpeningHours, newNeedHostConfirm }
   const promises = newImages.map((image, index) => {
     console.log('Uploading image', index + 1, 'out of', newImages.length);
     return uploadImage(image, spaceId, index)
@@ -1518,30 +1542,35 @@ export function createStaticData() {
   // Create static data for Amenities
   const cancellationPolicyRef = ref(database, 'system/cancellationPolicy');
   set(cancellationPolicyRef, {
+    "Super Flex": {
+      //  Cancel x number of hours before booking starts for full refund
+      label: "Super Flex",
+      numberOfHours: 0,
+      active: true
+    },
     "Flex": {
       //  Cancel x number of hours before booking starts for full refund
-      numberOfHours: 2,
-      active: false
-    },
-    "Flex-Medium": {
-      //  Cancel x number of hours before booking starts for full refund
-      numberOfHours: 6,
+      label: "Flex",
+      numberOfHours: 12,
       active: true
     },
     "Medium": {
       //  Cancel x number of hours before booking starts for full refund
-      numberOfHours: 12,
-      active: true
-    },
-    "Medium-Strict": {
-      //  Cancel x number of hours before booking starts for full refund
+      label: "Medium",
       numberOfHours: 24,
       active: true
     },
     "Strict": {
       //  Cancel x number of hours before booking starts for full refund
+      label: "Strict",
       numberOfHours: 48,
-      active: false
+      active: true
+    },
+    "Super Strict": {
+      //  Cancel x number of hours before booking starts for full refund
+      label: "Super Strict",
+      numberOfHours: 72,
+      active: true
     },
   })
     .then(() => console.log("cancellationPolicy static data created successfully."))

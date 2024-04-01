@@ -33,31 +33,37 @@ import {
   setMonthsAhead,
   setCancellationPolicy,
 } from '../../store/host';
-import { getTimingDiffFromUTC } from '../../components/Firebase/firebase';
+import { getTimingDiffFromUTC, getCancellationPolicies } from '../../components/Firebase/firebase';
 
-const cancellationPolicies = [
-  { label: 'Super Flex', numberOfHours: 72 },
-  { label: 'Flex', numberOfHours: 48 },
-  { label: 'Medium', numberOfHours: 24 },
-  { label: 'Strict', numberOfHours: 12 },
-  { label: 'Super Strict', numberOfHours: 0 }]
+// const cancellationPolicies = [
+//   { label: 'Super Flex', numberOfHours: 72 },
+//   { label: 'Flex', numberOfHours: 48 },
+//   { label: 'Medium', numberOfHours: 24 },
+//   { label: 'Strict', numberOfHours: 12 },
+//   { label: 'Super Strict', numberOfHours: 0 }]
 
 const HostingEdit13 = (props) => {
   const { editMode, selectedSpace, defaultWeekday, defaultSaturday, defaultSunday } = props.route.params
+  const [cancellationPolicies, setCancellationPolicies] = useState([])
   const [modalVisible, setModalVisible] = useState(false);
   const [ruleDays, setRuleDays] = useState([]);
   const [defaultRules, setDefaultRules] = useState()
   const [weekdaySet, setWeekdaySet] = useState(true);
   const [saturdaySet, setSaturdaySet] = useState(true);
   const [sundaySet, setSundaySet] = useState(true);
+  const cancellationPoliciesSorted = cancellationPolicies.sort((a, b) => a.numberOfHours - b.numberOfHours)
   // const defaultRule = [0,0,0,0,0,0,0,0,1,1,1,1,1,1,1,1,1,1,1,1,0,0,0,0]
   // { 0:0, 1:0, 2:0, 3:0, 4:0, 5:0, 6:0, 7:0, 8:1, 9:1, 10:1, 11:1, 12:1, 13:1, 14:1, 15:1, 16:1, 17:1, 18:1, 19:1, 20:0, 21:0, 22:0, 23:0,}
   const [weekdayRule, setWeekdayRule] = useState(defaultWeekday);
   const [saturdayRule, setSaturdayRule] = useState(defaultSaturday);
   const [sundayRule, setSundayRule] = useState(defaultSunday);
   const [monthsAhead, setMonthsAhead] = useState(1)
-  const [cancellationPolicy, setCancellationPolicy] = useState(cancellationPolicies[2])
+  const [cancellationPolicy, setCancellationPolicy] = useState(cancellationPoliciesSorted[2])
   const [count, setCount] = useState(0)
+
+  useEffect(() => {
+    getCancellationPolicies(setCancellationPolicies)
+  }, [])
 
   useEffect(() => { // used to set initial value to state
     if (selectedSpace && !count) {
