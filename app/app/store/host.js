@@ -17,6 +17,7 @@ const SET_MONTHS_AHEAD = 'SET_MONTHS_AHEAD';
 const SET_SPACE_BOOKINGS = 'SET_SPACE_BOOKINGS';
 const SET_SPACE_AVAILABILITY = 'SET_SPACE_AVAILABILITY';
 const SET_CANCELLATION_POLICY = 'SET_CANCELLATION_POLICY'
+const SET_NEED_HOST_CONFIRM = 'SET_NEED_HOST_CONFIRM'
 
 const initialStore = {
   spaceType: '',
@@ -35,7 +36,8 @@ const initialStore = {
   monthsAhead: 0,
   spaceBookings: [],
   spaceAvailability: [],
-  cancellationPolicy: { label: 'Medium', numberOfHours: 12 }
+  cancellationPolicy: {},
+  needHostConfirm: false
 };
 
 // Action creators
@@ -195,6 +197,17 @@ export const setCancellationPolicy = (cancellationPolicy) => {
       type: SET_CANCELLATION_POLICY,
       payload: {
         cancellationPolicy,
+      },
+    });
+  };
+};
+
+export const setNeedHostConfirm = (needHostConfirm) => {
+  return (dispatch) => {
+    dispatch({
+      type: SET_NEED_HOST_CONFIRM,
+      payload: {
+        needHostConfirm,
       },
     });
   };

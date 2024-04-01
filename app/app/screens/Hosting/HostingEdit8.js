@@ -18,7 +18,6 @@ import colors from "../../config/colors";
 import { connect } from "react-redux";
 
 const HostingEdit8 = (props) => {
-  const needHostConfirm = false
   const [loading, setLoading] = useState(false)
   const { editMode, selectedSpace } = props.route.params
   // const {selectedSpace} = props // from route
@@ -35,7 +34,7 @@ const HostingEdit8 = (props) => {
           { text: "OK", onPress: () => console.log('Navigate user to create profile') }, //props.navigation.navigate("Signup") },
         ]);
       }
-      const { spaceType, price, peakPrice, offPeakPrice, images, location, title, description, weekdayRule, saturdayRule, sundayRule, numSpaces, cancellationPolicy, monthsAhead } = props.state // from redux
+      const { spaceType, price, peakPrice, offPeakPrice, images, location, title, description, weekdayRule, saturdayRule, sundayRule, numSpaces, cancellationPolicy, monthsAhead, needHostConfirm } = props.state // from redux
       let openingHours = [sundayRule, ...(Array(5).fill(weekdayRule)), saturdayRule].flat(); // Sunday = 0, Monday = 1, .... Saturday = 6
       // move the array by locale timing difference from GMT
       const timeDiffHours = getTimingDiffFromUTC()

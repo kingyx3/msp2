@@ -23,6 +23,7 @@ import * as MyButton from '../../components/Button';
 import Colors from '../../config/colors';
 import { Button } from 'react-native-elements';
 import Icon from 'react-native-vector-icons/FontAwesome';
+import { Switch } from 'react-native-elements';
 //import { Button } from 'react-native-paper';
 //import redux
 import { connect } from 'react-redux';
@@ -32,6 +33,7 @@ import {
   setSundayRule,
   setMonthsAhead,
   setCancellationPolicy,
+  setNeedHostConfirm,
 } from '../../store/host';
 import { getTimingDiffFromUTC, getCancellationPolicies } from '../../components/Firebase/firebase';
 
@@ -59,6 +61,7 @@ const HostingEdit13 = (props) => {
   const [sundayRule, setSundayRule] = useState(defaultSunday);
   const [monthsAhead, setMonthsAhead] = useState(1)
   const [cancellationPolicy, setCancellationPolicy] = useState(cancellationPoliciesSorted[2])
+  const [needHostConfirm, setNeedHostConfirm] = useState(false)
   const [count, setCount] = useState(0)
 
   useEffect(() => {
@@ -76,6 +79,7 @@ const HostingEdit13 = (props) => {
       setSaturdayRule(adjustedToLocalOpeningHours.slice(6 * 24, 7 * 24))
       setMonthsAhead(selectedSpace.monthsAhead)
       setCancellationPolicy(selectedSpace.cancellationPolicy)
+      setNeedHostConfirm(selectedSpace.needHostConfirm)
       setCount(1)
     }
   }, [count, selectedSpace])
@@ -101,6 +105,7 @@ const HostingEdit13 = (props) => {
     props.setSundayRule(sundayRule);
     props.setMonthsAhead(monthsAhead)
     props.setCancellationPolicy(cancellationPolicy)
+    props.setNeedHostConfirm(needHostConfirm)
     props.navigation.navigate('HostingEdit5', { editMode, selectedSpace });
   };
   return (
@@ -188,6 +193,18 @@ const HostingEdit13 = (props) => {
               icon="chevron-down"
             />
           </InputWrapper>
+        </Step>
+        <Step>
+          <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', }}>
+            <Typography.Sub1>Require pre-booking approval?  </Typography.Sub1>
+            <Switch
+              testID="need-host-confirm-switch"
+              value={needHostConfirm}
+              onValueChange={() => setNeedHostConfirm(!needHostConfirm)}
+              color={'purple'}
+              thumbColor={'white'}
+            />
+          </View>
         </Step>
         <Modal animationType="fade" visible={modalVisible}>
           <RuleMakerEditor
@@ -291,4 +308,5 @@ export default connect(null, {
   setSundayRule,
   setMonthsAhead,
   setCancellationPolicy,
+  setNeedHostConfirm
 })(HostingEdit13);
