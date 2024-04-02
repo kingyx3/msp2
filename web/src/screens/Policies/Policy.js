@@ -13,16 +13,19 @@ const Policy = () => {
                     <PolicyLink href="/terms-of-service" target="_blank">Terms of Service</PolicyLink>
                 </PolicyItem>
                 <PolicyItem>
-                    <PolicyLink href="/payments-terms-of-service" target="_blank">Terms of Service</PolicyLink>
+                    <PolicyLink href="/payments-terms-of-service" target="_blank">Payments Terms of Service</PolicyLink>
                 </PolicyItem>
                 <PolicyItem>
                     <PolicyLink href="/cancellation-policy" target="_blank">Cancellation Policy</PolicyLink>
                 </PolicyItem>
                 <PolicyItem>
-                    <PolicyLink href="/host-cancellation-policy" target="_blank">Cancellation Policy</PolicyLink>
+                    <PolicyLink href="/hosting-rules" target="_blank">Hosting Rules</PolicyLink>
                 </PolicyItem>
                 <PolicyItem>
-                    <PolicyLink href="/non-discrimination-policy" target="_blank">Cancellation Policy</PolicyLink>
+                    <PolicyLink href="/host-cancellation-policy" target="_blank">Host Cancellation Policy</PolicyLink>
+                </PolicyItem>
+                <PolicyItem>
+                    <PolicyLink href="/non-discrimination-policy" target="_blank">Non-Discrimination Policy</PolicyLink>
                 </PolicyItem>
             </PolicyList>
         </Container>

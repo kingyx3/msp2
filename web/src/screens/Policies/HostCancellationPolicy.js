@@ -34,7 +34,7 @@ const HostCancellationPolicy = () => {
 
       <SubTitle>Other Consequences</SubTitle>
       <Paragraph>
-        In addition to a cancellation fee, other consequences may apply, such as preventing the Host from accepting another reservation for the Listing on the affected dates by blocking the Listing’s calendar. Hosts who cancel confirmed bookings without a valid reason may experience other consequences, as explained in our Terms of Service and ground rules for Hosts. For example, Hosts may have their Listing or account suspended or removed.
+        In addition to a cancellation fee, other consequences may apply, such as preventing the Host from accepting another reservation for the Listing on the affected dates by blocking the Listing’s calendar. Hosts who cancel confirmed bookings without a valid reason may experience other consequences, as explained in our Terms of Service and Hosting rules. For example, Hosts may have their Listing or account suspended or removed.
       </Paragraph>
 
       <SubTitle>Host Responsibility</SubTitle>
