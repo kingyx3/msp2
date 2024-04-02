@@ -222,11 +222,11 @@ const HostingEdit13 = (props) => {
             label="Next"
             size="small"
             color={
-              weekdaySet && saturdaySet && sundaySet
+              weekdaySet && saturdaySet && sundaySet && cancellationPolicy
                 ? colors.red
                 : colors.lightgray
             }
-            disabled={!weekdaySet && !saturdaySet && !sundaySet}
+            disabled={!weekdaySet || !saturdaySet || !sundaySet || !cancellationPolicy}
             onPress={() => onNavigate()}
           />
         </BtnContainer>
