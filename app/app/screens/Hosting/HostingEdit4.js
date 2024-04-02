@@ -44,7 +44,7 @@ import { getTimingDiffFromUTC, getCancellationPolicies } from '../../components/
 //   { label: 'Strict', numberOfHours: 12 },
 //   { label: 'Super Strict', numberOfHours: 0 }]
 
-const HostingEdit13 = (props) => {
+const HostingEdit4 = (props) => {
   const { editMode, selectedSpace, defaultWeekday, defaultSaturday, defaultSunday } = props.route.params
   const [cancellationPolicies, setCancellationPolicies] = useState([])
   const [modalVisible, setModalVisible] = useState(false);
@@ -309,4 +309,4 @@ export default connect(null, {
   setMonthsAhead,
   setCancellationPolicy,
   setNeedHostConfirm
-})(HostingEdit13);
+})(HostingEdit4);

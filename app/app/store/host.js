@@ -37,7 +37,7 @@ const initialStore = {
   spaceBookings: [],
   spaceAvailability: [],
   cancellationPolicy: {},
-  needHostConfirm: false
+  needHostConfirm: false,
 };
 
 // Action creators
@@ -263,6 +263,8 @@ const reducer = (state = initialStore, action) => {
       return { ...state, spaceAvailability: action.payload.spaceAvailability };
     case SET_CANCELLATION_POLICY:
       return { ...state, cancellationPolicy: action.payload.cancellationPolicy };
+    case SET_NEED_HOST_CONFIRM:
+      return { ...state, needHostConfirm: action.payload.needHostConfirm };
     default:
       return state;
   }
