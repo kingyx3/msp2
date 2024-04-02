@@ -10,6 +10,9 @@ const Navbar = () => {
                     <Link to="/" style={styles.link}>Home</Link>
                 </li>
                 <li style={styles.li}>
+                    <Link to="/policies" style={styles.link}>Policies</Link>
+                </li>
+                <li style={styles.li}>
                     <Link to="/contact-us" style={styles.link}>Contact Us</Link>
                 </li>
             </ul>
