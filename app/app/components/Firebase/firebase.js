@@ -551,9 +551,9 @@ export async function updateSpace(spaceId, newPrice, newPeakPrice, newOffPeakPri
             // All the items under listRef.
             const itemNum = item.toString().split('images/')[1];
             if (itemNum >= newImages.length) {
-              return deleteObject(itemRef)
+              return deleteObject(item)
                 .then(() => {
-                  return console.log("IMAGE FILE @ " + itemRef + " DELETED");
+                  return console.log("IMAGE FILE @ " + item + " DELETED");
                 })
                 .catch((e) => {
                   return Promise.reject("IMAGE FILE DELETION ERROR: " + e);
