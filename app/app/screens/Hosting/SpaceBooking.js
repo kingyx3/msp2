@@ -50,7 +50,7 @@ const SpaceBookings = (props) => {
   const renderItem = ({ item, index }) =>
     <List.Default
       title={
-        item.id
+        (item.id).slice(-process.env.EXPO_PUBLIC_BOOKING_ID_SHOW_LEN).toUpperCase()
       } //user2.name
       secondary={
         item.status == 'confirmed' ? ('$' + item?.price?.hostEarnings.toString() + "") : camelToFlat(item.status)
