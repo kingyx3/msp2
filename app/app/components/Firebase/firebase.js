@@ -239,28 +239,25 @@ export async function createSpace(spaceType, price, peakPrice, offPeakPrice, loc
 
           return listAll(listRef)
             .then((res) => {
-              res.items.forEach((itemRef, i) => {
+              return res.items.forEach((itemRef, i) => {
                 // All the items under listRef.
                 const itemNum = itemRef.toString().split('images/')[1];
                 if (itemNum >= localImages.length) {
-                  deleteObject(itemRef)
+                  return deleteObject(itemRef)
                     .then(() => {
-                      console.log("IMAGE FILE @ " + itemRef + " DELETED");
+                      return console.log("IMAGE FILE @ " + itemRef + " DELETED");
                     })
                     .catch((e) => {
-                      Promise.reject("IMAGE FILE DELETION ERROR: " + e);
+                      return Promise.reject("IMAGE FILE DELETION ERROR: " + e);
                     });
                 }
               });
             })
-            .then(() => {
-              console.log('EXTRA IMAGE FILES DELETED');
-            })
+            .then(() =>
+              console.log('ALL EXTRA IMAGE FILES DELETED'))
             .catch((e) => Promise.reject('FAILED TO DELETE EXTRA IMAGE FILES: ' + e));
         })
-        .catch((e) => {
-          Promise.reject("SPACE IMAGES UPLOADING ERROR: " + e);
-        })
+        .catch((e) => Promise.reject("SPACE IMAGES UPLOADING ERROR: " + e))
     })
     .catch((e) => Promise.reject("SPACE CREATION ERROR: " + e));
 }
@@ -550,21 +547,21 @@ export async function updateSpace(spaceId, newPrice, newPeakPrice, newOffPeakPri
 
       return listAll(listRef)
         .then((res) => {
-          res.items.forEach((item, i) => {
+          return res.items.forEach((item, i) => {
             // All the items under listRef.
             const itemNum = item.toString().split('images/')[1];
             if (itemNum >= newImages.length) {
-              deleteObject(item).then(() => {
-                console.log("IMAGE FILE @", item, "DELETED!");
-              }).catch((e) => {
-                console.log("IMAGE FILE DELETION ERROR:", e);
-              });
+              return deleteObject(itemRef)
+                .then(() => {
+                  return console.log("IMAGE FILE @ " + itemRef + " DELETED");
+                })
+                .catch((e) => {
+                  return Promise.reject("IMAGE FILE DELETION ERROR: " + e);
+                });
             }
           });
         })
-        .then(() => {
-          console.log('Extra image files deleted!');
-        })
+        .then(() => console.log('Extra image files deleted!'))
         .catch((e) => console.log('Failed to delete extra image files!', e));
     })
     .catch((e) => Promise.reject("IMAGES UPLOAD ERROR: " + e))
