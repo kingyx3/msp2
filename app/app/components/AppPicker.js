@@ -71,7 +71,7 @@ const AppPicker = ({
                 label={item.label
                   + (item.numberOfHours === 0
                     ? " - Free cancellation before booking starts"
-                    : item.numberOfHours ? ` - Free cancellation up to ${item.numberOfHours} hours before booking starts`
+                    : item.numberOfHours ? ` - Free cancellation up to ${item.numberOfHours} hours in advance`
                       : "")} // customization for cancellationPolicy only
                 icon={item.icon}
                 onPress={() => {
