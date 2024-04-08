@@ -68,7 +68,11 @@ const AppPicker = ({
             renderItem={({ item, index }) => (
               <PickerItem
                 testID={index.toString() + "_picker_item"}
-                label={item.label}
+                label={item.label
+                  + (item.numberOfHours === 0
+                    ? " - Free cancellation before booking starts"
+                    : item.numberOfHours ? ` - Free cancellation up to ${item.numberOfHours} hours before booking starts`
+                      : "")} // customization for cancellationPolicy only
                 icon={item.icon}
                 onPress={() => {
                   setOpenoptions(false);

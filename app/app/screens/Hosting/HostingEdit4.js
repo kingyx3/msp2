@@ -37,13 +37,6 @@ import {
 } from '../../store/host';
 import { getTimingDiffFromUTC, getCancellationPolicies } from '../../components/Firebase/firebase';
 
-// const cancellationPolicies = [
-//   { label: 'Super Flex', numberOfHours: 72 },
-//   { label: 'Flex', numberOfHours: 48 },
-//   { label: 'Medium', numberOfHours: 24 },
-//   { label: 'Strict', numberOfHours: 12 },
-//   { label: 'Super Strict', numberOfHours: 0 }]
-
 const HostingEdit4 = (props) => {
   const { editMode, selectedSpace, defaultWeekday, defaultSaturday, defaultSunday } = props.route.params
   const [cancellationPolicies, setCancellationPolicies] = useState([])

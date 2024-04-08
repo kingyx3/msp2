@@ -1,27 +1,26 @@
 import React from 'react';
 import styled from 'styled-components';
-
-const cancellationPolicies = [
-  { label: 'Super Flex', numberOfHours: 72 },
-  { label: 'Flex', numberOfHours: 48 },
-  { label: 'Medium', numberOfHours: 24 },
-  { label: 'Strict', numberOfHours: 12 },
-  { label: 'Super Strict', numberOfHours: 0 }
-];
+import { getCancellationPolicies } from '../../components/Firebase/firebase';
 
 const CancellationPolicy = () => {
+  const [cancellationPolicies, setCancellationPolicies] = useState([])
+  const cancellationPoliciesSorted = cancellationPolicies.sort((a, b) => a.numberOfHours - b.numberOfHours)
+  useEffect(() => {
+    getCancellationPolicies(setCancellationPolicies)
+  }, [])
+
   return (
     <CancellationPolicyContainer>
       <Title>Cancellation Policy</Title>
       <PolicyList>
-        {cancellationPolicies.map(policy => (
+        {cancellationPoliciesSorted.map(policy => (
           <PolicyItem key={policy.label}>
             <PolicyLabel>{policy.label}</PolicyLabel>
             <PolicyDetails>
               {policy.numberOfHours === 0 ? (
-                <span>No free cancellation allowed</span>
+                <span>Free cancellation before booking starts</span>
               ) : (
-                <span>Free cancel up to {policy.numberOfHours} hours prior to booking start</span>
+                <span>Free cancellation up to {policy.numberOfHours} hours before booking starts</span>
               )}
             </PolicyDetails>
           </PolicyItem>
