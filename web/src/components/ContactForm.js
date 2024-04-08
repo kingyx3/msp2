@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { functions } from './Firebase/FirebaseConfig';
+import { functions } from './Firebase/firebaseConfigz';
 import { httpsCallable } from 'firebase/functions';
 
 const ContactForm = () => {

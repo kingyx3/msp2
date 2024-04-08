@@ -1,6 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
-import { getCancellationPolicies } from '../../components/Firebase/firebase';
+import { getCancellationPolicies } from '../../components/Firebase/firebasez';
 
 const CancellationPolicy = () => {
   const [cancellationPolicies, setCancellationPolicies] = useState([])
