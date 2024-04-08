@@ -1,7 +1,24 @@
-import { firestore, auth, database, functions, storage, app } from './firebaseConfig'; // Adjust the path as necessary
+import {
+    // firestore,
+    // auth,
+    database,
+    // functions,
+    // storage,
+    // app
+} from './firebaseConfig'; // Adjust the path as necessary
 // import { updateProfile } from "firebase/auth";
 // import { collection, doc, onSnapshot, query, where, getDocs, getDoc, runTransaction, serverTimestamp, Timestamp } from 'firebase/firestore';
-import { ref, onValue, once, get, set, update, increment, serverTimestamp as RTDBServerTimestamp } from 'firebase/database';
+import {
+    ref,
+    // onValue,
+    // once,
+    get,
+    // set,
+    // update,
+    // increment,
+    // serverTimestamp as RTDBServerTimestamp,
+} from 'firebase/database';
+
 // import { httpsCallable } from 'firebase/functions';
 // import { ref as storageRef, uploadBytes, listAll, deleteObject } from 'firebase/storage';
 // import { isSignInWithEmailLink, sendSignInLinkToEmail, signInWithEmailLink, onAuthStateChanged, signInWithEmailAndPassword, signInAnonymously, signOut, sendPasswordResetEmail } from "firebase/auth";
