@@ -52,14 +52,16 @@ const Reserve_1 = (props) => {
   let endM = moment(end);
   let cancelByTime = moment(start).add(-1 * selectedSpace.cancellationPolicy.numberOfHours, 'hours').format('DD MMM YYYY, h a')
 
-  // const { initPaymentSheet, presentPaymentSheet } = useStripe();
-  // const [paymentSheetEnabled, setPaymentSheetEnabled] = useState(false);
-  // const [clientSecret, setClientSecret] = useState("");
-  // const [bookingId, setBookingId] = useState("")
-
-  // useEffect(() => {
-  //   initialisePaymentSheet();
-  // }, []);
+  const needHostConfirm = async () => {
+    Alert.alert('Requires host confirmation', 'We will send you a confirmation when the host accepts the booking.',
+      [{
+        text: 'Cancel',
+        onPress: () => null
+      }, {
+        text: 'Proceed',
+        onPress: () => onSubmit()
+      }]);
+  }
 
   const onSubmit = async () => {
     const networkState = await Network.getNetworkStateAsync();
@@ -245,7 +247,9 @@ const Reserve_1 = (props) => {
           // disabled={loading || !paymentSheetEnabled}
           color={loading ? colors.lightgray : colors.red}
           disabled={loading}
-          onPress={() => onSubmit()}
+          onPress={() => selectedSpace.needHostConfirm
+            ? needHostConfirm()
+            : onSubmit()}
         />
         {/* 액션 보내기 */}
       </Reserve>

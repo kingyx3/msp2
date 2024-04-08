@@ -2,6 +2,7 @@ import React from "react";
 
 //import navigation
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
+import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs';
 import HomeStack from "./HomeStack";
 // import BookingStack from "./BookingStack";
 // import MessageStack from "../navigation/MessageStack";
@@ -14,12 +15,37 @@ import Accounts from "../screens/Accounts";
 import Messages from "../screens/Messages";
 import Bookings from "../screens/Bookings";
 // import AccountStack from "./AccountStack";
-
+import colors from "../config/colors";
+import * as Typography from "../config/Typography";
+import styled from "styled-components/native";
 
 //import styles and assets
 import { EvilIcons } from "@expo/vector-icons";
 
 const Tab = createBottomTabNavigator();
+const TopTab = createMaterialTopTabNavigator();
+
+const BookingTopTab = (props) =>
+  <Container>
+    <Header>
+      <Typography.H color={colors.red}>Bookings</Typography.H>
+    </Header>
+    <TopTab.Navigator>
+      <TopTab.Screen name="Upcoming" component={Bookings} initialParams={{ history: false, hostConfirmed: true }} />
+      <TopTab.Screen name="Pending" component={Bookings} initialParams={{ history: false, hostConfirmed: false }} />
+      <TopTab.Screen name="History" component={Bookings} initialParams={{ history: true, hostConfirmed: true }} />
+    </TopTab.Navigator>
+  </Container>
+
+
+const Container = styled.View`
+  flex: 1;
+  background-color: white;
+`;
+
+const Header = styled.View`
+  padding: 24px 24px;
+`;
 
 const HomeTab = () => (
   <Tab.Navigator
@@ -39,17 +65,19 @@ const HomeTab = () => (
         tabBarIcon: ({ color, size }) => (
           <EvilIcons name="search" color={color} size={size} />
         ),
+        tabBarLabel: 'Search'
       }}
     />
     <Tab.Screen
       name="Bookings"
-      component={Bookings}
+      component={BookingTopTab}
       options={{
         tabBarTestID: 'btm-nav-bookings',
         headerShown: false,
         tabBarIcon: ({ color, size }) => (
           <EvilIcons name="calendar" color={color} size={size} />
         ),
+        tabBarLabel: 'Bookings'
       }}
     />
     <Tab.Screen
@@ -61,6 +89,7 @@ const HomeTab = () => (
         tabBarIcon: ({ color, size }) => (
           <EvilIcons name="chart" color={color} size={size} />
         ),
+        tabBarLabel: 'Hosting'
       }}
     />
     <Tab.Screen
@@ -72,6 +101,7 @@ const HomeTab = () => (
         tabBarIcon: ({ color, size }) => (
           <EvilIcons name="comment" color={color} size={size} />
         ),
+        tabBarLabel: 'Messages'
       }}
     />
     <Tab.Screen
@@ -83,6 +113,7 @@ const HomeTab = () => (
         tabBarIcon: ({ color, size }) => (
           <EvilIcons name="user" color={color} size={size} />
         ),
+        tabBarLabel: 'Account'
       }}
     />
   </Tab.Navigator>

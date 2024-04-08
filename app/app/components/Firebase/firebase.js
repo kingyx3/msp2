@@ -535,8 +535,6 @@ export async function updateSpace(spaceId, newPrice, newPeakPrice, newOffPeakPri
   return Promise.all(promises)
     .then(async () => {
       console.log("All images uploaded successfully")
-      await Image.clearDiskCache()
-      await Image.clearMemoryCache()
       return CFupdateSpace(inputs)
     })
     .then(async () => {
@@ -561,7 +559,11 @@ export async function updateSpace(spaceId, newPrice, newPeakPrice, newOffPeakPri
             }
           });
         })
-        .then(() => console.log('Extra image files deleted!'))
+        .then(async () => {
+          console.log('Extra image files deleted!')
+          await Image.clearDiskCache()
+          await Image.clearMemoryCache()
+        })
         .catch((e) => console.log('Failed to delete extra image files!', e));
     })
     .catch((e) => Promise.reject("IMAGES UPLOAD ERROR: " + e))

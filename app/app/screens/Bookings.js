@@ -20,14 +20,13 @@ import { Switch } from 'react-native-elements';
 
 const Bookings = (props) => {
   const [switchOn, setSwitchOn] = useState(false)
+  let { history, hostConfirmed } = props.route.params
   let userBookings = props.state.userBookings
   userBookings = Object.values(userBookings)
-  userBookings = userBookings.filter(function (userBooking) {
-    if ((userBooking.status == 'confirmed' && userBooking.start > Date.now()) || switchOn) {
-      return userBooking
-    }
-  })
-  userBookings = userBookings.sort((a, b) => new Date(b.start) - new Date(a.start)); //latest appear on top
+  userBookings = userBookings
+    .filter((userBooking) => history ? userBooking.end < Date.now() : userBooking.end > Date.now())
+    .filter((userBooking) => !hostConfirmed ? userBooking.hostConfirmed : !(userBooking.hostConfirmed))
+    .sort((a, b) => new Date(b.start) - new Date(a.start)); //latest appear on top
   // userBookings = userBookings.slice(0, 10) //load only the first 10 spaces
 
   return (
@@ -36,7 +35,7 @@ const Bookings = (props) => {
         testID="bookings-scroll-view"
         ListHeaderComponent={
           <Header testID="bookings-header-component">
-            <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
+            {/* <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
               <Typography.H color={colors.red}>{'Bookings'}</Typography.H>
               <View style={{ flexDirection: 'row', alignItems: 'center' }}>
                 <Typography.Cap color={colors.black}>{(switchOn ? 'Show Upcoming' : 'Show All') + '  '}</Typography.Cap>
@@ -48,8 +47,10 @@ const Bookings = (props) => {
                   thumbColor={'white'}
                 />
               </View>
-            </View>
-            <Typography.P color={colors.black}>{userBookings.length == 0 ? 'You have no upcoming bookings' : null}</Typography.P>
+            </View> */}
+            {userBookings.length == 0 &&
+              <Typography.P color={colors.black}>{(!history && hostConfirmed) ? 'You have no upcoming bookings' : ((history && hostConfirmed) ? 'You have no past bookings' : 'You have no pending bookings')}</Typography.P>
+            }
           </Header>
         }
         stickyHeaderIndices={[0]}

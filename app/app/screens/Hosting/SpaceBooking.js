@@ -29,9 +29,10 @@ import { H, P } from "../../config/Typography";
 const { width, height } = Dimensions.get('window');
 
 const SpaceBookings = (props) => {
-  const { spaceId, history } = props.route.params
+  const { spaceId, history, hostConfirmed } = props.route.params
   const spaceBookingsArray = (props.state.spaceBookings)
     .filter((spaceBooking) => history ? spaceBooking.end < Date.now() : spaceBooking.end > Date.now())
+    .filter((spaceBooking) => !hostConfirmed ? spaceBooking.hostConfirmed : !(spaceBooking.hostConfirmed))
     .sort((a, b) => new Date(b.start) - new Date(a.start))
   // console.log(spaceBookingsArray)
   let sum = 0
@@ -75,7 +76,7 @@ const SpaceBookings = (props) => {
         testID='space-bookings-flatlist'
         ListHeaderComponent={
           <Header>
-            <H color={colors.red}>Bookings</H>
+            {/* <H color={colors.red}>Bookings</H> */}
             <P color={colors.black}>{history ? `Total Earned: $${(Math.round(sum * 100) / 100).toFixed(2)}` : `Potential Earnings: $${(Math.round(sum * 100) / 100).toFixed(2)}`}</P>
           </Header>
         }

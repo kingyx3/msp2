@@ -3,7 +3,7 @@ import React from "react";
 //import navigation
 import { createStackNavigator } from "@react-navigation/stack";
 import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs';
-import { Platform } from "react-native";
+import { View, Platform } from "react-native";
 //import screens
 import Hosting from "../screens/Hosting/Hosting";
 import SpaceDetail from "../screens/Hosting/SpaceDetail";
@@ -20,6 +20,8 @@ import HostingEdit5 from "../screens/Hosting/HostingEdit5";
 import HostingStep6 from "../screens/Hosting/HostingStep6";
 import HostingEdit7 from "../screens/Hosting/HostingEdit7";
 import HostingEdit8 from "../screens/Hosting/HostingEdit8";
+import * as Typography from "../config/Typography";
+import colors from "../config/colors";
 
 //import syltes and assets
 import { EvilIcons } from "@expo/vector-icons";
@@ -31,12 +33,27 @@ const Tab = createMaterialTopTabNavigator();
 const SpaceBookingTopTab = (props) => {
     const { spaceId } = props.route.params
     return (
-        <Tab.Navigator>
-            <Tab.Screen name="Upcoming Bookings" component={SpaceBooking} initialParams={{ spaceId, history: false }} />
-            <Tab.Screen name="Booking History" component={SpaceBooking} initialParams={{ spaceId, history: true }} />
-        </Tab.Navigator>
+        <Container>
+            <Header>
+                <Typography.H color={colors.red}>Bookings</Typography.H>
+            </Header>
+            <Tab.Navigator>
+                <Tab.Screen name="Upcoming" component={SpaceBooking} initialParams={{ spaceId, history: false, hostConfirmed: true }} />
+                <Tab.Screen name="Pending" component={SpaceBooking} initialParams={{ spaceId, history: false, hostConfirmed: false }} />
+                <Tab.Screen name="History" component={SpaceBooking} initialParams={{ spaceId, history: true, hostConfirmed: true }} />
+            </Tab.Navigator>
+        </Container>
     );
 }
+
+const Container = styled.View`
+  flex: 1;
+  background-color: white;
+`;
+
+const Header = styled.View`
+  padding: 24px 24px;
+`;
 
 const HostStackModal = ({ navigation, route }) => {
     // Reactivate once done with host front end
