@@ -24,7 +24,7 @@ const Bookings = (props) => {
   let userBookings = props.state.userBookings
   userBookings = Object.values(userBookings)
   userBookings = userBookings
-    .filter((userBooking) => history ? userBooking.end < Date.now() : userBooking.end > Date.now())
+    .filter((userBooking) => history ? (userBooking.end < Date.now() || userBooking.cancelled) : userBooking.end > Date.now())
     .filter((userBooking) => !hostConfirmed ? userBooking.hostConfirmed : !(userBooking.hostConfirmed))
     .sort((a, b) => new Date(b.start) - new Date(a.start)); //latest appear on top
   // userBookings = userBookings.slice(0, 10) //load only the first 10 spaces
