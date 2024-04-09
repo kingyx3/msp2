@@ -39,6 +39,7 @@ const BookingDetails = (props) => {
   const [loading, setLoading] = useState(false)
   const [userName, setUserName] = useState('')
   const [hostName, setHostName] = useState('')
+  const hostConfirmed = selectedSpace.hostConfirmed
   const address = selectedSpace?.location?.description
   const postcode = selectedSpace?.location?.geoapify?.postcode
   let cancelByTime = host ? moment(booking?.end).add(5, 'days') : moment(booking?.start).add(-1 * selectedSpace?.cancellationPolicy?.numberOfHours, 'hours')
@@ -147,7 +148,9 @@ const BookingDetails = (props) => {
 
   if (Object.keys(selectedSpace).length == 0) {
     return (
-      <ActivityIndicator />
+      <Container>
+        <ActivityIndicator />
+      </Container>
     )
   } else {
     return (
