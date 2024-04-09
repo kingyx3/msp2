@@ -37,7 +37,7 @@ const SpaceManagement = (props) => {
         rules: { startTime, endTime }
       }
     },
-    { title: "View Booking History", icon: "history", screen: "SpaceBooking", data: { spaceId: selectedSpace.id } },
+    { title: "View Bookings", icon: "history", screen: "SpaceBooking", data: { spaceId: selectedSpace.id } },
     { title: "Edit Space Details", icon: "application-edit-outline", screen: "HostingEdit2", data: { selectedSpace, editMode } },
     { title: selectedSpace.disabled ? "Enable Space" : "Disable Space", icon: selectedSpace.disabled ? "plus-circle-outline" : "minus-circle-outline", screen: "" },
   ]
