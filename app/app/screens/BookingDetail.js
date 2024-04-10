@@ -262,7 +262,7 @@ const BookingDetails = (props) => {
               </View>
             }
             { // user can only write review up to 48 hrs after booking ends
-              !host && !(booking.cancelled) && booking.end < Date.now() && Math.floor((Date.now() - booking.end) / (1000 * 60 * 60 * 24)) < 2 &&
+              hostConfirmed && !host && !(booking.cancelled) && booking.end < Date.now() && Math.floor((Date.now() - booking.end) / (1000 * 60 * 60 * 24)) < 2 &&
               <View style={{ margin: 10 }}>
                 <Button.BtnContain
                   testID="write-review"
@@ -277,22 +277,70 @@ const BookingDetails = (props) => {
                   }} />
               </View>
             }
-            <View style={{ margin: 10 }}>
-              <Button.BtnContain
-                testID="cancel-booking"
-                label={booking.cancelled ? "Booking Cancelled" :
-                  (isHostAbleToCancel || isUserAbleToCancel || isBookingInProgress) ? "Cancel Booking" :
-                    "Booking Completed"}
-                color={(booking.cancelled ? true :
-                  loading || !(isHostAbleToCancel || isUserAbleToCancel)) ? colors.lightgray : colors.black}
-                size="small"
-                disabled={booking.cancelled ? true :
-                  loading || !(isHostAbleToCancel || isUserAbleToCancel)}
-                onPress={cancelBookingBox} />
-            </View>
+            {hostConfirmed &&
+              <View style={{ margin: 10 }}>
+                <Button.BtnContain
+                  testID="cancel-booking"
+                  label={booking.cancelled ? "Booking Cancelled" :
+                    (isHostAbleToCancel || isUserAbleToCancel || isBookingInProgress) ? "Cancel Booking" :
+                      "Booking Completed"}
+                  color={(booking.cancelled ? true :
+                    loading || !(isHostAbleToCancel || isUserAbleToCancel)) ? colors.lightgray : colors.black}
+                  size="small"
+                  disabled={booking.cancelled ? true :
+                    loading || !(isHostAbleToCancel || isUserAbleToCancel)}
+                  onPress={cancelBookingBox} />
+              </View>
+            }
+            {!hostConfirmed && host &&
+              <View style={{ margin: 10 }}>
+                {/* Approve/Reject booking (host only) */}
+                <Button.BtnContain
+                  testID="approve-booking"
+                  label={"Approve Booking"}
+                  color={loading ? colors.lightgray : colors.black}
+                  size="small"
+                  disabled={loading} //
+                  onPress={() => {
+                    Alert.alert(
+                      "Approve Booking",
+                      'Are you sure you want to approve this booking?', [
+                      {
+                        text: "Cancel",
+                        onPress: () => console.log("Cancel Pressed"),
+                        style: "cancel"
+                      }, {
+                        text: "Confirm",
+                        onPress: () => console.log('Host approved this booking! ' + bookingId),
+                        style: "cancel"
+                      }
+                    ])
+                  }} />
+                <Button.BtnContain
+                  testID="reject-booking"
+                  label={"Reject Booking"}
+                  color={loading ? colors.lightgray : colors.black}
+                  size="small"
+                  disabled={loading} //
+                  onPress={() => {
+                    Alert.alert(
+                      "Reject Booking",
+                      'Are you sure you want to reject this booking?', [
+                      {
+                        text: "Cancel",
+                        onPress: () => console.log("Cancel Pressed"),
+                        style: "cancel"
+                      }, {
+                        text: "Confirm",
+                        onPress: () => console.log('Host rejected this booking! ' + bookingId),
+                        style: "cancel"
+                      }
+                    ])
+                  }} />
+              </View>}
           </Main2>
         </Main>
-      </Container>
+      </Container >
     );
   }
 };
