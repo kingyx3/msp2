@@ -24,7 +24,9 @@ import {
   getUserName,
   hostFeeRate,
   getAvatarLink,
-  showOfflineAlert
+  showOfflineAlert,
+  approveBooking,
+  rejectBooking,
 } from "../components/Firebase/firebase";
 
 //import redux
@@ -39,7 +41,7 @@ const BookingDetails = (props) => {
   const [loading, setLoading] = useState(false)
   const [userName, setUserName] = useState('')
   const [hostName, setHostName] = useState('')
-  const hostConfirmed = selectedSpace.hostConfirmed
+  const hostConfirmed = booking.hostConfirmed
   const address = selectedSpace?.location?.description
   const postcode = selectedSpace?.location?.geoapify?.postcode
   let cancelByTime = host ? moment(booking?.end).add(5, 'days') : moment(booking?.start).add(-1 * selectedSpace?.cancellationPolicy?.numberOfHours, 'hours')
@@ -307,11 +309,11 @@ const BookingDetails = (props) => {
                       'Are you sure you want to approve this booking?', [
                       {
                         text: "Cancel",
-                        onPress: () => console.log("Cancel Pressed"),
+                        onPress: () => approveBooking(bookingId),
                         style: "cancel"
                       }, {
                         text: "Confirm",
-                        onPress: () => console.log('Host approved this booking! ' + bookingId),
+                        onPress: () => rejectBooking(bookingId),
                         style: "cancel"
                       }
                     ])
