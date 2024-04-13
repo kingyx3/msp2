@@ -635,6 +635,20 @@ export async function createBooking(spaceId, start, end, courtId) {//selectedSpa
     .catch((e) => Promise.reject(e))
 }
 
+// Function to approve bookings
+export const approveBooking = async (bookingId) => {
+  const CFapproveBooking = httpsCallable(functions, 'approveBooking');
+  const inputs = { bookingId };
+  return CFapproveBooking(inputs);
+};
+
+// Function to reject bookings
+export const rejectBooking = async (bookingId) => {
+  const CFrejectBooking = httpsCallable(functions, 'rejectBooking');
+  const inputs = { bookingId };
+  return CFrejectBooking(inputs);
+};
+
 // **Function to fetch bookings - HOST (BOOKING-R) (1R)
 // Function to fetch bookings - USER (BOOKING-R) (XR) => XR depends on userbookings (number of userbookings / 100)
 export function fetchUserBookings() {
