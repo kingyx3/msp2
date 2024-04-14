@@ -59,7 +59,6 @@ const HostingEdit4 = (props) => {
 
   useEffect(() => {
     getCancellationPolicies(setCancellationPolicies)
-      .then(() => setCancellationPolicy(cancellationPoliciesSorted[2]))
   }, [])
 
   useEffect(() => { // used to set initial value to state
