@@ -279,7 +279,7 @@ const BookingDetails = (props) => {
                   }} />
               </View>
             }
-            {hostConfirmed &&
+            {((!host) || (host && hostConfirmed)) &&
               <View style={{ margin: 10 }}>
                 <Button.BtnContain
                   testID="cancel-booking"
