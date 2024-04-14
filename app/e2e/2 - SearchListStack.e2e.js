@@ -127,6 +127,14 @@ describe('Make a booking via picking datetime & ListMap', () => {
 
     await element(by.id('book-now-button')).tap();
 
+    try {
+      await waitFor(element(by.text('Requires host confirmation'))).toBeVisible().withTimeout(30000);
+      await element(by.text('Proceed')).tap();
+    } catch (e) {
+      console.log('This space does not require host confirmation. i.e. Immediate approval')
+      console.log(e)
+    }
+
     if (global.excessBalance > 0) {
       console.log('Sufficient Balance')
       // Wait for modal to load, perform the visibility checks and navigate to Home
