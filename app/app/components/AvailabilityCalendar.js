@@ -84,7 +84,7 @@ const AvailabilityCalendar = ({ data, setDatedEvents, unitLabel, disabled }) => 
     };
 
     const renderBlockSetter = ({ item, index }) => {
-        const toggleText = (item == "") ? "Available " : (item == "blocked") ? "Blocked " : item.slice(-process.env.EXPO_PUBLIC_BOOKING_ID_SHOW_LEN).toUpperCase()
+        const toggleText = (item == "") ? "Available " : (item == "blocked") ? "Blocked " : item
         return (
             <TouchableHighlight
                 activeOpacity={1}

@@ -202,7 +202,7 @@ const BookingDetails = (props) => {
               <Typography.Cap color={colors.gray} style={{ marginBottom: 6 }}>
                 Reservation number
               </Typography.Cap>
-              <Typography.Sub1 selectable>{bookingId.slice(-process.env.EXPO_PUBLIC_BOOKING_ID_SHOW_LEN).toUpperCase()}</Typography.Sub1>
+              <Typography.Sub1 selectable>{booking.bookingIdShort}</Typography.Sub1>
             </Reservation>
             <HLine />
             <Rules>
