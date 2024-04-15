@@ -26,7 +26,6 @@ import {
   getAvatarLink,
   showOfflineAlert,
   approveBooking,
-  rejectBooking,
 } from "../components/Firebase/firebase";
 
 //import redux
@@ -313,7 +312,7 @@ const BookingDetails = (props) => {
                         style: "cancel"
                       }, {
                         text: "Confirm",
-                        onPress: () => rejectBooking(bookingId),
+                        onPress: () => cancelBooking(bookingId),
                         style: "cancel"
                       }
                     ])

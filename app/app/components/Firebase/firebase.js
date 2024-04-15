@@ -642,13 +642,6 @@ export const approveBooking = async (bookingId) => {
   return CFapproveBooking(inputs);
 };
 
-// Function to reject bookings
-export const rejectBooking = async (bookingId) => {
-  const CFrejectBooking = httpsCallable(functions, 'rejectBooking');
-  const inputs = { bookingId };
-  return CFrejectBooking(inputs);
-};
-
 // **Function to fetch bookings - HOST (BOOKING-R) (1R)
 // Function to fetch bookings - USER (BOOKING-R) (XR) => XR depends on userbookings (number of userbookings / 100)
 export function fetchUserBookings() {
