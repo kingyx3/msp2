@@ -71,7 +71,7 @@ const Reserve_1 = (props) => {
       // console.log(selectedSpace.id, start, end, bookingId, courtId)
       createBooking(selectedSpace.id, start, end, courtId)
         .then(async () => {
-          Alert.alert('Success', 'The payment was confirmed successfully', [{
+          Alert.alert('Success', selectedSpace.needHostConfirm ? 'Your booking is now pending host confirmation.' : 'The payment was confirmed successfully.', [{
             text: 'Ok',
             onPress: () => props.navigation.navigate('Home', { screen: 'Home ' })
           }]);
