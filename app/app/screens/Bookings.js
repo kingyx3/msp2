@@ -23,9 +23,17 @@ const Bookings = (props) => {
   let { history, hostConfirmed } = props.route.params
   let userBookings = props.state.userBookings
   userBookings = Object.values(userBookings)
+  // Upcoming (history false, hostConfirmed true) - status = "confirmed" && userBooking.start > Date.now()
+  // Pending (history false, hostConfirmed false) - status = "pending_host" && userBooking.start > Date.now()
+  // History (history true, hostConfirmed true/false) - status = "cancelled_by_host" || status = "cancelled_by_user" || userBooking.start < Date.now()
+
   userBookings = userBookings
-    .filter((userBooking) => history ? (userBooking.end < Date.now() || userBooking.cancelled) : userBooking.end > Date.now() && !(userBooking.cancelled))
-    .filter((userBooking) => hostConfirmed ? userBooking.hostConfirmed : !(userBooking.hostConfirmed))
+    .filter((userBooking) =>
+      history
+        ? (userBooking.cancelled || userBooking.start < Date.now()) // History
+        : hostConfirmed
+          ? userBooking.hostConfirmed && userBooking.start > Date.now() && !(userBooking.cancelled) // Upcoming
+          : !(userBooking.hostConfirmed) && userBooking.start > Date.now() && !(userBooking.cancelled)) // Pending
     .sort((a, b) => new Date(b.start) - new Date(a.start)); //latest appear on top
   // userBookings = userBookings.slice(0, 10) //load only the first 10 spaces
 
