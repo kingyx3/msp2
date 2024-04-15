@@ -34,7 +34,4 @@ const IconWrapper = styled.View`
   margin-left: ${Platform.OS === 'ios' ? '15px' : 0};
 `;
 
-// const mapDispatchProps = (dispatch) => bindActionCreators({ fetchUser, fetchIpLocation, fetchUserSpaces, fetchUserBookings }, dispatch);
-// export default connect(null, mapDispatchProps)(SearchStackModal);
-
 export default SearchStackModal

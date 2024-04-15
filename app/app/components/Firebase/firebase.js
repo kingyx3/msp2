@@ -4,7 +4,7 @@
 
 import { firestore, auth, database, functions, storage, app } from './firebaseConfig'; // Adjust the path as necessary
 import { updateProfile } from "firebase/auth";
-import { collection, doc, onSnapshot, query, where, getDocs, getDoc, runTransaction, serverTimestamp, Timestamp } from 'firebase/firestore';
+import { collection, doc, onSnapshot, query, where, getDocs, getDoc, runTransaction, serverTimestamp, Timestamp, orderBy, limit } from 'firebase/firestore';
 import { ref, onValue, once, get, set, update, increment, serverTimestamp as RTDBServerTimestamp } from 'firebase/database';
 import { httpsCallable } from 'firebase/functions';
 import { ref as storageRef, uploadBytes, listAll, deleteObject } from 'firebase/storage';
@@ -668,6 +668,34 @@ export function fetchUserBookings() {
   };
 }
 
+export function fetchUserLogs() {
+  return async (dispatch) => {
+    const userUid = auth.currentUser ? auth.currentUser.uid : null;
+    if (!userUid) {
+      console.log('User not logged in');
+      return;
+    }
+
+    const userLogsRef = collection(firestore, 'users', userUid, 'userlogs');
+    const q = query(userLogsRef, orderBy('lastModified', 'desc'), limit(1));
+
+    try {
+      const querySnapshot = await getDocs(q);
+      if (!querySnapshot.empty) {
+        const latestDoc = querySnapshot.docs[0].data();
+        delete latestDoc.lastModified
+        console.log('Latest document:', latestDoc);
+        dispatch({ type: "FETCH_USER_LOGS", payload: { userLogs: latestDoc } });
+      } else {
+        console.log('No user logs found');
+        dispatch({ type: "FETCH_USER_LOGS", payload: { userLogs: {} } });
+      }
+    } catch (error) {
+      console.error('Error fetching user logs:', error);
+      // dispatch({ type: "FETCH_USER_LOGS_ERROR", payload: { error: error.message } });
+    }
+  };
+}
 // Function to fetch userMessages
 export function fetchUserMessages() {
   return async (dispatch) => {
