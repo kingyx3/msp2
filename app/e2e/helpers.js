@@ -34,6 +34,7 @@ export function createSpaceTestSuite() {
 
         await element(by.id('cancellation-policy-picker')).tap()
         await waitFor(element(by.id('2_picker_item'))).toBeVisible().withTimeout(60000);
+        await expect(element(by.id('2_picker_item'))).toBeVisible();
         await element(by.id('2_picker_item')).tap()
 
         // await element(by.id("need-host-confirm-switch")).tap()
