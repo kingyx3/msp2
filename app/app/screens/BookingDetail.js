@@ -282,9 +282,11 @@ const BookingDetails = (props) => {
               <View style={{ margin: 10 }}>
                 <Button.BtnContain
                   testID="cancel-booking"
-                  label={booking.cancelled ? "Booking Cancelled" :
-                    (isHostAbleToCancel || isUserAbleToCancel || isBookingInProgress) ? "Cancel Booking" :
-                      "Booking Completed"}
+                  label={booking.cancelled 
+                    ? "Booking Cancelled" 
+                    : (isHostAbleToCancel || isUserAbleToCancel || isBookingInProgress) 
+                      ? (hostConfirmed ? "Cancel Booking" : "Cancel Pending")
+                      : "Booking Completed"}
                   color={(booking.cancelled ? true :
                     loading || !(isHostAbleToCancel || isUserAbleToCancel)) ? colors.lightgray : colors.black}
                   size="small"
