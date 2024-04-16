@@ -103,7 +103,7 @@ const HostingEdit4 = (props) => {
   };
   return (
     <Container>
-      <Main>
+      <Main testID="hosting-edit4-scroll-view">
         <Typography.H>Set your peak/off-peak periods</Typography.H>
         <Step style={{ paddingTop: 20 }}>
           <View style={styles.general}>
@@ -206,7 +206,7 @@ const HostingEdit4 = (props) => {
             onSubmit={onSubmit}
           />
         </Modal>
-      </Main>
+      </Main >
       <Next>
         <Left></Left>
         <BtnContainer>
