@@ -78,7 +78,7 @@ const Reserve_1 = (props) => {
           setLoading(false);
         })
         .catch((e) => {
-          Alert.alert('Insufficient Balance', e.message, [{
+          Alert.alert('Error', e.message, [{
             text: 'Ok',
             onPress: () => {
               // Gets the amount to top up from the error message

@@ -146,7 +146,7 @@ describe('Make a booking via picking datetime & ListMap', () => {
     } else {
       console.log('Insufficient Balance')
       // Wait for modal to load, perform the visibility checks and navigate to Home
-      await waitFor(element(by.text('Insufficient Balance'))).toBeVisible().withTimeout(60000);
+      await waitFor(element(by.text('Error'))).toBeVisible().withTimeout(60000);
       await expect(element(by.text('Sorry, you do not have sufficient funds in your wallet, please top up at least SGD ' + (Math.round((-excessBalance) * 100) / 100).toString() + '.'))).toBeVisible();
       await element(by.text('Ok')).tap();
 

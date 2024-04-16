@@ -696,6 +696,7 @@ export function fetchUserLogs() {
     }
   };
 }
+
 // Function to fetch userMessages
 export function fetchUserMessages() {
   return async (dispatch) => {
