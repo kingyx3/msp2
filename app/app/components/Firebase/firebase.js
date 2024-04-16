@@ -218,48 +218,46 @@ export function fetchIpLocation() {
 // Function to create an space (SPACE-C) (XR, 4W)
 export async function createSpace(spaceType, price, peakPrice, offPeakPrice, localImages, location, title, description, spaceCount, cancellationPolicy, monthsAhead, openingHours, needHostConfirm) { // TRANSACTION-ED
   const CFcreateSpace = httpsCallable(functions, 'createSpace');
-  // let spaceId = await generateUniqueId('spaces', 8);
-  const inputs = { spaceType, price, peakPrice, offPeakPrice, localImages, location, title, description, spaceCount, monthsAhead, cancellationPolicy, openingHours, needHostConfirm }
+  const spaceRef = doc(collection(firestore, "spaces"));
+  const spaceId = spaceRef.id
+  const inputs = { spaceId, spaceType, price, peakPrice, offPeakPrice, localImages, location, title, description, spaceCount, monthsAhead, cancellationPolicy, openingHours, needHostConfirm }
 
-  return CFcreateSpace(inputs)
-    .then(async ({ data }) => {
-      const spaceId = data.spaceId
-      console.log("SPACE CREATED SUCCESSFULLY, UPLOADING IMAGES");
-      const promises = localImages.map((image, index) => {
-        // console.log('Uploading image', index + 1, 'out of', localImages.length);
-        return uploadImage(image, spaceId, index)
-      });
-      return Promise.all(promises)
-        .then(async () => {
-          console.log("SPACE IMAGES UPLOADED SUCCESSFULLY");
-          const userId = auth.currentUser.uid;
-          const imagePath = `users/${userId}/spaces/${spaceId}/images/`;
+  const promises = localImages.map((image, index) => {
+    // console.log('Uploading image', index + 1, 'out of', localImages.length);
+    return uploadImage(image, spaceId, index)
+  });
+  return Promise.all(promises)
+    .then(async () => {
+      console.log("SPACE IMAGES UPLOADED SUCCESSFULLY");
+      const userId = auth.currentUser.uid;
+      const imagePath = `users/${userId}/spaces/${spaceId}/images/`;
 
-          const listRef = storageRef(storage, imagePath);
+      const listRef = storageRef(storage, imagePath);
 
-          return listAll(listRef)
-            .then((res) => {
-              return res.items.forEach((itemRef, i) => {
-                // All the items under listRef.
-                const itemNum = itemRef.toString().split('images/')[1];
-                if (itemNum >= localImages.length) {
-                  return deleteObject(itemRef)
-                    .then(() => {
-                      return console.log("IMAGE FILE @ " + itemRef + " DELETED");
-                    })
-                    .catch((e) => {
-                      return Promise.reject("IMAGE FILE DELETION ERROR: " + e);
-                    });
-                }
-              });
-            })
-            .then(() =>
-              console.log('ALL EXTRA IMAGE FILES DELETED'))
-            .catch((e) => Promise.reject('FAILED TO DELETE EXTRA IMAGE FILES: ' + e));
+      return listAll(listRef)
+        .then((res) => {
+          return res.items.forEach((itemRef, i) => {
+            // All the items under listRef.
+            const itemNum = itemRef.toString().split('images/')[1];
+            if (itemNum >= localImages.length) {
+              return deleteObject(itemRef)
+                .then(() => {
+                  return console.log("IMAGE FILE @ " + itemRef + " DELETED");
+                })
+                .catch((e) => {
+                  return Promise.reject("IMAGE FILE DELETION ERROR: " + e);
+                });
+            }
+          });
         })
-        .catch((e) => Promise.reject("SPACE IMAGES UPLOADING ERROR: " + e))
+        .then(() => {
+          console.log('ALL EXTRA IMAGE FILES DELETED')
+          return CFcreateSpace(inputs)
+        })
+        .then(() => console.log("SPACE CREATED SUCCESSFULLY"))
+        .catch((e) => Promise.reject('FAILED TO DELETE EXTRA IMAGE FILES: ' + e));
     })
-    .catch((e) => Promise.reject("SPACE CREATION ERROR: " + e));
+    .catch((e) => Promise.reject("SPACE IMAGES UPLOADING ERROR: " + e))
 }
 
 // Function to fetch space summary (SPACE-R) - USER (XR) => XR depends on allspaces (number of allspaces / 100 (per spaceType))
@@ -936,9 +934,10 @@ const uploadImage = async (uri, spaceId, i) => {
     childPath = `users/${auth.currentUser.uid}/spaces/${spaceId}/images/${i}`;
   }
 
+  const storagePath = storageRef(storage, childPath);
+
   if (uri) {
     const blob = await uriToBlob(uri);
-    const storagePath = storageRef(storage, childPath);
     return uploadBytes(storagePath, blob, {
       contentType: 'image/png',
     })
@@ -948,8 +947,7 @@ const uploadImage = async (uri, spaceId, i) => {
         return Promise.reject(`Image ${i + 1} failed to be uploaded.` + e)
       });
   } else {
-    const deletePath = storageRef(storage, childPath);
-    return deleteObject(deletePath);
+    return deleteObject(storagePath);
   }
 };
 
