@@ -680,7 +680,7 @@ export function fetchUserLogs() {
     try {
       const querySnapshot = await getDocs(q);
       if (!querySnapshot.empty) {
-        const latestDoc = querySnapshot.docs[0].data();
+        const latestDoc = convertTimestampsToIsoStrings(querySnapshot.docs[0].data());
         delete latestDoc.lastModified
         console.log('Latest document:', latestDoc);
         dispatch({ type: "FETCH_USER_LOGS", payload: { userLogs: latestDoc } });
