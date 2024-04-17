@@ -32,7 +32,7 @@ const UserActivity = (props) => {
   // const user = props.state.user
   const userLogs = props.state.userLogs
   const userHostingLogs = props.state.userHostingLogs
-  // console.log(user.logs)
+  // console.log(userLogs)
   const { host } = props.route.params
   const userBookingLogsArray = Object.values(userLogs).sort((a, b) => new Date(b.created) - new Date(a.created))
   const userHostingLogsArray = Object.values(userHostingLogs).sort((a, b) => new Date(b.created) - new Date(a.created))
@@ -85,7 +85,8 @@ const UserActivity = (props) => {
       secondary={item?.bookingId}
       amount={calcAmount(item, host)}
       onPress={() => {
-        if (item.logType == "createBooking" || item.logType == "cancelBooking") {
+        console.log(item.logType)
+        if (item.logType == "createBooking" || item.logType == "createBookingPending" || item.logType == "cancelBooking") {
           // Navigate to bookingDetail with props
           props.navigation.navigate('BookingStackModal', {
             screen: 'BookingDetail',
@@ -106,7 +107,6 @@ const UserActivity = (props) => {
           // For no navigation logTypes i.e. topup etc
           null
         }
-        console.log(item)
       }}
     />
 
