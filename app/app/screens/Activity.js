@@ -82,7 +82,7 @@ const UserActivity = (props) => {
         ? (item?.logType == 'createBooking')
         : (item?.logType == 'topUpWallet' || item?.logType == 'cancelBooking')}
       logType={item?.logType}
-      secondary={item?.bookingId}
+      secondary={item?.bookingIdShort}
       amount={calcAmount(item, host)}
       onPress={() => {
         console.log(item.logType)
