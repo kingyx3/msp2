@@ -29,11 +29,13 @@ import { H, P } from "../config/Typography";
 const { width, height } = Dimensions.get('window');
 
 const UserActivity = (props) => {
-  const user = props.state.user
+  // const user = props.state.user
+  const userLogs = props.state.userLogs
+  const userHostingLogs = props.state.userHostingLogs
   // console.log(user.logs)
   const { host } = props.route.params
-  const userBookingLogsArray = Object.values(user.bookingLogs).sort((a, b) => new Date(b.created) - new Date(a.created))
-  const userHostingLogsArray = Object.values(user.hostingLogs).sort((a, b) => new Date(b.created) - new Date(a.created))
+  const userBookingLogsArray = Object.values(userLogs).sort((a, b) => new Date(b.created) - new Date(a.created))
+  const userHostingLogsArray = Object.values(userHostingLogs).sort((a, b) => new Date(b.created) - new Date(a.created))
   // console.log(userBookingLogsArray)
   const logsArray = host ? userHostingLogsArray : userBookingLogsArray
 
