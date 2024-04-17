@@ -679,10 +679,11 @@ export function fetchUserLogs() {
 
     try {
       const querySnapshot = await getDocs(q);
+      console.log("NUMBER OF READS (fetchUserLogs):", querySnapshot.docs.length);
       if (!querySnapshot.empty) {
         const latestDoc = convertTimestampsToIsoStrings(querySnapshot.docs[0].data());
         delete latestDoc.lastModified
-        console.log('Latest document:', latestDoc);
+        // console.log('Latest document:', latestDoc);
         dispatch({ type: "FETCH_USER_LOGS", payload: { userLogs: latestDoc } });
       } else {
         console.log('No user logs found');
@@ -691,6 +692,36 @@ export function fetchUserLogs() {
     } catch (error) {
       console.error('Error fetching user logs:', error);
       // dispatch({ type: "FETCH_USER_LOGS_ERROR", payload: { error: error.message } });
+    }
+  };
+}
+
+export function fetchUserHostingLogs() {
+  return async (dispatch) => {
+    const userUid = auth.currentUser ? auth.currentUser.uid : null;
+    if (!userUid) {
+      console.log('User not logged in');
+      return;
+    }
+
+    const userHostingLogsRef = collection(firestore, 'users', userUid, 'userhostinglogs');
+    const q = query(userHostingLogsRef, orderBy('lastModified', 'desc'), limit(1));
+
+    try {
+      const querySnapshot = await getDocs(q);
+      console.log("NUMBER OF READS (fetchUserHostingLogs):", querySnapshot.docs.length);
+      if (!querySnapshot.empty) {
+        const latestDoc = convertTimestampsToIsoStrings(querySnapshot.docs[0].data());
+        delete latestDoc.lastModified
+        // console.log('Latest document:', latestDoc);
+        dispatch({ type: "FETCH_USER_HOSTING_LOGS", payload: { userHostingLogs: latestDoc } });
+      } else {
+        console.log('No user hosting logs found');
+        dispatch({ type: "FETCH_USER_HOSTING_LOGS", payload: { userHostingLogs: {} } });
+      }
+    } catch (error) {
+      console.error('Error fetching user hosting logs:', error);
+      // dispatch({ type: "FETCH_USER_HOSTING_LOGS_ERROR", payload: { error: error.message } });
     }
   };
 }

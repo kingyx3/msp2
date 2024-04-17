@@ -5,6 +5,7 @@ const FETCH_USER_IP_LOCATION = 'FETCH_USER_IP_LOCATION';
 const FETCH_USER_SPACES = 'FETCH_USER_SPACES';
 const FETCH_USER_BOOKINGS = 'FETCH_USER_BOOKINGS';
 const FETCH_USER_LOGS = 'FETCH_USER_LOGS';
+const FETCH_USER_HOSTING_LOGS = 'FETCH_USER_HOSTING_LOGS';
 const FETCH_USER_MESSAGES = 'FETCH_USER_MESSAGES';
 const FETCH_SYS_SPACETYPES = 'FETCH_SYS_SPACETYPES';
 
@@ -14,6 +15,7 @@ const initialStore = {
   userSpaces: [],
   userBookings: [],
   userLogs: [],
+  userHostingLogs: [],
   userMessages: [],
   spaceTypes: [],
 };
@@ -50,6 +52,8 @@ const reducer = (state = initialStore, action) => {
       return { ...state, userBookings: action.payload.userBookings };
     case FETCH_USER_LOGS:
       return { ...state, userLogs: action.payload.userLogs };
+    case FETCH_USER_HOSTING_LOGS:
+      return { ...state, userHostingLogs: action.payload.userHostingLogs };
     case FETCH_USER_MESSAGES:
       return { ...state, userMessages: action.payload.userMessages };
     case FETCH_SYS_SPACETYPES:

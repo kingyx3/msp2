@@ -11,7 +11,7 @@ import HostStackModal from './HostStackModal'
 import MessageStackModal from "../navigation/MessageStackModal";
 import BookingStackModal from "../navigation/BookingStackModal"
 import AccountStackModal from "../navigation/AccountStackModal"
-import { fetchUser, fetchIpLocation, fetchUserSpaces, fetchUserBookings, fetchUserMessages, fetchSpaceTypes, fetchUserLogs } from "../components/Firebase/firebase"
+import { fetchUser, fetchIpLocation, fetchUserSpaces, fetchUserBookings, fetchUserMessages, fetchSpaceTypes, fetchUserLogs, fetchUserHostingLogs } from "../components/Firebase/firebase"
 //import styles and assets
 import styled from 'styled-components/native';
 // import { EvilIcons } from '@expo/vector-icons';
@@ -29,6 +29,7 @@ const RootStack = (props) => {
         props.fetchUserBookings()
         props.fetchUserMessages()
         props.fetchUserLogs()
+        props.fetchUserHostingLogs()
         props.fetchSpaceTypes()
     })
 
@@ -95,5 +96,5 @@ const IconWrapper = styled.View`
   margin-left: ${Platform.OS === 'ios' ? '15px' : 0};
 `;
 
-const mapDispatchProps = (dispatch) => bindActionCreators({ fetchUser, fetchIpLocation, fetchUserSpaces, fetchUserBookings, fetchUserLogs, fetchUserMessages, fetchSpaceTypes }, dispatch);
+const mapDispatchProps = (dispatch) => bindActionCreators({ fetchUser, fetchIpLocation, fetchUserSpaces, fetchUserBookings, fetchUserLogs, fetchUserHostingLogs, fetchUserMessages, fetchSpaceTypes }, dispatch);
 export default connect(null, mapDispatchProps)(RootStack);
