@@ -683,7 +683,7 @@ export function fetchUserLogs() {
       if (!querySnapshot.empty) {
         const latestDoc = convertTimestampsToIsoStrings(querySnapshot.docs[0].data());
         delete latestDoc.lastModified
-        // console.log('Latest document:', latestDoc);
+        console.log('userLogs: ', latestDoc);
         dispatch({ type: "FETCH_USER_LOGS", payload: { userLogs: latestDoc } });
       } else {
         console.log('No user logs found');
@@ -713,7 +713,7 @@ export function fetchUserHostingLogs() {
       if (!querySnapshot.empty) {
         const latestDoc = convertTimestampsToIsoStrings(querySnapshot.docs[0].data());
         delete latestDoc.lastModified
-        // console.log('Latest document:', latestDoc);
+        console.log('userHostingLogs: ', latestDoc);
         dispatch({ type: "FETCH_USER_HOSTING_LOGS", payload: { userHostingLogs: latestDoc } });
       } else {
         console.log('No user hosting logs found');
