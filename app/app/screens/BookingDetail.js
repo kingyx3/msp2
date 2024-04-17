@@ -60,12 +60,12 @@ const BookingDetails = (props) => {
     currentTime = Date.now()
     cutOffTime = moment(cancelByTime).valueOf();
     if (!host) {
-      // Cancellation amount if cancelled by user
-      refundAmount = (currentTime < cutOffTime)
+      // Refund full amount if cancelled by user before cutOffTime or if cancelled while pending_host
+      refundAmount = ((currentTime < cutOffTime) || booking.status == "pending_host")
         ? (booking?.price?.total_price * 100)
         : 0
     } else {
-      // Cancellation amount if cancelled by host
+      // Refund amount if cancelled by host
       refundAmount = booking?.price?.total_price * 100
     }
   } catch {
@@ -282,9 +282,9 @@ const BookingDetails = (props) => {
               <View style={{ margin: 10 }}>
                 <Button.BtnContain
                   testID="cancel-booking"
-                  label={booking.cancelled 
-                    ? "Booking Cancelled" 
-                    : (isHostAbleToCancel || isUserAbleToCancel || isBookingInProgress) 
+                  label={booking.cancelled
+                    ? "Booking Cancelled"
+                    : (isHostAbleToCancel || isUserAbleToCancel || isBookingInProgress)
                       ? (hostConfirmed ? "Cancel Booking" : "Cancel Pending")
                       : "Booking Completed"}
                   color={(booking.cancelled ? true :
