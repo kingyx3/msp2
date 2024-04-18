@@ -85,7 +85,7 @@ const UserActivity = (props) => {
       secondary={item?.bookingIdShort}
       amount={calcAmount(item, host)}
       onPress={() => {
-        console.log(item.logType)
+        // console.log(item)
         if (item.logType == "createBooking" || item.logType == "createBookingPending" || item.logType == "cancelBooking") {
           // Navigate to bookingDetail with props
           props.navigation.navigate('BookingStackModal', {

@@ -678,17 +678,20 @@ export function fetchUserLogs() {
     const q = query(userLogsRef, orderBy('lastModified', 'desc'), limit(1));
 
     try {
-      const querySnapshot = await getDocs(q);
-      console.log("NUMBER OF READS (fetchUserLogs):", querySnapshot.docs.length);
-      if (!querySnapshot.empty) {
-        const latestDoc = convertTimestampsToIsoStrings(querySnapshot.docs[0].data());
-        delete latestDoc.lastModified
-        // console.log('userLogs: ', latestDoc);
-        dispatch({ type: "FETCH_USER_LOGS", payload: { userLogs: latestDoc } });
-      } else {
-        console.log('No user logs found');
-        dispatch({ type: "FETCH_USER_LOGS", payload: { userLogs: {} } });
-      }
+      const unsubscribe = onSnapshot(q, (snapshot) => {
+        console.log("NUMBER OF READS (fetchUserLogs):", snapshot.docs.length);
+        if (!snapshot.empty) {
+          const latestDoc = convertTimestampsToIsoStrings(snapshot.docs[0].data());
+          delete latestDoc.lastModified;
+          dispatch({ type: "FETCH_USER_LOGS", payload: { userLogs: latestDoc } });
+        } else {
+          console.log('No user logs found');
+          dispatch({ type: "FETCH_USER_LOGS", payload: { userLogs: {} } });
+        }
+      });
+
+      // Return the unsubscribe function to remove the listener when needed
+      return unsubscribe;
     } catch (error) {
       console.error('Error fetching user logs:', error);
       // dispatch({ type: "FETCH_USER_LOGS_ERROR", payload: { error: error.message } });
@@ -708,20 +711,23 @@ export function fetchUserHostingLogs() {
     const q = query(userHostingLogsRef, orderBy('lastModified', 'desc'), limit(1));
 
     try {
-      const querySnapshot = await getDocs(q);
-      console.log("NUMBER OF READS (fetchUserHostingLogs):", querySnapshot.docs.length);
-      if (!querySnapshot.empty) {
-        const latestDoc = convertTimestampsToIsoStrings(querySnapshot.docs[0].data());
-        delete latestDoc.lastModified
-        // console.log('userHostingLogs: ', latestDoc);
-        dispatch({ type: "FETCH_USER_HOSTING_LOGS", payload: { userHostingLogs: latestDoc } });
-      } else {
-        console.log('No user hosting logs found');
-        dispatch({ type: "FETCH_USER_HOSTING_LOGS", payload: { userHostingLogs: {} } });
-      }
+      const unsubscribe = onSnapshot(q, (snapshot) => {
+        console.log("NUMBER OF READS (fetchUserHostingLogs):", snapshot.docs.length);
+        if (!snapshot.empty) {
+          const latestDoc = convertTimestampsToIsoStrings(snapshot.docs[0].data());
+          delete latestDoc.lastModified;
+          dispatch({ type: "FETCH_USER_HOSTING_LOGS", payload: { userHostingLogs: latestDoc } });
+        } else {
+          console.log('No user hosting logs found');
+          dispatch({ type: "FETCH_USER_HOSTING_LOGS", payload: { userHostingLogs: {} } });
+        }
+      });
+
+      // Return the unsubscribe function to remove the listener when needed
+      return unsubscribe;
     } catch (error) {
       console.error('Error fetching user hosting logs:', error);
-      // dispatch({ type: "FETCH_USER_HOSTING_LOGS_ERROR", payload: { error: error.message } });
+      // dispatch({ type: "FETCH_USER_HOSTING_LOGS", payload: { error: error.message } });
     }
   };
 }
