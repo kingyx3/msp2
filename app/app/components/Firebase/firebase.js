@@ -790,7 +790,7 @@ export function fetchBooking(bookingId) {
 export async function cancelBooking(bookingId) { //booking, space) { // TRANSACTION-ED
   const CFcancelBooking = httpsCallable(functions, 'cancelBooking');
   const inputs = { bookingId }
-  console.log(inputs)
+  // console.log(inputs)
   return CFcancelBooking(inputs)
     .then(() => console.log("BOOKING DELETED SUCCESSFULLY!"))
     .catch((e) => Promise.reject("BOOKING DELETION ERROR: " + e))

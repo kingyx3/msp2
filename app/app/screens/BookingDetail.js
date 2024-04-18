@@ -43,7 +43,7 @@ const BookingDetails = (props) => {
   const hostConfirmed = booking.hostConfirmed
   const address = selectedSpace?.location?.description
   const postcode = selectedSpace?.location?.geoapify?.postcode
-  let cancelByTime = host ? moment(booking?.end).add(5, 'days') : moment(booking?.start).add(-1 * selectedSpace?.cancellationPolicy?.numberOfHours, 'hours')
+  let cancelByTime = host ? moment(booking?.end).add(5, 'days') : moment(booking?.start).add(-1 * booking?.cancellationPolicy?.numberOfHours, 'hours')
   cancelByTimeFormatted = cancelByTime.format('DD MMM YYYY, ha')
   // -------------------
   const isHostAbleToCancel = host && moment(booking?.end).add(5, 'days').valueOf() >= Date.now();
@@ -222,6 +222,7 @@ const BookingDetails = (props) => {
               <View>
                 <Typography.Cap color={colors.gray}>Cancellation Policy</Typography.Cap>
                 <Typography.Sub1 testID={'cancellation-policy'}>{host ? `Cancel by ${cancelByTimeFormatted} to refund your guest` : `Cancel by ${cancelByTimeFormatted} for free`}</Typography.Sub1>
+                <Typography.Sub1 testID={'cancellation-policy2'}>{`Free cancellation for bookings pending host confirmation.`}</Typography.Sub1>
                 {/*
               <Typography.P>-Smoke free</Typography.P>
               <Typography.P>-No pets allowed</Typography.P>
