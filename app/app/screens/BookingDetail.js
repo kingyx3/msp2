@@ -310,11 +310,11 @@ const BookingDetails = (props) => {
                       'Are you sure you want to approve this booking?', [
                       {
                         text: "Cancel",
-                        onPress: () => approveBooking(bookingId),
+                        onPress: () => console.log("Cancel Pressed, booking is not approved"),
                         style: "cancel"
                       }, {
                         text: "Confirm",
-                        onPress: () => cancelBooking(bookingId),
+                        onPress: () => approveBooking(bookingId),
                         style: "cancel"
                       }
                     ])
@@ -331,11 +331,11 @@ const BookingDetails = (props) => {
                       'Are you sure you want to reject this booking?', [
                       {
                         text: "Cancel",
-                        onPress: () => console.log("Cancel Pressed"),
+                        onPress: () => console.log("Cancel Pressed, booking is not rejected"),
                         style: "cancel"
                       }, {
                         text: "Confirm",
-                        onPress: () => console.log('Host rejected this booking! ' + bookingId),
+                        onPress: () => cancelBooking(bookingId),
                         style: "cancel"
                       }
                     ])
