@@ -221,8 +221,8 @@ const BookingDetails = (props) => {
             <CancellationPolicy>
               <View>
                 <Typography.Cap color={colors.gray}>Cancellation Policy</Typography.Cap>
+                {!hostConfirmed && <Typography.Sub1 testID={'cancellation-policy2'}>{`Full refund for bookings pending confirmation`}</Typography.Sub1>}
                 <Typography.Sub1 testID={'cancellation-policy'}>{host ? `Cancel by ${cancelByTimeFormatted} to refund your guest` : `Cancel by ${cancelByTimeFormatted} for free`}</Typography.Sub1>
-                <Typography.Sub1 testID={'cancellation-policy2'}>{`Free cancellation for bookings pending host confirmation.`}</Typography.Sub1>
                 {/*
               <Typography.P>-Smoke free</Typography.P>
               <Typography.P>-No pets allowed</Typography.P>
