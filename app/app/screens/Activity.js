@@ -50,6 +50,10 @@ const UserActivity = (props) => {
         case 'createBooking':
           // POV host - booking created
           return '+ SGD ' + item?.amount?.hostEarnings;
+        case 'createBookingPending':
+          // POV host - pending booking created
+          // return '+ SGD ' + item?.amount?.hostEarnings;
+          return '' // Money not earned until confirmed
         default:
           // other alternatives have no amount value
           return '';
@@ -61,6 +65,9 @@ const UserActivity = (props) => {
           return (item?.amount?.refundAmount == 0) ? "" : ('+ SGD ' + item?.amount?.refundAmount)
         case 'createBooking':
           // POV user - booking created
+          return '- SGD ' + item?.amount?.total_price;
+        case 'createBookingPending':
+          // POV user - pending booking created
           return '- SGD ' + item?.amount?.total_price;
         case 'topUpWallet':
           // POV user - top up wallet
@@ -79,10 +86,17 @@ const UserActivity = (props) => {
       created={moment(item?.created).format('DD MMM YYYY hh:mm A')}
       message={item?.message}
       positive={host
-        ? (item?.logType == 'createBooking')
+        ? (item?.logType == 'createBooking' || item?.logType == 'createBookingPending')
         : (item?.logType == 'topUpWallet' || item?.logType == 'cancelBooking')}
       logType={item?.logType}
-      secondary={item?.bookingIdShort}
+      secondary={item?.bookingIdShort
+        + (item.status == "pending_host"
+          ? " (Pending Host)"
+          : item.status == "cancelled_by_host"
+            ? " (Host Cancel)"
+            : item.status == "cancelled_by_user"
+              ? " (User Cancel)"
+              : "")}
       amount={calcAmount(item, host)}
       onPress={() => {
         // console.log(item)
