@@ -15,7 +15,7 @@ const initialStore = {
   endDay: '',
   selectedSpace: {},
   selectedSpaces: [],
-  selectedBooking: {},
+  selectedBooking: { status: "" },
   spaceSummary: {},
 };
 

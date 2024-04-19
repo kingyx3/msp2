@@ -146,7 +146,7 @@ const BookingDetails = (props) => {
   }
 
 
-  if (Object.keys(selectedSpace).length == 0) {
+  if (Object.keys(selectedSpace).length == 0 || Object.keys(booking).length == 1) {
     return (
       <Container>
         <ActivityIndicator />
@@ -240,7 +240,7 @@ const BookingDetails = (props) => {
                 image={host ? getAvatarLink(booking.userId) : getAvatarLink(selectedSpace.userId)}
               />
             </Host>
-            {!((booking.status).startsWith("cancelled")) && (Math.floor((Date.now() - booking.end) / (1000 * 60 * 60 * 24)) < 5) &&
+            {!booking.status.startsWith("cancelled") && (Math.floor((Date.now() - booking.end) / (1000 * 60 * 60 * 24)) < 5) &&
               <View style={{ margin: 10 }}>
                 {/* can only contact host/user up to 5 days after booking ends, existing chat need to hide? */}
                 <Button.BtnContain
