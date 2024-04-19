@@ -40,7 +40,6 @@ const BookingDetails = (props) => {
   const [loading, setLoading] = useState(false)
   const [userName, setUserName] = useState('')
   const [hostName, setHostName] = useState('')
-  const hostConfirmed = booking.hostConfirmed
   const address = selectedSpace?.location?.description
   const postcode = selectedSpace?.location?.geoapify?.postcode
   let cancelByTime = host ? moment(booking?.end).add(5, 'days') : moment(booking?.start).add(-1 * booking?.cancellationPolicy?.numberOfHours, 'hours')
@@ -221,7 +220,7 @@ const BookingDetails = (props) => {
             <CancellationPolicy>
               <View>
                 <Typography.Cap color={colors.gray}>Cancellation Policy</Typography.Cap>
-                {!hostConfirmed && <Typography.Sub1 testID={'cancellation-policy2'}>{`Full refund for bookings pending confirmation`}</Typography.Sub1>}
+                {booking.status === "pending_host" && <Typography.Sub1 testID={'cancellation-policy2'}>{`Full refund for bookings pending confirmation`}</Typography.Sub1>}
                 <Typography.Sub1 testID={'cancellation-policy'}>{host ? `Cancel by ${cancelByTimeFormatted} to refund your guest` : `Cancel by ${cancelByTimeFormatted} for free`}</Typography.Sub1>
                 {/*
               <Typography.P>-Smoke free</Typography.P>
@@ -241,7 +240,7 @@ const BookingDetails = (props) => {
                 image={host ? getAvatarLink(booking.userId) : getAvatarLink(selectedSpace.userId)}
               />
             </Host>
-            {!(booking.cancelled) && (Math.floor((Date.now() - booking.end) / (1000 * 60 * 60 * 24)) < 5) &&
+            {!((booking.status).startsWith("cancelled")) && (Math.floor((Date.now() - booking.end) / (1000 * 60 * 60 * 24)) < 5) &&
               <View style={{ margin: 10 }}>
                 {/* can only contact host/user up to 5 days after booking ends, existing chat need to hide? */}
                 <Button.BtnContain
@@ -264,7 +263,7 @@ const BookingDetails = (props) => {
               </View>
             }
             { // user can only write review up to 48 hrs after booking ends
-              hostConfirmed && !host && !(booking.cancelled) && booking.end < Date.now() && Math.floor((Date.now() - booking.end) / (1000 * 60 * 60 * 24)) < 2 &&
+              !host && booking.status === "confirmed" && booking.end < Date.now() && Math.floor((Date.now() - booking.end) / (1000 * 60 * 60 * 24)) < 2 &&
               <View style={{ margin: 10 }}>
                 <Button.BtnContain
                   testID="write-review"
@@ -279,24 +278,26 @@ const BookingDetails = (props) => {
                   }} />
               </View>
             }
-            {((!host) || (host && hostConfirmed)) &&
+            {((!host) || (host && booking.status === "confirmed")) &&
               <View style={{ margin: 10 }}>
                 <Button.BtnContain
                   testID="cancel-booking"
-                  label={booking.cancelled
+                  label={(booking.status).startsWith("cancelled")
                     ? "Booking Cancelled"
                     : (isHostAbleToCancel || isUserAbleToCancel || isBookingInProgress)
-                      ? (hostConfirmed ? "Cancel Booking" : "Cancel Pending")
-                      : "Booking Completed"}
-                  color={(booking.cancelled ? true :
+                      ? (booking.status === "pending_host"
+                        ? "Cancel Pending"
+                        : "Cancel Booking") // booking.status === "confirmed" and booking not completed
+                      : "Booking Completed"} // booking.status === "confirmed" and booking completed
+                  color={((booking.status).startsWith("cancelled") ? true :
                     loading || !(isHostAbleToCancel || isUserAbleToCancel)) ? colors.lightgray : colors.black}
                   size="small"
-                  disabled={booking.cancelled ? true :
+                  disabled={(booking.status).startsWith("cancelled") ? true :
                     loading || !(isHostAbleToCancel || isUserAbleToCancel)}
                   onPress={cancelBookingBox} />
               </View>
             }
-            {!hostConfirmed && host &&
+            {booking.status === "pending_host" && host &&
               <View style={{ margin: 10 }}>
                 {/* Approve/Reject booking (host only) */}
                 <Button.BtnContain
