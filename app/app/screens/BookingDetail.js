@@ -111,7 +111,8 @@ const BookingDetails = (props) => {
             style: "cancel"
           },
           {
-            text: "Yes", onPress: async () => {
+            text: "Yes",
+            onPress: async () => {
               setLoading(true)
               await cancelBooking(bookingId) // , selectedSpace)
                 .then(() => {
@@ -316,8 +317,31 @@ const BookingDetails = (props) => {
                         style: "cancel"
                       }, {
                         text: "Confirm",
-                        onPress: () => approveBooking(bookingId),
-                        style: "cancel"
+                        onPress: async () => {
+                          setLoading(true)
+                          await approveBooking(bookingId) // , selectedSpace)
+                            .then(() => {
+                              Alert.alert("Booking Approved!", "Success", [
+                                {
+                                  text: "OK", onPress: () => {
+                                    setLoading(false)
+                                    props.navigation.goBack()
+                                  }
+                                },
+                              ]);
+                            })
+                            .catch((e) => {
+                              Alert.alert("Booking Approval Error!", 'Please try again later.', [
+                                {
+                                  text: "OK", onPress: () => {
+                                    setLoading(false)
+                                    props.navigation.goBack()
+                                  }
+                                },
+                              ]);
+                              setLoading(false)
+                            })
+                        }
                       }
                     ])
                   }} />
@@ -337,8 +361,31 @@ const BookingDetails = (props) => {
                         style: "cancel"
                       }, {
                         text: "Confirm",
-                        onPress: () => cancelBooking(bookingId),
-                        style: "cancel"
+                        onPress: async () => {
+                          setLoading(true)
+                          await cancelBooking(bookingId) // , selectedSpace)
+                            .then(() => {
+                              Alert.alert("Booking Rejected!", "Success", [
+                                {
+                                  text: "OK", onPress: () => {
+                                    setLoading(false)
+                                    props.navigation.goBack()
+                                  }
+                                },
+                              ]);
+                            })
+                            .catch((e) => {
+                              Alert.alert("Booking Rejection Error!", 'Please try again later.', [
+                                {
+                                  text: "OK", onPress: () => {
+                                    setLoading(false)
+                                    props.navigation.goBack()
+                                  }
+                                },
+                              ]);
+                              setLoading(false)
+                            })
+                        }
                       }
                     ])
                   }} />
