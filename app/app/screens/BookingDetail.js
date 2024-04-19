@@ -37,8 +37,6 @@ const BookingDetails = (props) => {
   let { bookingId, spaceId, host } = props.route.params
   let booking = props.state.selectedBooking
   let selectedSpace = props.state.selectedSpace
-  console.log('bookingId, spaceId, host', bookingId, spaceId, host)
-  console.log('booking.id, selectedSpace.id, host', booking.id, selectedSpace.id, host)
   const [loading, setLoading] = useState(false)
   const [userName, setUserName] = useState('')
   const [hostName, setHostName] = useState('')
@@ -76,11 +74,14 @@ const BookingDetails = (props) => {
 
   useEffect(() => {
     // console.log(bookingId, '-', spaceId)
-    if (spaceId == selectedSpace.id && bookingId == booking.id) {
+    if (spaceId == selectedSpace.id) {
       getUserName(selectedSpace.userId, setHostName)
-      getUserName(booking.userId, setUserName)
     } else {
       props.setSelectedSpace(spaceId)
+    }
+    if (bookingId == booking.id) {
+      getUserName(booking.userId, setUserName)
+    } else {
       props.fetchBooking(bookingId)
     }
   }, [selectedSpace, booking])
@@ -285,17 +286,17 @@ const BookingDetails = (props) => {
               <View style={{ margin: 10 }}>
                 <Button.BtnContain
                   testID="cancel-booking"
-                  label={(booking.status).startsWith("cancelled")
+                  label={booking.status.startsWith("cancelled")
                     ? "Booking Cancelled"
                     : (isHostAbleToCancel || isUserAbleToCancel || isBookingInProgress)
                       ? (booking.status === "pending_host"
                         ? "Cancel Pending"
                         : "Cancel Booking") // booking.status === "confirmed" and booking not completed
                       : "Booking Completed"} // booking.status === "confirmed" and booking completed
-                  color={((booking.status).startsWith("cancelled") ? true :
+                  color={(booking.status.startsWith("cancelled") ? true :
                     loading || !(isHostAbleToCancel || isUserAbleToCancel)) ? colors.lightgray : colors.black}
                   size="small"
-                  disabled={(booking.status).startsWith("cancelled") ? true :
+                  disabled={booking.status.startsWith("cancelled") ? true :
                     loading || !(isHostAbleToCancel || isUserAbleToCancel)}
                   onPress={cancelBookingBox} />
               </View>
