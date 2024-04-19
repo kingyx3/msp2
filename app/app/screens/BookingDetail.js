@@ -37,6 +37,8 @@ const BookingDetails = (props) => {
   let { bookingId, spaceId, host } = props.route.params
   let booking = props.state.selectedBooking
   let selectedSpace = props.state.selectedSpace
+  console.log('bookingId, spaceId, host', bookingId, spaceId, host)
+  console.log('booking.id, selectedSpace.id, host', booking.id, selectedSpace.id, host)
   const [loading, setLoading] = useState(false)
   const [userName, setUserName] = useState('')
   const [hostName, setHostName] = useState('')
@@ -279,7 +281,7 @@ const BookingDetails = (props) => {
                   }} />
               </View>
             }
-            {((!host) || (host && booking.status === "confirmed")) &&
+            {((!host) || (host && booking.status !== "pending_host")) &&
               <View style={{ margin: 10 }}>
                 <Button.BtnContain
                   testID="cancel-booking"
