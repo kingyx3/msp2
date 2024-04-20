@@ -31,7 +31,7 @@ const Stack = createStackNavigator();
 const Tab = createMaterialTopTabNavigator();
 
 const SpaceBookingTopTab = (props) => {
-    const { spaceId } = props.route.params
+    const { spaceId, needHostConfirm } = props.route.params
     return (
         <Container>
             <Header>
@@ -39,7 +39,7 @@ const SpaceBookingTopTab = (props) => {
             </Header>
             <Tab.Navigator>
                 <Tab.Screen name="Upcoming" component={SpaceBooking} initialParams={{ spaceId, history: false, hostConfirmed: true }} />
-                <Tab.Screen name="Pending" component={SpaceBooking} initialParams={{ spaceId, history: false, hostConfirmed: false }} />
+                {needHostConfirm && <Tab.Screen name="Pending" component={SpaceBooking} initialParams={{ spaceId, history: false, hostConfirmed: false }} />}
                 <Tab.Screen name="History" component={SpaceBooking} initialParams={{ spaceId, history: true, hostConfirmed: true }} />
             </Tab.Navigator>
         </Container>

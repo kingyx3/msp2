@@ -90,13 +90,14 @@ const UserActivity = (props) => {
         : (item?.logType == 'topUpWallet' || item?.logType == 'cancelBooking')}
       logType={item?.logType}
       secondary={item?.bookingIdShort
-        + (item.status == "pending_host"
+        ? item?.bookingIdShort + (item.status == "pending_host"
           ? " (Pending Host)"
           : item.status == "cancelled_by_host"
             ? " (Host Cancel)"
             : item.status == "cancelled_by_user"
               ? " (User Cancel)"
-              : "")}
+              : "")
+        : ""}
       amount={calcAmount(item, host)}
       onPress={() => {
         // console.log(item)

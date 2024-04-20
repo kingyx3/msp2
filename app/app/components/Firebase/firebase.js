@@ -454,15 +454,14 @@ export function setSelectedSpaces(spaceType, start, end, spaceSummaryz) {
 export function setSelectedSpace(selectedSpaceId) {
   return (dispatch) => {
     const spaceRef = doc(firestore, 'spaces', selectedSpaceId);
-    getDoc(spaceRef)
-      .then(async (snapshot) => {
-        let selectedSpace = snapshot.data();
 
-        // Convert all Timestamps to ISO Strings
+    const listener = onSnapshot(spaceRef, async (snapshot) => {
+      console.log("NUMBER OF READS (fetchBooking): 1")
+      if (snapshot.exists()) {
+        let selectedSpace = snapshot.data();
+        // Convert all Timestamps, including nested ones, to ISO strings
         selectedSpace = convertTimestampsToIsoStrings(selectedSpace);
 
-        // console.log(selectedSpace?.reviews?.spaceReviewDT)
-        // selectedSpace?.reviews?.spaceReviewDT
         if (selectedSpace && selectedSpace.reviews && selectedSpace.reviews.spaceReviewDT) {
           for (const key in selectedSpace.reviews.spaceReviewDT) {
             if (selectedSpace.reviews.spaceReviewDT[key].hasOwnProperty('userId')) {
@@ -474,8 +473,34 @@ export function setSelectedSpace(selectedSpaceId) {
         }
 
         dispatch({ type: "SET_SELECTED_SPACE", payload: { selectedSpace } });
-      })
-      .catch((e) => console.log('Error selecting space: ' + e));
+      } else {
+        console.log('Error selecting space')
+      }
+    });
+    return listener
+
+    // getDoc(spaceRef)
+    //   .then(async (snapshot) => {
+    //     let selectedSpace = snapshot.data();
+
+    //     // Convert all Timestamps to ISO Strings
+    //     selectedSpace = convertTimestampsToIsoStrings(selectedSpace);
+
+    //     // console.log(selectedSpace?.reviews?.spaceReviewDT)
+    //     // selectedSpace?.reviews?.spaceReviewDT
+    //     if (selectedSpace && selectedSpace.reviews && selectedSpace.reviews.spaceReviewDT) {
+    //       for (const key in selectedSpace.reviews.spaceReviewDT) {
+    //         if (selectedSpace.reviews.spaceReviewDT[key].hasOwnProperty('userId')) {
+    //           // Access and run your function on userId here
+    //           const userId = selectedSpace.reviews.spaceReviewDT[key].userId;
+    //           selectedSpace.reviews.spaceReviewDT[key].userName = await getUserName(userId, () => { })
+    //         }
+    //       }
+    //     }
+
+    //     dispatch({ type: "SET_SELECTED_SPACE", payload: { selectedSpace } });
+    //   })
+    //   .catch((e) => console.log('Error selecting space: ' + e));
   };
 }
 
@@ -779,16 +804,19 @@ export function fetchSpaceTypes() {
 export function fetchBooking(bookingId) {
   return (dispatch) => {
     const bookingRef = doc(collection(firestore, 'bookings'), bookingId);
-    getDoc(bookingRef)
-      .then((snapshot) => {
-        // console.log("setting up selectedBooking");
+
+    const listener = onSnapshot(bookingRef, (snapshot) => {
+      console.log("NUMBER OF READS (fetchBooking): 1")
+      if (snapshot.exists()) {
         let selectedBooking = snapshot.data();
-        // Convert the booking data to ensure all values are serializable
+        // Convert all Timestamps, including nested ones, to ISO strings
         selectedBooking = convertTimestampsToIsoStrings(selectedBooking);
-        // console.log("selectedBooking is set", selectedBooking);
         dispatch({ type: "SET_SELECTED_BOOKING", payload: { selectedBooking } });
-      })
-      .catch((e) => console.log('Error fetching bookings: ' + e));
+      } else {
+        console.log('Error fetching booking')
+      }
+    });
+    return listener
   };
 }
 // Function to update booking (BOOKING-U)
