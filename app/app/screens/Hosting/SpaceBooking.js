@@ -54,7 +54,7 @@ const SpaceBookings = (props) => {
         (item.bookingIdShort)
       } //user2.name
       secondary={
-        item.status == 'confirmed' ? ('$' + item?.price?.hostEarnings.toString() + "") : camelToFlat(item.status)
+        item.status == 'confirmed' ? ('$' + item?.price?.hostEarnings.toString() + "") : camelToFlat(item.status).replace(/_/g, " ")
       } // bugs out if message is an empty
       // image={item?.otherUserAvatar}
       meta={
