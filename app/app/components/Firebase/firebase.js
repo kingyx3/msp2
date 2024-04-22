@@ -433,6 +433,7 @@ export function setSelectedSpaces(spaceType, start, end, spaceSummaryz) {
               'third_party': combinedSpaces[key].third_party,
               'reviews': ratingCount,
               'rating': rating,
+              'userId': combinedSpaces[key].userId,
             })
           }
         }
