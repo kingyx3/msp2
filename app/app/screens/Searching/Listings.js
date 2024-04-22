@@ -43,6 +43,7 @@ const Listings = (props) => {
   let endM = moment(props.state.end); //moment(startM).add(duration, 'h');
   let spaceSummary = props.state.spaceSummary
   let selectedSpaces = props.state.selectedSpaces
+  selectedSpaces = selectedSpaces.filter((space) => space.userId !== props.user.id) // dont show your own spaces
   selectedSpaces = selectedSpaces.slice(0, 25) // only show first 25
 
   const [showFilter, setShowFilter] = useState(false);
@@ -174,6 +175,7 @@ const CloseBtn = styled.View`
 const mapStateToProps = (state) => {
   return {
     state: state.search,
+    user: state.user
   };
 };
 const mapDispatchProps = (dispatch) => bindActionCreators({ clearSelectedSpace, setSelectedSpace, setSelectedSpaces }, dispatch);
