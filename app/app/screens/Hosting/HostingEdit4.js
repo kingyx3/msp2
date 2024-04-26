@@ -173,8 +173,6 @@ const HostingEdit4 = (props) => {
               />
             </View>
           </Flex>
-        </Step>
-        <Step>
           <Typography.Sub1>Choose a cancellation policy</Typography.Sub1>
           <InputWrapper>
             <AppPicker
@@ -186,8 +184,6 @@ const HostingEdit4 = (props) => {
               icon="chevron-down"
             />
           </InputWrapper>
-        </Step>
-        <Step>
           <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', }}>
             <Typography.Sub1>Require pre-booking approval?  </Typography.Sub1>
             <Switch
