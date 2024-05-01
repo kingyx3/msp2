@@ -2,7 +2,6 @@ import React from 'react';
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
 
-<Link to="/policies" style={styles.link}> Policies</Link>
 const Policy = () => {
     return (
         <Container>
@@ -67,12 +66,6 @@ const PolicyLink = styled.a`
   cursor: pointer;
 `;
 
-const styles = {
-    link: {
-        textDecoration: 'none',
-        color: 'black',
-        fontSize: '16px',
-    },
-};
+
 
 export default Policy;
