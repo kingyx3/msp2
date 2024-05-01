@@ -1,12 +1,15 @@
 // NavBarBtm.js
 import React from 'react';
 import { Link } from 'react-router-dom';
+import { envVars } from '../envConfig';
+
+const currentYear = new Date().getFullYear();
 
 const NavBarBtm = () => {
     return (
         <nav style={styles.nav}>
             <div style={styles.footer}>
-                <Link to="/privacy" style={styles.privacyLink}>© 2024 Airbnb, Inc. · Privacy</Link>
+                © {currentYear} {envVars.REACT_APP_NAME} · <Link to="/policies" style={styles.link}>Policies</Link>
             </div>
         </nav>
     );
@@ -41,7 +44,7 @@ const styles = {
         alignItems: 'center',
         padding: '5px 10px', // Consistent padding with the list
     },
-    privacyLink: {
+    link: {
         textDecoration: 'none',
         color: 'white',
         fontSize: '14px', // Slightly smaller font for the footer text
