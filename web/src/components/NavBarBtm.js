@@ -9,7 +9,7 @@ const NavBarBtm = () => {
     return (
         <nav style={styles.nav}>
             <div style={styles.footer}>
-                © {currentYear} {envVars.REACT_APP_NAME} · <Link to="/policies" style={styles.link}> Policies </Link> ·
+                © {currentYear} {envVars.REACT_APP_NAME} · <Link to="/policies" style={styles.link}>Policies</Link>
             </div>
         </nav>
     );
@@ -43,6 +43,7 @@ const styles = {
         // justifyContent: 'space-between', // Align items to the sides
         alignItems: 'center',
         padding: '5px 10px', // Consistent padding with the list
+        fontSize: '14px', // Slightly smaller font for the footer text
     },
     link: {
         textDecoration: 'none',
