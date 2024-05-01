@@ -67,4 +67,12 @@ const PolicyLink = styled.a`
   cursor: pointer;
 `;
 
+const styles = {
+    link: {
+        textDecoration: 'none',
+        color: 'white',
+        fontSize: '16px',
+    },
+};
+
 export default Policy;
