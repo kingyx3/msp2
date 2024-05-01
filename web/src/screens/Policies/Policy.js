@@ -1,16 +1,18 @@
 import React from 'react';
 import styled from 'styled-components';
+import { Link } from 'react-router-dom';
 
+<Link to="/policies" style={styles.link}> Policies</Link>
 const Policy = () => {
     return (
         <Container>
             <Title>Policies</Title>
             <PolicyList>
                 <PolicyItem>
-                    <PolicyLink href="/privacy-policy" target="_blank">Privacy Policy</PolicyLink>
+                    <PolicyLink><Link to="/privacy-policy" style={styles.link}>Privacy Policy</Link></PolicyLink>
                 </PolicyItem>
                 <PolicyItem>
-                    <PolicyLink href="/terms-of-service" target="_blank">Terms of Service</PolicyLink>
+                    <Link to="/terms-of-service" style={styles.link}>Terms of Service</Link>
                 </PolicyItem>
                 <PolicyItem>
                     <PolicyLink href="/payments-terms-of-service" target="_blank">Payments Terms of Service</PolicyLink>
