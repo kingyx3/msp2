@@ -40,7 +40,7 @@ const styles = {
     // },
     footer: {
         display: 'flex',
-        justifyContent: 'space-between', // Align items to the sides
+        // justifyContent: 'space-between', // Align items to the sides
         alignItems: 'center',
         padding: '5px 10px', // Consistent padding with the list
     },
