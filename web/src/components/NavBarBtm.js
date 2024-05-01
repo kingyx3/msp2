@@ -8,7 +8,7 @@ const currentYear = new Date().getFullYear();
 const NavBarBtm = () => {
     return (
         <footer style={styles.footer}>
-            <p>&copy; {currentYear} {envVars.REACT_APP_NAME} || <Link to="/policies" style={styles.link}> || Policies</Link></p>
+            <p>&copy; {currentYear} {envVars.REACT_APP_NAME} || <Link to="/policies" style={styles.link}> Policies</Link></p>
         </footer>
     );
 };
@@ -37,7 +37,14 @@ const styles = {
     //     fontSize: '16px',
     // },
     footer: {
-        textAlign: 'left', position: 'fixed', bottom: 0, left: 0, width: '100%', backgroundColor: 'purple', zIndex: '999',
+        textAlign: 'left',
+        position: 'fixed',
+        bottom: 0,
+        left: 0,
+        width: '100%',
+        backgroundColor: 'purple',
+        zIndex: '999',
+        fontSize: '14px',
     },
     link: {
         textDecoration: 'none',
