@@ -15,11 +15,13 @@ import HostCancellationPolicy from './screens/Policies/HostCancellationPolicy';
 import HostingRules from './screens/Policies/HostingRules';
 import PricingPolicy from './screens/Policies/PricingPolicy';
 import HostingFees from './screens/Policies/HostingFees';
+import NavBarBtm from './components/NavBarBtm';
 
 const App = () => {
   return (
     <Router>
       <Navbar />
+      <NavBarBtm />
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/contact-us" element={<ContactUs />} />
