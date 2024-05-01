@@ -26,6 +26,7 @@ const styles = {
         bottom: '0', // Move to the bottom of the screen
         width: '100%',
         zIndex: '999',
+        flexDirection: 'row'
     },
     // ul: {
     //     listStyleType: 'none',
