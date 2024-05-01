@@ -47,6 +47,10 @@ const UserActivity = (props) => {
         case 'cancelBooking':
           // POV host - booking cancelled
           return '- SGD ' + (item?.amount?.hostEarnings);
+        case 'cancelBookingPending':
+          // POV host - pending booking cancelled
+          // return '- SGD ' + (item?.amount?.hostEarnings);
+          return '' // Money not refunded (since it wasnt earned)
         case 'createBooking':
           // POV host - booking created
           return '+ SGD ' + item?.amount?.hostEarnings;
@@ -62,6 +66,9 @@ const UserActivity = (props) => {
       switch (item?.logType) {
         case 'cancelBooking':
           // POV user - booking cancelled
+          return (item?.amount?.refundAmount == 0) ? "" : ('+ SGD ' + item?.amount?.refundAmount)
+        case 'cancelBookingPending':
+          // POV user - pending booking cancelled
           return (item?.amount?.refundAmount == 0) ? "" : ('+ SGD ' + item?.amount?.refundAmount)
         case 'createBooking':
           // POV user - booking created
@@ -90,18 +97,26 @@ const UserActivity = (props) => {
         : (item?.logType == 'topUpWallet' || item?.logType == 'cancelBooking')}
       logType={item?.logType}
       secondary={item?.bookingIdShort
-        ? item?.bookingIdShort + (item.status == "pending_host"
+        ? item?.bookingIdShort
+        + (item.status == "pending_host"
           ? " (Pending Host)"
-          : item.status == "cancelled_by_host"
-            ? " (Host Cancel)"
-            : item.status == "cancelled_by_user"
-              ? " (User Cancel)"
-              : "")
+          : item.status == "pending_cancelled_by_host"
+            ? " (Host Cancel Pending)"
+            : item.status == "pending_cancelled_by_user"
+              ? " (User Cancel Pending)"
+              : item.status == "cancelled_by_host"
+                ? " (Host Cancel)"
+                : item.status == "cancelled_by_user"
+                  ? " (User Cancel)"
+                  : "")
         : ""}
       amount={calcAmount(item, host)}
       onPress={() => {
         // console.log(item)
-        if (item.logType == "createBooking" || item.logType == "createBookingPending" || item.logType == "cancelBooking") {
+        if (item.logType == "createBooking"
+          || item.logType == "createBookingPending"
+          || item.logType == "cancelBooking"
+          || item.logType == "cancelBookingPending") {
           // Navigate to bookingDetail with props
           props.navigation.navigate('BookingStackModal', {
             screen: 'BookingDetail',
@@ -111,7 +126,11 @@ const UserActivity = (props) => {
               host
             }
           });
-        } else if (item.logType == "createSpace" || item.logType == "updateSpace" || item.logType == "enableSpace" || item.logType == "disableSpace" || item.logType == "updateBlocked") {
+        } else if (item.logType == "createSpace"
+          || item.logType == "updateSpace"
+          || item.logType == "enableSpace"
+          || item.logType == "disableSpace"
+          || item.logType == "updateBlocked") {
           // Navigate to spaceDetail with props
           props.navigation.navigate('HostStackModal', {
             screen: 'SpaceDetail', params: {
