@@ -8,7 +8,7 @@ const currentYear = new Date().getFullYear();
 const NavBarBtm = () => {
     return (
         <footer style={styles.footer}>
-            <p>&copy; {currentYear} {envVars.REACT_APP_NAME} || <Link to="/policies" style={styles.link}> Policies</Link></p>
+            <p>&copy; {currentYear} {envVars.REACT_APP_NAME} · <Link to="/policies" style={styles.link}> Policies</Link></p>
         </footer>
     );
 };
