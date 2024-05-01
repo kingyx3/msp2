@@ -1,5 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
+import { envVars } from '../../envConfig';
 
 const HostCancellationPolicy = () => {
   return (
@@ -9,7 +10,7 @@ const HostCancellationPolicy = () => {
         <strong>Effective Date:</strong> 1 January 2024
       </Paragraph>
       <Paragraph>
-        At MakeShiftPlans, we understand that cancellations can disrupt plans and affect user trust. To address this, if a host cancels a confirmed booking or is found responsible for a cancellation under this policy, MakeShiftPlans may impose fees and other consequences. These are designed to reflect the costs and other impacts of cancellations on users, the broader host community, and the platform.
+        At {envVars.REACT_APP_NAME}, we understand that cancellations can disrupt plans and affect user trust. To address this, if a host cancels a confirmed booking or is found responsible for a cancellation under this policy, {envVars.REACT_APP_NAME} may impose fees and other consequences. These are designed to reflect the costs and other impacts of cancellations on users, the broader host community, and the platform.
       </Paragraph>
 
       <SubTitle>Cancellation Fees</SubTitle>
@@ -48,7 +49,7 @@ const HostCancellationPolicy = () => {
       </Paragraph>
 
       <Paragraph>
-        By continuing to use MakeShiftPlans, hosts agree to abide by this cancellation policy and all associated terms and conditions.
+        By continuing to use {envVars.REACT_APP_NAME}, hosts agree to abide by this cancellation policy and all associated terms and conditions.
       </Paragraph>
     </Container>
   );

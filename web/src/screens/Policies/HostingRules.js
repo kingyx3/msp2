@@ -1,5 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
+import { envVars } from '../../envConfig';
 
 const HostingRules = () => {
     return (
@@ -26,10 +27,10 @@ const HostingRules = () => {
 
             <SubTitle>Reporting a violation</SubTitle>
             <Paragraph>
-                MakeShiftPlans encourages guests to promptly report violations of these ground rules. When a user is dealing with a suspected or actual violation of these hosting rules, we ask that they:
+                {envVars.REACT_APP_NAME} encourages guests to promptly report violations of these ground rules. When a user is dealing with a suspected or actual violation of these hosting rules, we ask that they:
                 <ul>
                     <li>Communicate with the Host — the Host is in the best position to quickly resolve issues.</li>
-                    <li>Document the issue using the MakeShiftPlans message thread, photos, etc.</li>
+                    <li>Document the issue using the {envVars.REACT_APP_NAME} message thread, photos, etc.</li>
                     <li>If the Host can't resolve the issue, contact us to report the issue directly or request a refund through the Resolution Center.</li>
                     <li>Leave an honest review with feedback so that the Host can improve for future guests.</li>
                 </ul>
@@ -37,7 +38,7 @@ const HostingRules = () => {
 
             <SubTitle>Holding Hosts to these rules</SubTitle>
             <Paragraph>
-                MakeShiftPlans is committed to enforcing these rules. When a rule violation is reported, MakeShiftPlans will attempt to contact the Host to understand what occurred.
+                {envVars.REACT_APP_NAME} is committed to enforcing these rules. When a rule violation is reported, {envVars.REACT_APP_NAME} will attempt to contact the Host to understand what occurred.
             </Paragraph>
 
             <SubTitle>Appealing violations</SubTitle>

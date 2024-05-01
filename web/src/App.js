@@ -13,6 +13,8 @@ import NonDiscriminationPolicy from './screens/Policies/NonDiscriminationPolicy'
 import CancellationPolicy from './screens/Policies/CancellationPolicy';
 import HostCancellationPolicy from './screens/Policies/HostCancellationPolicy';
 import HostingRules from './screens/Policies/HostingRules';
+import PricingPolicy from './screens/Policies/PricingPolicy';
+import HostingFees from './screens/Policies/HostingFees';
 
 const App = () => {
   return (
@@ -23,6 +25,7 @@ const App = () => {
         <Route path="/contact-us" element={<ContactUs />} />
         <Route path="/return" element={<Return />} />
         <Route path="/policies" element={<Policy />} />
+        <Route path="/pricing-policy" element={<PricingPolicy />} />
         <Route path="/privacy-policy" element={<PrivacyPolicy />} />
         <Route path="/terms-of-service" element={<TermsOfService />} />
         <Route path="/payments-terms-of-service" element={<PaymentsTermsOfService />} />
@@ -30,6 +33,7 @@ const App = () => {
         <Route path="/cancellation-policy" element={<CancellationPolicy />} />
         <Route path="/host-cancellation-policy" element={<HostCancellationPolicy />} />
         <Route path="/hosting-rules" element={<HostingRules />} />
+        <Route path="/hosting-fees" element={<HostingFees />} />
         {/* Other routes can be defined here */}
       </Routes>
     </Router>
