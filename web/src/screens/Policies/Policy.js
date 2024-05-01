@@ -70,7 +70,7 @@ const PolicyLink = styled.a`
 const styles = {
     link: {
         textDecoration: 'none',
-        color: 'white',
+        color: 'black',
         fontSize: '16px',
     },
 };
