@@ -9,7 +9,10 @@ const NavBarBtm = () => {
     return (
         <nav style={styles.nav}>
             <div style={styles.footer}>
-                © {currentYear} {envVars.REACT_APP_NAME} · <Link to="/policies" style={styles.link}> Policies</Link>
+                <ul>
+                    <li>© {currentYear} {envVars.REACT_APP_NAME} · </li>
+                    <li><Link to="/policies" style={styles.link}>Policies</Link></li>
+                </ul>
             </div>
         </nav>
     );
