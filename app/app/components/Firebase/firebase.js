@@ -129,11 +129,9 @@ export const getUserName = async (userId, setUserName) => {
       const userData = snapshot.val();
       const userName = Object.values(userData)[0];
       setUserName(userName);
-      return userName
     } else {
       // Handle the case where the user data doesn't exist
-      setUserName('User Not Found');
-      return 'User Not Found'
+      setUserName('');
     }
   } catch (error) {
     console.error('Error fetching user data:', error);

@@ -149,8 +149,10 @@ const BookingDetails = (props) => {
     }
   }
 
-
-  if (Object.keys(selectedSpace).length == 0 || Object.keys(booking).length == 1) {
+  if (Object.keys(selectedSpace).length == 0
+    || Object.keys(booking).length == 1
+    || hostName == ''
+    || userName == '') {
     return (
       <Container>
         <ActivityIndicator />
