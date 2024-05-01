@@ -7,23 +7,20 @@ const currentYear = new Date().getFullYear();
 
 const NavBarBtm = () => {
     return (
-        <nav style={styles.nav}>
-            <div style={styles.footer}>
-                © {currentYear} {envVars.REACT_APP_NAME} || <Link to="/policies" style={styles.link}>Policies</Link>
-            </div>
-        </nav>
+        <footer style={styles.footer}>
+            <p>&copy; {currentYear} {envVars.REACT_APP_NAME} || <Link to="/policies" style={styles.link}> || Policies</Link></p>
+        </footer>
     );
 };
 
 const styles = {
-    nav: {
-        background: 'purple',
-        position: 'fixed',
-        bottom: '0', // Move to the bottom of the screen
-        width: '100%',
-        zIndex: '999',
-        flexDirection: 'row'
-    },
+    // nav: {
+    //     background: 'purple',
+    //     position: 'fixed',
+    //     bottom: '0', // Move to the bottom of the screen
+    //     width: '100%',
+    //     zIndex: '999',
+    // },
     // ul: {
     //     listStyleType: 'none',
     //     margin: '0',
@@ -40,11 +37,7 @@ const styles = {
     //     fontSize: '16px',
     // },
     footer: {
-        display: 'flex',
-        // justifyContent: 'space-between', // Align items to the sides
-        alignItems: 'center',
-        padding: '5px 10px', // Consistent padding with the list
-        fontSize: '14px', // Slightly smaller font for the footer text
+        textAlign: 'left', position: 'fixed', bottom: 0, left: 0, width: '100%', backgroundColor: 'purple', zIndex: '999',
     },
     link: {
         textDecoration: 'none',
