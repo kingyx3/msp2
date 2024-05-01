@@ -47,10 +47,10 @@ const Paragraph = styled.p`
   margin-bottom: 15px;
 `;
 
-const Link = styled.a`
-  text-decoration: underline;
-  color: #007bff;
-  cursor: pointer;
-`;
+// const Link = styled.a`
+//   text-decoration: underline;
+//   color: #007bff;
+//   cursor: pointer;
+// `;
 
 export default HostingFees;
