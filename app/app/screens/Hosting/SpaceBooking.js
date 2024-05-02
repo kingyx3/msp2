@@ -29,10 +29,10 @@ import { H, P } from "../../config/Typography";
 const { width, height } = Dimensions.get('window');
 
 const SpaceBookings = (props) => {
-  const { spaceId, history, hostConfirmed } = props.route.params
+  const { spaceId, history, pending } = props.route.params
   const spaceBookingsArray = (props.state.spaceBookings)
     .filter((spaceBooking) => history ? (spaceBooking.end < Date.now() || spaceBooking.cancelled) : spaceBooking.end > Date.now())
-    .filter((spaceBooking) => hostConfirmed ? spaceBooking.hostConfirmed : !(spaceBooking.hostConfirmed))
+    .filter((spaceBooking) => pending ? spaceBooking.status.includes('pending') : !(spaceBooking.status.includes('pending'))
     .sort((a, b) => new Date(b.start) - new Date(a.start))
   // console.log(spaceBookingsArray)
   let sum = 0
