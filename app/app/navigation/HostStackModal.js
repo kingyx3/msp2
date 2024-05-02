@@ -38,9 +38,9 @@ const SpaceBookingTopTab = (props) => {
                 <Typography.H color={colors.red}>Bookings</Typography.H>
             </Header>
             <Tab.Navigator>
-                <Tab.Screen name="Upcoming" component={SpaceBooking} initialParams={{ spaceId, history: false, hostConfirmed: true }} />
-                {needHostConfirm && <Tab.Screen name="Pending" component={SpaceBooking} initialParams={{ spaceId, history: false, hostConfirmed: false }} />}
-                <Tab.Screen name="History" component={SpaceBooking} initialParams={{ spaceId, history: true, hostConfirmed: true }} />
+                <Tab.Screen name="Upcoming" component={SpaceBooking} initialParams={{ spaceId, history: false, pending: false }} />
+                {needHostConfirm && <Tab.Screen name="Pending" component={SpaceBooking} initialParams={{ spaceId, history: false, pending: true }} />}
+                <Tab.Screen name="History" component={SpaceBooking} initialParams={{ spaceId, history: true, pending: false }} />
             </Tab.Navigator>
         </Container>
     );
