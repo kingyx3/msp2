@@ -40,8 +40,6 @@ const UserActivity = (props) => {
   const logsArray = host ? userHostingLogsArray : userBookingLogsArray
 
   function calcAmount(item, host) {
-    const platformFee = (item?.amount?.total_price - item?.amount?.subtotal)
-
     if (host) {
       switch (item?.logType) {
         case 'cancelBooking':
@@ -92,9 +90,7 @@ const UserActivity = (props) => {
       testID={index.toString() + "_" + (host ? 'host' : 'user') + "_log"}
       created={moment(item?.created).format('DD MMM YYYY hh:mm A')}
       message={item?.message}
-      positive={host
-        ? (item?.logType == 'createBooking' || item?.logType == 'createBookingPending')
-        : (item?.logType == 'topUpWallet' || item?.logType == 'cancelBooking')}
+      positive={calcAmount(item, host).startsWith('+') ? true : false}
       logType={item?.logType}
       secondary={item?.bookingIdShort
         ? item?.bookingIdShort

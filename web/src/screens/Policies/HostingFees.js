@@ -13,7 +13,12 @@ const HostingFees = () => {
 
       <SubTitle>Types of fees</SubTitle>
       <Paragraph>
-        Platform fee: It typically ranges between 8-15% of the booking subtotal, with a minimum of SGD 1.50 per booking.
+        Platform fee: It typically ranges between 8-15% of the booking subtotal, subject to a minimum of SGD 1.50 per booking.
+      </Paragraph>
+
+      <SubTitle>Taxation</SubTitle>
+      <Paragraph>
+        Please note that all fees are subject to applicable taxes and fees may vary based on specific circumstances or promotions. For further details or inquiries regarding our pricing/fee policy, please feel free to contact us.
       </Paragraph>
     </Container>
   );
