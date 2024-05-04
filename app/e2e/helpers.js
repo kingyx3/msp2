@@ -191,7 +191,7 @@ export const testBookingDetail = async () => {
     const bookingEndPlusFive = new Date(bookingEndDateTime);
     bookingEndPlusFive.setDate(bookingEndPlusFive.getDate() + 5);
 
-    await element(by.id('booking-detail-scroll-view')).scroll(350, 'down', NaN, 0.85);
+    await element(by.id('booking-detail-scroll-view')).scroll(450, 'down', NaN, 0.85);
     const cancellationPolicyLabel = (await element(by.id("cancellation-policy")).getAttributes()).label
     const hostOrUserLabel = (await element(by.id("host-or-user")).getAttributes()).label
     const host = hostOrUserLabel.includes('Hosted by') ? false : true
