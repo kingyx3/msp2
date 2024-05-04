@@ -70,9 +70,10 @@ const Listings = (props) => {
       // Device is connected to the internet
       const selectedSpace = selectedSpaces.filter((space) => space.id == spaceId)[0]
       const periodAvailabilityArray = selectedSpace.periodAvailabilityArray
-      const periodPriceExclFees = selectedSpace.periodPriceExclFees
-      const fees = selectedSpace.fees
-      props.navigation.navigate('ListStackModal', { screen: "Details", params: { spaceId, periodAvailabilityArray, periodPriceExclFees, fees } });
+      const periodPrice = selectedSpace.periodPrice
+      // const periodPriceExclFees = selectedSpace.periodPriceExclFees
+      // const fees = selectedSpace.fees
+      props.navigation.navigate('ListStackModal', { screen: "Details", params: { spaceId, periodAvailabilityArray, periodPrice } });
     } else {
       // Device is not connected to the internet
       showOfflineAlert()

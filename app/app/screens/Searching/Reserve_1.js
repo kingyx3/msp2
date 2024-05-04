@@ -26,7 +26,7 @@ import ImgSliderItems from "../../components/ImgSliderItems";
 const Reserve_1 = (props) => {
   // const [initLoading, setInitLoading] = useState(true)
   const [loading, setLoading] = useState(false)
-  const { selectedSpace, periodPrice, periodAvailabilityArray, hours, periodPriceExclFees, fees } = props.route.params;
+  const { selectedSpace, periodPrice, periodAvailabilityArray, hours, } = props.route.params;
   const spaceTypes = [...(props.spaceTypes)]
   const selectedSpaceType = (spaceTypes.filter((spaceType) => spaceType.label === selectedSpace.spaceType))[0]
 
@@ -98,7 +98,8 @@ const Reserve_1 = (props) => {
   };
 
   const calcTotal = () => {
-    const total = Math.round((periodPriceExclFees + fees + Number.EPSILON) * 100) / 100;
+    const total = Math.round((periodPrice
+      + Number.EPSILON) * 100) / 100;
     return total;
   };
 
@@ -112,7 +113,7 @@ const Reserve_1 = (props) => {
                 {selectedSpace.spaceType}
               </Typography.Cap>
               <View testID="reservation-cost" style={{ marginVertical: 5 }}>
-                <Typography.Sub1>${periodPrice}</Typography.Sub1>
+                <Typography.Sub1>${calcTotal()}</Typography.Sub1>
               </View>
               {selectedSpace.ratingCount == 0 ? null :
                 <IconLabel.FA
@@ -209,16 +210,16 @@ const Reserve_1 = (props) => {
             </View>
             <Flex>
               <Typography.Sub1>Booking fee</Typography.Sub1>
-              <Typography.Sub1>${periodPriceExclFees}</Typography.Sub1>
+              <Typography.Sub1>${periodPrice}</Typography.Sub1>
             </Flex>
             {/*<Flex>
               <Typography.Sub1>Cleaning fee</Typography.Sub1>
               <Typography.Sub1>${calcCleaning()}</Typography.Sub1>
             </Flex>*/}
-            <Flex>
+            {/* <Flex>
               <Typography.Sub1>Platform fee</Typography.Sub1>
               <Typography.Sub1>${fees}</Typography.Sub1>
-            </Flex>
+            </Flex> */}
             <HLine />
             <Flex>
               <Typography.Sub1>Total</Typography.Sub1>

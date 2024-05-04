@@ -44,7 +44,7 @@ const CARD_ADJ = Math.floor(CARD_INSET / 2)
 
 const Details = ({ navigation, route, state, setSelectedSpace, clearSelectedSpace }) => {
   // let user
-  const { spaceId, periodAvailabilityArray, periodPriceExclFees, fees } = route.params
+  const { spaceId, periodAvailabilityArray, periodPrice } = route.params
   const selectedSpace = state.selectedSpace
   const [hostName, setHostName] = useState('')
   const duration = moment.duration(moment(state.end).diff(moment(state.start)));
@@ -52,7 +52,6 @@ const Details = ({ navigation, route, state, setSelectedSpace, clearSelectedSpac
   const { userId: hostId } = selectedSpace
   const [spaceReviews, setSpaceReviews] = useState({})
 
-  const periodPrice = periodPriceExclFees + fees
   const opacityValue = new Animated.Value(0);
   // Create selector for reviews (by latest datetime (spaceReviewDT), by highest (spaceReviewRTTop), by lowest (spaceReviewRTBtm) ratings)
 
@@ -277,7 +276,7 @@ const Details = ({ navigation, route, state, setSelectedSpace, clearSelectedSpac
               testID="confirm-details-button"
               label="Make a reservation"
               color={colors.red}
-              onPress={() => navigation.navigate("Reserve_1", { selectedSpace, periodPrice, periodAvailabilityArray, hours, periodPriceExclFees, fees })}
+              onPress={() => navigation.navigate("Reserve_1", { selectedSpace, periodPrice, periodAvailabilityArray, hours })}
             />
           </BtnContainer>
         </Reserve>

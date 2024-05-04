@@ -360,15 +360,15 @@ export function setSelectedSpaces(spaceType, start, end, spaceSummaryz) {
           // }
 
           if (periodAvailabilityArray.includes(timeSlots.length)) {
-            let periodPriceExclFees = periodAvailabilityArray[0]
+            let periodPrice = periodAvailabilityArray[0]
             periodAvailabilityArray.shift() // remove first (pricing) element from array
-            let fees = calcBookerFee(periodPriceExclFees)
-            let periodPrice = periodPriceExclFees + fees
+            // let fees = calcBookerFee(periodPriceExclFees)
+            // let periodPrice = periodPriceExclFees + fees
             availableSpaces[spaceIds[i]] = {
               periodAvailabilityArray: periodAvailabilityArray,
               periodPrice,
-              periodPriceExclFees,
-              fees
+              // periodPriceExclFees,
+              // fees
             };
           }
         }
@@ -378,19 +378,6 @@ export function setSelectedSpaces(spaceType, start, end, spaceSummaryz) {
           dispatch({ type: 'SET_SELECTED_SPACES', payload: { selectedSpaces: [] } })
           return
         }
-
-        // // Compute price here // solving issues from here on v10
-        // const priceSummary = {}
-        // delete spaceSummary.spaceType;
-        // for (let spaceId in spaceSummary) {
-        //   const { price, peakPrice, offPeakPrice, openingHours } = spaceSummary[spaceId]
-        //   const periodPriceExclFees = calcPeriodPriceExclFees(start, end, price, peakPrice, offPeakPrice, openingHours)
-        //   const fee = calcBookerFee(periodPriceExclFees)
-        //   periodPrice = periodPriceExclFees + fee
-        //   priceSummary[spaceId] = {
-        //     periodPrice,
-        //   }
-        // }
 
         // console.log('priceSummary', priceSummary)
 
@@ -425,8 +412,8 @@ export function setSelectedSpaces(spaceType, start, end, spaceSummaryz) {
               },
               'periodAvailabilityArray': combinedSpaces[key].periodAvailabilityArray,
               'periodPrice': combinedSpaces[key].periodPrice,
-              'periodPriceExclFees': combinedSpaces[key].periodPriceExclFees,
-              'fees': combinedSpaces[key].fees,
+              // 'periodPriceExclFees': combinedSpaces[key].periodPriceExclFees,
+              // 'fees': combinedSpaces[key].fees,
               'disabled': combinedSpaces[key].disabled,
               'third_party': combinedSpaces[key].third_party,
               'reviews': ratingCount,
