@@ -220,11 +220,11 @@ const Reserve_1 = (props) => {
               <Typography.Sub1>Platform fee</Typography.Sub1>
               <Typography.Sub1>${fees}</Typography.Sub1>
             </Flex> */}
-            <HLine />
+            {/* <HLine />
             <Flex>
               <Typography.Sub1>Total</Typography.Sub1>
               <Typography.Sub1>${calcTotal()}</Typography.Sub1>
-            </Flex>
+            </Flex> */}
           </View>
           <HLine />
           <View>
