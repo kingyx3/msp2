@@ -22,7 +22,6 @@ import {
   fetchBooking,
   cancelBooking,
   getUserName,
-  hostFeeRate,
   getAvatarLink,
   showOfflineAlert,
   approveBooking,

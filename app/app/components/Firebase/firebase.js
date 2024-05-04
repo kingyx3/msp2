@@ -19,9 +19,6 @@ import { activesgSpaceSummary } from '../../config/appConfig';
 import * as SecureStore from 'expo-secure-store';
 import { Alert } from 'react-native';
 
-export const hostFeeRate = process.env.EXPO_PUBLIC_hostFeeRate
-export const minBookerFeeRate = process.env.EXPO_PUBLIC_minBookerFeeRate
-
 const deepmerge = require('deepmerge')
 
 // Email link Auth
@@ -1025,12 +1022,6 @@ export function calcPeriodPriceExclFees(start, end, price, peakPrice, offPeakPri
   return total;
 }
 
-export function calcBookerFee(subtotal) {
-  return Math.ceil((subtotal * minBookerFeeRate > 1) ? subtotal * minBookerFeeRate : 1)
-}
-export function calcHostFee(subtotal) {
-  return subtotal * hostFeeRate
-}
 export const camelToFlat = (camel) => {
   const camelCase = camel.replace(/([a-z])([A-Z])/g, '$1 $2').split(" ")
 
