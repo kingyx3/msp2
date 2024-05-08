@@ -31,8 +31,8 @@ import { bindActionCreators } from 'redux'
 import {
   getUserName,
   getAvatarLink,
-  setSelectedSpace,
-  clearSelectedSpace,
+  // setSelectedSpace,
+  // clearSelectedSpace,
   showOfflineAlert
 } from "../../components/Firebase/firebase";
 //import data
@@ -378,11 +378,4 @@ const styles = StyleSheet.create({
   },
 });
 
-const mapStateToProps = (state) => {
-  return {
-    state: state.search,
-  };
-};
-const mapDispatchProps = (dispatch) => bindActionCreators({ setSelectedSpace, clearSelectedSpace }, dispatch);
-
-export default connect(mapStateToProps, mapDispatchProps)(SpaceDetail);
+export default SpaceDetail;

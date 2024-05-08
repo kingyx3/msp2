@@ -112,8 +112,6 @@ const Hosting = (props) => {
                 const networkState = await Network.getNetworkStateAsync();
                 if (networkState.isConnected) {
                   // Device is connected to the internet
-                  // props.clearSelectedSpace()
-                  // props.setSelectedSpace(item.id)
                   props.navigation.navigate('HostStackModal', {
                     screen: 'SpaceManagement', params: {
                       spaceId: item.id

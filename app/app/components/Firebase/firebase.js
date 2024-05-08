@@ -432,7 +432,7 @@ export function setSelectedSpace(selectedSpaceId) {
     const spaceRef = doc(firestore, 'spaces', selectedSpaceId);
 
     const listener = onSnapshot(spaceRef, async (snapshot) => {
-      console.log("NUMBER OF READS (fetchBooking): 1")
+      console.log("NUMBER OF READS (setSelectedSpace): 1")
       if (snapshot.exists()) {
         let selectedSpace = snapshot.data();
         // Convert all Timestamps, including nested ones, to ISO strings

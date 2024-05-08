@@ -26,7 +26,17 @@ const MapCard = ({
   onPress,
 }) =>
   <TouchableWithoutFeedback testID={testID} onPress={onPress}>
-    <Container testID="map-card-touchable" >
+    <Container style={
+      // Adding shadow to the styling outside of styled component to avoid annoying " WARN  Expected style "shadowOpacity: 0.1px" to be unitless" error messages
+      [Platform.select({
+        android: {
+          elevation: 2,
+        },
+        ios: {
+          shadowColor: '#000',
+          shadowOpacity: 0.1,
+        },
+      })]} testID="map-card-touchable" >
       <ImgSliderItem
         customStyle={{
           width: img_width,
@@ -59,15 +69,6 @@ const Container = styled.View`
   background-color: white;
   border-radius: 16px;
   margin: 0 10px 20px;
-  ${Platform.select({
-  android: {
-    elevation: 2,
-  },
-  ios: {
-    shadowColor: '#000',
-    shadowOpacity: 0.1,
-  },
-})}
 `;
 
 // const ImgContainer = styled.Image`
