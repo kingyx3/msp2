@@ -8,6 +8,7 @@ import * as Network from 'expo-network';
 
 //import components
 import * as Button from "../../components/Button";
+import MapCard from "../../components/MapCard";
 
 //import styles and assets
 import styled from "styled-components/native";
@@ -15,6 +16,7 @@ import * as Typography from "../../config/Typography";
 // import { H } from "../../config/Typography";
 import colors from "../../config/colors";
 import * as Cards from "../../components/Cards";
+import { getRating } from "../../components/Firebase/firebase";
 
 //import data
 import { bindActionCreators } from 'redux'
@@ -96,8 +98,34 @@ const Hosting = (props) => {
         extraData={userSpaces}
         keyExtractor={item => item.id}
         renderItem={({ item, index }) =>
-          <View style={{ padding: 24 }}>
-            <Cards.Default
+          <View style={{ padding: 8 }}>
+            <MapCard
+              testID={index.toString() + "_space"}
+              key={index.toString()}
+              image={item.images}
+              property={item.spaceType}
+              title={item.title}
+              // subtitle={item.periodPrice}
+              rating={getRating(item.ratingCount, item.ratingTotal)}
+              reviews={item.reviews} // number of reviews
+              onPress={async () => {
+                const networkState = await Network.getNetworkStateAsync();
+                if (networkState.isConnected) {
+                  // Device is connected to the internet
+                  // props.clearSelectedSpace()
+                  // props.setSelectedSpace(item.id)
+                  props.navigation.navigate('HostStackModal', {
+                    screen: 'SpaceDetail', params: {
+                      spaceId: item.id
+                    }
+                  });
+                } else {
+                  // Device is not connected to the internet
+                  showOfflineAlert()
+                }
+              }} //pass marker info?
+            />
+            {/* <Cards.Default
               testID={index.toString() + '_space'}
               image={item.images}
               // sub={handleDate(item)}
@@ -122,7 +150,7 @@ const Hosting = (props) => {
                   showOfflineAlert()
                 }
               }}
-            />
+            /> */}
           </View>
         }
       ></FlatList>

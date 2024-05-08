@@ -30,7 +30,7 @@ describe('Hosting - Manage Space', () => {
   });
 
   it('Navigate to SpaceDetail screen', async () => {
-    await element(by.id('hosting-flatlist')).scroll(300, 'down', NaN, 0.95);
+    // await element(by.id('hosting-flatlist')).scroll(300, 'down', NaN, 0.95);
     await waitFor(element(by.id('0_space'))).toBeVisible(device.getPlatform() === 'ios' ? 75 : 100).withTimeout(60000);
     await expect(element(by.id('0_space'))).toBeVisible();
     let x = true

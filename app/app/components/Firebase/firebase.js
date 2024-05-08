@@ -388,14 +388,7 @@ export function setSelectedSpaces(spaceType, start, end, spaceSummaryz) {
             && combinedSpaces[key].periodAvailabilityArray
             && combinedSpaces[key].periodPrice > 0
             && !(combinedSpaces[key].disabled)) {
-            const ratingCount = combinedSpaces[key].ratingCount
-            const ratingTotal = combinedSpaces[key].ratingTotal
-            let rating
-            if (ratingCount == 0) {
-              rating = 0
-            } else {
-              rating = (ratingTotal / ratingCount).toFixed(2)
-            }
+            const rating = getRating(combinedSpaces[key].ratingCount, combinedSpaces[key].ratingTotal)
             selectedSpaces.push({
               'id': combinedSpaces[key].id,
               'title': combinedSpaces[key].title,
@@ -413,7 +406,7 @@ export function setSelectedSpaces(spaceType, start, end, spaceSummaryz) {
               // 'fees': combinedSpaces[key].fees,
               'disabled': combinedSpaces[key].disabled,
               'third_party': combinedSpaces[key].third_party,
-              'reviews': ratingCount,
+              'reviews': combinedSpaces[key].ratingCount,
               'rating': rating,
               'userId': combinedSpaces[key].userId,
             })
@@ -1692,4 +1685,14 @@ function convertTimestampsToIsoStrings(obj) {
   } else {
     return obj;
   }
+}
+
+export function getRating(ratingCount, ratingTotal) {
+  let rating
+  if (ratingCount == 0) {
+    rating = 0
+  } else {
+    rating = (ratingTotal / ratingCount).toFixed(2)
+  }
+  return rating
 }

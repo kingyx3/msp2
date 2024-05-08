@@ -144,7 +144,7 @@ const ListMap = (props) => {
   useEffect(() => {
     mapAnimation.addListener(({ value }) => {
       animateToRegion(value + 10)
-      console.log('value', value + 10)
+      // console.log('value', value + 10)
     });
   });
 
@@ -162,7 +162,7 @@ const ListMap = (props) => {
     // flatListRef.scrollToIndex({animated: false, index: markerID});
     flatListRef.scrollToOffset({ animated: false, offset: x });
     animateToRegion(x);
-    console.log('x', x)
+    // console.log('x', x)
     // console.log('CARD_INSET', CARD_INSET)
   };
 

@@ -1,5 +1,5 @@
 import React from "react";
-import { Dimensions, TouchableWithoutFeedback, View, Image } from "react-native";
+import { Dimensions, TouchableWithoutFeedback, View, Image, Platform } from "react-native";
 
 //import styles and assets
 import styled from "styled-components/native";
@@ -40,14 +40,14 @@ const MapCard = ({
       <Description>
         <SP>{property}</SP>
         <Title numberOfLines={1}>{title}</Title>
-        <Price>{`$${subtitle}`}</Price>
-        {reviews == 0 ? null :
+        {(reviews == 0 || !reviews) ? null :
           <Rating>
             <FontAwesome name="star" color={Colors.red} />
             <SP>{rating}</SP>
             <SP>{`(${reviews})`}</SP>
           </Rating>
         }
+        {subtitle && <Price>{`$${subtitle}`}</Price>}
       </Description>
     </Container>
   </TouchableWithoutFeedback>
@@ -59,6 +59,15 @@ const Container = styled.View`
   background-color: white;
   border-radius: 16px;
   margin: 0 10px 20px;
+  ${Platform.select({
+  android: {
+    elevation: 2,
+  },
+  ios: {
+    shadowColor: '#000',
+    shadowOpacity: 0.1,
+  },
+})}
 `;
 
 // const ImgContainer = styled.Image`
