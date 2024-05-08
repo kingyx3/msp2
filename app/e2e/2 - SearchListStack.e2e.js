@@ -12,8 +12,8 @@ describe('Make a booking via picking datetime & ListMap', () => {
 
     // Wait for navigation to complete & perform the visibility checks
     // await waitFor(element(by.text('Quick Search'))).toBeVisible().withTimeout(60000);
-    await waitFor(element(by.text('Wallet Balance'))).toBeVisible().withTimeout(60000);
-    await waitFor(element(by.id('search-bar'))).toBeVisible().withTimeout(60000);
+    await waitFor(element(by.text('Wallet Balance'))).toBeVisible().withTimeout(30000);
+    await waitFor(element(by.id('search-bar'))).toBeVisible().withTimeout(30000);
     await expect(element(by.text("Continue with Email"))).not.toBeVisible()
     const walletBalanceLabel = (await element(by.id("wallet-balance")).getAttributes()).label
     // Regular expression to match the numeric value
@@ -178,8 +178,8 @@ describe('Make a booking via quick search & Listings', () => {
 
     // Wait for navigation to complete & perform the visibility checks
     // await waitFor(element(by.text('Quick Search'))).toBeVisible().withTimeout(60000);
-    await waitFor(element(by.text('Wallet Balance'))).toBeVisible().withTimeout(60000);
-    await waitFor(element(by.id('search-bar'))).toBeVisible().withTimeout(60000);
+    await waitFor(element(by.text('Wallet Balance'))).toBeVisible().withTimeout(30000);
+    await waitFor(element(by.id('search-bar'))).toBeVisible().withTimeout(30000);
     await expect(element(by.text("Continue with Email"))).not.toBeVisible()
     const walletBalanceLabel = (await element(by.id("wallet-balance")).getAttributes()).label
     // Regular expression to match the numeric value

@@ -10,16 +10,16 @@ import {
   Alert,
 } from "react-native";
 import MapView, { PROVIDER_GOOGLE, Marker } from "react-native-maps";
-import { connect } from "react-redux";
+// import { connect } from "react-redux";
 import * as Network from 'expo-network'
 
 //import components
 import ImgCarousel from "../../components/ImgCarousel";
-import * as Highlights from "../../components/Highlights";
+// import * as Highlights from "../../components/Highlights";
 import * as Button from "../../components/Button";
 import * as List from "../../components/List";
 import * as IconLabel from "../../components/IconLabel";
-import { NavBar2 } from "../../components/NavBar";
+// import { NavBar2 } from "../../components/NavBar";
 import * as Card from "../../components/Cards";
 //import screens
 import moment from 'moment';
@@ -27,7 +27,7 @@ import moment from 'moment';
 import styled from "styled-components/native";
 import colors from "../../config/colors";
 import * as Typography from "../../config/Typography";
-import { bindActionCreators } from 'redux'
+// import { bindActionCreators } from 'redux'
 import {
   getUserName,
   getAvatarLink,
