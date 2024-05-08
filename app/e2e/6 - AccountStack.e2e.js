@@ -115,7 +115,8 @@ const testBookingDetailFromActivity = async (host) => {
   await element(by.id('0_' + (host ? "host" : "user") + '_log')).tap();
 
   await waitFor(element(by.id("booking-detail-scroll-view"))).toBeVisible(100).withTimeout(60000)
-  await waitFor(element(by.id("booking-title-price"))).toBeVisible(100).withTimeout(60000)
+  await waitFor(element(by.id("booking-title"))).toBeVisible(100).withTimeout(60000)
+  await waitFor(element(by.id("booking-price"))).toBeVisible(100).withTimeout(60000)
 
   await testBookingDetail()
 
