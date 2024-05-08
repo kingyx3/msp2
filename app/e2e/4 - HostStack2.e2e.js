@@ -29,36 +29,22 @@ describe('Hosting - Manage Space', () => {
     await waitFor(element(by.id('hosting-header-component'))).toBeVisible().withTimeout(60000);
   });
 
-  it('Navigate to SpaceDetail screen', async () => {
+  it('Navigate to Manage Space screen', async () => {
     // await element(by.id('hosting-flatlist')).scroll(300, 'down', NaN, 0.95);
     await waitFor(element(by.id('0_space'))).toBeVisible(device.getPlatform() === 'ios' ? 75 : 100).withTimeout(60000);
     await expect(element(by.id('0_space'))).toBeVisible();
-    let x = true
-    while (x) {
-      await element(by.id('0_space')).tap();
-      try {
-        // Wait for navigation to complete & perform the visibility checks
-        await waitFor(element(by.id('space-detail-scroll-view'))).toBeVisible().withTimeout(10000);
-        x = false
-      } catch (e) {
-        console.log('Looping in while loop3. ' + e)
-      }
-    }
-    console.log('SpaceDetail - Exited while loop3')
-  });
-
-  it('Navigate to Manage Space screen', async () => {
-    await expect(element(by.id('manage-space-button'))).toBeVisible();
-    await element(by.id('manage-space-button')).tap();
+    await element(by.id('0_space')).tap();
 
     // Wait for navigation to complete & perform the visibility checks
     await waitFor(element(by.id('manage-space-flatlist'))).toBeVisible().withTimeout(60000);
-    await waitFor(element(by.id('0_manage_space_item'))).toBeVisible(device.getPlatform() === 'ios' ? 75 : 100).withTimeout(60000);
+    await waitFor(element(by.id('1_manage_space_item'))).toBeVisible(device.getPlatform() === 'ios' ? 75 : 100).withTimeout(60000);
   });
 
+
+
   it('Navigate to Manage Calender (SpaceAvailability) screen/feature', async () => {
-    await expect(element(by.id('0_manage_space_item'))).toBeVisible();
-    await element(by.id('0_manage_space_item')).tap();
+    await expect(element(by.id('1_manage_space_item'))).toBeVisible();
+    await element(by.id('1_manage_space_item')).tap();
 
     await waitFor(element(by.id('space-calendar-header'))).toBeVisible().withTimeout(60000);;
     await expect(element(by.id('space-calendar-confirm-button'))).toBeVisible();
@@ -71,12 +57,12 @@ describe('Hosting - Manage Space', () => {
 
     await element(by.id('manage-calendar-back-button')).tap();
     await waitFor(element(by.id('manage-space-flatlist'))).toBeVisible().withTimeout(60000);
-    await waitFor(element(by.id('1_manage_space_item'))).toBeVisible(device.getPlatform() === 'ios' ? 75 : 100).withTimeout(60000);
+    await waitFor(element(by.id('2_manage_space_item'))).toBeVisible(device.getPlatform() === 'ios' ? 75 : 100).withTimeout(60000);
   });
 
   it('Navigate to View Booking History (SpaceBookings) screen/feature', async () => {
-    await expect(element(by.id('1_manage_space_item'))).toBeVisible();
-    await element(by.id('1_manage_space_item')).tap();
+    await expect(element(by.id('2_manage_space_item'))).toBeVisible();
+    await element(by.id('2_manage_space_item')).tap();
 
     await waitFor(element(by.id('space-bookings-flatlist'))).toBeVisible().withTimeout(60000);;
     // await waitFor(element(by.id('space-calendar-header'))).toBeVisible().withTimeout(60000);;
@@ -111,7 +97,22 @@ describe('Hosting - Manage Space', () => {
     await element(by.text('Cancel')).tap()
     console.log('Leaving it as ' + (active ? 'active' : 'inactive') + '!')
     await waitFor(element(by.id('manage-space-flatlist'))).toBeVisible().withTimeout(60000);
-    await waitFor(element(by.id('2_manage_space_item'))).toBeVisible(device.getPlatform() === 'ios' ? 75 : 100).withTimeout(60000);
+    await waitFor(element(by.id('0_manage_space_item'))).toBeVisible(device.getPlatform() === 'ios' ? 75 : 100).withTimeout(60000);
+  });
+
+  it('Navigate to Manage Space Details screen', async () => {
+    let x = true
+    while (x) {
+      await element(by.id('0_manage_space_item')).tap();
+      try {
+        // Wait for navigation to complete & perform the visibility checks
+        await waitFor(element(by.id('space-detail-scroll-view'))).toBeVisible().withTimeout(10000);
+        x = false
+      } catch (e) {
+        console.log('Looping in while loop3. ' + e)
+      }
+    }
+    console.log('SpaceDetail - Exited while loop3')
   });
 
   describe('Update Space', () => {

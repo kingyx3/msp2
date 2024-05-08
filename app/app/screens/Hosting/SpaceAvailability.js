@@ -11,7 +11,7 @@ import HourlyRentalComponent from '../../components/AvailabilityCalendar';
 //import components
 import * as Button from '../../components/Button';
 // import Counter from '../../components/Counter';
-import { fetchSpaceAvailability, updateBlocked, showOfflineAlert } from '../../components/Firebase/firebase';
+import { fetchSpaceAvailability, updateBlocked, getTimingDiffFromUTC, showOfflineAlert } from '../../components/Firebase/firebase';
 import * as Network from 'expo-network';
 
 //import screens
@@ -34,6 +34,7 @@ const SpaceAvailability = (props) => {
   const [datedEvents, setDatedEvents] = useState({})
   const [disabled, setDisabled] = useState(false)
   const [stateCount, setStateCount] = useState(0)
+  // const { startTime, endTime } = getOpeningHours(selectedSpace?.openingHours)
 
   useEffect(() => {
     // Adding date key in between year and timeslots
@@ -169,3 +170,28 @@ const mapStateToProps = (state) => {
 const mapDispatchProps = (dispatch) =>
   bindActionCreators({ fetchSpaceAvailability }, dispatch);
 export default connect(mapStateToProps, mapDispatchProps)(SpaceAvailability);
+
+
+
+// function getOpeningHours(openingHoursArray) {
+//   if (openingHoursArray) {
+//     let minStartHour = 24;
+//     let maxEndHour = 0
+//     for (let i = 0; i < 7; i++) {
+//       const dayHours = openingHoursArray.slice(i * 24, (i + 1) * 24);
+//       for (let j = 0; j < 24; j++) {
+//         if (dayHours[j] !== 0) {
+//           // console.log(j)
+//           if (minStartHour > j) {
+//             minStartHour = j
+//           } else if (maxEndHour < j) {
+//             maxEndHour = j
+//           }
+//         }
+//       }
+//     }
+//     const startTime = minStartHour + getTimingDiffFromUTC()
+//     const endTime = maxEndHour + getTimingDiffFromUTC()
+//     return { startTime, endTime };
+//   }
+// }

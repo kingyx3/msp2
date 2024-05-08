@@ -131,7 +131,7 @@ export function createSpaceTestSuite() {
 
 export function updateSpaceTestSuite() {
     it('Navigate to HostingEdit2', async () => {
-        await element(by.id('2_manage_space_item')).tap()
+        await element(by.id('edit-space-button')).tap()
 
         await waitFor(element(by.id('hosting-edit2-next-button'))).toBeVisible().withTimeout(60000);
         await expect(element(by.id('hosting-edit2-back-button'))).toBeVisible()

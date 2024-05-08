@@ -115,7 +115,7 @@ const Hosting = (props) => {
                   // props.clearSelectedSpace()
                   // props.setSelectedSpace(item.id)
                   props.navigation.navigate('HostStackModal', {
-                    screen: 'SpaceDetail', params: {
+                    screen: 'SpaceManagement', params: {
                       spaceId: item.id
                     }
                   });

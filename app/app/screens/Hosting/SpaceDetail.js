@@ -11,6 +11,7 @@ import {
 } from "react-native";
 import MapView, { PROVIDER_GOOGLE, Marker } from "react-native-maps";
 import { connect } from "react-redux";
+import * as Network from 'expo-network'
 
 //import components
 import ImgCarousel from "../../components/ImgCarousel";
@@ -20,7 +21,6 @@ import * as List from "../../components/List";
 import * as IconLabel from "../../components/IconLabel";
 import { NavBar2 } from "../../components/NavBar";
 import * as Card from "../../components/Cards";
-import _ from "lodash";
 //import screens
 import moment from 'moment';
 //import styles and assets
@@ -48,15 +48,11 @@ const CARD_ADJ = Math.floor(CARD_INSET / 2)
 const SpaceDetail = (props) => {
   const [loading, setLoading] = useState(false)
   const [userName, setUserName] = useState('')
-  const selectedSpace = _.cloneDeep(props.state.selectedSpace)
-  const spaceId = props.route.params.spaceId
-  const editMode = true
+  const selectedSpace = props.route.params.selectedSpace
   const opacityValue = new Animated.Value(0);
   const [headerOpacity, setHeaderOpacity] = useState(opacityValue);
 
   useEffect(() => {
-    props.clearSelectedSpace()
-    props.setSelectedSpace(spaceId)
     getUserName(selectedSpace.userId, setUserName)
   }, [])
 
@@ -272,12 +268,21 @@ const SpaceDetail = (props) => {
         </View>
         <BtnContainer>
           <Button.BtnContain
-            testID={'manage-space-button'}
-            label="Manage Space"
+            testID={'edit-space-button'}
+            label="Edit Space"
             color={loading ? colors.lightgray : colors.red}
             disabled={loading}
             // size="small"
-            onPress={() => props.navigation.navigate("SpaceManagement", { selectedSpace, editMode })}
+            onPress={async () => {
+              const networkState = await Network.getNetworkStateAsync();
+              if (networkState.isConnected) {
+                // Device is connected to the internet
+                props.navigation.navigate("HostingEdit2", { selectedSpace, editMode: true })
+              } else {
+                // Device is not connected to the internet
+                showOfflineAlert()
+              }
+            }}
           />
         </BtnContainer>
         {/* <BtnContainer>

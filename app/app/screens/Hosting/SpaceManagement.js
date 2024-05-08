@@ -12,8 +12,14 @@ import {
   // TouchableOpacity,
   // TouchableWithoutFeedback,
 } from 'react-native';
-import { enableSpace, disableSpace, showOfflineAlert, getTimingDiffFromUTC } from "../../components/Firebase/firebase";
+import {
+  enableSpace, disableSpace, showOfflineAlert, setSelectedSpace,
+  clearSelectedSpace,
+} from "../../components/Firebase/firebase";
 import * as Network from 'expo-network';
+import { connect } from "react-redux";
+import { bindActionCreators } from 'redux'
+import _ from "lodash";
 
 //import screens
 //import styles and assets
@@ -27,18 +33,27 @@ const { width, height } = Dimensions.get('window');
 
 const SpaceManagement = (props) => {
   const [loading, setLoading] = useState(false)
-  const { selectedSpace, editMode } = props.route.params
-  const { startTime, endTime } = getOpeningHours(selectedSpace?.openingHours)
+  const { spaceId } = props.route.params
+  const selectedSpace = _.cloneDeep(props.state.selectedSpace)
+
+  useEffect(() => {
+    props.clearSelectedSpace()
+    props.setSelectedSpace(spaceId)
+  }, [])
 
   const SpaceManagementItems = [
     {
-      title: "Manage Calendar", icon: "calendar-month", screen: "SpaceAvailability", data: {
+      title: "Manage Space Details", icon: "calendar-month", screen: "SpaceDetail", data: {
         selectedSpace,
-        rules: { startTime, endTime }
       }
     },
-    { title: "View Bookings", icon: "history", screen: "SpaceBooking", data: { spaceId: selectedSpace.id, needHostConfirm: selectedSpace.needHostConfirm } },
-    { title: "Edit Space Details", icon: "application-edit-outline", screen: "HostingEdit2", data: { selectedSpace, editMode } },
+    {
+      title: "Manage Calendar", icon: "calendar-month", screen: "SpaceAvailability", data: {
+        selectedSpace,
+      }
+    },
+    { title: "Manage Bookings", icon: "history", screen: "SpaceBooking", data: { spaceId: selectedSpace.id, needHostConfirm: selectedSpace.needHostConfirm } },
+    // { title: "Edit Space Details", icon: "application-edit-outline", screen: "HostingEdit2", data: { selectedSpace, editMode: true } },
     { title: selectedSpace.disabled ? "Enable Space" : "Disable Space", icon: selectedSpace.disabled ? "plus-circle-outline" : "minus-circle-outline", screen: "" },
   ]
 
@@ -152,27 +167,11 @@ const Header = styled.View`
   padding: 24px 0;
 `;
 
-export default SpaceManagement
+const mapStateToProps = (state) => {
+  return {
+    state: state.search,
+  };
+};
+const mapDispatchProps = (dispatch) => bindActionCreators({ setSelectedSpace, clearSelectedSpace }, dispatch);
 
-function getOpeningHours(openingHoursArray) {
-  if (openingHoursArray) {
-    let minStartHour = 24;
-    let maxEndHour = 0
-    for (let i = 0; i < 7; i++) {
-      const dayHours = openingHoursArray.slice(i * 24, (i + 1) * 24);
-      for (let j = 0; j < 24; j++) {
-        if (dayHours[j] !== 0) {
-          // console.log(j)
-          if (minStartHour > j) {
-            minStartHour = j
-          } else if (maxEndHour < j) {
-            maxEndHour = j
-          }
-        }
-      }
-    }
-    const startTime = minStartHour + getTimingDiffFromUTC()
-    const endTime = maxEndHour + getTimingDiffFromUTC()
-    return { startTime, endTime };
-  }
-}
+export default connect(mapStateToProps, mapDispatchProps)(SpaceManagement);
