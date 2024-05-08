@@ -34,8 +34,9 @@ export function createSpaceTestSuite() {
 
         // Scroll down if android
         if (device.getPlatform() === 'ios') {
-            null
+            console.log("1. Platform is " + device.getPlatform())
         } else {
+            console.log("2. Platform is " + device.getPlatform())
             await element(by.id('hosting-edit4-scroll-view')).scroll(350, 'down', NaN, 0.85);
         }
 
