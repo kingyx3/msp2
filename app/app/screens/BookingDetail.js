@@ -184,7 +184,10 @@ const BookingDetails = (props) => {
           </MapView>
           <Main2>
             <View style={{ marginBottom: 20 }}>
-              <Typography.H3 testID="booking-title-price">{selectedSpace.title} (${host ? booking?.price?.hostEarnings : booking?.price?.total_price})</Typography.H3>
+              <View style={{ flexDirection: "row" }}>
+                <Typography.H3 testID="booking-title">{selectedSpace.title} </Typography.H3>
+                <Typography.H3 testID="booking-price">(${host ? booking?.price?.hostEarnings : booking?.price?.total_price})</Typography.H3>
+              </View>
               <Typography.Sub1>{selectedSpace.spaceType + ' #' + (booking.courtId + 1).toString()}</Typography.Sub1>
               <Typography.pS>{"Address: " + address + (postcode ? " " + postcode : "")}</Typography.pS>
               <Typography.pS>{(selectedSpace.location.user.unit ? "Unit: #" + selectedSpace.location.user.unit : "")}</Typography.pS>

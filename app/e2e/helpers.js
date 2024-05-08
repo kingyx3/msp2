@@ -177,11 +177,12 @@ export function updateSpaceTestSuite() {
 }
 
 export const testBookingDetail = async () => {
-    let bookingTitleLabel
+    let bookingPriceLabel
     let bookingPrice
     while (isNaN(bookingPrice)) {
-        bookingTitleLabel = (await element(by.id("booking-title-price")).getAttributes()).label
-        bookingPrice = parseFloat(bookingTitleLabel.match(/([0-9]+(\.[0-9]+)?)/));
+        bookingPriceLabel = (await element(by.id("booking-price")).getAttributes()).label
+        bookingPrice = parseFloat(bookingPriceLabel.match(/([0-9]+(\.[0-9]+)?)/));
+
     }
 
     const bookingDateLabel = (await element(by.id("booking-date")).getAttributes()).label
@@ -210,7 +211,7 @@ export const testBookingDetail = async () => {
     console.log('Booking end + 5: ', bookingEndPlusFive)
     console.log('Host?: ', host)
     console.log('Booking Price: ', bookingPrice)
-    console.log('bookingTitleLabel', bookingTitleLabel)
+    console.log('bookingPriceLabel', bookingPriceLabel)
 
     const cancelledLabel = (await element(by.id("cancel-booking")).getAttributes()).label
     console.log('Label (cancel-booking): ', "|" + cancelledLabel + "|")
