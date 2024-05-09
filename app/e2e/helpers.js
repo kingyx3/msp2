@@ -46,6 +46,7 @@ export function createSpaceTestSuite() {
         await waitFor(element(by.id('2_picker_item'))).toBeVisible().withTimeout(60000);
         await expect(element(by.id('2_picker_item'))).toBeVisible();
 
+        let x = true
         while (x) {
             await element(by.id('2_picker_item')).tap()
             try {
