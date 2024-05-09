@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Text, View, Dimensions } from "react-native";
+import { Text, View, Dimensions, Platform } from "react-native";
 
 //import components
 import { DefaultInput } from "../../components/forms/AppInput";
