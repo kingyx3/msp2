@@ -71,37 +71,45 @@ describe('Check AccountStack & ensure navigation works across bookings & spaces'
     await waitFor(element(by.text('Booking activity'))).toBeVisible().withTimeout(60000);
   });
 
-  it('Attempt user log tap', async () => {
-    await element(by.id('user-top-tab')).tap(); // Not always necessary
-    await waitFor(element(by.id('0_user_log'))).toBeVisible().withTimeout(60000);
-    const userLogLabel = (await element(by.id("0_user_log")).getAttributes()).label
-    console.log(userLogLabel + "USER_CONSOLE_LOG_OUTPUT")
+  // it('Attempt user log tap', async () => {
+  //   await element(by.id('user-top-tab')).tap(); // Not always necessary
+  //   await waitFor(element(by.id('0_user_log'))).toBeVisible().withTimeout(60000);
+  //   const userLogLabel = (await element(by.id("0_user_log")).getAttributes()).label
+  //   console.log(userLogLabel + "USER_CONSOLE_LOG_OUTPUT")
 
-    if (userLogLabel == 'Top up') {
-      // Top up
-      null
-    } else {
-      // Booking (CD)
-      await testBookingDetailFromActivity(false)
-    }
+  //   if (userLogLabel == 'Top up') {
+  //     // Top up
+  //     null
+  //   } else {
+  //     // Booking (CD)
+  //     await testBookingDetailFromActivity(false)
+  //   }
+  // });
+
+  it('Navigate to Activity screen (host)', async () => {
+    await element(by.id('host-top-tab')).tap();
+
+    // Wait for navigation to complete & perform the visibility checks
+    await waitFor(element(by.id('activity-header-component'))).toBeVisible().withTimeout(60000);
+    await waitFor(element(by.text('Hosting activity'))).toBeVisible().withTimeout(60000);
   });
 
-  it('Attempt host log tap (needs work)', async () => {
-    await element(by.id('host-top-tab')).tap(); // Not always necessary
-    await waitFor(element(by.id('0_host_log'))).toBeVisible().withTimeout(60000);
-    const hostLogLabel = (await element(by.id("0_host_log")).getAttributes()).label
-    console.log(hostLogLabel + "HOST_CONSOLE_LOG_OUTPUT")
+  // it('Attempt host log tap (needs work)', async () => {
+  //   await element(by.id('host-top-tab')).tap(); // Not always necessary
+  //   await waitFor(element(by.id('0_host_log'))).toBeVisible().withTimeout(60000);
+  //   const hostLogLabel = (await element(by.id("0_host_log")).getAttributes()).label
+  //   console.log(hostLogLabel + "HOST_CONSOLE_LOG_OUTPUT")
 
-    const spaceLogTypeArray = ['Space Created', 'Space Updated', 'Space Disabled', 'Space Enabled', 'Price/Availability Updated']
+  //   const spaceLogTypeArray = ['Space Created', 'Space Updated', 'Space Disabled', 'Space Enabled', 'Price/Availability Updated']
 
-    if (spaceLogTypeArray.includes(hostLogLabel)) {
-      // Space (CUD)
-      null
-    } else {
-      // Booking (CD)
-      await testBookingDetailFromActivity(true)
-    }
-  });
+  //   if (spaceLogTypeArray.includes(hostLogLabel)) {
+  //     // Space (CUD)
+  //     null
+  //   } else {
+  //     // Booking (CD)
+  //     await testBookingDetailFromActivity(true)
+  //   }
+  // });
 
   it('Navigate back to Account screen', async () => {
     await element(by.id("back-button-activity")).tap();

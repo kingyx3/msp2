@@ -108,35 +108,35 @@ const UserActivity = (props) => {
         : ""}
       amount={calcAmount(item, host)}
       onPress={() => {
-        // console.log(item)
-        if (item.logType == "createBooking"
-          || item.logType == "createBookingPending"
-          || item.logType == "cancelBooking"
-          || item.logType == "cancelBookingPending") {
-          // Navigate to bookingDetail with props
-          props.navigation.navigate('BookingStackModal', {
-            screen: 'BookingDetail',
-            params: {
-              bookingId: item.bookingId,
-              spaceId: item.spaceId,
-              host
-            }
-          });
-        } else if (item.logType == "createSpace"
-          || item.logType == "updateSpace"
-          || item.logType == "enableSpace"
-          || item.logType == "disableSpace"
-          || item.logType == "updateBlocked") {
-          // Navigate to spaceDetail with props
-          props.navigation.navigate('HostStackModal', {
-            screen: 'SpaceDetail', params: {
-              spaceId: item.spaceId
-            }
-          });
-        } else {
-          // For no navigation logTypes i.e. topup etc
-          null
-        }
+        console.log(item)
+        // if (item.logType == "createBooking"
+        //   || item.logType == "createBookingPending"
+        //   || item.logType == "cancelBooking"
+        //   || item.logType == "cancelBookingPending") {
+        //   // Navigate to bookingDetail with props
+        //   props.navigation.navigate('BookingStackModal', {
+        //     screen: 'BookingDetail',
+        //     params: {
+        //       bookingId: item.bookingId,
+        //       spaceId: item.spaceId,
+        //       host
+        //     }
+        //   });
+        // } else if (item.logType == "createSpace"
+        //   || item.logType == "updateSpace"
+        //   || item.logType == "enableSpace"
+        //   || item.logType == "disableSpace"
+        //   || item.logType == "updateBlocked") {
+        //   // Navigate to spaceDetail with props
+        //   props.navigation.navigate('HostStackModal', {
+        //     screen: 'SpaceDetail', params: {
+        //       spaceId: item.spaceId
+        //     }
+        //   });
+        // } else {
+        //   // For no navigation logTypes i.e. topup etc
+        //   null
+        // }
       }}
     />
 

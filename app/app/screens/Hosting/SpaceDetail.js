@@ -276,8 +276,10 @@ const SpaceDetail = (props) => {
             onPress={async () => {
               const networkState = await Network.getNetworkStateAsync();
               if (networkState.isConnected) {
+                setLoading(true)
                 // Device is connected to the internet
                 props.navigation.navigate("HostingEdit2", { selectedSpace, editMode: true })
+                setLoading(false)
               } else {
                 // Device is not connected to the internet
                 showOfflineAlert()
