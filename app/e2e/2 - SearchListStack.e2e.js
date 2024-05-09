@@ -129,7 +129,7 @@ describe('Make a booking via picking datetime & ListMap', () => {
     await element(by.id('book-now-button')).tap();
 
     try {
-      await waitFor(element(by.text('Requires host confirmation'))).toBeVisible().withTimeout(30000);
+      await waitFor(element(by.text('Requires host confirmation'))).toBeVisible().withTimeout(10000);
       await element(by.text('Proceed')).tap();
     } catch (e) {
       console.log('This space does not require host confirmation. i.e. Immediate approval')
@@ -251,7 +251,7 @@ describe('Make a booking via quick search & Listings', () => {
     await element(by.id('book-now-button')).tap();
 
     try {
-      await waitFor(element(by.text('Requires host confirmation'))).toBeVisible().withTimeout(30000);
+      await waitFor(element(by.text('Requires host confirmation'))).toBeVisible().withTimeout(10000);
       await element(by.text('Proceed')).tap();
     } catch (e) {
       console.log('This space does not require host confirmation. i.e. Immediate approval')
