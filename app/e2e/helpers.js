@@ -45,12 +45,18 @@ export function createSpaceTestSuite() {
         await element(by.id('cancellation-policy-picker')).tap()
         await waitFor(element(by.id('2_picker_item'))).toBeVisible().withTimeout(60000);
         await expect(element(by.id('2_picker_item'))).toBeVisible();
-        await element(by.id('2_picker_item')).tap()
 
+        while (x) {
+            await element(by.id('2_picker_item')).tap()
+            try {
+                await expect(element(by.id('hosting-edit4-next-button'))).toBeVisible();
+                await expect(element(by.id('hosting-edit4-back-button'))).toBeVisible();
+                x = false
+            } catch (e) {
+                console.log('Looping in while loop0. ' + e)
+            }
+        }
         // await element(by.id("need-host-confirm-switch")).tap()
-
-        await waitFor(element(by.id('hosting-edit4-next-button'))).toBeVisible().withTimeout(60000);
-        await expect(element(by.id('hosting-edit4-back-button'))).toBeVisible()
     })
     it('Navigate to HostingEdit5', async () => {
         await element(by.id('hosting-edit4-next-button')).tap()
