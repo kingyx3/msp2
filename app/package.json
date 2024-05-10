@@ -64,7 +64,7 @@
     "expo-status-bar": "~1.12.1",
     "expo-updates": "~0.25.11",
     "expo-web-browser": "~13.0.3",
-    "firebase": "^10.9.0",
+    "firebase": "10.11.1",
     "formik": "^2.4.5",
     "geofire-common": "^6.0.0",
     "lodash": "^4.17.21",
