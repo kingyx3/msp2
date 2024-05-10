@@ -12,7 +12,7 @@ import {
   SafeAreaView,
   FlatList,
 } from "react-native";
-import MapView, { PROVIDER_GOOGLE, Marker } from "react-native-maps";
+import MapView, { PROVIDER_DEFAULT, PROVIDER_GOOGLE, Marker } from "react-native-maps";
 import * as Network from 'expo-network';
 
 //import components
@@ -218,7 +218,7 @@ const ListMap = (props) => {
   return (
     <Container>
       <MapView
-        provider={PROVIDER_GOOGLE}
+        provider={Platform.OS === 'android' ? PROVIDER_GOOGLE : PROVIDER_DEFAULT}
         ref={_map}
         style={styles.map}
         initialRegion={initialState.region}

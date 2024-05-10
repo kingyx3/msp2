@@ -7,8 +7,9 @@ import {
   View,
   Animated,
   Text,
+  Platform,
 } from "react-native";
-import MapView, { PROVIDER_GOOGLE, Marker } from "react-native-maps";
+import MapView, { PROVIDER_DEFAULT, PROVIDER_GOOGLE, Marker } from "react-native-maps";
 import { connect } from "react-redux";
 import { bindActionCreators } from 'redux'
 
@@ -193,7 +194,7 @@ const Details = ({ navigation, route, state, setSelectedSpace, clearSelectedSpac
             <Section>
               <Typography.H2>Location</Typography.H2>
               <MapView
-                provider={PROVIDER_GOOGLE}
+                provider={Platform.OS === 'android' ? PROVIDER_GOOGLE : PROVIDER_DEFAULT}
                 style={styles.map}
                 scrollEnabled={false}
                 minZoomLevel={12} // 5

@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { View, Text, StyleSheet, Alert, Platform, TouchableOpacity } from "react-native";
-import MapView, { PROVIDER_GOOGLE, Marker } from "react-native-maps";
+import MapView, { PROVIDER_DEFAULT, PROVIDER_GOOGLE, Marker } from "react-native-maps";
 import moment from 'moment';
 import * as Linking from 'expo-linking';
 
@@ -163,7 +163,7 @@ const BookingDetails = (props) => {
         <NavBar testID="back-button-booking-detail" nav="chevron-left" onPress={() => props.navigation.goBack()} />
         <Main testID="booking-detail-scroll-view">
           <MapView
-            provider={PROVIDER_GOOGLE}
+            provider={Platform.OS === 'android' ? PROVIDER_GOOGLE : PROVIDER_DEFAULT}
             style={styles.map}
             minZoomLevel={12}
             maxZoomLevel={15}

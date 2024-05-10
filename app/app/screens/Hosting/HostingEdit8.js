@@ -1,6 +1,6 @@
 import React, { useState } from "react";
-import { StyleSheet, ScrollView, Alert } from "react-native";
-import MapView, { PROVIDER_GOOGLE, Marker } from "react-native-maps";
+import { StyleSheet, ScrollView, Alert, Platform } from "react-native";
+import MapView, { PROVIDER_DEFAULT, PROVIDER_GOOGLE, Marker } from "react-native-maps";
 
 //import components
 import ImgCarousel from "../../components/ImgCarousel";
@@ -120,7 +120,7 @@ const HostingEdit8 = (props) => {
           <Section>
             <Typography.H2>Location</Typography.H2>
             <MapView
-              provider={PROVIDER_GOOGLE}
+              provider={Platform.OS === 'android' ? PROVIDER_GOOGLE : PROVIDER_DEFAULT}
               style={styles.map}
               scrollEnabled={false}
               minZoomLevel={12} // 5
