@@ -30,7 +30,7 @@ const Hosting = (props) => {
   const [loading, setLoading] = useState(false)
   let userSpaces = props.state.userSpaces
   userSpaces = Object.values(userSpaces) //.slice(0, 10) //load only the first 10 userSpaces
-
+  console.log(userSpaces)
   useFocusEffect(
     useCallback(() => {
       props.clearHostData()

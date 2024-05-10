@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from "react";
 import { Text, View, Alert } from "react-native";
-import StarRating from 'react-native-star-rating';
+import StarRating from 'react-native-star-rating-widget';
 
-//import components
+// import components
 import { DefaultInput } from "../components/forms/AppInput";
 import { createReview } from "../components/Firebase/firebase";
 
@@ -58,10 +58,11 @@ const ReviewInput = (props) => {
           <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
             <H>Review</H>
             <StarRating
-              disabled={false}
+              // disabled={false}
               maxStars={5}
               rating={rating}
-              selectedStar={(rating) => setRating(rating)}
+              onChange={setRating}
+            // selectedStar={(rating) => setRating(rating)}
             // fullStarColor={'red'}
             />
           </View>

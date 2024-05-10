@@ -7,7 +7,7 @@ module.exports = {
     "android"
   ],
   "plugins": [
-    "@config-plugins/detox"
+    "@config-plugins/detox", "expo-secure-store"
   ],
   "version": process.env.EXPO_PUBLIC_nativeApplicationVersion,
   "orientation": "portrait",
