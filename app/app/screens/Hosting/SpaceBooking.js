@@ -37,11 +37,7 @@ const SpaceBookings = (props) => {
   // console.log(spaceBookingsArray)
   let sum = 0
   spaceBookingsArray.forEach(element => {
-    if (element.status == 'confirmed' && element.end < Date.now()) {
-      sum += element.price.hostEarnings
-    } else if (element.status == 'confirmed' && element.end > Date.now()) {
-      sum += element.price.hostEarnings
-    }
+    sum += element.price.hostEarnings
   });
 
   useEffect(() => {
