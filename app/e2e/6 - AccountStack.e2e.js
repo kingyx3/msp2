@@ -37,6 +37,7 @@ describe('Check AccountStack & ensure navigation works across bookings & spaces'
     const oldUserNameLabel = (await element(by.id('username-input')).getAttributes()).label
 
     await element(by.id('edit-input')).tap();
+    await element(by.id('username-input')).tap();
     await element(by.id('username-input')).clearText();
     await element(by.id('username-input')).typeText(newUserName);
     await element(by.id('save-input')).tap(); // Closes keyboard
