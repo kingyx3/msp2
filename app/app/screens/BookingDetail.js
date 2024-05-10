@@ -85,16 +85,20 @@ const BookingDetails = (props) => {
     }
   }, [selectedSpace, booking])
 
-  const openGMaps = (latitude, longitude) => {
-    const scheme = Platform.select({ ios: 'comgooglemaps://?daddr=', android: 'geo:0,0?q=' });
+  const openMaps = (latitude, longitude, label) => {
+    const scheme = Platform.select({
+      ios: 'maps://app?daddr=',
+      android: 'geo:0,0?q='
+    });
+
     const latLng = `${latitude},${longitude}`;
-    const label = selectedSpace.title;
     const url = Platform.select({
-      ios: `${scheme}${label}@${latLng}`,
+      ios: `${scheme}${latLng}&q=${label}`,
       android: `${scheme}${latLng}(${label})`
     });
+
     Linking.openURL(url);
-  }
+  };
 
   // Confirm cancel booking modal
   const cancelBookingBox = async () => {
@@ -167,7 +171,7 @@ const BookingDetails = (props) => {
             style={styles.map}
             minZoomLevel={12}
             maxZoomLevel={15}
-            onPress={(e) => openGMaps(selectedSpace.location.latitude, selectedSpace.location.longitude)} //e.nativeEvent.coordinate
+            onPress={(e) => openMaps(selectedSpace.location.latitude, selectedSpace.location.longitude, selectedSpace.title)} //e.nativeEvent.coordinate
             region={{
               latitude: selectedSpace.location.latitude,
               longitude: selectedSpace.location.longitude,
