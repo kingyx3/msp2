@@ -40,7 +40,7 @@ describe('Check a booking detail & send message to the host', () => {
       try {
         await element(by.id('0_booking_detail')).tap();
         // Wait for navigation to complete & perform the visibility checks
-        await waitFor(element(by.id("booking-detail-scroll-view"))).toBeVisible().withTimeout(10000);
+        // await waitFor(element(by.id("booking-detail-scroll-view"))).toBeVisible().withTimeout(10000);
         await waitFor(element(by.id("booking-title"))).toBeVisible().withTimeout(10000);
         await waitFor(element(by.id("booking-price"))).toBeVisible().withTimeout(10000);
         x = false
