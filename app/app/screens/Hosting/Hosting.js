@@ -107,7 +107,7 @@ const Hosting = (props) => {
               title={item.title}
               // subtitle={item.periodPrice}
               rating={getRating(item.ratingCount, item.ratingTotal)}
-              reviews={item.reviews} // number of reviews
+              reviews={item.ratingCount} // number of reviews
               onPress={async () => {
                 const networkState = await Network.getNetworkStateAsync();
                 if (networkState.isConnected) {
