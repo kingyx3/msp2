@@ -148,7 +148,7 @@ describe('Make a booking via picking datetime & ListMap', () => {
       console.log('Insufficient Balance')
       // Wait for modal to load, perform the visibility checks and navigate to Home
       await waitFor(element(by.text('Error'))).toBeVisible().withTimeout(60000);
-      await expect(element(by.text('Sorry, you do not have sufficient funds in your wallet, please top up at least SGD ' + (Math.round((-excessBalance) * 100) / 100).toString() + '.'))).toBeVisible();
+      await expect(element(by.text('Sorry, you do not have sufficient funds in your wallet, please top up at least SGD ' + (Math.round((-1 * global.excessBalance) * 100) / 100).toString() + '.'))).toBeVisible();
       await element(by.text('Ok')).tap();
 
       // Wait for navigation to complete & perform the visibility checks
@@ -270,7 +270,7 @@ describe('Make a booking via quick search & Listings', () => {
       console.log('Insufficient Balance')
       // Wait for modal to load, perform the visibility checks and navigate to Home
       await waitFor(element(by.text('Error'))).toBeVisible().withTimeout(60000);
-      await expect(element(by.text('Sorry, you do not have sufficient funds in your wallet, please top up at least SGD ' + (Math.round((-excessBalance) * 100) / 100).toString() + '.'))).toBeVisible();
+      await expect(element(by.text('Sorry, you do not have sufficient funds in your wallet, please top up at least SGD ' + (Math.round((-1 * global.excessBalance) * 100) / 100).toString() + '.'))).toBeVisible();
       await element(by.text('Ok')).tap();
 
       // Wait for navigation to complete & perform the visibility checks
