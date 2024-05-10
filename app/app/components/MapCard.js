@@ -23,20 +23,26 @@ const MapCard = ({
   rating,
   reviews,
   property,
+  overwriteCardWidthPct,
   onPress,
 }) =>
   <TouchableWithoutFeedback testID={testID} onPress={onPress}>
-    <Container style={
-      // Adding shadow to the styling outside of styled component to avoid annoying " WARN  Expected style "shadowOpacity: 0.1px" to be unitless" error messages
-      [Platform.select({
-        android: {
-          elevation: 2,
-        },
-        ios: {
-          shadowColor: '#000',
-          shadowOpacity: 0.1,
-        },
-      })]} testID="map-card-touchable" >
+    <Container
+      style={
+        // Adding shadow to the styling outside of styled component to avoid annoying " WARN  Expected style "shadowOpacity: 0.1px" to be unitless" error messages
+        [Platform.select({
+          android: {
+            elevation: 2,
+          },
+          ios: {
+            shadowColor: '#000',
+            shadowOpacity: 0.1,
+          },
+        }), {
+          width: overwriteCardWidthPct ? overwriteCardWidthPct * width : null
+        }]}
+      testID="map-card-touchable"
+    >
       <ImgSliderItem
         customStyle={{
           width: img_width,

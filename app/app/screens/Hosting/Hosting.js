@@ -30,7 +30,7 @@ const Hosting = (props) => {
   const [loading, setLoading] = useState(false)
   let userSpaces = props.state.userSpaces
   userSpaces = Object.values(userSpaces) //.slice(0, 10) //load only the first 10 userSpaces
-  console.log(userSpaces)
+
   useFocusEffect(
     useCallback(() => {
       props.clearHostData()
@@ -105,6 +105,7 @@ const Hosting = (props) => {
               image={item.images}
               property={item.spaceType}
               title={item.title}
+              overwriteCardWidthPct={0.9}
               // subtitle={item.periodPrice}
               rating={getRating(item.ratingCount, item.ratingTotal)}
               reviews={item.ratingCount} // number of reviews
