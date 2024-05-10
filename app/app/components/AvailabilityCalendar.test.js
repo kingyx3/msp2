@@ -66,8 +66,8 @@ describe('AvailabilityCalendar', () => {
         // Test confirm actions
         const confirmButton = getByTestId('confirm-button');
         fireEvent.press(confirmButton);
-        expect(queryByTestId('modal').props.visible).toBe(false);
-        // expect(queryByTestId('modal')).toBeNull();
+        // expect(queryByTestId('modal').props.visible).toBe(false); // old
+        expect(queryByTestId('modal')).toBeNull();
 
         // //  write expect that values are updated
         //  expect(setDatedEvents).toHaveBeenCalledWith('data');
@@ -79,8 +79,8 @@ describe('AvailabilityCalendar', () => {
         // Test cancel actions
         const cancelButton = getByTestId('cancel-button');
         fireEvent.press(cancelButton);
-        expect(queryByTestId('modal').props.visible).toBe(false);
-        // expect(queryByTestId('modal')).toBeNull();
+        // expect(queryByTestId('modal').props.visible).toBe(false); // old
+        expect(queryByTestId('modal')).toBeNull();
 
         //  write expect that values are NOT updated
     });
