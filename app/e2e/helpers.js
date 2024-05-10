@@ -48,9 +48,9 @@ export function createSpaceTestSuite() {
 
         let x = true
         while (x) {
-            await element(by.id('2_picker_item')).tap()
             try {
-                await expect(element(by.id('hosting-edit4-next-button'))).toBeVisible();
+                await element(by.id('2_picker_item')).tap()
+                await waitFor(element(by.id('hosting-edit4-next-button'))).toBeVisible().withTimeout(5000);
                 await expect(element(by.id('hosting-edit4-back-button'))).toBeVisible();
                 x = false
             } catch (e) {
