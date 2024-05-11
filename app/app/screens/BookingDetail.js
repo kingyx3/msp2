@@ -252,7 +252,7 @@ const BookingDetails = (props) => {
                 image={host ? getAvatarLink(booking.userId) : getAvatarLink(selectedSpace.userId)}
               />
             </Host>
-            {!booking.status.startsWith("cancelled") && (Math.floor((Date.now() - booking.end) / (1000 * 60 * 60 * 24)) < 5) &&
+            {!booking.status.includes("cancelled") && (Math.floor((Date.now() - booking.end) / (1000 * 60 * 60 * 24)) < 5) &&
               <View style={{ margin: 10 }}>
                 {/* can only contact host/user up to 5 days after booking ends, existing chat need to hide? */}
                 <Button.BtnContain
@@ -294,17 +294,17 @@ const BookingDetails = (props) => {
               <View style={{ margin: 10 }}>
                 <Button.BtnContain
                   testID="cancel-booking"
-                  label={booking.status.startsWith("cancelled")
+                  label={booking.status.includes("cancelled")
                     ? "Booking Cancelled"
                     : (isHostAbleToCancel || isUserAbleToCancel || isBookingInProgress)
                       ? (booking.status === "pending_host"
                         ? "Cancel Pending"
                         : "Cancel Booking") // booking.status === "confirmed" and booking not completed
                       : "Booking Completed"} // booking.status === "confirmed" and booking completed
-                  color={(booking.status.startsWith("cancelled") ? true :
+                  color={(booking.status.includes("cancelled") ? true :
                     loading || !(isHostAbleToCancel || isUserAbleToCancel)) ? colors.lightgray : colors.black}
                   size="small"
-                  disabled={booking.status.startsWith("cancelled") ? true :
+                  disabled={booking.status.includes("cancelled") ? true :
                     loading || !(isHostAbleToCancel || isUserAbleToCancel)}
                   onPress={cancelBookingBox} />
               </View>

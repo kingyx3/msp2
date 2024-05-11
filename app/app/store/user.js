@@ -8,6 +8,7 @@ const FETCH_USER_LOGS = 'FETCH_USER_LOGS';
 const FETCH_USER_HOSTING_LOGS = 'FETCH_USER_HOSTING_LOGS';
 const FETCH_USER_MESSAGES = 'FETCH_USER_MESSAGES';
 const FETCH_SYS_SPACETYPES = 'FETCH_SYS_SPACETYPES';
+const FETCH_PENDING_HOST = 'FETCH_PENDING_HOST';
 
 const initialStore = {
   user: {},
@@ -18,6 +19,8 @@ const initialStore = {
   userHostingLogs: [],
   userMessages: [],
   spaceTypes: [],
+  pendingHost: [],
+  pendingHostTotalCount: 0,
 };
 
 // Action creators
@@ -58,6 +61,8 @@ const reducer = (state = initialStore, action) => {
       return { ...state, userMessages: action.payload.userMessages };
     case FETCH_SYS_SPACETYPES:
       return { ...state, spaceTypes: action.payload.spaceTypes };
+    case FETCH_PENDING_HOST:
+      return { ...state, pendingHost: action.payload.pendingHost, pendingHostTotalCount: action.payload.pendingHostTotalCount };
     default:
       return state;
   }

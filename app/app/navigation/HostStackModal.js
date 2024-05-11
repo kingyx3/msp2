@@ -1,9 +1,10 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 
 //import navigation
 import { createStackNavigator } from "@react-navigation/stack";
 import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs';
-import { View, Platform } from "react-native";
+import { View, Platform, Text } from "react-native";
+import { useSelector } from 'react-redux';
 //import screens
 import Hosting from "../screens/Hosting/Hosting";
 import SpaceDetail from "../screens/Hosting/SpaceDetail";
@@ -32,15 +33,63 @@ const Tab = createMaterialTopTabNavigator();
 
 const SpaceBookingTopTab = (props) => {
     const { spaceId, needHostConfirm } = props.route.params
+    const [notificationCount, setNotificationCount] = useState(0)
+    const pendingHost = useSelector(state => state.user.pendingHost);
+
+    useEffect(() => {
+        setNotificationCount(pendingHost[spaceId])
+    }, [pendingHost])
+
     return (
         <Container>
             <Header>
                 <Typography.H color={colors.red}>Bookings</Typography.H>
             </Header>
-            <Tab.Navigator>
-                <Tab.Screen name="Upcoming" component={SpaceBooking} initialParams={{ spaceId, history: false, pending: false }} />
-                {needHostConfirm && <Tab.Screen name="Pending" component={SpaceBooking} initialParams={{ spaceId, history: false, pending: true }} />}
-                <Tab.Screen name="History" component={SpaceBooking} initialParams={{ spaceId, history: true, pending: false }} />
+            <Tab.Navigator
+                screenOptions={{
+                    // labelStyle: { textTransform: 'uppercase', fontSize: 12 },
+                    // indicatorStyle: { backgroundColor: colors.red },
+                }}
+            >
+                <Tab.Screen
+                    name="Upcoming"
+                    component={SpaceBooking}
+                    initialParams={{ spaceId, history: false, pending: false }}
+                />
+                {needHostConfirm && (
+                    <Tab.Screen
+                        name="Pending"
+                        component={SpaceBooking}
+                        initialParams={{ spaceId, history: false, pending: true }}
+                        options={{
+                            tabBarLabel: ({ focused }) => (
+                                <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+                                    <Text style={{ textTransform: 'uppercase', fontSize: 12 }}>Pending</Text>
+                                    {notificationCount > 0 && (
+                                        <View
+                                            style={{
+                                                marginLeft: 5,
+                                                backgroundColor: colors.red,
+                                                borderRadius: 10,
+                                                paddingVertical: 2,
+                                                paddingHorizontal: 5,
+                                                justifyContent: 'center',
+                                                alignItems: 'center',
+                                            }}
+                                        >
+                                            <Text style={{ color: 'white', fontSize: 10 }}>{notificationCount}</Text>
+                                        </View>
+                                    )}
+                                </View>
+                            ),
+                        }}
+                    />
+                )}
+                <Tab.Screen
+                    name="History"
+                    component={SpaceBooking}
+                    initialParams={{ spaceId, history: true, pending: false }}
+                />
             </Tab.Navigator>
         </Container>
     );

@@ -4,6 +4,7 @@ import React, { useEffect, useState } from 'react';
 import { createStackNavigator } from '@react-navigation/stack';
 import HomeTab from './HomeTab';
 import { Platform } from 'react-native';
+import { useSelector } from 'react-redux';
 //import screens
 import SearchStackModal from './SearchStackModal'
 import ListStackModal from './ListStackModal';
@@ -11,7 +12,7 @@ import HostStackModal from './HostStackModal'
 import MessageStackModal from "../navigation/MessageStackModal";
 import BookingStackModal from "../navigation/BookingStackModal"
 import AccountStackModal from "../navigation/AccountStackModal"
-import { fetchUser, fetchIpLocation, fetchUserSpaces, fetchUserBookings, fetchUserMessages, fetchSpaceTypes, fetchUserLogs, fetchUserHostingLogs } from "../components/Firebase/firebase"
+import { fetchUser, fetchIpLocation, fetchUserSpaces, fetchUserBookings, fetchUserMessages, fetchSpaceTypes, fetchUserLogs, fetchUserHostingLogs, fetchPendingHost, stopFetchPendingHost } from "../components/Firebase/firebase"
 //import styles and assets
 import styled from 'styled-components/native';
 // import { EvilIcons } from '@expo/vector-icons';
@@ -21,16 +22,24 @@ import { StatusBar } from "expo-status-bar";
 
 const Stack = createStackNavigator();
 const RootStack = (props) => {
-
+    const host = useSelector(state => state.user.user.accountId);
     useEffect(() => {
-        props.fetchUser()
-        props.fetchIpLocation()
-        props.fetchUserSpaces()
-        props.fetchUserBookings()
-        props.fetchUserMessages()
-        props.fetchUserLogs()
-        props.fetchUserHostingLogs()
-        props.fetchSpaceTypes()
+        const getData = async () => {
+            props.fetchUser() // Firestore
+            props.fetchSpaceTypes() // RTDB
+            props.fetchIpLocation() // 3rd Party
+            props.fetchUserBookings() // Firestore
+            props.fetchUserMessages() // RTDB
+            props.fetchUserLogs() // Firestore
+            if (host) {
+                console.log('User is a host, calling host-related subscriptions on RootStack')
+                //  Host-only
+                props.fetchUserSpaces() // Firestore
+                props.fetchUserHostingLogs() // Firestore
+                props.fetchPendingHost(); // RTDB
+            }
+        }
+        getData()
     })
 
     return (
@@ -96,5 +105,9 @@ const IconWrapper = styled.View`
   margin-left: ${Platform.OS === 'ios' ? '15px' : 0};
 `;
 
-const mapDispatchProps = (dispatch) => bindActionCreators({ fetchUser, fetchIpLocation, fetchUserSpaces, fetchUserBookings, fetchUserLogs, fetchUserHostingLogs, fetchUserMessages, fetchSpaceTypes }, dispatch);
+const mapDispatchProps = (dispatch) => bindActionCreators({
+    fetchUser,
+    fetchIpLocation, fetchUserSpaces, fetchUserBookings, fetchUserLogs,
+    fetchUserHostingLogs, fetchUserMessages, fetchSpaceTypes, fetchPendingHost, stopFetchPendingHost
+}, dispatch);
 export default connect(null, mapDispatchProps)(RootStack);

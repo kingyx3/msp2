@@ -2,6 +2,7 @@ import React, { useState, useCallback } from "react";
 import { View, FlatList } from "react-native";
 import { connect } from "react-redux";
 import { useFocusEffect } from '@react-navigation/native';
+import { useSelector } from 'react-redux';
 import * as Linking from 'expo-linking';
 import * as Network from 'expo-network';
 // import * as WebBrowser from 'expo-web-browser';
@@ -30,6 +31,7 @@ const Hosting = (props) => {
   const [loading, setLoading] = useState(false)
   let userSpaces = props.state.userSpaces
   userSpaces = Object.values(userSpaces) //.slice(0, 10) //load only the first 10 userSpaces
+  const pendingHost = useSelector(state => state.user.pendingHost);
 
   useFocusEffect(
     useCallback(() => {
@@ -107,6 +109,7 @@ const Hosting = (props) => {
               title={item.title}
               overwriteCardWidthPct={0.9}
               // subtitle={item.periodPrice}
+              notificationCount={pendingHost[item.id]}
               rating={getRating(item.ratingCount, item.ratingTotal)}
               reviews={item.ratingCount} // number of reviews
               onPress={async () => {
@@ -115,7 +118,8 @@ const Hosting = (props) => {
                   // Device is connected to the internet
                   props.navigation.navigate('HostStackModal', {
                     screen: 'SpaceManagement', params: {
-                      spaceId: item.id
+                      spaceId: item.id,
+                      notificationCount: pendingHost[item.id]
                     }
                   });
                 } else {

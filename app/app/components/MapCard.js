@@ -1,5 +1,5 @@
 import React from "react";
-import { Dimensions, TouchableWithoutFeedback, View, Image, Platform } from "react-native";
+import { Dimensions, TouchableWithoutFeedback, View, Image, Platform, Text } from "react-native";
 
 //import styles and assets
 import styled from "styled-components/native";
@@ -23,6 +23,7 @@ const MapCard = ({
   rating,
   reviews,
   property,
+  notificationCount,
   overwriteCardWidthPct,
   onPress,
 }) =>
@@ -53,8 +54,26 @@ const MapCard = ({
           contentFit: 'contain'
         }}
         source={image} />
+
       <Description>
-        <SP>{property}</SP>
+        <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+          <SP>{property}</SP>
+          {notificationCount > 0 && (
+            <View
+              style={{
+                marginLeft: 5,
+                backgroundColor: Colors.red,
+                borderRadius: 10,
+                paddingVertical: 2,
+                paddingHorizontal: 5,
+                justifyContent: 'center',
+                alignItems: 'center',
+              }}
+            >
+              <Text style={{ color: 'white', fontSize: 10 }}>{notificationCount + " pending"}</Text>
+            </View>
+          )}
+        </View>
         <Title numberOfLines={1}>{title}</Title>
         {(reviews == 0 || !reviews) ? null :
           <Rating>
@@ -74,7 +93,7 @@ const Container = styled.View`
   height: 110px;
   background-color: white;
   border-radius: 16px;
-  margin: 0 10px 20px;
+  margin: 0 10px 0px;
 `;
 
 // const ImgContainer = styled.Image`

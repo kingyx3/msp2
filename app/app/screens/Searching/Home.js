@@ -95,7 +95,7 @@ const Home = (props) => {
     async function initialize() {
       try {
         const publishableKey = await getPublicKey();
-        console.log(publishableKey, 'lolol')
+        // console.log(publishableKey, 'lolol')
         if (publishableKey) {
           await initStripe({
             publishableKey,

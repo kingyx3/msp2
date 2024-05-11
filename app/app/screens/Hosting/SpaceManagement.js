@@ -20,6 +20,7 @@ import * as Network from 'expo-network';
 import { connect } from "react-redux";
 import { bindActionCreators } from 'redux'
 import _ from "lodash";
+import { useSelector } from 'react-redux';
 
 //import screens
 //import styles and assets
@@ -35,6 +36,12 @@ const SpaceManagement = (props) => {
   const [loading, setLoading] = useState(false)
   const { spaceId } = props.route.params
   const selectedSpace = _.cloneDeep(props.state.selectedSpace)
+  const [notificationCount, setNotificationCount] = useState(0)
+  const pendingHost = useSelector(state => state.user.pendingHost);
+
+  useEffect(() => {
+    setNotificationCount(pendingHost[spaceId])
+  }, [pendingHost])
 
   useEffect(() => {
     props.clearSelectedSpace()
@@ -52,7 +59,7 @@ const SpaceManagement = (props) => {
         selectedSpace,
       }
     },
-    { title: "Manage Bookings", icon: "history", screen: "SpaceBooking", data: { spaceId: selectedSpace.id, needHostConfirm: selectedSpace.needHostConfirm } },
+    { title: "Manage Bookings", icon: "history", screen: "SpaceBooking", data: { spaceId, needHostConfirm: selectedSpace.needHostConfirm, notificationCount } },
     // { title: "Edit Space Details", icon: "application-edit-outline", screen: "HostingEdit2", data: { selectedSpace, editMode: true } },
     { title: selectedSpace.disabled ? "Enable Space" : "Disable Space", icon: selectedSpace.disabled ? "plus-circle-outline" : "minus-circle-outline", screen: "" },
   ]
@@ -62,6 +69,7 @@ const SpaceManagement = (props) => {
       title={item.title}
       testID={index.toString() + "_manage_space_item"}
       icon={item.icon}
+      notificationCount={item.title == "Manage Bookings" ? notificationCount : 0}
       onPress={async () => {
         const networkState = await Network.getNetworkStateAsync();
         if (networkState.isConnected) {

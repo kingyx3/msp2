@@ -1,5 +1,5 @@
 import React from "react";
-import { View, TouchableHighlight, StyleSheet, } from "react-native";
+import { View, TouchableHighlight, StyleSheet, Text } from "react-native";
 import Swipeable from "react-native-gesture-handler/Swipeable";
 import { Badge } from 'react-native-elements';
 import {
@@ -13,7 +13,7 @@ import * as Typography from "../config/Typography";
 import colors from "../config/colors";
 import ImgSliderItems from "./ImgSliderItems";
 
-export const Default = ({ containedicon, icon, secondary, meta, title, onPress, testID, ...otherProps }) => {
+export const Default = ({ containedicon, icon, secondary, meta, title, notificationCount, onPress, testID, ...otherProps }) => {
   return (
     <TouchableHighlight {...otherProps} testID={testID} underlayColor={colors.lightgray} onPress={onPress}>
       <Container >
@@ -23,7 +23,24 @@ export const Default = ({ containedicon, icon, secondary, meta, title, onPress, 
           </IconContainer>
         )}
         <TextContainer>
-          <Typography.Sub1 color={colors.black}>{title}</Typography.Sub1>
+          <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+            <Typography.Sub1 color={colors.black}>{title}</Typography.Sub1>
+            {notificationCount > 0 && (
+              <View
+                style={{
+                  marginLeft: 5,
+                  backgroundColor: colors.red,
+                  borderRadius: 10,
+                  paddingVertical: 2,
+                  paddingHorizontal: 5,
+                  justifyContent: 'center',
+                  alignItems: 'center',
+                }}
+              >
+                <Text style={{ color: 'white', fontSize: 10 }}>{notificationCount + " pending"}</Text>
+              </View>
+            )}
+          </View>
           {meta && <Typography.SP color={colors.black}>{meta}</Typography.SP>}
           {secondary && <Typography.P>{secondary}</Typography.P>}
         </TextContainer>

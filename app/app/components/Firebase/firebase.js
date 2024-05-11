@@ -5,7 +5,7 @@
 import { firestore, auth, database, functions, storage, app } from './firebaseConfig'; // Adjust the path as necessary
 import { updateProfile } from "firebase/auth";
 import { collection, doc, onSnapshot, query, where, getDocs, getDoc, runTransaction, serverTimestamp, Timestamp, orderBy, limit } from 'firebase/firestore';
-import { ref, onValue, once, get, set, update, increment, serverTimestamp as RTDBServerTimestamp } from 'firebase/database';
+import { ref, onValue, once, get, set, update, increment, off, serverTimestamp as RTDBServerTimestamp } from 'firebase/database';
 import { httpsCallable } from 'firebase/functions';
 import { ref as storageRef, uploadBytes, listAll, deleteObject } from 'firebase/storage';
 import { isSignInWithEmailLink, sendSignInLinkToEmail, signInWithEmailLink, onAuthStateChanged, signInWithEmailAndPassword, signInAnonymously, signOut, sendPasswordResetEmail } from "firebase/auth";
@@ -761,6 +761,30 @@ export function fetchUserMessages() {
   };
 }
 
+// Function to fetch userMessages
+export function fetchPendingHost() {
+  return async (dispatch) => {
+    const user = auth.currentUser;
+    if (!user) {
+      console.log('User not logged in');
+      return;
+    }
+
+    const pendingHostRef = ref(database, `users/${user.uid}/pendingHost`);
+    const unsubscribe = onValue(pendingHostRef, async (snapshot) => {
+      let pendingHost = snapshot.exists() ? snapshot.val() : {};
+      let pendingHostTotalCount = Object.values(pendingHost).reduce((accumulator, currentValue) => accumulator + currentValue, 0);
+      // console.log('pendingHost', pendingHost)
+      dispatch({ type: "FETCH_PENDING_HOST", payload: { pendingHost, pendingHostTotalCount } });
+    });
+
+    // Return the unsubscribe function to allow the caller to remove the listener when necessary
+    return () => {
+      off(pendingHostRef, '', unsubscribe);
+    };
+  };
+}
+
 // Function to fetch spaceTypes
 export function fetchSpaceTypes() {
   return (dispatch) => {
@@ -835,21 +859,28 @@ export function fetchSpaceBookings(spaceId) {
     const spaceBookingsRef = collection(doc(firestore, 'spaces', spaceId), 'spacebookings');
 
     try {
-      const snapshot = await getDocs(spaceBookingsRef);
-      console.log("NUMBER OF READS (fetchSpaceBookings):", snapshot.docs.length);
-
-      let spaceBookings = {};
-      snapshot.docs.forEach((doc) => {
-        spaceBookings = { ...spaceBookings, ...doc.data() };
+      const unsubscribe = onSnapshot(spaceBookingsRef, (snapshot) => {
+        console.log("NUMBER OF READS (fetchSpaceBookings):", snapshot.docs.length);
+        if (!snapshot.empty) {
+          let spaceBookings = {};
+          snapshot.docs.forEach((doc) => {
+            spaceBookings = { ...spaceBookings, ...doc.data() };
+          });
+          spaceBookings = convertTimestampsToIsoStrings(spaceBookings)
+          const spaceBookingsArray = Object.values(spaceBookings);
+          dispatch({ type: 'SET_SPACE_BOOKINGS', payload: { spaceBookingsArray } });
+        } else {
+          console.log('No space bookings found');
+          dispatch({ type: "SET_SPACE_BOOKINGS", payload: { spaceBookingsArray: [] } });
+        }
       });
-      spaceBookings = convertTimestampsToIsoStrings(spaceBookings)
-      const spaceBookingsArray = Object.values(spaceBookings);
-
-      return dispatch({ type: 'SET_SPACE_BOOKINGS', payload: { spaceBookingsArray } });
+      // Return the unsubscribe function to remove the listener when needed
+      return unsubscribe;
     } catch (error) {
-      console.log("Error getting documents: ", error);
+      console.error('Error fetching user hosting logs:', error);
+      // dispatch({ type: "FETCH_USER_HOSTING_LOGS", payload: { error: error.message } });
     }
-  };
+  }
 }
 
 // Function to update blocked dates
