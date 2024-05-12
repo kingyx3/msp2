@@ -44,32 +44,41 @@ exports[`Default Component renders icon correctly - Default 1`] = `
       }
     >
       <View
-        style={{}}
-      >
-        <Text
-          style={
-            {
-              "fontFamily": "Avenir",
-            }
+        style={
+          {
+            "alignItems": "center",
+            "flexDirection": "row",
           }
+        }
+      >
+        <View
+          style={{}}
         >
-          <Text>
-            <Text
-              style={
-                [
-                  {
-                    "fontSize": 7.2,
-                  },
-                  {
-                    "color": "#333333",
-                  },
-                ]
+          <Text
+            style={
+              {
+                "fontFamily": "Avenir",
               }
-            >
-              Test Title
+            }
+          >
+            <Text>
+              <Text
+                style={
+                  [
+                    {
+                      "fontSize": 7.2,
+                    },
+                    {
+                      "color": "#333333",
+                    },
+                  ]
+                }
+              >
+                Test Title
+              </Text>
             </Text>
           </Text>
-        </Text>
+        </View>
       </View>
     </View>
     <Text />
