@@ -8,6 +8,7 @@ import * as Network from 'expo-network';
 import { NavBar } from "../../components/NavBar";
 import * as Button from "../../components/Button";
 import SliderView from "../../patterns/SliderView";
+import MapCard from "../../components/MapCard";
 
 //import screens
 import ListMap from "./ListMap";
@@ -47,6 +48,7 @@ const Listings = (props) => {
     return space.userId !== props.user.id
   }) // dont show your own spaces
   selectedSpaces = selectedSpaces.slice(0, 25) // only show first 25
+  let selectedSpaceType = props.state.spaceType;
 
   const [showFilter, setShowFilter] = useState(false);
   const [showMap, setShowMap] = useState(false);
@@ -81,16 +83,17 @@ const Listings = (props) => {
   }
 
   const renderItem = ({ item, index }) =>
-    <SliderView
+    <MapCard
       testID={index.toString() + "_listing"}
-      images={item.images}
+      key={index.toString()}
+      image={item.images[0]}
+      property={selectedSpaceType}
       title={(item.location.suburb ? item.location.suburb : item.location.street) + ', ' + item.location.country}
       subtitle={item.periodPrice}
-      // rating={item.rating}
-      // reviews={item.reviews}
-      onPress={() => item.third_party ? null : submit(item.id)}
+      rating={item.rating}
+      reviews={item.reviews} // number of reviews
+      onPress={() => item.third_party ? null : submit(item.id)} //pass marker info?
     />
-
 
   return (
     <Body>
@@ -143,7 +146,7 @@ const Main = styled.View`
 const Header = styled.View`
   flex-direction: row;
   justify-content: space-between;
-  margin: 40px 0 30px 0;
+  margin: 40px 0 15px 0;
 `;
 
 const Filter = styled.Image`

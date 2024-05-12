@@ -100,61 +100,32 @@ const Hosting = (props) => {
         extraData={userSpaces}
         keyExtractor={item => item.id}
         renderItem={({ item, index }) =>
-          <View style={{ padding: 8 }}>
-            <MapCard
-              testID={index.toString() + "_space"}
-              key={index.toString()}
-              image={item.images}
-              property={item.spaceType}
-              title={item.title}
-              overwriteCardWidthPct={0.9}
-              // subtitle={item.periodPrice}
-              notificationCount={pendingHost[item.id]}
-              rating={getRating(item.ratingCount, item.ratingTotal)}
-              reviews={item.ratingCount} // number of reviews
-              onPress={async () => {
-                const networkState = await Network.getNetworkStateAsync();
-                if (networkState.isConnected) {
-                  // Device is connected to the internet
-                  props.navigation.navigate('HostStackModal', {
-                    screen: 'SpaceManagement', params: {
-                      spaceId: item.id,
-                      notificationCount: pendingHost[item.id]
-                    }
-                  });
-                } else {
-                  // Device is not connected to the internet
-                  showOfflineAlert()
-                }
-              }} //pass marker info?
-            />
-            {/* <Cards.Default
-              testID={index.toString() + '_space'}
-              image={item.images}
-              // sub={handleDate(item)}
-              title={item.title} //item.city
-              secondary={item.description} //item.title
-              action={`View${item.disabled ? " disabled " : " "}space details`}
-              meta
-              sub={item.spaceType}
-              onPress={async () => {
-                const networkState = await Network.getNetworkStateAsync();
-                if (networkState.isConnected) {
-                  // Device is connected to the internet
-                  // props.clearSelectedSpace()
-                  // props.setSelectedSpace(item.id)
-                  props.navigation.navigate('HostStackModal', {
-                    screen: 'SpaceDetail', params: {
-                      spaceId: item.id
-                    }
-                  });
-                } else {
-                  // Device is not connected to the internet
-                  showOfflineAlert()
-                }
-              }}
-            /> */}
-          </View>
+          <MapCard
+            testID={index.toString() + "_space"}
+            key={index.toString()}
+            image={item.images}
+            property={item.spaceType}
+            title={item.title}
+            // subtitle={item.periodPrice}
+            notificationCount={pendingHost[item.id]}
+            rating={getRating(item.ratingCount, item.ratingTotal)}
+            reviews={item.ratingCount} // number of reviews
+            onPress={async () => {
+              const networkState = await Network.getNetworkStateAsync();
+              if (networkState.isConnected) {
+                // Device is connected to the internet
+                props.navigation.navigate('HostStackModal', {
+                  screen: 'SpaceManagement', params: {
+                    spaceId: item.id,
+                    notificationCount: pendingHost[item.id]
+                  }
+                });
+              } else {
+                // Device is not connected to the internet
+                showOfflineAlert()
+              }
+            }} //pass marker info?
+          />
         }
       ></FlatList>
       {/*
@@ -187,14 +158,14 @@ const Hosting = (props) => {
 const Container = styled.View`
   flex: 1;
   background-color: white;
+  padding-top: 24px;
+  padding-left: 24px;
+  padding-right: 24px;
 `;
 
 const Main = styled.ScrollView``;
 
 const Top = styled.View`
-  padding-top: 24px;
-  padding-left: 24px;
-  padding-right: 24px;
   background-color: white;
 `;
 

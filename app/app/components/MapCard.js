@@ -93,7 +93,7 @@ const Container = styled.View`
   height: 110px;
   background-color: white;
   border-radius: 16px;
-  margin: 0 10px 0px;
+  margin: 15px 10px 5px;
 `;
 
 // const ImgContainer = styled.Image`

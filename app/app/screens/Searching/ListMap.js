@@ -365,7 +365,7 @@ const MapBox = styled.View`
   margin-top: ${Platform.OS === "ios" ? "250px" : "250px"};
   border-radius: 6px;
   align-self: center;
-  bottom: 20;
+  bottom: 10px;
 `;
 // padding-top: 20px;
 // padding-bottom: 20px;
