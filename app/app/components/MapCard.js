@@ -20,6 +20,7 @@ const MapCard = ({
   image,
   title,
   subtitle,
+  description,
   rating,
   reviews,
   property,
@@ -83,6 +84,7 @@ const MapCard = ({
           </Rating>
         }
         {subtitle && <Price>{`$${subtitle}`}</Price>}
+        {description && <Text>{description}</Text>}
       </Description>
     </Container>
   </TouchableWithoutFeedback>
@@ -93,7 +95,7 @@ const Container = styled.View`
   height: 110px;
   background-color: white;
   border-radius: 16px;
-  margin: 15px 10px 5px;
+  margin: 10px 10px 5px;
 `;
 
 // const ImgContainer = styled.Image`

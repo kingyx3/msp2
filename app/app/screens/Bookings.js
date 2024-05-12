@@ -7,6 +7,7 @@ import { showOfflineAlert } from "../components/Firebase/firebase";
 
 //import components
 import * as Cards from "../components/Cards";
+import MapCard from "../components/MapCard";
 
 //import styles and icons
 import styled from "styled-components/native";
@@ -66,8 +67,42 @@ const Bookings = (props) => {
         extraData={userBookings}
         keyExtractor={(item, index) => index.toString()}
         renderItem={({ item, index }) =>
-          <View style={{ padding: 24 }}>
-            <Cards.Default
+          <View style={{ paddingLeft: 24, paddingRight: 24 }}>
+            <MapCard
+              testID={index.toString() + "_booking_detail"}
+              key={index.toString()}
+              image={item.images}
+              property={"Booking Ref: " + item.id.toUpperCase().slice(-6)}
+              title={item.spaceType}
+              subtitle={item.periodPrice}
+              description={[moment(item.start).format("DD-MMM-YYYY, hA"), '-', moment(item.end).format("hA")]}
+              // rating={item.rating}
+              // reviews={item.reviews} // number of reviews
+              onPress={async () => {
+                const networkState = await Network.getNetworkStateAsync();
+                if (networkState.isConnected) {
+                  // Device is connected to the internet
+                  // console.log({
+                  //   bookingId: item.id,
+                  //   spaceId: item.spaceId,
+                  //   host: false
+                  // })
+                  props.navigation.navigate("BookingStackModal", {
+                    screen: 'BookingDetail',
+                    params: {
+                      bookingId: item.id,
+                      spaceId: item.spaceId,
+                      host: false
+                    }
+                  })
+                } else {
+                  // Device is not connected to the internet
+                  showOfflineAlert()
+                }
+              }} //pass marker info?
+            />
+
+            {/* <Cards.Default
               testID={index.toString() + "_booking_detail"}
               image={item.images}
               // sub={handleDate(item)}
@@ -96,7 +131,7 @@ const Bookings = (props) => {
                   showOfflineAlert()
                 }
               }}
-            />
+            /> */}
           </View>
         }
       />
