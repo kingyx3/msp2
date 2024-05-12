@@ -43,6 +43,11 @@ jobs:
       - name: 📋 Test project
         run: yarn testFinal
 
+      - name: 🏗 Setup Java
+        uses: actions/setup-java@v2
+        with:
+          java-version: "17" # Set the required Java version
+
       - name: Decode Google Play Service Account (Production)
         env:
           SERVICE_ACCOUNT_JSON: ${{ secrets.GOOGLE_PLAY_SERVICE_ACCOUNT }}
