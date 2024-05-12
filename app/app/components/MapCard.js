@@ -7,6 +7,7 @@ import { FontAwesome } from "@expo/vector-icons";
 import Colors from "../config/colors";
 import { SP } from "../config/Typography";
 import ImgSliderItem from './ImgSliderItems'
+import colors from "../config/colors";
 
 const { width, height } = Dimensions.get("window");
 // const card_width = width * 0.8;
@@ -83,8 +84,8 @@ const MapCard = ({
             <SP>{`(${reviews})`}</SP>
           </Rating>
         }
-        {subtitle && <Price>{`$${subtitle}`}</Price>}
-        {description && <Text>{description}</Text>}
+        {subtitle && <Text>{subtitle}</Text>}
+        {description && <Text style={{ color: colors.gray }}>{description}</Text>}
       </Description>
     </Container>
   </TouchableWithoutFeedback>

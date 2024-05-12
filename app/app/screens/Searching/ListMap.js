@@ -184,7 +184,7 @@ const ListMap = (props) => {
       image={item.images[0]}
       property={selectedSpaceType}
       title={(item.location.suburb ? item.location.suburb : item.location.street) + ', ' + item.location.country}
-      subtitle={item.periodPrice}
+      subtitle={"$" + item.periodPrice}
       rating={item.rating}
       reviews={item.reviews} // number of reviews
       onPress={() => item.third_party ? null : submit(item.id)} //pass marker info?
