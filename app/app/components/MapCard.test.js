@@ -7,6 +7,7 @@ describe('MapCard', () => {
     image: 'http://example.com/image.jpg',
     title: 'Test Title',
     subtitle: '123',
+    description: 'abc',
     rating: 4.5,
     reviews: 10,
     property: 'Test Property'
@@ -16,7 +17,8 @@ describe('MapCard', () => {
     const { getByText } = render(<MapCard {...mockProps} />);
 
     expect(getByText(mockProps.title)).toBeTruthy();
-    expect(getByText(`$${mockProps.subtitle}`)).toBeTruthy();
+    expect(getByText(`${mockProps.subtitle}`)).toBeTruthy();
+    expect(getByText(`${mockProps.description}`)).toBeTruthy();
     expect(getByText(`${mockProps.rating}`)).toBeTruthy();
     expect(getByText(`(${mockProps.reviews})`)).toBeTruthy();
   });
