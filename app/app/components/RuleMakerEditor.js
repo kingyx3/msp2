@@ -27,7 +27,7 @@ export default function RuleMakerEditor(props) {
     //console.log(hours)
   }
   // function keepNum(num, obj) {
-  //   for (var key in obj) {
+  //   for (let key in obj) {
   //     if (!isNaN(obj[key]) && obj[key] !== num) {
   //       delete obj[key];
   //     }

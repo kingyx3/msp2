@@ -30,7 +30,7 @@ const AppPicker = ({
   disabled,
   testID
 }) => {
-  const [openOptions, setOpenoptions] = useState(false);
+  const [openOptions, setOpenOptions] = useState(false);
 
   return (
     <>
@@ -38,7 +38,7 @@ const AppPicker = ({
         if (disabled) {
           null
         } else {
-          setOpenoptions(true)
+          setOpenOptions(true)
         }
       }
       }>
@@ -55,11 +55,11 @@ const AppPicker = ({
       </TouchableWithoutFeedback>
       <Modal visible={openOptions} animationType="slide">
         <CloseBtn>
-          <TouchableOpacity testID='close-modal' onPress={() => setOpenoptions(false)}>
+          <TouchableOpacity testID='close-modal' onPress={() => setOpenOptions(false)}>
             <EvilIcons name="close" size={30} />
           </TouchableOpacity>
         </CloseBtn>
-        {/* <Button title="close" onPress={() => setOpenoptions(false)} /> */}
+        {/* <Button title="close" onPress={() => setOpenOptions(false)} /> */}
         <OptionsWrapper>
           <FlatList
             contentContainerStyle={{ flexGrow: 1 }}
@@ -75,7 +75,7 @@ const AppPicker = ({
                       : "")} // customization for cancellationPolicy only
                 icon={item.icon}
                 onPress={() => {
-                  setOpenoptions(false);
+                  setOpenOptions(false);
                   onSelectItem(item);
                 }}
               />

@@ -269,7 +269,7 @@ const ListMap = (props) => {
       <MapBox>
         <AnimatedFlatList
           testID='listing-card-flatlist'
-          ref={ref => { flatListRef = ref }}
+          ref={ref => { let flatListRef = ref }}
           // getItemLayout={getItemLayout}
           horizontal
           scrollEventThrottle={1} //16

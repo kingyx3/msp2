@@ -42,7 +42,7 @@ const BookingDetails = (props) => {
   const address = selectedSpace?.location?.description
   const postcode = selectedSpace?.location?.geoapify?.postcode
   let cancelByTime = host ? moment(booking?.end).add(5, 'days') : moment(booking?.start).add(-1 * booking?.cancellationPolicy?.numberOfHours, 'hours')
-  cancelByTimeFormatted = cancelByTime.format('DD MMM YYYY, ha')
+  let cancelByTimeFormatted = cancelByTime.format('DD MMM YYYY, ha')
   // -------------------
   const isHostAbleToCancel = host && moment(booking?.end).add(5, 'days').valueOf() >= Date.now();
   const isUserAbleToCancel = !host && booking.start >= Date.now();
