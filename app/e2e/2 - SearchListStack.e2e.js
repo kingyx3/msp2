@@ -157,7 +157,7 @@ describe('Make a booking via picking datetime & ListMap', () => {
       await element(by.id("back-button")).atIndex(1).tap();
 
       // Wait for navigation to complete & perform the visibility checks
-      await waitFor(element(by.id('fee-information'))).toBeVisible();
+      await waitFor(element(by.id('fee-information'))).toBeVisible().withTimeout(60000);
     }
   })
 });

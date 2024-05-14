@@ -47,15 +47,23 @@ const SpaceBookings = (props) => {
   const renderItem = ({ item, index }) =>
     <List.Default
       title={
-        (item.bookingIdShort)
+        "Booking Ref: " + item.bookingIdShort
       } //user2.name
-      secondary={('$' + item?.price?.hostEarnings.toString() + "")
+      secondary={('$' + item?.price?.hostEarnings.toString()
+        + "("
+        + (item.status.includes("cancelled")
+          ? "Cancelled"
+          : item.status == "pending_host"
+            ? "Pending"
+            : item.status == "confirmed"
+              ? "Confirmed"
+              : item.status == "confirmed_paid"
+                ? "Confirmed & Paid"
+                : "")
+        + ")")
       } // bugs out if message is an empty
       // image={item?.otherUserAvatar}
-      meta={
-        (moment(item?.start).format("DD MMM YYYY h A"))
-        + ' to '
-        + (moment(item?.end).format("h A"))}
+      meta={[moment(item.start).format("DD-MMM-YYYY, hA"), '-', moment(item.end).format("hA")]}
       onPress={() => props.navigation.navigate("BookingStackModal", {
         screen: 'BookingDetail',
         params: {

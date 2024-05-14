@@ -72,7 +72,7 @@ const Bookings = (props) => {
               testID={index.toString() + "_booking_detail"}
               key={index.toString()}
               image={item.images}
-              property={"Booking Ref: " + item.id.toUpperCase().slice(-6)}
+              property={"Booking Ref: " + item.bookingIdShort}
               title={item.spaceType}
               subtitle={[moment(item.start).format("DD-MMM-YYYY, hA"), '-', moment(item.end).format("hA")]}
               description={item.status.includes("cancelled")
