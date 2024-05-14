@@ -23,13 +23,12 @@ import { DURATION } from "../../config/appConfig"
 import { connect } from "react-redux";
 import { setStart, setEnd } from "../../store/search";
 
-// Testing date params (must remove in production)
-let now = new Date()
-process.env.EXPO_PUBLIC_TYPE == 'TEST' ? now.setUTCHours(26, 0, 0, 0, 0) : now.setMinutes(60, 0, 0);
-
 const isDark = Appearance.getColorScheme() === 'dark'
 
 const RangePicker = (props) => {
+  let now = new Date()
+  process.env.EXPO_PUBLIC_TYPE == 'TEST' ? now.setUTCHours(26, 0, 0, 0, 0) : now.setMinutes(60, 0, 0);
+
   const [startDateTime, setStartDateTime] = useState(now);
   const [duration, setDuration] = useState(DURATION[0]);
   const [isDatePickerVisible, setDatePickerVisibility] = useState(false);
