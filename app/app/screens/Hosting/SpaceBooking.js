@@ -31,13 +31,15 @@ const { width, height } = Dimensions.get('window');
 const SpaceBookings = (props) => {
   const { spaceId, history, pending } = props.route.params
   const spaceBookingsArray = (props.state.spaceBookings)
-    .filter((spaceBooking) => history ? (spaceBooking.end < Date.now() || spaceBooking.cancelled) : spaceBooking.end > Date.now())
+    .filter((spaceBooking) => history ? (spaceBooking.end < Date.now() || spaceBooking.cancelled) : spaceBooking.end > Date.now() && !spaceBooking.cancelled)
     .filter((spaceBooking) => pending ? spaceBooking.status == 'pending_host' : !(spaceBooking.status == 'pending_host'))
     .sort((a, b) => new Date(b.start) - new Date(a.start))
   // console.log(spaceBookingsArray)
   let sum = 0
-  spaceBookingsArray.forEach(element => {
-    sum += element.price.hostEarnings
+  spaceBookingsArray.forEach(spaceBooking => {
+    if(spaceBooking.status.includes("confirmed") ||spaceBooking.status == "pending_host") { 
+    sum += spaceBooking
+}
   });
 
   useEffect(() => {
