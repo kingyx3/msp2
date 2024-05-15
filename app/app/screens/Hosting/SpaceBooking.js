@@ -38,7 +38,7 @@ const SpaceBookings = (props) => {
   let sum = 0
   spaceBookingsArray.forEach(spaceBooking => {
     if(spaceBooking.status.includes("confirmed") ||spaceBooking.status == "pending_host") { 
-    sum += spaceBooking
+    sum += spaceBooking.price.hostEarnings
 }
   });
 
