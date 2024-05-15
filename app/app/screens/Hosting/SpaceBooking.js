@@ -52,7 +52,7 @@ const SpaceBookings = (props) => {
         "Booking Ref: " + item.bookingIdShort
       } //user2.name
       secondary={('$' + item?.price?.hostEarnings.toString()
-        + "("
+        + " ("
         + (item.status.includes("cancelled")
           ? "Cancelled"
           : item.status == "pending_host"
