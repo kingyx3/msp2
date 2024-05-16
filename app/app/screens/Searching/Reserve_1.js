@@ -243,7 +243,7 @@ const Reserve_1 = (props) => {
       <Reserve>
         <Button.BtnContain
           testID="book-now-button"
-          label="Book now"
+          label={selectedSpace.needHostConfirm ? "Request Booking" : "Book now"}
           // color={(loading || !paymentSheetEnabled) ? colors.lightgray : colors.red}
           // disabled={loading || !paymentSheetEnabled}
           color={loading ? colors.lightgray : colors.red}

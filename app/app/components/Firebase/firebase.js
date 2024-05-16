@@ -121,14 +121,10 @@ export const getUserName = async (userId) => {
   try {
     const userNameRef = ref(database, `users/${userId}`);
     const snapshot = await get(userNameRef);
-
-    console.log('snapshot', snapshot)
-
     if (snapshot.exists()) {
       const userData = snapshot.val();
-      console.log('userData', userData)
       const userName = Object.values(userData)[0];
-      console.log('userName', userName)
+      // console.log('userName', userName)
       return userName
     } else {
       // Handle the case where the user data doesn't exist
