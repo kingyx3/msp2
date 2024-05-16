@@ -34,7 +34,8 @@ import {
   getAvatarLink,
   // setSelectedSpace,
   // clearSelectedSpace,
-  showOfflineAlert
+  showOfflineAlert,
+  fetchSpaceReviews
 } from "../../components/Firebase/firebase";
 //import data
 import { review } from "../../data/detailreview";
@@ -52,9 +53,15 @@ const SpaceDetail = (props) => {
   const selectedSpace = props.route.params.selectedSpace
   const opacityValue = new Animated.Value(0);
   const [headerOpacity, setHeaderOpacity] = useState(opacityValue);
+  const [spaceReviews, setSpaceReviews] = useState({})
 
   useEffect(() => {
-    getUserName(selectedSpace.userId, setUserName)
+    async function fetchUserName(userId) {
+      const userName = await getUserName(userId)
+      setUserName(userName)
+    }
+    fetchUserName(selectedSpace.userId)
+    fetchSpaceReviews(selectedSpace.id, setSpaceReviews)
   }, [])
 
   const renderItem = ({ item, index }) =>
@@ -218,10 +225,10 @@ const SpaceDetail = (props) => {
           {/* Start of review section */}
           <Section>
             <Typography.H2>Reviews</Typography.H2>
-            {selectedSpace?.reviews?.spaceReviewDT
+            {spaceReviews.length > 0
               ? <MarginContainer>
                 <FlatList
-                  data={Object.values(selectedSpace?.reviews?.spaceReviewDT).sort((a, b) => new Date(b.timestamp) - new Date(a.timestamp))}
+                  data={spaceReviews}
                   keyExtractor={(item, index) => index.toString()} // {reviews.index}
                   horizontal
                   decelerationRate={0}
@@ -237,7 +244,7 @@ const SpaceDetail = (props) => {
                     right: CARD_INSET,
                   }}
                 />
-                <Button.BtnTxtUnderline
+                {/* <Button.BtnTxtUnderline
                   label="View more"
                   color={colors.gray}
                   onPress={() => {
@@ -245,9 +252,9 @@ const SpaceDetail = (props) => {
                     // navigation.navigate("Reviews", selectedSpace.id)
                     console.log('Button to open more reviews pressed!')
                   }}
-                />
+                /> */}
               </MarginContainer>
-              : <Typography.P colors={colors.darkgray}>Be the first to leave a review after your experience!</Typography.P>
+              : <Typography.P color={colors.darkgray}>Be the first to leave a review after your experience!</Typography.P>
             }
           </Section>
           <HLine />

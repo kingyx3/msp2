@@ -117,18 +117,22 @@ export const updateUserName = async (name) => {
 };
 
 // Function to get user name
-export const getUserName = async (userId, setUserName) => {
+export const getUserName = async (userId) => {
   try {
     const userNameRef = ref(database, `users/${userId}`);
     const snapshot = await get(userNameRef);
 
+    console.log('snapshot', snapshot)
+
     if (snapshot.exists()) {
       const userData = snapshot.val();
+      console.log('userData', userData)
       const userName = Object.values(userData)[0];
-      setUserName(userName);
+      console.log('userName', userName)
+      return userName
     } else {
       // Handle the case where the user data doesn't exist
-      setUserName('');
+      return
     }
   } catch (error) {
     console.error('Error fetching user data:', error);
@@ -438,15 +442,15 @@ export function setSelectedSpace(selectedSpaceId) {
         // Convert all Timestamps, including nested ones, to ISO strings
         selectedSpace = convertTimestampsToIsoStrings(selectedSpace);
 
-        if (selectedSpace && selectedSpace.reviews && selectedSpace.reviews.spaceReviewDT) {
-          for (const key in selectedSpace.reviews.spaceReviewDT) {
-            if (selectedSpace.reviews.spaceReviewDT[key].hasOwnProperty('userId')) {
-              // Access and run your function on userId here
-              const userId = selectedSpace.reviews.spaceReviewDT[key].userId;
-              selectedSpace.reviews.spaceReviewDT[key].userName = await getUserName(userId, () => { })
-            }
-          }
-        }
+        // if (selectedSpace && selectedSpace.reviews && selectedSpace.reviews.spaceReviewDT) {
+        //   for (const key in selectedSpace.reviews.spaceReviewDT) {
+        //     if (selectedSpace.reviews.spaceReviewDT[key].hasOwnProperty('userId')) {
+        //       // Access and run your function on userId here
+        //       const userId = selectedSpace.reviews.spaceReviewDT[key].userId;
+        //       selectedSpace.reviews.spaceReviewDT[key].userName = await getUserName(userId, () => { })
+        //     }
+        //   }
+        // }
 
         dispatch({ type: "SET_SELECTED_SPACE", payload: { selectedSpace } });
       } else {

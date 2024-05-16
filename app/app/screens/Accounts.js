@@ -53,8 +53,10 @@ const Accounts = (props) => {
   // console.log(imageUri)
 
   useEffect(() => {
-    getUserName(user.id, setUserName)
-
+    async function fetchUserName(userId) {
+      const userName = await getUserName(userId)
+      setUserName(userName)
+    }
     async function fetchAvatar() {
       const res = await fetch(user.avatar)
       if (res.status != 200) {
@@ -65,6 +67,8 @@ const Accounts = (props) => {
         setImageUri(user.avatar)
       }
     }
+
+    fetchUserName(user.id)
 
     if (user.avatar) {
       // setImageUri(user.avatar)

@@ -63,9 +63,16 @@ const Details = ({ navigation, route, state, setSelectedSpace, clearSelectedSpac
   }, [spaceId, selectedSpace])
 
   useEffect(() => {
-    getUserName(hostId, setHostName)
-    fetchSpaceReviews(spaceId, setSpaceReviews)
-  }, [])
+    async function fetchHostName(hostId) {
+      const hostName = await getUserName(hostId)
+      setHostName(hostName)
+      console.log("Host Name is set to " + hostName)
+    }
+    fetchHostName(hostId)
+    if (spaceReviews == {}) {
+      fetchSpaceReviews(spaceId, setSpaceReviews)
+    }
+  }, [hostName, spaceReviews])
 
   const renderItem = ({ item, index }) =>
     <View style={{ width: CARD_WIDTH + CARD_ADJ }}>

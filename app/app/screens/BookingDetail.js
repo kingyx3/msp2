@@ -73,13 +73,24 @@ const BookingDetails = (props) => {
 
   useEffect(() => {
     // console.log(bookingId, '-', spaceId)
+    async function fetchUserName(userId) {
+      const userName = await getUserName(userId)
+      setUserName(userName)
+    }
+    async function fetchHostName(hostId) {
+      const hostName = await getUserName(hostId)
+      setHostName(hostName)
+    }
+
     if (spaceId == selectedSpace.id) {
-      getUserName(selectedSpace.userId, setHostName)
+      fetchHostName(selectedSpace.userId)
+      // getUserName(selectedSpace.userId, setHostName)
     } else {
       props.setSelectedSpace(spaceId)
     }
     if (bookingId == booking.id) {
-      getUserName(booking.userId, setUserName)
+      fetchUserName(booking.userId)
+      // getUserName(booking.userId, setUserName)
     } else {
       props.fetchBooking(bookingId)
     }
