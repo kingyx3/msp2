@@ -57,22 +57,23 @@ const Details = ({ navigation, route, state, setSelectedSpace, clearSelectedSpac
   // Create selector for reviews (by latest datetime (spaceReviewDT), by highest (spaceReviewRTTop), by lowest (spaceReviewRTBtm) ratings)
 
   useEffect(() => {
-    if (selectedSpace.id != spaceId) {
-      setSelectedSpace(spaceId)
-    }
-  }, [spaceId, selectedSpace])
-
-  useEffect(() => {
     async function fetchHostName(hostId) {
       const hostName = await getUserName(hostId)
       setHostName(hostName)
       console.log("Host Name is set to " + hostName)
     }
-    fetchHostName(hostId)
+    if (selectedSpace.id == spaceId) {
+      fetchHostName(hostId)
+    } else {
+      setSelectedSpace(spaceId)
+    }
+  }, [spaceId, selectedSpace])
+
+  useEffect(() => {
     if (spaceReviews == {}) {
       fetchSpaceReviews(spaceId, setSpaceReviews)
     }
-  }, [hostName, spaceReviews])
+  }, [spaceReviews])
 
   const renderItem = ({ item, index }) =>
     <View style={{ width: CARD_WIDTH + CARD_ADJ }}>
