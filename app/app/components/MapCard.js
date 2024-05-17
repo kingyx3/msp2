@@ -22,6 +22,7 @@ const MapCard = ({
   title,
   subtitle,
   description,
+  instantBook,
   rating,
   reviews,
   property,
@@ -77,18 +78,37 @@ const MapCard = ({
           )}
         </View>
         <Title numberOfLines={1}>{title}</Title>
-        {(reviews == 0 || !reviews) ? null :
-          <Rating>
+        {reviews ?
+          < Rating >
             <FontAwesome name="star" color={Colors.red} />
             <SP>{rating}</SP>
             <SP>{`(${reviews})`}</SP>
           </Rating>
+          : null
         }
         {subtitle && <Text>{subtitle}</Text>}
         {description && <Text style={{ color: colors.gray }}>{description}</Text>}
       </Description>
+      {/* Instant Book Status */}
+      {instantBook && <View style={{
+        position: 'absolute',
+        bottom: 10,
+        right: 10,
+        backgroundColor: Colors.red,
+        borderRadius: 15,
+        paddingVertical: 5,
+        paddingHorizontal: 10,
+      }}>
+        <Text style={{
+          fontSize: 12,
+          color: 'white',
+          fontWeight: 'bold',
+        }}>Insta-Book
+        </Text>
+      </View>
+      }
     </Container>
-  </TouchableWithoutFeedback>
+  </TouchableWithoutFeedback >
 
 const Container = styled.View`
   flex-direction: row;

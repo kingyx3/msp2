@@ -409,6 +409,7 @@ export function setSelectedSpaces(spaceType, start, end, spaceSummaryz) {
               'reviews': combinedSpaces[key].ratingCount,
               'rating': rating,
               'userId': combinedSpaces[key].userId,
+              'needHostConfirm': combinedSpaces[key].needHostConfirm,
             })
           }
         }
