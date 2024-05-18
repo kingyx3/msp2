@@ -36,9 +36,13 @@ const SpaceBookings = (props) => {
     .sort((a, b) => new Date(b.start) - new Date(a.start))
   // console.log(spaceBookingsArray)
   let sum = 0
+  let paid = 0
   spaceBookingsArray.forEach(spaceBooking => {
     if(spaceBooking.status.includes("confirmed") ||spaceBooking.status == "pending_host") { 
     sum += spaceBooking.price.hostEarnings
+}
+    if(space booking.status == "confirmed_paid") {
+    paid += spaceBooking.price.hostEarnings
 }
   });
 
@@ -83,6 +87,7 @@ const SpaceBookings = (props) => {
           <Header>
             {/* <H color={colors.red}>Bookings</H> */}
             <P color={colors.black}>{history ? `Total Earned: $${(Math.round(sum * 100) / 100).toFixed(2)}` : `Potential Earnings: $${(Math.round(sum * 100) / 100).toFixed(2)}`}</P>
+            {history && <P colour={colours.black}>Total Paid: ${(Math.round(paid * 100) / 100).toFixed(2)}</P>}
           </Header>
         }
         data={spaceBookingsArray}
