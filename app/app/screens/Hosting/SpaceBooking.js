@@ -87,7 +87,7 @@ const SpaceBookings = (props) => {
           <Header>
             {/* <H color={colors.red}>Bookings</H> */}
             <P color={colors.black}>{history ? `Total Earned: $${(Math.round(sum * 100) / 100).toFixed(2)}` : `Potential Earnings: $${(Math.round(sum * 100) / 100).toFixed(2)}`}</P>
-            {history && <P colour={colours.black}>Total Paid: ${(Math.round(paid * 100) / 100).toFixed(2)}</P>}
+            {history && <P color={colors.black}>{`Total Paid: $${(Math.round(paid * 100) / 100).toFixed(2)}`}</P>}
           </Header>
         }
         data={spaceBookingsArray}
