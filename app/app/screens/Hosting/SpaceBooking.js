@@ -41,7 +41,7 @@ const SpaceBookings = (props) => {
     if(spaceBooking.status.includes("confirmed") ||spaceBooking.status == "pending_host") { 
     sum += spaceBooking.price.hostEarnings
 }
-    if(space booking.status == "confirmed_paid") {
+    if(spaceBooking.status == "confirmed_paid") {
     paid += spaceBooking.price.hostEarnings
 }
   });
