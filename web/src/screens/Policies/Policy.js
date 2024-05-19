@@ -8,10 +8,10 @@ const Policy = () => {
             <Title>Policies</Title>
             <PolicyList>
                 <PolicyItem>
-                    <PolicyLink><Link to="/privacy-policy" style={styles.link}>Privacy Policy</Link></PolicyLink>
+                    <PolicyLink><Link to="/privacy-policy" target="_blank">Privacy Policy</Link></PolicyLink>
                 </PolicyItem>
                 <PolicyItem>
-                    <Link to="/terms-of-service" style={styles.link}>Terms of Service</Link>
+                    <Link to="/terms-of-service" target="_blank">Terms of Service</Link>
                 </PolicyItem>
                 <PolicyItem>
                     <PolicyLink href="/payments-terms-of-service" target="_blank">Payments Terms of Service</PolicyLink>
