@@ -90,7 +90,7 @@ const Listings = (props) => {
       property={selectedSpaceType}
       title={(item.location.suburb ? item.location.suburb : item.location.street) + ', ' + item.location.country}
       subtitle={"$" + item.periodPrice}
-      instantBook={!item.needHostConfirm}
+      caption={item.needHostConfirm ? null : "Insta-Book"}
       rating={item.rating}
       reviews={item.reviews} // number of reviews
       onPress={() => item.third_party ? null : submit(item.id)} //pass marker info?
