@@ -70,7 +70,7 @@ const SpaceDetail = (props) => {
         <Card.Review
           imagexsmall={getAvatarLink(item.userId)}
           title={item.userName}
-          secondary={new Date(item.created).toLocaleDateString('en-US', { month: 'short', year: 'numeric' })} // hh:mmA
+          secondary={new Date(item.created.seconds * 1000).toLocaleDateString('en-US', { month: 'short', year: 'numeric' })} // hh:mmA
           content={item.review}
           rating={item.rating}
         />
