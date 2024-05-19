@@ -22,7 +22,7 @@ const MapCard = ({
   title,
   subtitle,
   description,
-  instantBook,
+  caption,
   rating,
   reviews,
   property,
@@ -90,7 +90,7 @@ const MapCard = ({
         {description && <Text style={{ color: colors.gray }}>{description}</Text>}
       </Description>
       {/* Instant Book Status */}
-      {instantBook && <View style={{
+      {caption && <View style={{
         position: 'absolute',
         bottom: 10,
         right: 10,
@@ -103,7 +103,7 @@ const MapCard = ({
           fontSize: 12,
           color: 'white',
           fontWeight: 'bold',
-        }}>Insta-Book
+        }}>{caption}
         </Text>
       </View>
       }
