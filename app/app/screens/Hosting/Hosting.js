@@ -110,6 +110,7 @@ const Hosting = (props) => {
             notificationCount={pendingHost[item.id]}
             rating={getRating(item.ratingCount, item.ratingTotal)}
             reviews={item.ratingCount} // number of reviews
+            caption={item.disabled ? "Disabled" : null}
             onPress={async () => {
               const networkState = await Network.getNetworkStateAsync();
               if (networkState.isConnected) {
