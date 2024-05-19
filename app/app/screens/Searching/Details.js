@@ -70,10 +70,8 @@ const Details = ({ navigation, route, state, setSelectedSpace, clearSelectedSpac
   }, [spaceId, selectedSpace])
 
   useEffect(() => {
-    if (spaceReviews == {}) {
-      fetchSpaceReviews(spaceId, setSpaceReviews)
-    }
-  }, [spaceReviews])
+     fetchSpaceReviews(selectedSpace.id, setSpaceReviews)
+  }, [])
 
   const renderItem = ({ item, index }) =>
     <View style={{ width: CARD_WIDTH + CARD_ADJ }}>
