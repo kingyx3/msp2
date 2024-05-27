@@ -20,4 +20,5 @@ ios/
 dist/
 
 pc-api-6795295579632533760-300-d0f297d14ac0.json
+*key.json
 encoded-service-account-file.txt
