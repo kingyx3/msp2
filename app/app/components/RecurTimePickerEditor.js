@@ -10,15 +10,19 @@ import { MaterialIcons } from '@expo/vector-icons';
 import Colors from "../config/colors";
 import { getFontSize } from '../config/Typography';
 
-RecurTimePickerEditor.defaultProps = {
-  onChange: null,
-  style: null,
-  dayStyle: null,
-  hours: { 0: 1, 1: 1, 2: 1, 3: 1, 4: 1, 5: 1, 6: 1, 7: 1, 8: 1, 9: 1, 10: 1, 11: 1, 12: 1, 13: 1, 14: 1, 15: 1, 16: 1, 17: 1, 18: 1, 19: 1, 20: 1, 21: 1, 22: 1, 23: 1, }
-}
+// RecurTimePickerEditor.defaultProps = {
+//   onChange: null,
+//   style: null,
+//   dayStyle: null,
+//   hours: { 0: 1, 1: 1, 2: 1, 3: 1, 4: 1, 5: 1, 6: 1, 7: 1, 8: 1, 9: 1, 10: 1, 11: 1, 12: 1, 13: 1, 14: 1, 15: 1, 16: 1, 17: 1, 18: 1, 19: 1, 20: 1, 21: 1, 22: 1, 23: 1, }
+// }
 
-export default function RecurTimePickerEditor(props) {
-  let { onChange, style, dayStyle, hours } = props;
+const RecurTimePickerEditor = ({
+  onChange = null,
+  style = null,
+  dayStyle = null,
+  hours = { 0: 1, 1: 1, 2: 1, 3: 1, 4: 1, 5: 1, 6: 1, 7: 1, 8: 1, 9: 1, 10: 1, 11: 1, 12: 1, 13: 1, 14: 1, 15: 1, 16: 1, 17: 1, 18: 1, 19: 1, 20: 1, 21: 1, 22: 1, 23: 1, }
+}) => {
   /**
    * Function for toggling the day
    *
@@ -26,7 +30,7 @@ export default function RecurTimePickerEditor(props) {
    */
   //const [days, setDays] = useState({ 1:0, 2:1 , 3:1 , 4:1 , 5:1, 6:0, 0:0,})
   const [hoursContainer, setHoursContainer] = useState([])
-
+  console.log('hours2', hours)
   function handleChange(hours) {
     onChange(hours)
     const innerHoursContainer = []
@@ -163,3 +167,5 @@ const styles = StyleSheet.create({
     margin: 3
   }
 });
+
+export default RecurTimePickerEditor
