@@ -1,4 +1,60 @@
 // SearchStackModal & ListStackModal
+
+const navigateToHomeScreen = async () => {
+  await waitFor(element(by.text('Wallet Balance'))).toBeVisible().withTimeout(30000);
+  await waitFor(element(by.id('search-bar'))).toBeVisible().withTimeout(30000);
+  await expect(element(by.text("Continue with Email"))).not.toBeVisible();
+
+  const walletBalanceLabel = (await element(by.id("wallet-balance")).getAttributes()).label;
+  const match = walletBalanceLabel.match(/(\d+\.\d+)/);
+  global.beginWalletBalance = match ? parseFloat(match[0]) : 0;
+};
+
+const navigateToListingDetailsScreen = async (type) => {
+  await element(by.id('0_' + type)).tap();
+  await waitFor(element(by.id('image-carousel'))).toBeVisible().withTimeout(60000);
+  await waitFor(element(by.id('confirm-details-button'))).toBeVisible().withTimeout(60000);
+};
+
+const navigateToReservationScreen = async () => {
+  await element(by.id('confirm-details-button')).tap();
+  await waitFor(element(by.id('fee-information'))).toBeVisible().withTimeout(60000);
+  await waitFor(element(by.id('book-now-button'))).toBeVisible().withTimeout(60000);
+};
+
+const attemptBooking = async () => {
+  const reservationCostLabel = (await element(by.id("reservation-cost")).getAttributes()).label;
+  const reservationCost = parseFloat(reservationCostLabel.replace(/[^0-9.]/g, ''));
+  console.log('reservationCost: ', reservationCost);
+  global.excessBalance = global.beginWalletBalance - reservationCost;
+  console.log('Ending Balance: ', global.excessBalance);
+
+  await element(by.id('book-now-button')).tap();
+
+  try {
+    await waitFor(element(by.text('Requires host confirmation'))).toBeVisible().withTimeout(10000);
+    await element(by.text('Proceed')).tap();
+  } catch (e) {
+    console.log('This space does not require host confirmation. i.e. Immediate approval');
+    console.log(e);
+  }
+
+  if (global.excessBalance > 0) {
+    console.log('Sufficient Balance');
+    await waitFor(element(by.text('Success'))).toBeVisible().withTimeout(60000);
+    await element(by.text('Ok')).tap();
+    await waitFor(element(by.text('Quick Search'))).toBeVisible().withTimeout(60000);
+  } else {
+    console.log('Insufficient Balance');
+    await waitFor(element(by.text('Error'))).toBeVisible().withTimeout(60000);
+    await expect(element(by.text('Sorry, you do not have sufficient funds in your wallet, please top up at least SGD ' + (Math.round((-1 * global.excessBalance) * 100) / 100).toString() + '.'))).toBeVisible();
+    await element(by.text('Ok')).tap();
+    await waitFor(element(by.id('balance-container'))).toBeVisible().withTimeout(60000);
+    await element(by.id("back-button")).atIndex(1).tap();
+    await waitFor(element(by.id('fee-information'))).toBeVisible().withTimeout(60000);
+  }
+};
+
 describe('Make a booking via picking datetime & ListMap', () => {
   beforeAll(async () => {
     await device.launchApp();
@@ -11,29 +67,16 @@ describe('Make a booking via picking datetime & ListMap', () => {
     await element(by.id('submit-email-button')).tap();
 
     // Wait for navigation to complete & perform the visibility checks
-    // await waitFor(element(by.text('Quick Search'))).toBeVisible().withTimeout(60000);
-    await waitFor(element(by.text('Wallet Balance'))).toBeVisible().withTimeout(30000);
-    await waitFor(element(by.id('search-bar'))).toBeVisible().withTimeout(30000);
-    await expect(element(by.text("Continue with Email"))).not.toBeVisible()
-    const walletBalanceLabel = (await element(by.id("wallet-balance")).getAttributes()).label
-    // Regular expression to match the numeric value
-    const match = walletBalanceLabel.match(/(\d+\.\d+)/);
-    console.log('Wallet Balance: ', walletBalanceLabel, match)
-    // Parsing the string to a float
-    global.beginWalletBalance = match ? parseFloat(match[0]) : 0;
+    await navigateToHomeScreen()
   });
 
   it('Navigate to SpaceTypePicker screen', async () => {
     await element(by.id('search-bar')).tap();
-
-    // Wait for navigation to complete & perform the visibility checks
     await waitFor(element(by.text('Badminton Court'))).toBeVisible().withTimeout(60000);
   });
 
   it('Navigate to RangePicker screen', async () => {
     await element(by.text('Badminton Court')).tap();
-
-    // Wait for navigation to complete & perform the visibility checks
     await waitFor(element(by.id('open-date-picker'))).toBeVisible().withTimeout(60000);
     await waitFor(element(by.id('open-time-picker'))).toBeVisible().withTimeout(60000);
     await expect(element(by.id('open-time-picker'))).toBeVisible();
@@ -102,92 +145,21 @@ describe('Make a booking via picking datetime & ListMap', () => {
     await expect(element(by.id('0_listing'))).toBeVisible();
   });
 
-  it('Navigate to Listing Details screen', async () => {
-    await element(by.id('0_listing')).tap();
+  it('Navigate to Listing Details screen', async () => navigateToListingDetailsScreen('listing'));
 
-    // Wait for navigation to complete & perform the visibility checks
-    await waitFor(element(by.id('image-carousel'))).toBeVisible().withTimeout(60000);
-    await waitFor(element(by.id('confirm-details-button'))).toBeVisible().withTimeout(60000);
-  });
+  it('Navigate to Reservation screen', navigateToReservationScreen);
 
-  it('Navigate to Reservation screen', async () => {
-    await element(by.id('confirm-details-button')).tap();
-
-    // Wait for navigation to complete & perform the visibility checks
-    await waitFor(element(by.id('fee-information'))).toBeVisible().withTimeout(60000);
-    await waitFor(element(by.id('book-now-button'))).toBeVisible().withTimeout(60000);
-  });
-
-  it('Attempt Booking (Navigate back to Home screen / Insufficient balance)', async () => {
-    // Test changing of court number before booking
-    const reservationCostLabel = (await element(by.id("reservation-cost")).getAttributes()).label
-    const reservationCost = parseFloat(reservationCostLabel.replace(/[^0-9.]/g, ''));
-    console.log('reservationCost: ', reservationCost)
-    global.excessBalance = global.beginWalletBalance - reservationCost
-    console.log('Ending Balance: ', global.excessBalance)
-
-    await element(by.id('book-now-button')).tap();
-
-    try {
-      await waitFor(element(by.text('Requires host confirmation'))).toBeVisible().withTimeout(10000);
-      await element(by.text('Proceed')).tap();
-    } catch (e) {
-      console.log('This space does not require host confirmation. i.e. Immediate approval')
-      console.log(e)
-    }
-
-    if (global.excessBalance > 0) {
-      console.log('Sufficient Balance')
-      // Wait for modal to load, perform the visibility checks and navigate to Home
-      await waitFor(element(by.text('Success'))).toBeVisible().withTimeout(60000);
-      await element(by.text('Ok')).tap();
-
-      // Wait for navigation to complete & perform the visibility checks
-      await waitFor(element(by.text('Quick Search'))).toBeVisible().withTimeout(60000);
-    } else {
-      console.log('Insufficient Balance')
-      // Wait for modal to load, perform the visibility checks and navigate to Home
-      await waitFor(element(by.text('Error'))).toBeVisible().withTimeout(60000);
-      await expect(element(by.text('Sorry, you do not have sufficient funds in your wallet, please top up at least SGD ' + (Math.round((-1 * global.excessBalance) * 100) / 100).toString() + '.'))).toBeVisible();
-      await element(by.text('Ok')).tap();
-
-      // Wait for navigation to complete & perform the visibility checks
-      await waitFor(element(by.id('balance-container'))).toBeVisible().withTimeout(60000);
-
-      await element(by.id("back-button")).atIndex(1).tap();
-
-      // Wait for navigation to complete & perform the visibility checks
-      await waitFor(element(by.id('fee-information'))).toBeVisible().withTimeout(60000);
-    }
-  })
+  it('Attempt Booking (Navigate back to Home screen / Insufficient balance)', attemptBooking)
 });
 
 
 describe('Make a booking via quick search & Listings', () => {
   beforeAll(async () => {
     await device.reloadReactNative()
-    // await device.launchApp();
     await device.disableSynchronization(); // Disable synchronization
   });
 
-  it('Navigate to Home screen (Dev Authentication)', async () => {
-    // // Already authenticated
-    // await element(by.id('email-input')).replaceText('kingyx3@hotmail.com');
-    // await element(by.id('welcome-text')).multiTap(3);
-    // await element(by.id('submit-email-button')).tap();
-
-    // Wait for navigation to complete & perform the visibility checks
-    // await waitFor(element(by.text('Quick Search'))).toBeVisible().withTimeout(60000);
-    await waitFor(element(by.text('Wallet Balance'))).toBeVisible().withTimeout(30000);
-    await waitFor(element(by.id('search-bar'))).toBeVisible().withTimeout(30000);
-    await expect(element(by.text("Continue with Email"))).not.toBeVisible()
-    const walletBalanceLabel = (await element(by.id("wallet-balance")).getAttributes()).label
-    // Regular expression to match the numeric value
-    const match = walletBalanceLabel.match(/(\d+\.\d+)/);
-    console.log('Wallet Balance: ', walletBalanceLabel, match)
-    // Parsing the string to a float
-    global.beginWalletBalance = match ? parseFloat(match[0]) : 0;
-  });
+  it('Navigate to Home screen (Dev Authentication)', navigateToHomeScreen); // Already authenticated
 
   it('Navigate to Listings screen (Shortcut)', async () => {
     await element(by.id('0_quick_search')).tap();
@@ -224,62 +196,9 @@ describe('Make a booking via quick search & Listings', () => {
     await waitFor(element(by.id('back-button-x'))).toBeVisible();
   });
 
-  it('Navigate to Listing Details screen', async () => {
-    await element(by.id('0_listmap')).tap();
+  it('Navigate to Listing Details screen', async () => navigateToListingDetailsScreen('listmap'));
 
-    // Wait for navigation to complete & perform the visibility checks
-    await waitFor(element(by.id('image-carousel'))).toBeVisible().withTimeout(60000);
-    await waitFor(element(by.id('confirm-details-button'))).toBeVisible().withTimeout(60000);
-  });
+  it('Navigate to Reservation screen', navigateToReservationScreen);
 
-  it('Navigate to Reservation screen', async () => {
-    await element(by.id('confirm-details-button')).tap();
-
-    // Wait for navigation to complete & perform the visibility checks
-    await waitFor(element(by.id('fee-information'))).toBeVisible().withTimeout(60000);
-    await waitFor(element(by.id('book-now-button'))).toBeVisible().withTimeout(60000);
-  });
-
-  it('Attempt Booking (Navigate back to Home screen / Insufficient balance)', async () => {
-    // Test changing of court number before booking
-    const reservationCostLabel = (await element(by.id("reservation-cost")).getAttributes()).label
-    const reservationCost = parseFloat(reservationCostLabel.replace(/[^0-9.]/g, ''));
-    console.log('reservationCost: ', reservationCost)
-    global.excessBalance = global.beginWalletBalance - reservationCost
-    console.log('Ending Balance: ', global.excessBalance)
-
-    await element(by.id('book-now-button')).tap();
-
-    try {
-      await waitFor(element(by.text('Requires host confirmation'))).toBeVisible().withTimeout(10000);
-      await element(by.text('Proceed')).tap();
-    } catch (e) {
-      console.log('This space does not require host confirmation. i.e. Immediate approval')
-      console.log(e)
-    }
-
-    if (global.excessBalance > 0) {
-      console.log('Sufficient Balance')
-      // Wait for modal to load, perform the visibility checks and navigate to Home
-      await waitFor(element(by.text('Success'))).toBeVisible().withTimeout(60000);
-      await element(by.text('Ok')).tap();
-
-      // Wait for navigation to complete & perform the visibility checks
-      await waitFor(element(by.text('Quick Search'))).toBeVisible().withTimeout(60000);
-    } else {
-      console.log('Insufficient Balance')
-      // Wait for modal to load, perform the visibility checks and navigate to Home
-      await waitFor(element(by.text('Error'))).toBeVisible().withTimeout(60000);
-      await expect(element(by.text('Sorry, you do not have sufficient funds in your wallet, please top up at least SGD ' + (Math.round((-1 * global.excessBalance) * 100) / 100).toString() + '.'))).toBeVisible();
-      await element(by.text('Ok')).tap();
-
-      // Wait for navigation to complete & perform the visibility checks
-      await waitFor(element(by.id('balance-container'))).toBeVisible().withTimeout(60000);
-
-      await element(by.id("back-button")).atIndex(1).tap();
-
-      // Wait for navigation to complete & perform the visibility checks
-      await waitFor(element(by.id('fee-information'))).toBeVisible().withTimeout(60000);
-    }
-  })
+  it('Attempt Booking (Navigate back to Home screen / Insufficient balance)', attemptBooking)
 });
