@@ -1,5 +1,7 @@
 export default {
   red: "#7D0292", //dark purple
+  purple: "#7D0292",
+  darkpurple: "#5a2d82",
   oldred: "#f15c61",
   blue: "#00a699",
   faintgray: "#f4f4f4",
