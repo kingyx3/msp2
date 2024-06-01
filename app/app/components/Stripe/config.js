@@ -1,1 +1,0 @@
-export const API_URL = "https://us-central1-makeshiftplans.cloudfunctions.net/widgets" //"https://expo-stripe-server-example.glitch.me"
