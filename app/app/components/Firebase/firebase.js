@@ -1029,20 +1029,22 @@ const uploadImage = async (uri, spaceId, i) => {
 export function calcPeriodPriceExclFees(start, end, price, peakPrice, offPeakPrice, openingHours) {
   let total = 0;
   let current = start
-  while (current < end && openingHours) {
-    const date = new Date(current);
-    const dayOfWeek = date.getUTCDay(); // Sunday = 0, Monday = 1, .... Saturday = 6
-    const currentHour = date.getUTCHours();
-    const index = dayOfWeek * 24 + currentHour
-    const priceType = openingHours[index];
-    if (priceType === 1) {
-      total += price;
-    } else if (priceType === 2) {
-      total += peakPrice;
-    } else if (priceType === 3) {
-      total += offPeakPrice;
+  if (openingHours) {
+    while (current < end) {
+      const date = new Date(current);
+      const dayOfWeek = date.getUTCDay(); // Sunday = 0, Monday = 1, .... Saturday = 6
+      const currentHour = date.getUTCHours();
+      const index = dayOfWeek * 24 + currentHour
+      const priceType = openingHours[index];
+      if (priceType === 1) {
+        total += price;
+      } else if (priceType === 2) {
+        total += peakPrice;
+      } else if (priceType === 3) {
+        total += offPeakPrice;
+      }
+      current += 60 * 60 * 1000
     }
-    current += 60 * 60 * 1000
   }
   return total;
 }

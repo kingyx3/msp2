@@ -1,11 +1,39 @@
 import React from "react";
-import { TouchableOpacity, TouchableWithoutFeedback, View, Platform } from "react-native";
-
+import { TouchableOpacity, TouchableWithoutFeedback, View, Platform, StyleSheet, Text } from "react-native";
+import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen';
 import { EvilIcons, FontAwesome } from "@expo/vector-icons";
 
 import styled from "styled-components/native";
 import colors from "../config/colors";
 import * as Typography from "../config/Typography";
+
+export const BtnContainNew = ({ color, disabled, label, onPress, icon, size, testID }) =>
+  <TouchableOpacity
+    style={styles.button}
+    disabled={disabled}
+    color={disabled ? colors.gray : colors.purple}
+    onPress={onPress}
+    testID={testID}
+  >
+    <Text style={styles.buttonText}>{label}</Text>
+  </TouchableOpacity>
+
+
+const styles = StyleSheet.create({
+  button: {
+    backgroundColor: '#5a2d82',
+    paddingVertical: hp('2%'),
+    paddingHorizontal: hp('1.5%'),
+    borderRadius: 5,
+    width: '100%',
+    alignItems: 'center',
+    marginBottom: hp('4%'),  // Increased padding between the button and the text above
+  },
+  buttonText: {
+    color: '#fff',
+    fontSize: wp('4%'),
+  },
+})
 
 export const BtnContain = ({ color, disabled, label, onPress, icon, size, testID }) => {
   return (
