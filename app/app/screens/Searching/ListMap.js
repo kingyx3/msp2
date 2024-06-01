@@ -160,23 +160,15 @@ const ListMap = (props) => {
     // console.log('xaf:',x)
     // _scrollView.current.scrollTo({ x: x, y: 0, animated: false });
     // flatListRef.scrollToIndex({animated: false, index: markerID});
-    flatListRef.scrollToOffset({ animated: false, offset: x });
+    flatListRef.current.scrollToOffset({ animated: false, offset: x });
     animateToRegion(x);
     // console.log('x', x)
     // console.log('CARD_INSET', CARD_INSET)
   };
 
-  // const getItemLayout = (data, index) => {
-  //   let LENGTH = CARD_WIDTH + CARD_ADJ
-  //   let offset = LENGTH * index
-  //   if (Platform.OS === "ios") {
-  //     offset = offset - CARD_INSET;
-  //   }
-  //   return ({ length: LENGTH, offset, index })
-  // }
-
   const _map = useRef(null);
   // const _scrollView = useRef(null);
+  const flatListRef = useRef(null);
   const renderItem = ({ item, index }) =>
     <MapCard
       testID={index.toString() + "_listmap"}
@@ -270,7 +262,7 @@ const ListMap = (props) => {
       <MapBox>
         <AnimatedFlatList
           testID='listing-card-flatlist'
-          ref={ref => { let flatListRef = ref }}
+          ref={flatListRef}
           // getItemLayout={getItemLayout}
           horizontal
           scrollEventThrottle={1} //16

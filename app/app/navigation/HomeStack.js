@@ -1,27 +1,17 @@
-import React, { useEffect, useState } from 'react';
-
-//import navigation
+import React from 'react';
 import { createStackNavigator } from '@react-navigation/stack';
-// import HomeTab from './HomeTab';
-// import ListStack from './ListStack';
 import { Platform } from 'react-native';
-//import screens
-import Home from "../screens/Searching/Home";
+import styled from 'styled-components/native';
+
+// Import screens
+import Home from '../screens/Searching/Home';
 import TopUp from '../screens/Searching/TopUp';
-import RangePicker from '../screens/Searching/RangePicker';
 import Listings from '../screens/Searching/Listings';
 import ListMap from '../screens/Searching/ListMap';
-//import AddGuest from "../screens/AddGuest";
-//import styles and assets
-import styled from 'styled-components/native';
-// import { EvilIcons } from '@expo/vector-icons';
-// import { connect } from "react-redux";
-// import { bindActionCreators } from 'redux'
 
 const Stack = createStackNavigator();
 
-const HomeStack = (props) => {
-
+const HomeStack = () => {
   return (
     <Stack.Navigator>
       <Stack.Screen
@@ -45,7 +35,7 @@ const HomeStack = (props) => {
         options={{ headerShown: false }}
       />
     </Stack.Navigator>
-  )
+  );
 };
 
 const IconWrapper = styled.View`
