@@ -35,7 +35,7 @@ const Container = styled.Text`
 `;
 
 const styledText = (Component, fontSize, extraStyles = {}) => styled(Component)`
-  font-size: ${Platform.OS === "ios" ? fontSize + "px" : fontSize + "px"};
+  font-size: ${fontSize + "px"};
   ${extraStyles}
 `;
 

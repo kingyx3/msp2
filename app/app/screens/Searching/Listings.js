@@ -7,7 +7,6 @@ import * as Network from 'expo-network';
 //import components
 import { NavBar } from "../../components/NavBar";
 import * as Button from "../../components/Button";
-import SliderView from "../../patterns/SliderView";
 import MapCard from "../../components/MapCard";
 
 //import screens

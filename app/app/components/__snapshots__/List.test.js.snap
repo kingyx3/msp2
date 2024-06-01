@@ -61,7 +61,9 @@ exports[`Default Component renders icon correctly - Default 1`] = `
               }
             }
           >
-            <Text>
+            <Text
+              style={null}
+            >
               <Text
                 style={
                   [
@@ -172,17 +174,21 @@ exports[`LogsList Component renders icon correctly - LogsList 1`] = `
           }
         >
           <Text
-            style={
-              [
-                {
-                  "fontSize": 5.4,
-                },
-                {
-                  "color": undefined,
-                },
-              ]
-            }
-          />
+            style={null}
+          >
+            <Text
+              style={
+                [
+                  {
+                    "fontSize": 5.4,
+                  },
+                  {
+                    "color": undefined,
+                  },
+                ]
+              }
+            />
+          </Text>
         </Text>
       </View>
     </View>
@@ -206,7 +212,9 @@ exports[`LogsList Component renders icon correctly - LogsList 1`] = `
             }
           }
         >
-          <Text>
+          <Text
+            style={null}
+          >
             <Text
               style={
                 [
@@ -272,7 +280,9 @@ exports[`LogsList Component renders icon correctly - LogsList 1`] = `
           }
         }
       >
-        <Text>
+        <Text
+          style={null}
+        >
           <Text
             style={
               [
@@ -399,7 +409,9 @@ exports[`UserList Component renders icon correctly - UserList 1`] = `
                     }
                   }
                 >
-                  <Text>
+                  <Text
+                    style={null}
+                  >
                     <Text
                       style={
                         [
@@ -428,17 +440,21 @@ exports[`UserList Component renders icon correctly - UserList 1`] = `
                   }
                 >
                   <Text
-                    style={
-                      [
-                        {
-                          "fontSize": 5.4,
-                        },
-                        {
-                          "color": "#333333",
-                        },
-                      ]
-                    }
-                  />
+                    style={null}
+                  >
+                    <Text
+                      style={
+                        [
+                          {
+                            "fontSize": 5.4,
+                          },
+                          {
+                            "color": "#333333",
+                          },
+                        ]
+                      }
+                    />
+                  </Text>
                 </Text>
               </View>
             </View>
@@ -461,7 +477,9 @@ exports[`UserList Component renders icon correctly - UserList 1`] = `
                     }
                   }
                 >
-                  <Text>
+                  <Text
+                    style={null}
+                  >
                     <Text
                       style={
                         [
