@@ -37,6 +37,8 @@ import {
 } from '../../store/host';
 import { getTimingDiffFromUTC, getCancellationPolicies } from '../../components/Firebase/firebase';
 
+// let x = [0, 0, 0, 0, 0, 0, 0, 0, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 0, 0, 0, 0, 0, 0]
+
 const HostingEdit4 = (props) => {
   const { editMode, selectedSpace, defaultWeekday, defaultSaturday, defaultSunday } = props.route.params
   const [cancellationPolicies, setCancellationPolicies] = useState([])
@@ -67,9 +69,18 @@ const HostingEdit4 = (props) => {
       const shiftedArr = selectedSpace.openingHours.splice(-timeDiffHours);
       const adjustedToLocalOpeningHours = shiftedArr.concat(selectedSpace.openingHours);
 
-      setSundayRule(adjustedToLocalOpeningHours.slice(0 * 24, 1 * 24))
-      setWeekdayRule(adjustedToLocalOpeningHours.slice(1 * 24, 2 * 24))
-      setSaturdayRule(adjustedToLocalOpeningHours.slice(6 * 24, 7 * 24))
+      let oldSundayRule = adjustedToLocalOpeningHours.slice(0 * 24, 1 * 24)
+      let oldWeekdayRule = adjustedToLocalOpeningHours.slice(1 * 24, 2 * 24)
+      let oldSaturdayRule = adjustedToLocalOpeningHours.slice(6 * 24, 7 * 24)
+
+      // Replace (old) normal price with 1, peak price with 2, and off peak price with 3
+      oldSundayRule = revertPricesInOpeningHours(oldSundayRule, selectedSpace.price, selectedSpace.peakPrice, selectedSpace.offPeakPrice)
+      oldWeekdayRule = revertPricesInOpeningHours(oldWeekdayRule, selectedSpace.price, selectedSpace.peakPrice, selectedSpace.offPeakPrice)
+      oldSaturdayRule = revertPricesInOpeningHours(oldSaturdayRule, selectedSpace.price, selectedSpace.peakPrice, selectedSpace.offPeakPrice)
+
+      setSundayRule(oldSundayRule)
+      setWeekdayRule(oldWeekdayRule)
+      setSaturdayRule(oldSaturdayRule)
       setMonthsAhead(selectedSpace.monthsAhead)
       setCancellationPolicy(selectedSpace.cancellationPolicy)
       setNeedHostConfirm(selectedSpace.needHostConfirm)
@@ -79,6 +90,7 @@ const HostingEdit4 = (props) => {
 
 
   const onSubmit = (ruleDays, hours) => {
+    console.log('hours', hours)
     if (ruleDays[0] == 0) {
       setWeekdaySet(true);
       setWeekdayRule(hours);
@@ -299,3 +311,48 @@ export default connect(null, {
   setCancellationPolicy,
   setNeedHostConfirm
 })(HostingEdit4);
+
+function revertPricesInOpeningHours(openingHours, price, peakPrice, offPeakPrice) {
+  for (let i = 0; i < openingHours.length; i++) {
+    switch (openingHours[i]) {
+      case 0:
+        openingHours[i] = 0;
+        break;
+      case price: // normal
+        openingHours[i] = 1;
+        break;
+      case peakPrice: // peak
+        openingHours[i] = 2;
+        break;
+      case offPeakPrice: // offPeak
+        openingHours[i] = 3;
+        break;
+      default:
+        break;
+    }
+  }
+  return openingHours;
+}
+
+// hostingedit 8 screen
+// function setPricesInOpeningHours(openingHours, price, peakPrice, offPeakPrice) {
+//   for (let i = 0; i < openingHours.length; i++) {
+//     switch (openingHours[i]) {
+//       case 0:
+//         openingHours[i] = 0;
+//         break;
+//       case 1: // normal
+//         openingHours[i] = price;
+//         break;
+//       case 2: // peak
+//         openingHours[i] = peakPrice;
+//         break;
+//       case 3: // offPeak
+//         openingHours[i] = offPeakPrice;
+//         break;
+//       default:
+//         break;
+//     }
+//   }
+//   return openingHours;
+// }
