@@ -10,24 +10,15 @@ import {
   Modal,
   Alert,
 } from 'react-native';
-// import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
+
 //import components
-// import AppForm from '../../components/forms/AppForm';
-// import AppPicker from '../../components/AppPicker';
 import OpeningHours from '../../components/OpeningHours';
-//import Counter from "../components/Counter";
-// import RuleMakerEditor from '../../components/RuleMakerEditor';
-// import DatePicker from 'react-native-datepicker'
+
 //import styles and assets
 import styled from 'styled-components/native';
 import * as Typography from '../../config/Typography';
 import colors from '../../config/colors';
 import * as MyButton from '../../components/Button';
-// import Colors from '../../config/colors';
-// import { Button } from 'react-native-elements';
-// import Icon from 'react-native-vector-icons/FontAwesome';
-//import { Button } from 'react-native-paper';
-//import redux
 import { connect } from 'react-redux';
 import {
   setPrice,
