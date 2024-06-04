@@ -95,7 +95,6 @@ const SpaceAvailability = (props) => {
               for (let timeSlot in dbEvents) {
                 const year = new Date(+timeSlot).getFullYear()
                 if (dbEvents[timeSlot].length === newDbEvents[timeSlot].length && dbEvents[timeSlot].every((element, index) => element === newDbEvents[timeSlot][index])) { // Array content comparison
-                  null
                 } else {
                   // Splitting the inputs by year for faster backend updates
                   if (updateDbEvents[year]) {

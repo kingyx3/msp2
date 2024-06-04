@@ -43,22 +43,6 @@ const ListStackModal = ({ navigation, route }) => {
                     ),
                 }}
             />
-            {/* <Stack.Screen
-                name="Amenities"
-                component={Amenities}
-                options={{
-                    title: false,
-                    headerBackTitleVisible: false,
-                    headerStyle: {
-                        height: 60,
-                    },
-                    headerBackImage: () => (
-                        <IconWrapper>
-                            <EvilIcons name="chevron-left" size={30} />
-                        </IconWrapper>
-                    ),
-                }}
-            /> */}
             <Stack.Screen
                 name="Description"
                 component={Description}

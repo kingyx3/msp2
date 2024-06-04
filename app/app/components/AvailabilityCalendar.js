@@ -8,7 +8,7 @@ import colors from '../config/colors';
 import * as Typography from '../config/Typography';
 import { FontAwesome } from '@expo/vector-icons'; // Assuming you are using Expo
 import moment from 'moment'
-options = {
+const options = {
     hour: 'numeric', hour12: true
 }
 const { width, height } = Dimensions.get('window');

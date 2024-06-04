@@ -43,8 +43,6 @@ const OpeningHours = ({ title, start, setStart, end, setEnd, fullDay, setFullDay
     } else if (type == "end") {
       setShowEndDatePicker(!showEndDatePicker)
       setEnd(chosen)
-    } else {
-      null
     }
   }
 

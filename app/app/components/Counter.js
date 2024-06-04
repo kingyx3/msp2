@@ -72,8 +72,4 @@ const CountWrapper = styled.View`
   width: 40%;
 `;
 
-const Number = styled.Text`
-  text-align: center;
-`;
-
 export default Counter;

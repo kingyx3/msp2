@@ -61,7 +61,9 @@ const RangePicker = (props) => {
   const handleConfirm = (date) => {
     setDatePickerVisibility(false)
     let selectedDateTime = new Date(date);
-    selectedDateTime.getMinutes() === 0 ? null : selectedDateTime.setMinutes(60);
+    if (selectedDateTime.getMinutes() !== 0) {
+      selectedDateTime.setMinutes(60);
+    }
     if (now <= selectedDateTime) {
       setStartDateTime(selectedDateTime);
     } else {

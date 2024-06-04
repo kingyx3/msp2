@@ -219,7 +219,6 @@ const ListMap = (props) => {
         maxZoomLevel={15} // default => 20
         onRegionChangeComplete={async (region, { isGesture }) => {
           if (region.longitude == 0) {
-            null
           } else {
             _map?.current?.animateToRegion(
               region, 350
@@ -355,7 +354,7 @@ const CustomMarker = styled.View`
 
 const MapBox = styled.View`
   position: absolute;
-  margin-top: ${Platform.OS === "ios" ? "250px" : "250px"};
+  margin-top: 250px;
   border-radius: 6px;
   align-self: center;
   bottom: 10px;

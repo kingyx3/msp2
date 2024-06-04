@@ -622,7 +622,6 @@ export async function activateSpace(spaceId) {
 }
 // *Function to delete an space (SPACE-D)
 export function deleteSpace(spaceId) { // need to beware of dependencies i.e. previous bookings etc causing orphaned.. maybe deleted = true?
-  null
 }
 
 // Function to create a booking (BOOKING-C) (XR+XW+2W) => XR depends on allspacesavailability (number of dates involved)

@@ -136,7 +136,7 @@ const Back = styled.Text`
 
 const BackBtn = styled.View`
   position: absolute;
-  margin-top: ${Platform.OS === "ios" ? "5px" : "5px"};
+  margin-top: 5px;
 `;
 
 const Title = styled.Text``;

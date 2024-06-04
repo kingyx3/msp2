@@ -36,7 +36,7 @@ const AppPicker = ({
     <>
       <TouchableWithoutFeedback testID={testID} onPress={() => {
         if (disabled) {
-          null
+          setOpenOptions(false)
         } else {
           setOpenOptions(true)
         }
@@ -98,7 +98,7 @@ const Container = styled.View`
 `;
 
 const CloseBtn = styled.View`
-  margin-top: ${Platform.OS === "ios" ? "40px" : "40px"};
+  margin-top: 40px;
   margin-left: 20px;
   border-radius: 6px;
   padding: 4px;

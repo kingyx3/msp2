@@ -41,7 +41,6 @@ describe('Hosting - Setup payments & Create a new Space', () => {
       create = true
     } else {
       // "Setup Payments"
-      null
     }
 
   });
