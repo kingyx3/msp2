@@ -90,7 +90,7 @@ const HostingEdit4 = (props) => {
 
 
   const onSubmit = (ruleDays, hours) => {
-    console.log('hours', hours)
+    // console.log('hours', hours)
     if (ruleDays[0] == 0) {
       setWeekdaySet(true);
       setWeekdayRule(hours);

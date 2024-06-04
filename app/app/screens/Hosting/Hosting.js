@@ -16,7 +16,6 @@ import styled from "styled-components/native";
 import * as Typography from "../../config/Typography";
 // import { H } from "../../config/Typography";
 import colors from "../../config/colors";
-import * as Cards from "../../components/Cards";
 import { getRating } from "../../components/Firebase/firebase";
 
 //import data
