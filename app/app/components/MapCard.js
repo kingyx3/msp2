@@ -94,7 +94,7 @@ const MapCard = ({
         position: 'absolute',
         bottom: 10,
         right: 10,
-        backgroundColor: Colors.red,
+        backgroundColor: Colors.lightgray,
         borderRadius: 15,
         paddingVertical: 5,
         paddingHorizontal: 10,
