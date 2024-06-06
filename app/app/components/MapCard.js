@@ -94,7 +94,7 @@ const MapCard = ({
         position: 'absolute',
         bottom: 10,
         right: 10,
-        backgroundColor: caption == "Disabled" ? Colors.lightgray : Colours.red,
+        backgroundColor: caption == "Disabled" ? Colors.lightgray : Colors.red,
         borderRadius: 15,
         paddingVertical: 5,
         paddingHorizontal: 10,
