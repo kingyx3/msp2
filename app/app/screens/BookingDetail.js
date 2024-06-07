@@ -176,8 +176,8 @@ const BookingDetails = (props) => {
               image={host ? getAvatarLink(booking.userId) : getAvatarLink(selectedSpace.userId)}
             />
           </Host>
-          {booking.status !== "cancelled" && moment().diff(moment(booking.end), 'days') < 5 && (
-            <View style={{ margin: 10 }}>
+          <View style={{ margin: 10 }}>
+            {booking.status !== "cancelled" && moment().diff(moment(booking.end), 'days') < 5 && (
               <Button.BtnContain
                 testID="contact-host-or-user"
                 label={host ? "Contact User" : "Contact Host"}
@@ -196,10 +196,8 @@ const BookingDetails = (props) => {
                   });
                 }}
               />
-            </View>
-          )}
-          {!host && booking.status === "confirmed" && moment().isAfter(booking.end) && moment().diff(moment(booking.end), 'days') < 2 && (
-            <View style={{ margin: 10 }}>
+            )}
+            {!host && booking.status === "confirmed" && moment().isAfter(booking.end) && moment().diff(moment(booking.end), 'days') < 2 && (
               <Button.BtnContain
                 testID="write-review"
                 label="Write Review"
@@ -208,10 +206,8 @@ const BookingDetails = (props) => {
                 disabled={loading}
                 onPress={() => props.navigation.navigate("ReviewInput", { selectedSpace })}
               />
-            </View>
-          )}
-          {(host || (!host && booking.status !== "pending_host")) && (
-            <View style={{ margin: 10 }}>
+            )}
+            {((host && booking.status !== "pending_host") || (!host && booking.status !== "pending_host")) && (
               <Button.BtnContain
                 testID="cancel-booking"
                 label={
@@ -226,8 +222,8 @@ const BookingDetails = (props) => {
                 disabled={booking.status.includes("cancelled") ? true : loading || !(isHostAbleToCancel || isUserAbleToCancel)}
                 onPress={cancelBookingBox}
               />
-            </View>
-          )}
+            )}
+          </View>
           {booking.status === "pending_host" && host && (
             <View style={{ margin: 10 }}>
               <Button.BtnContain
