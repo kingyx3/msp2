@@ -211,49 +211,64 @@ export function fetchIpLocation() {
 // *Function to update user info (USER-U)
 // Function to delete user (USER-D)
 // Function to create an space (SPACE-C) (XR, 4W)
-export async function createSpace(spaceType, price, peakPrice, offPeakPrice, localImages, location, title, description, spaceCount, cancellationPolicy, monthsAhead, openingHours, needHostConfirm) { // TRANSACTION-ED
+export async function createSpace(spaceType, price, peakPrice, offPeakPrice, localImages, location, title, description, spaceCount, cancellationPolicy, monthsAhead, openingHours, needHostConfirm) {
   const CFcreateSpace = httpsCallable(functions, 'createSpace');
   const spaceRef = doc(collection(firestore, "spaces"));
-  const spaceId = spaceRef.id
-  const inputs = { spaceId, spaceType, price, peakPrice, offPeakPrice, localImages, location, title, description, spaceCount, monthsAhead, cancellationPolicy, openingHours, needHostConfirm }
+  const spaceId = spaceRef.id;
+  const inputs = {
+    spaceId,
+    spaceType,
+    price,
+    peakPrice,
+    offPeakPrice,
+    localImages,
+    location,
+    title,
+    description,
+    spaceCount,
+    monthsAhead,
+    cancellationPolicy,
+    openingHours,
+    needHostConfirm,
+  };
 
-  const promises = localImages.map((image, index) => {
-    // console.log('Uploading image', index + 1, 'out of', localImages.length);
-    return uploadImage(image, spaceId, index)
-  });
-  return Promise.all(promises)
-    .then(async () => {
-      console.log("SPACE IMAGES UPLOADED SUCCESSFULLY");
-      const userId = auth.currentUser.uid;
-      const imagePath = `users/${userId}/spaces/${spaceId}/images/`;
+  try {
+    await Promise.all(localImages.map((image, index) => uploadImage(image, spaceId, index)));
+    console.log("SPACE IMAGES UPLOADED SUCCESSFULLY");
 
-      const listRef = storageRef(storage, imagePath);
+    const userId = auth.currentUser.uid;
+    const imagePath = `users/${userId}/spaces/${spaceId}/images/`;
+    const listRef = storageRef(storage, imagePath);
 
-      return listAll(listRef)
-        .then((res) => {
-          return res.items.forEach((itemRef, i) => {
-            // All the items under listRef.
-            const itemNum = itemRef.toString().split('images/')[1];
-            if (itemNum >= localImages.length) {
-              return deleteObject(itemRef)
-                .then(() => {
-                  return console.log("IMAGE FILE @ " + itemRef + " DELETED");
-                })
-                .catch((e) => {
-                  return Promise.reject("IMAGE FILE DELETION ERROR: " + e);
-                });
-            }
-          });
-        })
-        .then(() => {
-          console.log('ALL EXTRA IMAGE FILES DELETED')
-          return CFcreateSpace(inputs)
-        })
-        .then(() => console.log("SPACE CREATED SUCCESSFULLY"))
-        .catch((e) => Promise.reject('FAILED TO DELETE EXTRA IMAGE FILES: ' + e));
-    })
-    .catch((e) => Promise.reject("SPACE IMAGES UPLOADING ERROR: " + e))
+    const res = await listAll(listRef);
+
+    await Promise.all(
+      res.items.map((itemRef, i) => {
+        const itemNum = itemRef.toString().split('images/')[1];
+        if (itemNum >= localImages.length) {
+          return deleteObject(itemRef)
+            .then(() => console.log("IMAGE FILE @ " + itemRef + " DELETED"))
+            .catch((e) => Promise.reject("IMAGE FILE DELETION ERROR: " + e));
+        }
+      })
+    );
+
+    console.log('ALL EXTRA IMAGE FILES DELETED');
+    await CFcreateSpace(inputs);
+    console.log("SPACE CREATED SUCCESSFULLY");
+
+  } catch (e) {
+    console.error(e);
+    if (e.message.includes('IMAGE FILE DELETION ERROR')) {
+      return Promise.reject('FAILED TO DELETE EXTRA IMAGE FILES: ' + e.message);
+    } else if (e.message.includes('SPACE IMAGES UPLOADING ERROR')) {
+      return Promise.reject("SPACE IMAGES UPLOADING ERROR: " + e.message);
+    } else {
+      return Promise.reject(e);
+    }
+  }
 }
+
 
 // Function to fetch space summary (SPACE-R) - USER (XR) => XR depends on allspaces (number of allspaces / 100 (per spaceType))
 export function setSpaceSummary(spaceType) {
@@ -1023,8 +1038,6 @@ const uploadImage = async (uri, spaceId, i) => {
   }
 };
 
-
-
 export function calcPeriodPriceExclFees(start, end, price, peakPrice, offPeakPrice, openingHours) {
   let total = 0;
   let current = start
@@ -1077,28 +1090,6 @@ function getTimeSlots(start, end) {
   }
   console.log("Timeslots are:", timeSlots)
   return timeSlots
-}
-
-export const clearResources = () => {
-  const databaseRef = ref(database);
-
-  // Update the database reference
-  update(databaseRef, { "availability": null })
-    .then(() => console.log('Firebase database cleared'))
-    .catch((error) => console.log(error));
-
-  const storageReference = storageRef(storage, 'users/');
-
-  // List and delete all objects in the storage reference
-  listAll(storageReference)
-    .then((result) => {
-      result.items.forEach((itemRef) => {
-        // Delete the item
-        deleteObject(itemRef).catch((error) => console.log(error));
-      });
-      console.log('Firebase storage cleared');
-    })
-    .catch((error) => console.log(error));
 }
 
 // Function Archives
@@ -1214,469 +1205,6 @@ export function getTimingDiffFromUTC() {
 //////////////////////
 //////////////////////
 //////////////////////
-
-export function createStaticData() {
-
-  // Create static data for SpaceTypes
-  const spaceTypesRef = ref(database, 'system/spacetypes');
-  set(spaceTypesRef, {
-    "Badminton Court": {
-      label: "Badminton Court",
-      unitLabel: "Court",
-      active: true
-    },
-    "Tennis Court": {
-      label: "Tennis Court",
-      unitLabel: "Court",
-      active: false
-    },
-    "Pool Table": {
-      label: "Pool Table",
-      unitLabel: "Table",
-      active: false
-    },
-    "Soccer Field (11-a-side)": {
-      label: "Soccer Field",
-      unitLabel: "Field",
-      active: false
-    },
-    "Futsal Field (7-a-side)": {
-      label: "Futsal Field (7-a-side)",
-      unitLabel: "Field",
-      active: false
-    },
-    "Futsal Field (5-a-side)": {
-      label: "Futsal Field (5-a-side)",
-      unitLabel: "Field",
-      active: false
-    },
-    "Bowling Lane": {
-      label: "Bowling Lane",
-      unitLabel: "Lane",
-      active: true
-    },
-    "Mahjong Table": {
-      label: "Mahjong Table",
-      unitLabel: "Table",
-      active: false
-    },
-    "Loft": {
-      label: "Loft",
-      unitLabel: "Loft",
-      active: false
-    },
-    "House": {
-      label: "House",
-      unitLabel: "House",
-      active: false
-    },
-    "Squash Court": {
-      label: "Squash Court",
-      unitLabel: "Court",
-      active: false
-    },
-    "Table Tennis Table": {
-      label: "Table Tennis Table",
-      unitLabel: "Table",
-      active: false
-    },
-    "Karaoke Room": {
-      label: "Karaoke Room",
-      unitLabel: "Room",
-      active: false
-    },
-    "Home Movie Theater": {
-      label: "Home Movie Theater",
-      unitLabel: "Theater",
-      active: false
-    },
-    "Study Room": {
-      label: "Study Room",
-      unitLabel: "Room",
-      active: false
-    },
-    "Art Room": {
-      label: "Art Room",
-      unitLabel: "Room",
-      active: true
-    },
-    "Music Room": {
-      label: "Music Room",
-      unitLabel: "Room",
-      active: false
-    },
-    "Dance Studio": {
-      label: "Dance Studio",
-      unitLabel: "Studio",
-      active: false
-    },
-    "Yoga Studio": {
-      label: "Yoga Studio",
-      unitLabel: "Studio",
-      active: false
-    },
-    "Meditation Room": {
-      label: "Meditation Room",
-      unitLabel: "Room",
-      active: false
-    },
-    "Conference Room": {
-      label: "Conference Room",
-      unitLabel: "Room",
-      active: false
-    },
-    "Lecture Hall": {
-      label: "Lecture Hall",
-      unitLabel: "Hall",
-      active: false
-    },
-    "Auditorium": {
-      label: "Auditorium",
-      unitLabel: "Hall",
-      active: true
-    }
-  })
-    .then(() => console.log("spaceTypes static data created successfully."))
-    .catch((error) => console.log("Error creating static data (spaceTypes):", error));
-
-  // Create static data for Activities
-  const activitiesRef = ref(database, 'system/activities');
-  set(activitiesRef, {
-    "Bowling": {
-      label: "Bowling",
-      active: false
-    },
-    "Mahjong": {
-      label: "Mahjong",
-      active: false
-    },
-    "Badminton": {
-      label: "Badminton",
-      active: false
-    },
-    "Party": {
-      label: "Party",
-      active: false
-    },
-    "Basketball": {
-      label: "Basketball",
-      active: false
-    },
-    "Football": {
-      label: "Football",
-      active: false
-    },
-    "Swimming": {
-      label: "Swimming",
-      active: false
-    },
-    "Gym Workout": {
-      label: "Gym Workout",
-      active: false
-    },
-    "Squash": {
-      label: "Squash",
-      active: false
-    },
-    "Table Tennis": {
-      label: "Table Tennis",
-      active: false
-    },
-    "Karaoke Party": {
-      label: "Karaoke Party",
-      active: false
-    },
-    "Movie Night": {
-      label: "Movie Night",
-      active: false
-    },
-    "Drawing": {
-      label: "Drawing",
-      active: false
-    },
-    "Painting": {
-      label: "Painting",
-      active: false
-    },
-    "Piano": {
-      label: "Piano",
-      active: false
-    },
-    "Guitar": {
-      label: "Guitar",
-      active: false
-    },
-    "Ballet": {
-      label: "Ballet",
-      active: false
-    },
-    "Hip Hop": {
-      label: "Hip Hop",
-      active: false
-    },
-    "Yoga": {
-      label: "Yoga",
-      active: false
-    },
-    "Meditation": {
-      label: "Meditation",
-      active: false
-    },
-    "Conference": {
-      label: "Conference",
-      active: false
-    },
-    "Lecture": {
-      label: "Lecture",
-      active: false
-    },
-    "Auditorium Performance": {
-      label: "Auditorium Performance",
-      active: false
-    }
-  })
-    .then(() => console.log("activities static data created successfully."))
-    .catch((error) => console.log("Error creating static data (activities):", error));
-
-  // Create static data for Items for sale/rent
-  const itemsRef = ref(database, 'system/items');
-  set(itemsRef, {
-    "Swimming Fins": {
-      label: "Swimming Fins",
-      active: false
-    },
-    "Swimming Paddles": {
-      label: "Swimming Paddles",
-      active: false
-    },
-    "Swimming Kickboard": {
-      label: "Swimming Kickboard",
-      active: false
-    },
-    "Gym Headphones": {
-      label: "Gym Headphones",
-      active: false
-    },
-    "Gym Resistance Bands": {
-      label: "Gym Resistance Bands",
-      active: false
-    },
-    "Gym Foam Roller": {
-      label: "Gym Foam Roller",
-      active: false
-    },
-    "Bowling Shoes Cover": {
-      label: "Bowling Shoes Cover",
-      active: false
-    },
-    "Mahjong Table": {
-      label: "Mahjong Table",
-      active: false
-    },
-    "Mahjong Table Cover": {
-      label: "Mahjong Table Cover",
-      active: false
-    },
-    "Mahjong Dice Set": {
-      label: "Mahjong Dice Set",
-      active: false
-    },
-    "Mahjong Wind Indicator Set": {
-      label: "Mahjong Wind Indicator Set",
-      active: false
-    },
-    "Party Balloons Decoration Service": {
-      label: "Party Balloons Decoration Service",
-      active: false
-    },
-    "Party DJ Service": {
-      label: "Party DJ Service",
-      active: false
-    },
-    "Soccer Goalkeeper Gloves": {
-      label: "Soccer Goalkeeper Gloves",
-      active: false
-    },
-    "Soccer Shin Guards": {
-      label: "Soccer Shin Guards",
-      active: false
-    },
-    "Tennis Balls Set": {
-      label: "Tennis Balls Set",
-      active: false
-    },
-    "Tennis Shoes Cover": {
-      label: "Tennis Shoes Cover",
-      active: false
-    },
-    "Squash Balls Set": {
-      label: "Squash Balls Set",
-      active: false
-    },
-    "Squash Shoes Cover": {
-      label: "Squash Shoes Cover",
-      active: false
-    }
-  })
-    .then(() => console.log("items static data created successfully."))
-    .catch((error) => console.log("Error creating static data (items):", error));
-
-  // Create static data for Amenities
-  const amenitiesRef = ref(database, 'system/amenities');
-  set(amenitiesRef, {
-    "Indoors": {
-      label: "Indoors",
-      active: false
-    },
-    "Toilets": {
-      label: "Toilets",
-      active: false
-    },
-    "Shower facilities": {
-      label: "Shower facilities",
-      active: false
-    },
-    "Drinking water fountains": {
-      label: "Drinking water fountains",
-      active: false
-    },
-    "Lockers": {
-      label: "Lockers",
-      active: false
-    },
-    "Changing rooms": {
-      label: "Changing rooms",
-      active: false
-    },
-    "First aid kits": {
-      label: "First aid kits",
-      active: false
-    },
-    "Seating spaces": {
-      label: "Seating spaces",
-      active: false
-    },
-    "Parking lots": {
-      label: "Parking lots",
-      active: false
-    },
-    "Scoreboards": {
-      label: "Scoreboards",
-      active: false
-    },
-    "Lighting systems": {
-      label: "Lighting systems",
-      active: false
-    },
-    "Sound systems": {
-      label: "Sound systems",
-      active: false
-    },
-    "Wi-Fi access": {
-      label: "Wi-Fi access",
-      active: false
-    },
-    "Cafeterias": {
-      label: "Cafeterias",
-      active: false
-    },
-    "Vending machines": {
-      label: "Vending machines",
-      active: false
-    },
-    "Pro shops": {
-      label: "Pro shops",
-      active: false
-    },
-    "Equipment rental services": {
-      label: "Equipment rental services",
-      active: false
-    },
-    "Meeting rooms": {
-      label: "Meeting rooms",
-      active: false
-    },
-    "Event spaces": {
-      label: "Event spaces",
-      active: false
-    },
-    "Childcare services": {
-      label: "Childcare services",
-      active: false
-    },
-    "Massage services": {
-      label: "Massage services",
-      active: false
-    },
-    "Saunas": {
-      label: "Saunas",
-      active: false
-    },
-    "Steam rooms": {
-      label: "Steam rooms",
-      active: false,
-    },
-    "Jacuzzis": {
-      label: "Jacuzzis",
-      active: false,
-    },
-    "Cold plunge pools": {
-      label: "Cold plunge pools",
-      active: false,
-    },
-    "Hot tubs": {
-      label: "Hot tubs",
-      active: false,
-    },
-    "Ice baths": {
-      label: "Ice baths",
-      active: false,
-    },
-    "Tanning beds": {
-      label: "Tanning beds",
-      active: false,
-    },
-  })
-    .then(() => console.log("amenities static data created successfully."))
-    .catch((error) => console.log("Error creating static data (amenities):", error));
-
-  // Create static data for Amenities
-  const cancellationPolicyRef = ref(database, 'system/cancellationPolicy');
-  set(cancellationPolicyRef, {
-    "Super Flex": {
-      //  Cancel x number of hours before booking starts for full refund
-      label: "Super Flex",
-      numberOfHours: 0,
-      active: true
-    },
-    "Flex": {
-      //  Cancel x number of hours before booking starts for full refund
-      label: "Flex",
-      numberOfHours: 12,
-      active: true
-    },
-    "Medium": {
-      //  Cancel x number of hours before booking starts for full refund
-      label: "Medium",
-      numberOfHours: 24,
-      active: true
-    },
-    "Strict": {
-      //  Cancel x number of hours before booking starts for full refund
-      label: "Strict",
-      numberOfHours: 48,
-      active: true
-    },
-    "Super Strict": {
-      //  Cancel x number of hours before booking starts for full refund
-      label: "Super Strict",
-      numberOfHours: 72,
-      active: true
-    },
-  })
-    .then(() => console.log("cancellationPolicy static data created successfully."))
-    .catch((error) => console.log("Error creating static data (cancellationPolicy):", error));
-}
 
 export async function getCancelByHours(setCancelByHours, spaceCancellationPolicy) {
   get(ref(database, 'system/cancellationPolicy'))
