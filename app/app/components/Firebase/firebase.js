@@ -233,8 +233,8 @@ export async function createSpace(spaceType, price, peakPrice, offPeakPrice, loc
   };
 
   try {
-    await Promise.all(localImages.map((image, index) => uploadImage(image, spaceId, index)));
-    console.log("SPACE IMAGES UPLOADED SUCCESSFULLY");
+    await uploadAllImages(localImages, spaceId);
+    console.log("All images uploaded successfully");
 
     const userId = auth.currentUser.uid;
     const imagePath = `users/${userId}/spaces/${spaceId}/images/`;
@@ -302,145 +302,112 @@ export function setSpaceSummary(spaceType) {
 // Function to get available spaces (SPACE-R) - USER (XR) => XR depends on allspacesavailability (number of dates involved * number of allspaces / 100 (per spaceType))
 export function setSelectedSpaces(spaceType, start, end, spaceSummaryz) {
   let spaceSummary = JSON.parse(JSON.stringify(spaceSummaryz));
-  // export function setSelectedSpaces(spaceType, start, end, spaceSummaryz) { //, country, city
-  return ((dispatch) => {
-    console.log('Getting available', spaceType, 'from:', start, 'to:', end)
-    start = start.valueOf()
-    end = end.valueOf()
-    let timeSlots = getTimeSlots(start, end)
-    let dates = Array.from(new Set(timeSlots.map(timeSlot => new Date(timeSlot).toISOString().slice(0, 10).replace(/-/g, ''))));
+  return async (dispatch) => {
+    console.log('Getting available', spaceType, 'from:', start, 'to:', end);
+    start = start.valueOf();
+    end = end.valueOf();
+    const timeSlots = getTimeSlots(start, end);
+    const dates = Array.from(new Set(timeSlots.map(timeSlot => new Date(timeSlot).toISOString().slice(0, 10).replace(/-/g, ''))));
 
-    console.log('dates', dates)
+    console.log('dates', dates);
     const allSpacesAvailabilityRef = collection(firestore, 'allspacesavailability');
-
     const q = query(
       allSpacesAvailabilityRef,
       where('spaceType', '==', spaceType),
       where('date', 'in', dates) // Note: 'in' query supports only up to 10 items
     );
 
-    getDocs(q)
-      .then(async (snapshot) => {
-        console.log("NUMBER OF READS (setSelectedSpaces):", snapshot.docs.length + 1)
+    try {
+      const snapshot = await getDocs(q);
+      console.log("NUMBER OF READS (setSelectedSpaces):", snapshot.docs.length + 1);
 
-        // collect full list of spaceIds
-        let spaceIds = [];
-        snapshot
-          .forEach((doc) => Object.values(doc.data())
-            .forEach((timeSlot) => Object.keys(timeSlot) // spaceIds.add(spaceId))
-              .forEach((spaceId) => spaceIds.push(spaceId))))
-        spaceIds = Array.from(new Set(spaceIds))
+      const spaceIds = Array.from(new Set(
+        snapshot.docs.flatMap(doc =>
+          Object.values(doc.data()).flatMap(timeSlot =>
+            Object.keys(timeSlot)
+          )
+        )
+      ));
 
-        // get all timeSlotSpaces
-        let timeSlotSpaces = {}
-        for (let i = 0; i < snapshot.docs.length; i++) {
-          let data = snapshot.docs[i].data() // doc.data() is {spaceType : spaceType, spaceId1:true, datetime: {spaceId1: spaceCount}}
-          let newData = {}
-          for (let timeSlot in data) {
-            // console.log('timeSlot', timeSlot)
-            if (timeSlots.includes(parseInt(timeSlot))) {
-              newData[timeSlot] = data[timeSlot]
-            }
+      // console.log('spaceIds:', spaceIds);
+
+      const timeSlotSpaces = snapshot.docs.reduce((acc, doc) => {
+        const data = doc.data();
+        const filteredData = Object.fromEntries(
+          Object.entries(data).filter(([timeSlot]) => timeSlots.includes(parseInt(timeSlot)))
+        );
+        return deepmerge.all([acc, filteredData]);
+      }, {});
+
+      // console.log('timeSlotSpaces:', timeSlotSpaces);
+
+      // get all available spaces from db
+      const availableSpaces = {};
+
+      spaceIds.forEach(spaceId => {
+        let periodAvailabilityArray = [];
+
+        Object.values(timeSlotSpaces).forEach(spaceTimeSlotAvailabilityObj => {
+          const spaceTimeSlotAvailabilityArray = spaceTimeSlotAvailabilityObj[spaceId];
+
+          if (spaceTimeSlotAvailabilityArray) {
+            periodAvailabilityArray = periodAvailabilityArray.length === 0
+              ? spaceTimeSlotAvailabilityArray
+              : periodAvailabilityArray.map((e, idx) => e + spaceTimeSlotAvailabilityArray[idx]);
           }
-          // console.log('newData', newData)
-          timeSlotSpaces = deepmerge.all([{ ...timeSlotSpaces }, newData]) // merging available spaces to get object with all potential spaces
+        });
+
+        if (periodAvailabilityArray.includes(timeSlots.length)) {
+          const [periodPrice, ...availabilityArray] = periodAvailabilityArray;
+          availableSpaces[spaceId] = {
+            periodAvailabilityArray: availabilityArray,
+            periodPrice,
+          };
         }
+      });
 
-        // get all available spaces from db
-        const availableSpaces = {}
-        for (let i = 0; i < spaceIds.length; i++) {
-          let periodAvailabilityArray = []
-          for (const timeSlot in timeSlotSpaces) {
-            const spaceTimeSlotAvailabilityObj = timeSlotSpaces[timeSlot]
-            // console.log('spaceTimeSlotAvailabilityObj', spaceTimeSlotAvailabilityObj)
-            const spaceTimeSlotAvailabilityArray = spaceTimeSlotAvailabilityObj[spaceIds[i]]
-            // console.log('spaceTimeSlotAvailabilityArray', spaceTimeSlotAvailabilityArray, 'spaceIds[i]', spaceIds[i])
-            if (spaceTimeSlotAvailabilityArray) {
-              if (periodAvailabilityArray.length == 0) {
-                periodAvailabilityArray = spaceTimeSlotAvailabilityArray
-              } else {
-                periodAvailabilityArray = periodAvailabilityArray.map((e, idx) => e + (spaceTimeSlotAvailabilityArray)[idx])
-              }
-            }
-          }
-          // console.log('spaceId', spaceIds[i])
-          // console.log('timeSlots.length', timeSlots.length)
-          // console.log('periodAvailabilityArray', periodAvailabilityArray)
 
-          // if (periodAvailabilityArray.includes(timeSlots.length)) { // if every doc/timeslot has this listing available, add it to avaiableSpaces
-          //   availableSpaces[spaceIds[i]] = { periodAvailabilityArray }
-          // }
+      // console.log('availableSpaces:', availableSpaces);
 
-          if (periodAvailabilityArray.includes(timeSlots.length)) {
-            let periodPrice = periodAvailabilityArray[0]
-            periodAvailabilityArray.shift() // remove first (pricing) element from array
-            // let fees = calcBookerFee(periodPriceExclFees)
-            // let periodPrice = periodPriceExclFees + fees
-            availableSpaces[spaceIds[i]] = {
-              periodAvailabilityArray: periodAvailabilityArray,
-              periodPrice,
-              // periodPriceExclFees,
-              // fees
-            };
-          }
-        }
+      if (Object.keys(availableSpaces).length === 0) {
+        console.log("NO AVAILABLE SPACES FOR THESE TIMESLOTS");
+        dispatch({ type: 'SET_SELECTED_SPACES', payload: { selectedSpaces: [] } });
+        return;
+      }
 
-        if (Object.keys(availableSpaces).length == 0) { // *** to clear the selectedSpaces variable in redux
-          console.log("NO AVAILABLE SPACES FOR THESE TIMESLOTS") //
-          dispatch({ type: 'SET_SELECTED_SPACES', payload: { selectedSpaces: [] } })
-          return
-        }
+      const combinedSpaces = deepmerge.all([spaceSummary, availableSpaces]);
+      const selectedSpaces = Object.values(combinedSpaces).filter(space =>
+        space.title && space.images && space.location && space.periodAvailabilityArray && space.periodPrice > 0 && !space.disabled
+      ).map(space => ({
+        id: space.id,
+        title: space.title,
+        images: space.images,
+        location: {
+          latitude: space.location.latitude,
+          longitude: space.location.longitude,
+          street: space.location.geoapify.street,
+          suburb: space.location.geoapify.suburb,
+          country: space.location.geoapify.country,
+        },
+        periodAvailabilityArray: space.periodAvailabilityArray,
+        periodPrice: space.periodPrice,
+        disabled: space.disabled,
+        third_party: space.third_party,
+        reviews: space.ratingCount,
+        rating: getRating(space.ratingCount, space.ratingTotal),
+        userId: space.userId,
+        needHostConfirm: space.needHostConfirm,
+      }));
 
-        // console.log('priceSummary', priceSummary)
-
-        let combinedSpaces = deepmerge.all([spaceSummary, availableSpaces])
-        // console.log("combinedSpaces are", combinedSpaces['B9A4EO8N4FH30G5PU0CIZC']) //
-        let selectedSpaces = []
-        for (let key in combinedSpaces) {
-          if (combinedSpaces[key].title
-            && combinedSpaces[key].images
-            && combinedSpaces[key].location
-            && combinedSpaces[key].periodAvailabilityArray
-            && combinedSpaces[key].periodPrice > 0
-            && !(combinedSpaces[key].disabled)) {
-            const rating = getRating(combinedSpaces[key].ratingCount, combinedSpaces[key].ratingTotal)
-            selectedSpaces.push({
-              'id': combinedSpaces[key].id,
-              'title': combinedSpaces[key].title,
-              'images': combinedSpaces[key].images,
-              'location': {
-                'latitude': combinedSpaces[key].location.latitude,
-                'longitude': combinedSpaces[key].location.longitude,
-                'street': combinedSpaces[key].location.geoapify.street,
-                'suburb': combinedSpaces[key].location.geoapify.suburb,
-                'country': combinedSpaces[key].location.geoapify.country
-              },
-              'periodAvailabilityArray': combinedSpaces[key].periodAvailabilityArray,
-              'periodPrice': combinedSpaces[key].periodPrice,
-              // 'periodPriceExclFees': combinedSpaces[key].periodPriceExclFees,
-              // 'fees': combinedSpaces[key].fees,
-              'disabled': combinedSpaces[key].disabled,
-              'third_party': combinedSpaces[key].third_party,
-              'reviews': combinedSpaces[key].ratingCount,
-              'rating': rating,
-              'userId': combinedSpaces[key].userId,
-              'needHostConfirm': combinedSpaces[key].needHostConfirm,
-            })
-          }
-        }
-
-        // console.log('spaceSummary:', spaceSummary)
-        // console.log('spaceIds:', spaceIds)
-        // console.log('timeSlotSpaces:', timeSlotSpaces)
-        // console.log('availableSpaces', availableSpaces)
-        // console.log('combinedSpaces', combinedSpaces)
-        // console.log("selectedSpaces are", selectedSpaces)
-        // console.log("setting selectedSpaces", selectedSpaces)
-        dispatch({ type: 'SET_SELECTED_SPACES', payload: { selectedSpaces } })
-      })
-      .catch((e) => console.log("ALLSPACESAVAILABILITY DOCS READ ERROR:", e))
-  })
+      // console.log('selectedSpaces:', selectedSpaces);
+      dispatch({ type: 'SET_SELECTED_SPACES', payload: { selectedSpaces } });
+    } catch (e) {
+      console.log("ALLSPACESAVAILABILITY DOCS READ ERROR:", e);
+    }
+  };
 }
+
+
 
 // Function to get user selected space (SPACE-R) - USER (1R)
 export function setSelectedSpace(selectedSpaceId) {
@@ -541,48 +508,56 @@ export function fetchUserSpaces() {
 // Function to update an space (SPACE-U) (XW)
 export async function updateSpace(spaceId, newPrice, newPeakPrice, newOffPeakPrice, newImages, newTitle, newDescription, newCancellationPolicy, monthsAhead, newOpeningHours, newNeedHostConfirm) {
   const CFupdateSpace = httpsCallable(functions, 'updateSpace');
-  const inputs = { spaceId, newPrice, newPeakPrice, newOffPeakPrice, newImages, newTitle, newDescription, monthsAhead, newCancellationPolicy, newOpeningHours, newNeedHostConfirm }
-  const promises = newImages.map((image, index) => {
-    console.log('Uploading image', index + 1, 'out of', newImages.length);
-    return uploadImage(image, spaceId, index)
+  const inputs = { spaceId, newPrice, newPeakPrice, newOffPeakPrice, newImages, newTitle, newDescription, monthsAhead, newCancellationPolicy, newOpeningHours, newNeedHostConfirm };
+
+  try {
+    await uploadAllImages(newImages, spaceId);
+    console.log("All images uploaded successfully");
+
+    await CFupdateSpace(inputs);
+    console.log("SPACE UPDATED SUCCESSFULLY!");
+
+    await deleteExtraImages(spaceId, newImages.length);
+    console.log('Extra image files deleted!');
+
+    await Image.clearDiskCache();
+    await Image.clearMemoryCache();
+  } catch (e) {
+    console.error(e);
+    throw new Error("Error updating space: " + e.message);
+  }
+}
+
+async function uploadAllImages(images, spaceId) {
+  const uploadPromises = images.map((image, index) => {
+    console.log('Uploading image', index + 1, 'out of', images.length);
+    return uploadImage(image, spaceId, index);
+  });
+  return Promise.all(uploadPromises);
+}
+
+async function deleteExtraImages(spaceId, newImageCount) {
+  const userId = auth.currentUser.uid;
+  const imagePath = `users/${userId}/spaces/${spaceId}/images/`;
+  const listRef = storageRef(storage, imagePath);
+
+  const res = await listAll(listRef);
+  const deletePromises = res.items.map((item) => {
+    const itemNum = item.toString().split('images/')[1];
+    if (itemNum >= newImageCount) {
+      return deleteObject(item)
+        .then(() => {
+          console.log("IMAGE FILE @ " + item + " DELETED");
+        })
+        .catch((e) => {
+          throw new Error("IMAGE FILE DELETION ERROR: " + e.message);
+        });
+    }
   });
 
-  return Promise.all(promises)
-    .then(async () => {
-      console.log("All images uploaded successfully")
-      return CFupdateSpace(inputs)
-    })
-    .then(async () => {
-      console.log("SPACE UPDATED SUCCESSFULLY!");
-      const userId = auth.currentUser.uid;
-      const imagePath = `users/${userId}/spaces/${spaceId}/images/`; // {i} remove all images in the path
-      const listRef = storageRef(storage, imagePath);
-
-      return listAll(listRef)
-        .then((res) => {
-          return res.items.forEach((item, i) => {
-            // All the items under listRef.
-            const itemNum = item.toString().split('images/')[1];
-            if (itemNum >= newImages.length) {
-              return deleteObject(item)
-                .then(() => {
-                  return console.log("IMAGE FILE @ " + item + " DELETED");
-                })
-                .catch((e) => {
-                  return Promise.reject("IMAGE FILE DELETION ERROR: " + e);
-                });
-            }
-          });
-        })
-        .then(async () => {
-          console.log('Extra image files deleted!')
-          await Image.clearDiskCache()
-          await Image.clearMemoryCache()
-        })
-        .catch((e) => console.log('Failed to delete extra image files!', e));
-    })
-    .catch((e) => Promise.reject("IMAGES UPLOAD ERROR: " + e))
+  return Promise.all(deletePromises);
 }
+
 // Function to disable an space (SPACE-U) (XW)
 export async function disableSpace(spaceId) {
   const CFdisableSpace = httpsCallable(functions, 'disableSpace');
@@ -760,16 +735,18 @@ export function fetchUserMessages() {
     const chatRef = ref(database, `chatrooms/${user.uid}/`);
     onValue(chatRef, async (snapshot) => {
       let userMessages = snapshot.exists() ? Object.values(snapshot.val()) : [];
-      userMessages = userMessages.filter((chat) => chat.chatId);
-      userMessages = userMessages.sort((a, b) => b.lastMessage.createdAt - a.lastMessage.createdAt);
+      userMessages = userMessages
+        .filter(chat => chat.chatId)
+        .sort((a, b) => b.lastMessage.createdAt - a.lastMessage.createdAt);
 
-      // Fetch other user names asynchronously
-      const updatedUserMessages = await Promise.all(userMessages.map(async (chat) => {
+      const fetchOtherUserNames = async (chat) => {
         const nameRef = ref(database, `users/${chat.otherUserId}`);
         const nameSnapshot = await new Promise((resolve) => onValue(nameRef, resolve, { onlyOnce: true }));
         const result = nameSnapshot.exists() ? Object.values(nameSnapshot.val()) : [];
         return { ...chat, otherUserName: result[0] };
-      }));
+      };
+
+      const updatedUserMessages = await Promise.all(userMessages.map(fetchOtherUserNames));
 
       dispatch({ type: "FETCH_USER_MESSAGES", payload: { userMessages: updatedUserMessages } });
     });
