@@ -84,61 +84,71 @@ const UserActivity = (props) => {
     }
   }
 
-  const renderItem = ({ item, index }) =>
-    <List.LogsList
-      title={item?.title}
-      testID={index.toString() + "_" + (host ? 'host' : 'user') + "_log"}
-      created={moment(item?.created).format('DD MMM YYYY hh:mm A')}
-      message={item?.message}
-      positive={calcAmount(item, host).startsWith('+') ? true : false}
-      logType={item?.logType}
-      secondary={item?.bookingIdShort
-        ? item?.bookingIdShort
-        + (item.status == "pending_host"
-          ? " (Pending Host)"
-          : item.status == "pending_cancelled_by_host"
-            ? " (Host Cancel Pending)"
-            : item.status == "pending_cancelled_by_user"
-              ? " (User Cancel Pending)"
-              : item.status == "cancelled_by_host"
-                ? " (Host Cancel)"
-                : item.status == "cancelled_by_user"
-                  ? " (User Cancel)"
-                  : "")
-        : ""}
-      amount={calcAmount(item, host)}
-      onPress={() => {
-        console.log(item)
-        // if (item.logType == "createBooking"
-        //   || item.logType == "createBookingPending"
-        //   || item.logType == "cancelBooking"
-        //   || item.logType == "cancelBookingPending") {
-        //   // Navigate to bookingDetail with props
-        //   props.navigation.navigate('BookingStackModal', {
-        //     screen: 'BookingDetail',
-        //     params: {
-        //       bookingId: item.bookingId,
-        //       spaceId: item.spaceId,
-        //       host
-        //     }
-        //   });
-        // } else if (item.logType == "createSpace"
-        //   || item.logType == "updateSpace"
-        //   || item.logType == "enableSpace"
-        //   || item.logType == "disableSpace"
-        //   || item.logType == "updateBlocked") {
-        //   // Navigate to spaceDetail with props
-        //   props.navigation.navigate('HostStackModal', {
-        //     screen: 'SpaceDetail', params: {
-        //       spaceId: item.spaceId
-        //     }
-        //   });
-        // } else {
-        //   // For no navigation logTypes i.e. topup etc
-        //   null
-        // }
-      }}
-    />
+  const renderItem = ({ item, index }) => {
+    const formattedDate = moment(item?.created).format('DD MMM YYYY hh:mm A');
+    const testID = `${index}_${host ? 'host' : 'user'}_log`;
+    const amount = calcAmount(item, host);
+    const positive = amount.startsWith('+');
+    const statusMap = {
+      pending_host: " (Pending Host)",
+      pending_cancelled_by_host: " (Host Cancel Pending)",
+      pending_cancelled_by_user: " (User Cancel Pending)",
+      cancelled_by_host: " (Host Cancel)",
+      cancelled_by_user: " (User Cancel)"
+    };
+    const secondary = item?.bookingIdShort
+      ? item?.bookingIdShort + (statusMap[item.status] || "")
+      : "";
+
+    return (
+      <List.LogsList
+        title={item?.title}
+        testID={testID}
+        created={formattedDate}
+        message={item?.message}
+        positive={positive}
+        logType={item?.logType}
+        secondary={secondary}
+        amount={amount}
+        onPress={() => {
+          console.log(item);
+          // Navigation logic can be added here if needed
+        }}
+      />
+    );
+  };
+
+  //     onPress={() => {
+  //       console.log(item)
+  //       // if (item.logType == "createBooking"
+  //       //   || item.logType == "createBookingPending"
+  //       //   || item.logType == "cancelBooking"
+  //       //   || item.logType == "cancelBookingPending") {
+  //       //   // Navigate to bookingDetail with props
+  //       //   props.navigation.navigate('BookingStackModal', {
+  //       //     screen: 'BookingDetail',
+  //       //     params: {
+  //       //       bookingId: item.bookingId,
+  //       //       spaceId: item.spaceId,
+  //       //       host
+  //       //     }
+  //       //   });
+  //       // } else if (item.logType == "createSpace"
+  //       //   || item.logType == "updateSpace"
+  //       //   || item.logType == "enableSpace"
+  //       //   || item.logType == "disableSpace"
+  //       //   || item.logType == "updateBlocked") {
+  //       //   // Navigate to spaceDetail with props
+  //       //   props.navigation.navigate('HostStackModal', {
+  //       //     screen: 'SpaceDetail', params: {
+  //       //       spaceId: item.spaceId
+  //       //     }
+  //       //   });
+  //       // } else {
+  //       //   // For no navigation logTypes i.e. topup etc
+  //       //   null
+  //       // }
+  //     }}
 
   return (
     <Container>

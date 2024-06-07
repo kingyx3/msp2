@@ -6,7 +6,6 @@ import { View, StyleSheet, Modal, Text, KeyboardAvoidingView, Keyboard, Alert, D
 // import LocationPicker from "../../components/LocationPicker";
 import * as Button from "../../components/Button";
 import { DefaultInput } from "../../components/forms/AppInput";
-import { similarity } from "../../components/Firebase/firebase";
 
 //import styles and assets
 import styled from "styled-components/native";
@@ -275,3 +274,37 @@ const mapStateToProps = (state) => {
 };
 
 export default connect(mapStateToProps, { setCurrLocation, setRevGeoCode })(HostingStep6);
+
+// Function to compare similarity between 2 strings
+// https://stackoverflow.com/questions/10473745/compare-strings-javascript-return-of-likely
+function similarity(s1, s2) {
+  let longer = s1;
+  let shorter = s2;
+  if (s1.length < s2.length) {
+    longer = s2;
+    shorter = s1;
+  }
+  let longerLength = longer.length;
+  if (longerLength == 0) {
+    return 1.0;
+  }
+  return (longerLength - editDistance(longer, shorter)) / parseFloat(longerLength);
+}
+
+function editDistance(s1, s2) {
+  s1 = s1.toLowerCase();
+  s2 = s2.toLowerCase();
+
+  const costs = new Array(s2.length + 1).fill(0).map((_, i) => i);
+
+  for (let i = 1; i <= s1.length; i++) {
+    let lastValue = i;
+    for (let j = 1; j <= s2.length; j++) {
+      const newValue = (s1.charAt(i - 1) === s2.charAt(j - 1)) ? costs[j - 1] : Math.min(costs[j - 1], lastValue, costs[j]) + 1;
+      costs[j - 1] = lastValue;
+      lastValue = newValue;
+    }
+    costs[s2.length] = lastValue;
+  }
+  return costs[s2.length];
+}
