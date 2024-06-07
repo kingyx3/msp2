@@ -77,37 +77,17 @@ export default function App() {
   }, []);
 
   useEffect(() => {
-    // Sign in via email link
     const checkAuth = async () => {
-      const email = await SecureStore.getItemAsync('emailForSignIn');
-      const latestRandomKey = await SecureStore.getItemAsync('latestRandomKey')
+      try {
+        const email = await SecureStore.getItemAsync('emailForSignIn');
+        const latestRandomKey = await SecureStore.getItemAsync('latestRandomKey');
 
-      if (useUrl) {
-        // Confirm the link is a sign-in with email link.
-        if (isSignInWithEmailLink(auth, useUrl)) {
-          // Additional state parameters can also be passed via URL.
-          // This can be used to continue the user's intended action before triggering
-          // the sign-in operation.
+        if (useUrl && isSignInWithEmailLink(auth, useUrl)) {
           if (useUrl.includes(latestRandomKey)) {
-            // Get the email if available. This should be available if the user completes
-            // the flow on the same device where they started it.
             if (email) {
-              // The client SDK will parse the code from the link for you.
-              try {
-                await signInWithEmailLink(auth, email, useUrl)
-                // Clear email & randomkey from storage.
-                await SecureStore.deleteItemAsync('emailForSignIn');
-                await SecureStore.deleteItemAsync('latestRandomKey');
-                // You can access the new user via result.user
-                // Additional user info profile not available via:
-                // result.additionalUserInfo.profile == null
-                // You can check if the user is new or existing:
-                // result.additionalUserInfo.isNewUser
-              } catch (e) {
-                // Alert.alert('Email link login error', e, [
-                //   { text: 'OK', onPress: () => console.log('OK Pressed') },
-                // ]);
-              }
+              await signInWithEmailLink(auth, email, useUrl);
+              await SecureStore.deleteItemAsync('emailForSignIn');
+              await SecureStore.deleteItemAsync('latestRandomKey');
             } else {
               Alert.alert('Different Device', 'Please login using the same device.', [
                 { text: 'OK', onPress: () => console.log('OK Pressed') },
@@ -118,18 +98,15 @@ export default function App() {
               { text: 'OK', onPress: () => console.log('OK Pressed') },
             ]);
           }
-        } else {
-          // Alert.alert('Not Email Link', '', [
-          //   { text: 'OK', onPress: () => console.log('OK Pressed') },
-          // ]);
         }
+      } catch (error) {
+        console.error('Email link login error', error);
       }
-    }
-    // call the function
-    checkAuth()
-      // make sure to catch any error
-      .catch(console.error);
-  }, [useUrl])
+    };
+
+    checkAuth().catch(console.error);
+  }, [useUrl]);
+
 
   // Not very useful, doesnt really help to persist auth
   useEffect(() => {
