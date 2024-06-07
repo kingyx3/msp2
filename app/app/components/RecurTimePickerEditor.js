@@ -57,9 +57,12 @@ const RecurTimePickerEditor = ({
   };
 
   const toggleHour = (hour) => {
+    // if (hours[hour] === 3) {
+    //   hours[hour] = 1;
+    // } else if (hours[hour] === 0) {
+    //   hours[hour] = 0;
+    // }
     if (hours[hour] === 3) {
-      hours[hour] = 1;
-    } else if (hours[hour] === 0) {
       hours[hour] = 0;
     } else {
       hours[hour] += 1;
@@ -123,19 +126,19 @@ const styles = StyleSheet.create({
     backgroundColor: Colors.faintgray
   },
   activeText: {
-    fontSize: hp('1.8%'),
+    fontSize: hp('1.5%'),
     color: '#ffffff'
   },
   activeText2: {
-    fontSize: hp('1.8%'),
+    fontSize: hp('1.5%'),
     color: '#ffffff'
   },
   activeText3: {
-    fontSize: hp('1.8%'),
+    fontSize: hp('1.5%'),
     color: '#ffffff'
   },
   inactiveText: {
-    fontSize: hp('1.8%'),
+    fontSize: hp('1.5%'),
     color: Colors.darkgray
   },
   container: {

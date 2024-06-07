@@ -60,7 +60,7 @@ const styles = StyleSheet.create({
     padding: wp('5%'),
   },
   headerText: {
-    fontSize: hp('3%'),
+    fontSize: hp('2%'),
   },
   legendContainer: {
     padding: wp('5%'),
@@ -86,22 +86,22 @@ const styles = StyleSheet.create({
     backgroundColor: Colors.faintgray,
   },
   activeText: {
-    fontSize: hp('2%'),
+    fontSize: hp('1.5%'),
     color: '#ffffff',
     textAlign: 'center',
   },
   activeText2: {
-    fontSize: hp('2%'),
+    fontSize: hp('1.5%'),
     color: '#ffffff',
     textAlign: 'center',
   },
   activeText3: {
-    fontSize: hp('2%'),
+    fontSize: hp('1.5%'),
     color: '#ffffff',
     textAlign: 'center',
   },
   inactiveText: {
-    fontSize: hp('2%'),
+    fontSize: hp('1.5%'),
     color: Colors.darkgray,
     textAlign: 'center',
   },

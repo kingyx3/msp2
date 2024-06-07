@@ -1,179 +1,117 @@
 import React, { useState, useEffect } from 'react';
 import {
   View,
-  Text,
-  TextInput,
-  SafeAreaView,
-  TouchableOpacity,
-  Image,
   StyleSheet,
   Modal,
-  Alert,
 } from 'react-native';
-//import components
-// import AppForm from '../../components/forms/AppForm';
 import AppPicker from '../../components/AppPicker';
 import Counter from "../../components/Counter";
 import RuleMakerEditor from '../../components/RuleMakerEditor';
-//import styles and assets
 import styled from 'styled-components/native';
 import * as Typography from '../../config/Typography';
 import colors from '../../config/colors';
 import * as MyButton from '../../components/Button';
-import Colors from '../../config/colors';
 import { Button } from 'react-native-elements';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import { Switch } from 'react-native-elements';
-//import { Button } from 'react-native-paper';
-//import redux
 import { connect } from 'react-redux';
 import {
   setWeekdayRule,
-  setSaturdayRule,
-  setSundayRule,
   setMonthsAhead,
   setCancellationPolicy,
   setNeedHostConfirm,
 } from '../../store/host';
 import { getTimingDiffFromUTC, getCancellationPolicies } from '../../components/Firebase/firebase';
 
-// let x = [0, 0, 0, 0, 0, 0, 0, 0, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 0, 0, 0, 0, 0, 0]
+const initializeDefaultRules = () => {
+  const defaultRules = Array(168).fill(0);
+  for (let day = 0; day < 7; day++) {
+    for (let hour = 8; hour < 18; hour++) {
+      defaultRules[day * 24 + hour] = 1; // Assume 1 is the code for open hours
+    }
+  }
+  return defaultRules;
+};
 
 const HostingEdit4 = (props) => {
-  const { editMode, selectedSpace, defaultWeekday, defaultSaturday, defaultSunday } = props.route.params
-  const [cancellationPolicies, setCancellationPolicies] = useState([])
+  const { editMode, selectedSpace } = props.route.params;
+  const [cancellationPolicies, setCancellationPolicies] = useState([]);
   const [modalVisible, setModalVisible] = useState(false);
   const [ruleDays, setRuleDays] = useState([]);
-  const [defaultRules, setDefaultRules] = useState()
-  const [weekdaySet, setWeekdaySet] = useState(true);
-  const [saturdaySet, setSaturdaySet] = useState(true);
-  const [sundaySet, setSundaySet] = useState(true);
-  const cancellationPoliciesSorted = cancellationPolicies.sort((a, b) => a.numberOfHours - b.numberOfHours)
-  // const defaultRule = [0,0,0,0,0,0,0,0,1,1,1,1,1,1,1,1,1,1,1,1,0,0,0,0]
-  // { 0:0, 1:0, 2:0, 3:0, 4:0, 5:0, 6:0, 7:0, 8:1, 9:1, 10:1, 11:1, 12:1, 13:1, 14:1, 15:1, 16:1, 17:1, 18:1, 19:1, 20:0, 21:0, 22:0, 23:0,}
-  const [weekdayRule, setWeekdayRule] = useState(defaultWeekday);
-  const [saturdayRule, setSaturdayRule] = useState(defaultSaturday);
-  const [sundayRule, setSundayRule] = useState(defaultSunday);
-  const [monthsAhead, setMonthsAhead] = useState(1)
-  const [cancellationPolicy, setCancellationPolicy] = useState(cancellationPoliciesSorted[2])
-  const [needHostConfirm, setNeedHostConfirm] = useState(false)
-  const [count, setCount] = useState(0)
+  const [defaultRules, setDefaultRules] = useState(initializeDefaultRules());
+  const [weekdayRules, setWeekdayRules] = useState(initializeDefaultRules());
+  const [monthsAhead, setMonthsAhead] = useState(1);
+  const [cancellationPolicy, setCancellationPolicy] = useState(null);
+  const [needHostConfirm, setNeedHostConfirm] = useState(false);
+  const [count, setCount] = useState(0);
 
   useEffect(() => {
-    getCancellationPolicies(setCancellationPolicies)
-  }, [])
+    getCancellationPolicies(setCancellationPolicies);
+  }, []);
 
-  useEffect(() => { // used to set initial value to state
+  useEffect(() => {
     if (selectedSpace && !count) {
-      const timeDiffHours = getTimingDiffFromUTC()
+      const timeDiffHours = getTimingDiffFromUTC();
       const shiftedArr = selectedSpace.openingHours.splice(-timeDiffHours);
       const adjustedToLocalOpeningHours = shiftedArr.concat(selectedSpace.openingHours);
 
-      let oldSundayRule = adjustedToLocalOpeningHours.slice(0 * 24, 1 * 24)
-      let oldWeekdayRule = adjustedToLocalOpeningHours.slice(1 * 24, 2 * 24)
-      let oldSaturdayRule = adjustedToLocalOpeningHours.slice(6 * 24, 7 * 24)
+      const newRules = revertPricesInOpeningHours(adjustedToLocalOpeningHours, selectedSpace.price, selectedSpace.peakPrice, selectedSpace.offPeakPrice);
 
-      // Replace (old) normal price with 1, peak price with 2, and off peak price with 3
-      oldSundayRule = revertPricesInOpeningHours(oldSundayRule, selectedSpace.price, selectedSpace.peakPrice, selectedSpace.offPeakPrice)
-      oldWeekdayRule = revertPricesInOpeningHours(oldWeekdayRule, selectedSpace.price, selectedSpace.peakPrice, selectedSpace.offPeakPrice)
-      oldSaturdayRule = revertPricesInOpeningHours(oldSaturdayRule, selectedSpace.price, selectedSpace.peakPrice, selectedSpace.offPeakPrice)
-
-      setSundayRule(oldSundayRule)
-      setWeekdayRule(oldWeekdayRule)
-      setSaturdayRule(oldSaturdayRule)
-      setMonthsAhead(selectedSpace.monthsAhead)
-      setCancellationPolicy(selectedSpace.cancellationPolicy)
-      setNeedHostConfirm(selectedSpace.needHostConfirm)
-      setCount(1)
+      setWeekdayRules(newRules);
+      setMonthsAhead(selectedSpace.monthsAhead);
+      setCancellationPolicy(selectedSpace.cancellationPolicy);
+      setNeedHostConfirm(selectedSpace.needHostConfirm);
+      setCount(1);
     }
-  }, [count, selectedSpace])
-
+  }, [count, selectedSpace]);
 
   const onSubmit = (ruleDays, hours) => {
-    // console.log('hours', hours)
-    if (ruleDays[0] == 0) {
-      setWeekdaySet(true);
-      setWeekdayRule(hours);
-    } else if (ruleDays[0] == 5) {
-      setSaturdaySet(true);
-      setSaturdayRule(hours);
-    } else {
-      setSundaySet(true);
-      setSundayRule(hours);
-    }
+    const newRules = [...weekdayRules];
+    ruleDays.forEach(day => {
+      for (let hour = 0; hour < 24; hour++) {
+        newRules[day * 24 + hour] = hours[hour];
+      }
+    });
+    console.log(newRules)
+    setWeekdayRules(newRules);
     setModalVisible(false);
   };
 
   const onNavigate = () => {
-    props.setWeekdayRule(weekdayRule);
-    props.setSaturdayRule(saturdayRule);
-    props.setSundayRule(sundayRule);
-    props.setMonthsAhead(monthsAhead)
-    props.setCancellationPolicy(cancellationPolicy)
-    props.setNeedHostConfirm(needHostConfirm)
+    props.setWeekdayRule(weekdayRules);
+    props.setMonthsAhead(monthsAhead);
+    props.setCancellationPolicy(cancellationPolicy);
+    props.setNeedHostConfirm(needHostConfirm);
     props.navigation.navigate('HostingEdit5', { editMode, selectedSpace });
   };
+
+  const renderButton = (day, index) => (
+    <View style={styles.general} key={index}>
+      <Button
+        icon={
+          <Icon
+            name={weekdayRules.slice(index * 24, (index + 1) * 24).some(hour => hour) ? 'check-square-o' : 'square-o'}
+            size={15}
+            color="white"
+          />
+        }
+        title={`  Set ${day} Peak/Off-Peak`}
+        onPress={() => {
+          setModalVisible(true);
+          setRuleDays([index]);
+          setDefaultRules(weekdayRules.slice(index * 24, (index + 1) * 24));
+        }}
+      />
+    </View>
+  );
+
   return (
     <Container>
       <Main testID="hosting-edit4-scroll-view">
         <Typography.H>Set your peak/off-peak periods</Typography.H>
-        <Step style={{ paddingTop: 20 }}>
-          <View style={styles.general}>
-            <Button
-              icon={
-                <Icon
-                  name={weekdaySet ? 'check-square-o' : 'square-o'}
-                  size={15}
-                  color="white"
-                />
-              }
-              title="  Set Weekday Peak/Off-Peak"
-              onPress={() => {
-                setModalVisible(true);
-                setRuleDays([0, 1, 2, 3, 4]);
-                setDefaultRules(weekdayRule)
-              }}
-            />
-          </View>
-          <View style={styles.general}>
-            <Button
-              icon={
-                <Icon
-                  name={saturdaySet ? 'check-square-o' : 'square-o'}
-                  size={15}
-                  color="white"
-                />
-              }
-              title="  Set Saturday Peak/Off-Peak"
-              onPress={() => {
-                setModalVisible(true);
-                setRuleDays([5]);
-                setDefaultRules(saturdayRule)
-              }}
-            />
-          </View>
-          <View style={styles.general}>
-            <Button
-              icon={
-                <Icon
-                  name={sundaySet ? 'check-square-o' : 'square-o'}
-                  size={15}
-                  color="white"
-                />
-              }
-              title="  Set Sunday Peak/Off-Peak"
-              onPress={() => {
-                setModalVisible(true);
-                setRuleDays([6]);
-                setDefaultRules(sundayRule)
-              }}
-            />
-          </View>
-        </Step>
+        {['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'].map((day, index) => renderButton(day, index))}
         <Step>
-          <Typography.Sub1>
-            How many months of advanced booking is allowed?
-          </Typography.Sub1>
+          <Typography.Sub1>How many months of advanced booking is allowed?</Typography.Sub1>
           <Flex>
             <Typography.P colors={colors.gray}>Number of months</Typography.P>
             <View style={{ width: "30%" }}>
@@ -209,7 +147,7 @@ const HostingEdit4 = (props) => {
         </Step>
         <Modal animationType="fade" visible={modalVisible}>
           <RuleMakerEditor
-            ruleDays={ruleDays} //weekdays
+            ruleDays={ruleDays}
             defaultRules={defaultRules}
             onSubmit={onSubmit}
           />
@@ -223,11 +161,11 @@ const HostingEdit4 = (props) => {
             label="Next"
             size="small"
             color={
-              weekdaySet && saturdaySet && sundaySet && cancellationPolicy
+              weekdayRules.some(rule => rule) && cancellationPolicy
                 ? colors.red
                 : colors.lightgray
             }
-            disabled={!weekdaySet || !saturdaySet || !sundaySet || !cancellationPolicy}
+            disabled={!weekdayRules.some(rule => rule) || !cancellationPolicy}
             onPress={() => onNavigate()}
           />
         </BtnContainer>
@@ -276,83 +214,31 @@ const Flex = styled.View`
   justify-content: space-between;
   margin: 15px 10px 10px 0;
 `;
+
 const styles = StyleSheet.create({
-  // viewTask: {
-  //   position: 'absolute',
-  //   top: 350,
-  //   //bottom: 0,
-  //   right: 17,
-  //   height: 60,
-  //   width: 60,
-  //   backgroundColor: '#2E66E7',
-  //   borderRadius: 30,
-  //   justifyContent: 'center',
-  //   alignItems: 'center',
-  //   shadowColor: '#2E66E7',
-  //   shadowOffset: {
-  //     width: 0,
-  //     height: 5,
-  //   },
-  // },
   general: {
     padding: 5,
   },
-  // button: {
-  //   color: Colors.red,
-  //   padding: 5,
-  // },
 });
 
 export default connect(null, {
   setWeekdayRule,
-  setSaturdayRule,
-  setSundayRule,
   setMonthsAhead,
   setCancellationPolicy,
   setNeedHostConfirm
 })(HostingEdit4);
 
 function revertPricesInOpeningHours(openingHours, price, peakPrice, offPeakPrice) {
-  for (let i = 0; i < openingHours.length; i++) {
-    switch (openingHours[i]) {
-      case 0:
-        openingHours[i] = 0;
-        break;
-      case price: // normal
-        openingHours[i] = 1;
-        break;
-      case peakPrice: // peak
-        openingHours[i] = 2;
-        break;
-      case offPeakPrice: // offPeak
-        openingHours[i] = 3;
-        break;
+  return openingHours.map(hour => {
+    switch (hour) {
+      case price:
+        return 1;
+      case peakPrice:
+        return 2;
+      case offPeakPrice:
+        return 3;
       default:
-        break;
+        return 0;
     }
-  }
-  return openingHours;
+  });
 }
-
-// hostingedit 8 screen
-// function setPricesInOpeningHours(openingHours, price, peakPrice, offPeakPrice) {
-//   for (let i = 0; i < openingHours.length; i++) {
-//     switch (openingHours[i]) {
-//       case 0:
-//         openingHours[i] = 0;
-//         break;
-//       case 1: // normal
-//         openingHours[i] = price;
-//         break;
-//       case 2: // peak
-//         openingHours[i] = peakPrice;
-//         break;
-//       case 3: // offPeak
-//         openingHours[i] = offPeakPrice;
-//         break;
-//       default:
-//         break;
-//     }
-//   }
-//   return openingHours;
-// }
