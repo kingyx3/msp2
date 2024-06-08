@@ -193,6 +193,8 @@ export const testBookingDetail = async () => {
 
     const bookingDateLabel = (await element(by.id("booking-date")).getAttributes()).label
     const bookingTimeLabel = (await element(by.id("booking-time")).getAttributes()).label
+    console.log('bookingDateLabel', bookingDateLabel, bookingDateLabel.slice(0, -1))
+    console log('bookingTimeLabel', bookingTimeLabel, bookingTimeLabel.split(" to ")[0])
 
     const bookingStartDateTime = extractDateTime(bookingDateLabel.slice(0, -1) + ", " + bookingTimeLabel.split(" to ")[0])
     const bookingEndDateTime = extractDateTime(bookingDateLabel.slice(0, -1) + ", " + bookingTimeLabel.split(" to ")[1])
