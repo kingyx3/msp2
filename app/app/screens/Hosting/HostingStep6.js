@@ -1,46 +1,76 @@
 import React, { useState, useEffect } from "react";
 import { View, StyleSheet, Modal, Text, KeyboardAvoidingView, Keyboard, Alert, Dimensions, FlatList, ActivityIndicator, TouchableWithoutFeedback, TouchableOpacity, Platform } from "react-native";
-
-//import components
-// import AppForm from "../../components/forms/AppForm";
-// import LocationPicker from "../../components/LocationPicker";
-import * as Button from "../../components/Button";
-import { DefaultInput } from "../../components/forms/AppInput";
-
-//import styles and assets
 import styled from "styled-components/native";
 import { H, H4 } from "../../config/Typography";
 import colors from "../../config/colors";
-
-//import redux
 import { connect } from "react-redux";
 import { setCurrLocation, setRevGeoCode } from "../../store/host";
 import { GooglePlacesAutocomplete } from 'react-native-google-places-autocomplete';
 import { subtitle1FontSize, subtitle1FontSizeIOS } from "../../config/Typography";
+import * as Button from "../../components/Button";
+import { DefaultInput } from "../../components/forms/AppInput";
 
-let height = Dimensions.get('window').height;
+const height = Dimensions.get('window').height;
 
-const HostingStep6 = (props) => {
-  const initialState = { user: { unit: "" }, latitude: 999, longitude: 999, geoapify: {}, checked: false }
-  const [location, setLocation] = useState(initialState)
-  const { editMode, selectedSpace } = props.route.params
-  const [searchTerm, setSearchTerm] = useState('')
-  const [loading, setLoading] = useState(true)
+const initialState = { user: { unit: "" }, latitude: 999, longitude: 999, geoapify: {}, checked: false };
+
+const HostingStep6 = ({ route, navigation, setCurrLocation, state }) => {
+  const { editMode, selectedSpace } = route.params;
+  const [location, setLocation] = useState(initialState);
+  const [searchTerm, setSearchTerm] = useState('');
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    if (location == props.state.location) {
-      setLoading(false)
+    if (location === state.location) {
+      setLoading(false);
     } else {
-      setLoading(true)
-      props.setCurrLocation(location);
+      setLoading(true);
+      setCurrLocation(location);
     }
-  }, [location, props.state.location])
+  }, [location, state.location]);
 
   const onNavigate = () => {
-    // console.log(location)
-    props.setCurrLocation(location);
-    // props.setRevGeoCode(address[0]);
-    props.navigation.navigate("HostingEdit7", { editMode, selectedSpace, location });
+    setCurrLocation(location);
+    navigation.navigate("HostingEdit7", { editMode, selectedSpace, location });
+  };
+
+  const handleAddressSelection = async (data) => {
+    const update = { ...location, description: data.description };
+    setSearchTerm(data.description);
+
+    const uri = `https://api.geoapify.com/v1/geocode/search?text=${data.description}&type=amenity&format=json&apiKey=${process.env.EXPO_PUBLIC_GEOAPIFY_API_KEY}`;
+    const encoded = encodeURI(uri);
+
+    try {
+      const response = await fetch(encoded);
+      const results = await response.json();
+      const validResults = results.results.filter(result => result.rank.confidence >= 0.8);
+
+      if (validResults.length > 0) {
+        const topResult = validResults.reduce((prev, current) => (
+          similarity(current.formatted, data.description) > similarity(prev.formatted, data.description) ? current : prev
+        ));
+
+        update.checked = true;
+        update.geoapify = topResult;
+        update.geoapify.accuracy = similarity(topResult.formatted, data.description);
+        update.latitude = topResult.lat;
+        update.longitude = topResult.lon;
+      } else {
+        update.checked = false;
+        update.geoapify = {};
+      }
+
+      if (update.latitude !== update.geoapify.lat || update.longitude !== update.geoapify.lon) {
+        Alert.alert("Address not valid", "Please try again", [{ text: "OK" }]);
+      }
+    } catch (error) {
+      update.checked = false;
+      update.geoapify = {};
+      console.error(error);
+    }
+
+    setLocation(update);
   };
 
   return (
@@ -48,8 +78,9 @@ const HostingStep6 = (props) => {
       <Container>
         <Main
           testID="hosting-step6-scroll-view"
-          keyboardShouldPersistTaps={'handled'}
-          contentContainerStyle={{ height }}>
+          keyboardShouldPersistTaps="handled"
+          contentContainerStyle={{ height }}
+        >
           <H>Where is your space?</H>
           <Step>
             <H4>Apartment, unit, suite, or floor #</H4>
@@ -57,132 +88,65 @@ const HostingStep6 = (props) => {
               name="unit"
               value={location.user.unit}
               onChangeText={(text) => {
-                let update = { ...location }
-                text = text.replace(/[^0-9-]/g, '')
-                if (text.length <= 10) {
-                  update.user.unit = text
-                  setLocation(update)
+                const update = { ...location };
+                const sanitizedText = text.replace(/[^0-9-]/g, '');
+                if (sanitizedText.length <= 10) {
+                  update.user.unit = sanitizedText;
+                  setLocation(update);
                 }
               }}
-              keyboardType={'numbers-and-punctuation'}
-              style={{ paddingLeft: 10, fontSize: Platform.OS === 'ios' ? subtitle1FontSizeIOS : subtitle1FontSize, zIndex: 1 }}
+              keyboardType="numbers-and-punctuation"
+              style={{
+                paddingLeft: 10,
+                fontSize: Platform.OS === 'ios' ? subtitle1FontSizeIOS : subtitle1FontSize,
+                zIndex: 1
+              }}
             />
           </Step>
           <Step>
             <H4>Address</H4>
             <GooglePlacesAutocomplete
               placeholder="e.g. 99 Cross Street"
-              minLength={3} // minimum length of text to search
-              listViewDisplayed={null}    // 'auto'/null after place selection
-              // fetchDetails={true}
+              minLength={3}
               disableScroll
               enablePoweredByContainer={false}
               preProcess={(text) => {
-                // // Clears geoapify object
-                // let update = { ...location }
-                // update['geoapify'] = {}
-                // setLocation(update)
-
-                if (!isNaN(text.charAt(0))) { // if first char is a number
-                  return text
-                } else { // first char not number
+                if (!isNaN(text.charAt(0))) {
+                  return text;
+                } else {
                   Alert.alert(
                     "Started with non-numeric character",
                     "Please start your address with a number",
-                    [{ text: "OK", onPress: () => console.log("User acknowledgement - Started with non-numeric character") }]
+                    [{ text: "OK" }]
                   );
-                  return ""
+                  return "";
                 }
               }}
               textInputProps={{
                 testID: "address-input",
-                onChangeText: (text) => setSearchTerm(text)
+                onChangeText: setSearchTerm
               }}
               styles={{
-                textInputContainer: {
-                  paddingTop: 10,
-                },
+                textInputContainer: { paddingTop: 10 },
                 textInput: {
                   width: '100%',
                   borderBottomWidth: 1,
                   borderBottomColor: '#d4d4d4',
-                  fontSize: Platform.OS === 'ios' ? subtitle1FontSizeIOS : subtitle1FontSize,
+                  fontSize: Platform.OS === 'ios' ? subtitle1FontSizeIOS : subtitle1FontSize
                 },
-                listView: {
-                  position: 'absolute',
-                  top: 55,
-                },
+                listView: { position: 'absolute', top: 55 }
               }}
               query={{
                 key: process.env.EXPO_PUBLIC_GOOGLE_PLACES_API_KEY,
-                language: 'en', // language of the results
+                language: 'en',
                 components: 'country:SGP',
-                type: 'address', // geocode, address, establishment
+                type: 'address'
               }}
-              onPress={async (data, details = null) => {
-                let update = { ...location }
-                update['description'] = data.description
-                setSearchTerm(data.description)
-
-                // Validate address with Geoapify
-                // let uri = `https://api.geoapify.com/v1/geocode/search?text=${street_address + ", " + country_name + ', ' + postal_code}&format=json&apiKey=${APIKEY}`;
-                let uri = `https://api.geoapify.com/v1/geocode/search?text=${data.description}&type=amenity&format=json&apiKey=${process.env.EXPO_PUBLIC_GEOAPIFY_API_KEY}`;
-                let encoded = encodeURI(uri);
-                try {
-                  let results = await fetch(encoded)
-                  results = await results.json()
-                  results = results.results
-                  // console.log(results)
-                  if (results.length == 0) {
-                    console.log('No results')
-                    update['checked'] = false // no change, default false
-                    update['geoapify'] = {}
-                  } else {
-                    let topScore = 0
-                    for (let i = 0; i < results.length; i++) {
-                      let result = results[i]
-                      // console.log(result)
-                      if (result.rank.confidence >= 0.8) {
-                        let score = similarity(result.formatted, data.description)
-                        if (score > topScore) {
-                          topScore = score
-                          update['checked'] = true
-                          update['geoapify'] = result
-                          update['geoapify']['accuracy'] = score
-                          update.latitude = result.lat
-                          update.longitude = result.lon
-                        }
-                      }
-                    }
-                    if (topScore === 0) {
-                      console.log('No results with >80% confidence')
-                      update['checked'] = false // no change, default false
-                      update['geoapify'] = {}
-                    }
-                  }
-
-                  if (update.latitude != update.geoapify.lat || update.longitude != update.geoapify.lon) {
-                    // Alert user that address selected is not valid
-                    Alert.alert(
-                      "Address not valid",
-                      "Please try again",
-                      [{ text: "OK", onPress: () => console.log("User acknowledgement - Address not valid") }]
-                    );
-                  }
-
-                } catch (e) {
-                  update['checked'] = false // no change, default false
-                  update['geoapify'] = {}
-                  console.log(e)
-                }
-                // console.log(update)
-                setLocation(update)
-              }}
+              onPress={handleAddressSelection}
               onFail={(error) => console.error(error)}
               requestUrl={{
-                url:
-                  'https://maps.googleapis.com/maps/api',
-                useOnPlatform: 'web',
+                url: 'https://maps.googleapis.com/maps/api',
+                useOnPlatform: 'web'
               }}
             />
           </Step>
@@ -191,32 +155,25 @@ const HostingStep6 = (props) => {
           <Left></Left>
           <BtnContainer>
             <Button.BtnContain
-              testID={'hosting-step6-next-button'}
+              testID="hosting-step6-next-button"
               label="Next"
-              // color={colors.red}
               size="small"
-              color={(!loading && location.latitude == location.geoapify.lat && searchTerm == location.description) ? colors.red : colors.lightgray}
-              disabled={(!loading && location.latitude == location.geoapify.lat && searchTerm == location.description) ? false : true}
+              color={(!loading && location.latitude === location.geoapify.lat && searchTerm === location.description) ? colors.red : colors.lightgray}
+              disabled={(!loading && location.latitude === location.geoapify.lat && searchTerm === location.description) ? false : true}
               onPress={onNavigate}
             />
           </BtnContainer>
         </Next>
       </Container>
-    </TouchableWithoutFeedback >
+    </TouchableWithoutFeedback>
   );
 };
 
-
-
-const Container = Platform.OS === 'ios'
-  ? styled.View`
+const Container = styled.View`
   flex: 1;
   background-color: white;
-  `
-  : styled.View`
-  height: ${height - 50}px; /* instead of flex:1 */
-  background-color: white;
-  `;
+  ${Platform.OS !== 'ios' && `height: ${height - 50}px;`}
+`;
 
 const Main = styled.ScrollView`
   flex: 1;
@@ -232,7 +189,6 @@ const Next = styled.View`
   border-top-color: ${colors.faintgray};
   background-color: white;
 `;
-
 const Left = styled.View``;
 
 const BtnContainer = styled.View`
@@ -240,63 +196,33 @@ const BtnContainer = styled.View`
 `;
 
 const Step = styled.View`
-margin-top: 20px;
+  margin-top: 20px;
 `;
 
-// const styles = StyleSheet.create({
-//   container: {
-//     flex: 1,
-//     backgroundColor: '#f8f8f8',
-//     alignItems: 'center'
-//   },
-//   text: {
-//     fontSize: 15,
-//     color: '#101010',
-//     marginTop: 60,
-//     fontWeight: '700'
-//   },
-//   listItem: {
-//     marginTop: 10,
-//     paddingTop: 8,
-//     alignItems: 'center',
-//     backgroundColor: '#fff',
-//     width: '100%'
-//   },
-//   listItemText: {
-//     fontSize: 14
-//   }
-// });
-
-const mapStateToProps = (state) => {
-  return {
-    state: state.host,
-  };
-};
+const mapStateToProps = (state) => ({
+  state: state.host,
+});
 
 export default connect(mapStateToProps, { setCurrLocation, setRevGeoCode })(HostingStep6);
 
-// Function to compare similarity between 2 strings
-// https://stackoverflow.com/questions/10473745/compare-strings-javascript-return-of-likely
-function similarity(s1, s2) {
+// Helper functions
+const similarity = (s1, s2) => {
   let longer = s1;
   let shorter = s2;
   if (s1.length < s2.length) {
     longer = s2;
     shorter = s1;
   }
-  let longerLength = longer.length;
-  if (longerLength == 0) {
-    return 1.0;
-  }
+  const longerLength = longer.length;
+  if (longerLength === 0) return 1.0;
   return (longerLength - editDistance(longer, shorter)) / parseFloat(longerLength);
-}
+};
 
-function editDistance(s1, s2) {
+const editDistance = (s1, s2) => {
   s1 = s1.toLowerCase();
   s2 = s2.toLowerCase();
 
-  const costs = new Array(s2.length + 1).fill(0).map((_, i) => i);
-
+  const costs = Array(s2.length + 1).fill(0).map((_, i) => i);
   for (let i = 1; i <= s1.length; i++) {
     let lastValue = i;
     for (let j = 1; j <= s2.length; j++) {
@@ -307,4 +233,4 @@ function editDistance(s1, s2) {
     costs[s2.length] = lastValue;
   }
   return costs[s2.length];
-}
+};
