@@ -32,16 +32,6 @@ export function createSpaceTestSuite() {
         await waitFor(element(by.id('hosting-edit4-next-button'))).toBeVisible().withTimeout(60000);
         await expect(element(by.id('hosting-edit4-back-button'))).toBeVisible()
 
-        // Scroll down if android
-        if (device.getPlatform() === 'ios') {
-            console.log("1. Platform is " + device.getPlatform())
-        } else {
-            console.log("2. Platform is " + device.getPlatform())
-            await element(by.id('hosting-edit4-scroll-view')).scroll(350, 'down', NaN, 0.85);
-            await element(by.id('hosting-edit4-scroll-view')).scroll(350, 'down', NaN, 0.85);
-            await element(by.id('hosting-edit4-scroll-view')).scroll(350, 'down', NaN, 0.85);
-        }
-
         await element(by.id('cancellation-policy-picker')).tap()
         await waitFor(element(by.id('2_picker_item'))).toBeVisible().withTimeout(60000);
         await expect(element(by.id('2_picker_item'))).toBeVisible();
