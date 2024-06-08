@@ -423,8 +423,8 @@ const testCancelBooking = async (host, currentDateTime, cancelByDateTime, bookin
     await element(by.id("cancel-booking")).tap();
 
     const bookingCancellationText = host
-        ? ("Do you want to cancel this booking? Your potential earnings will be reduced by $" + refundAmount + " if you cancel now.")
-        : ("Do you want to cancel this booking? $" + refundAmount + " will be refunded to your wallet if you cancel now.")
+        ? ("Do you want to cancel this booking? Your potential earnings will be reduced by $" + refundAmount.toFixed(2) + " if you cancel now.")
+        : ("Do you want to cancel this booking? $" + refundAmount.toFixed(2) + " will be refunded to your wallet if you cancel now.")
 
     console.log('bookingCancellationText', "|" + bookingCancellationText + "|")
     await waitFor(element(by.text(bookingCancellationText))).toBeVisible().withTimeout(60000);
