@@ -5,6 +5,7 @@ const SET_NUM_SPACES = 'SET_NUM_SPACES';
 const SET_PRICE = 'SET_PRICE';
 const SET_PEAKPRICE = 'SET_PEAKPRICE';
 const SET_OFFPEAKPRICE = 'SET_OFFPEAKPRICE';
+const SET_OPENING_HOURS = 'SET_OPENING_HOURS'
 const SET_WEEKDAY_RULE = 'SET_WEEKDAY_RULE';
 const SET_SATURDAY_RULE = 'SET_SATURDAY_RULE';
 const SET_SUNDAY_RULE = 'SET_SUNDAY_RULE';
@@ -25,6 +26,7 @@ const initialStore = {
   price: 0,
   peakPrice: 0,
   offPeakPrice: 0,
+  openingHours: [],
   weekdayRule: {},
   saturdayRule: {},
   sundayRule: {},
@@ -97,6 +99,17 @@ export const setOffPeakPrice = (num) => {
       type: SET_OFFPEAKPRICE,
       payload: {
         num,
+      },
+    });
+  };
+};
+
+export const setOpeningHours = (ruleset) => {
+  return (dispatch) => {
+    dispatch({
+      type: SET_OPENING_HOURS,
+      payload: {
+        ruleset,
       },
     });
   };
@@ -239,6 +252,8 @@ const reducer = (state = initialStore, action) => {
       return { ...state, peakPrice: action.payload.num };
     case SET_OFFPEAKPRICE:
       return { ...state, offPeakPrice: action.payload.num };
+    case SET_OPENING_HOURS:
+      return { ...state, openingHours: action.payload.ruleset };
     case SET_WEEKDAY_RULE:
       return { ...state, weekdayRule: action.payload.ruleset };
     case SET_SATURDAY_RULE:

@@ -64,7 +64,7 @@ const HostingEdit2 = (props) => {
       props.setPrice(price);
       props.setPeakPrice(peakPrice);
       props.setOffPeakPrice(offPeakPrice);
-      props.navigation.navigate(editMode ? 'HostingEdit4' : 'HostingStep3', { editMode, selectedSpace });
+      props.navigation.navigate('HostingEdit3', { editMode, selectedSpace });
     }
   };
   return (

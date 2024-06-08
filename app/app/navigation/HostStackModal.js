@@ -15,7 +15,7 @@ import Description from "../screens/Hosting/details/Description";
 import BookingDetail from "../screens/BookingDetail";
 import HostingStep1 from "../screens/Hosting/HostingStep1";
 import HostingEdit2 from "../screens/Hosting/HostingEdit2";
-import HostingStep3 from "../screens/Hosting/HostingStep3";
+import HostingEdit3 from "../screens/Hosting/HostingEdit3";
 import HostingEdit4 from "../screens/Hosting/HostingEdit4";
 import HostingEdit5 from "../screens/Hosting/HostingEdit5";
 import HostingStep6 from "../screens/Hosting/HostingStep6";
@@ -140,13 +140,13 @@ const HostStackModal = ({ navigation, route }) => {
                 }}
             />
             <Stack.Screen
-                name="HostingStep3"
-                component={HostingStep3}
+                name="HostingEdit3"
+                component={HostingEdit3}
                 options={{
                     title: false,
                     headerBackTitleVisible: false,
                     headerBackImage: () => (
-                        <IconWrapper testID="hosting-step3-back-button">
+                        <IconWrapper testID="hosting-edit3-back-button">
                             <EvilIcons name="chevron-left" size={30} />
                         </IconWrapper>
                     ),
