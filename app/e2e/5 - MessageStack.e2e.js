@@ -37,6 +37,8 @@ describe('Check MessageStack & send a message', () => {
 
   it('Send a message to the other party (or yourself)', async () => {
     await element(by.id('messageInput')).tap();
+    await waitFor(element(by.id('messageInput'))).toBeVisible().withTimeout(60000);
+  });
     await element(by.id('messageInput')).typeText('Hey, good day to you sir/mdm');
     await element(by.id("send-button")).tap();
 
