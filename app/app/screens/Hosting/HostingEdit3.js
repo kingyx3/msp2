@@ -136,7 +136,7 @@ const HostingEdit3 = (props) => {
       <Main testID="hosting-edit3-scroll-view">
         <Typography.H>Set your peak/off-peak periods</Typography.H>
         {['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'].map((day, index) => (
-          <View key={index}>
+          <View key={index} style={index === 6 ? styles.lastDayContainer : {}}>
             {renderButton(day, index)}
             <Text style={styles.dayTitle}>{day}:</Text>
             {readableOpeningHours[day].map((interval, idx) => (
@@ -182,6 +182,7 @@ const Container = styled.View`
 const Main = styled.ScrollView`
   flex: 1;
   padding: 24px;
+  padding-bottom: 100px; /* Adding padding at the bottom to prevent overlap */
 `;
 
 const Next = styled.View`
@@ -225,6 +226,9 @@ const styles = StyleSheet.create({
   },
   intervalText: {
     marginLeft: 10,
+  },
+  lastDayContainer: {
+    paddingBottom: 100, // Add extra space at the bottom for the last day
   },
 });
 
