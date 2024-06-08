@@ -83,7 +83,7 @@ const HostingEdit3 = (props) => {
 
   return (
     <Container>
-      <Main testID="hosting-step3-scroll-view">
+      <Main testID="hosting-edit3-scroll-view">
         <Typography.H>Set your peak/off-peak periods</Typography.H>
         {['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'].map((day, index) => renderButton(day, index))}
         <Modal animationType="fade" visible={modalVisible}>
@@ -99,7 +99,7 @@ const HostingEdit3 = (props) => {
         <Left></Left>
         <BtnContainer>
           <MyButton.BtnContain
-            testID={'hosting-step3-next-button'}
+            testID={'hosting-edit3-next-button'}
             label="Next"
             size="small"
             color={
