@@ -150,8 +150,14 @@ export function updateSpaceTestSuite() {
         await waitFor(element(by.id('hosting-edit2-next-button'))).toBeVisible().withTimeout(60000);
         await expect(element(by.id('hosting-edit2-back-button'))).toBeVisible()
     })
-    it('Navigate to HostingEdit4', async () => {
+    it('Navigate to HostingEdit3', async () => {
         await element(by.id('hosting-edit2-next-button')).tap()
+
+        await waitFor(element(by.id('hosting-edit3-next-button'))).toBeVisible().withTimeout(60000);
+        await expect(element(by.id('hosting-edit3-back-button'))).toBeVisible()
+    })
+    it('Navigate to HostingEdit4', async () => {
+        await element(by.id('hosting-edit3-next-button')).tap()
 
         await waitFor(element(by.id('hosting-edit4-next-button'))).toBeVisible().withTimeout(60000);
         await expect(element(by.id('hosting-edit4-back-button'))).toBeVisible()
