@@ -90,21 +90,29 @@ const HostingEdit3 = (props) => {
 
     daysOfWeek.forEach((day, index) => {
       let dayHours = openingHours.slice(index * hoursInDay, (index + 1) * hoursInDay);
-      let intervals = [];
+      let regularHours = [];
+      let peakHours = [];
+      let offPeakHours = [];
       let currentStatus = dayHours[0];
       let startHour = 0;
 
       for (let hour = 1; hour <= hoursInDay; hour++) {
         if (dayHours[hour] !== currentStatus || hour === hoursInDay) {
-          if (currentStatus !== 0) {
-            intervals.push(`${formatHour(startHour)} - ${formatHour(hour)}: ${getStatusLabel(currentStatus)}`);
-          }
+          const timeInterval = `${formatHour(startHour)} - ${formatHour(hour)}`;
+          if (currentStatus === 1) regularHours.push(timeInterval);
+          else if (currentStatus === 2) peakHours.push(timeInterval);
+          else if (currentStatus === 3) offPeakHours.push(timeInterval);
+          
           currentStatus = dayHours[hour];
           startHour = hour;
         }
       }
 
-      result[day] = intervals.length > 0 ? intervals : ["Closed"];
+      result[day] = {
+        regular: regularHours.length > 0 ? regularHours : ["Closed"],
+        peak: peakHours.length > 0 ? peakHours : ["Closed"],
+        offPeak: offPeakHours.length > 0 ? offPeakHours : ["Closed"],
+      };
     });
 
     return result;
@@ -116,26 +124,30 @@ const HostingEdit3 = (props) => {
     return `${formattedHour} ${period}`;
   };
 
-  const getStatusLabel = (status) => {
-    switch (status) {
-      case 1:
-        return 'Regular hours';
-      case 2:
-        return 'Peak hours';
-      case 3:
-        return 'Off-peak hours';
-      default:
-        return 'Closed';
-    }
-  };
-
   const readableOpeningHours = convertArrayToReadableFormat(openingHours);
 
   return (
     <Container>
       <Main testID="hosting-edit3-scroll-view">
         <Typography.H>Set your peak/off-peak periods</Typography.H>
-        {['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'].map((day, index) => renderButton(day, index))}
+        {['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'].map((day, index) => (
+          <View key={index}>
+            {renderButton(day, index)}
+            <Text style={styles.dayTitle}>{day}:</Text>
+            <Text style={styles.hoursTitle}>Regular:</Text>
+            {readableOpeningHours[day].regular.map((interval, idx) => (
+              <Text key={idx} style={styles.intervalText}>{interval}</Text>
+            ))}
+            <Text style={styles.hoursTitle}>Peak:</Text>
+            {readableOpeningHours[day].peak.map((interval, idx) => (
+              <Text key={idx} style={styles.intervalText}>{interval}</Text>
+            ))}
+            <Text style={styles.hoursTitle}>Off-Peak:</Text>
+            {readableOpeningHours[day].offPeak.map((interval, idx) => (
+              <Text key={idx} style={styles.intervalText}>{interval}</Text>
+            ))}
+          </View>
+        ))}
         <Modal animationType="fade" visible={modalVisible}>
           <RuleMakerEditor
             ruleDays={ruleDays}
@@ -144,16 +156,6 @@ const HostingEdit3 = (props) => {
             onSubmit={onSubmit}
           />
         </Modal>
-        <ScrollView>
-          {Object.entries(readableOpeningHours).map(([day, hours]) => (
-            <View key={day}>
-              <Text style={styles.dayTitle}>{day}:</Text>
-              {hours.map((interval, idx) => (
-                <Text key={idx} style={styles.intervalText}>{interval}</Text>
-              ))}
-            </View>
-          ))}
-        </ScrollView>
       </Main>
       <Next>
         <Left></Left>
@@ -224,6 +226,10 @@ const styles = StyleSheet.create({
   dayTitle: {
     fontWeight: 'bold',
     marginTop: 10,
+  },
+  hoursTitle: {
+    fontStyle: 'italic',
+    marginTop: 5,
   },
   intervalText: {
     marginLeft: 10,
