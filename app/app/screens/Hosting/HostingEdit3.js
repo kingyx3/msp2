@@ -89,6 +89,7 @@ const HostingEdit3 = (props) => {
         <Modal animationType="fade" visible={modalVisible}>
           <RuleMakerEditor
             ruleDays={ruleDays}
+            editMode={editMode}
             defaultRules={defaultRules}
             onSubmit={onSubmit}
           />

@@ -13,6 +13,7 @@ const RecurTimePickerEditor = ({
   onChange = null,
   style = null,
   dayStyle = null,
+  editMode,
   hours = { 0: 1, 1: 1, 2: 1, 3: 1, 4: 1, 5: 1, 6: 1, 7: 1, 8: 1, 9: 1, 10: 1, 11: 1, 12: 1, 13: 1, 14: 1, 15: 1, 16: 1, 17: 1, 18: 1, 19: 1, 20: 1, 21: 1, 22: 1, 23: 1, }
 }) => {
   const [hoursContainer, setHoursContainer] = useState([]);
@@ -57,15 +58,20 @@ const RecurTimePickerEditor = ({
   };
 
   const toggleHour = (hour) => {
-    // if (hours[hour] === 3) {
-    //   hours[hour] = 1;
-    // } else if (hours[hour] === 0) {
-    //   hours[hour] = 0;
-    // }
-    if (hours[hour] === 3) {
-      hours[hour] = 0;
+    if (editMode) {
+      if (hours[hour] === 3) {
+        hours[hour] = 1;
+      } else if (hours[hour] === 0) {
+        hours[hour] = 0;
+      } else {
+        hours[hour] += 1;
+      }
     } else {
-      hours[hour] += 1;
+      if (hours[hour] === 3) {
+        hours[hour] = 0;
+      } else {
+        hours[hour] += 1;
+      }
     }
     handleChange(hours);
   };

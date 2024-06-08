@@ -8,7 +8,7 @@ import Colors from "../config/colors";
 import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen';
 
 export default function RuleMakerEditor(props) {
-  let { ruleDays, defaultRules, onSubmit } = props;
+  let { ruleDays, editMode, defaultRules, onSubmit } = props;
   const [hours, setHours] = useState(defaultRules);
 
   const onChangeHour = (updatedHours) => {
@@ -22,6 +22,7 @@ export default function RuleMakerEditor(props) {
       </View>
       <TimePickerEditor
         testID="time-picker-editor"
+        editMode={editMode}
         hours={hours}
         onChange={onChangeHour}
       />
