@@ -64,7 +64,7 @@ const HostingEdit3 = (props) => {
   };
 
   const renderButton = (day, index) => (
-    <View style={styles.general} key={index}>
+    <View style={styles.buttonContainer} key={index}>
       <Button
         icon={
           <Icon
@@ -73,12 +73,14 @@ const HostingEdit3 = (props) => {
             color="white"
           />
         }
-        title={`  Set ${day} Peak/Off-Peak`}
+        title={`Set ${day} Peak/Off-Peak`}
         onPress={() => {
           setModalVisible(true);
           setRuleDays([index]);
           setDefaultRules(openingHours.slice(index * 24, (index + 1) * 24));
         }}
+        buttonStyle={styles.buttonStyle}
+        titleStyle={styles.buttonTitleStyle}
       />
     </View>
   );
@@ -134,14 +136,18 @@ const HostingEdit3 = (props) => {
   return (
     <Container>
       <Main testID="hosting-edit3-scroll-view">
-        <Typography.H>Set your peak/off-peak periods</Typography.H>
+        <Typography.H>Set your Opening hours</Typography.H>
         {['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'].map((day, index) => (
-          <View key={index} style={index === 6 ? styles.lastDayContainer : {}}>
-            {renderButton(day, index)}
-            <Text style={styles.dayTitle}>{day}:</Text>
-            {readableOpeningHours[day].map((interval, idx) => (
-              <Text key={idx} style={styles.intervalText}>{interval}</Text>
-            ))}
+          <View key={index} style={[styles.dayContainer, index === 6 ? styles.lastDayContainer : {}]}>
+            <View style={styles.row}>
+              {renderButton(day, index)}
+              <View style={styles.hoursContainer}>
+                <Text style={styles.dayTitle}>{day}:</Text>
+                {readableOpeningHours[day].map((interval, idx) => (
+                  <Text key={idx} style={styles.intervalText}>{interval}</Text>
+                ))}
+              </View>
+            </View>
           </View>
         ))}
         <Modal animationType="fade" visible={modalVisible}>
@@ -217,8 +223,19 @@ const Flex = styled.View`
 `;
 
 const styles = StyleSheet.create({
-  general: {
-    padding: 5,
+  dayContainer: {
+    marginBottom: 20,
+  },
+  buttonContainer: {
+    flex: 1,
+  },
+  row: {
+    flexDirection: 'row',
+    alignItems: 'center',
+  },
+  hoursContainer: {
+    flex: 2,
+    marginLeft: 15,
   },
   dayTitle: {
     fontWeight: 'bold',
@@ -226,6 +243,12 @@ const styles = StyleSheet.create({
   },
   intervalText: {
     marginLeft: 10,
+  },
+  buttonStyle: {
+    backgroundColor: colors.primary,
+  },
+  buttonTitleStyle: {
+    color: 'white',
   },
   lastDayContainer: {
     paddingBottom: 100, // Add extra space at the bottom for the last day
