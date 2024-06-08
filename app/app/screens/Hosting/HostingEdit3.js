@@ -3,6 +3,8 @@ import {
   View,
   StyleSheet,
   Modal,
+  ScrollView,
+  Text,
 } from 'react-native';
 import RuleMakerEditor from '../../components/RuleMakerEditor';
 import styled from 'styled-components/native';
@@ -11,7 +13,7 @@ import colors from '../../config/colors';
 import * as MyButton from '../../components/Button';
 import { Button } from 'react-native-elements';
 import Icon from 'react-native-vector-icons/FontAwesome';
-import { connect, } from 'react-redux';
+import { connect } from 'react-redux';
 import {
   setOpeningHours
 } from '../../store/host';
@@ -81,6 +83,43 @@ const HostingEdit3 = (props) => {
     </View>
   );
 
+  const convertArrayToReadableFormat = (openingHours) => {
+    const daysOfWeek = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'];
+    const hoursInDay = 24;
+    let result = {};
+
+    daysOfWeek.forEach((day, index) => {
+      let dayHours = openingHours.slice(index * hoursInDay, (index + 1) * hoursInDay);
+      let intervals = [];
+      let open = null;
+
+      for (let hour = 0; hour < hoursInDay; hour++) {
+        if (dayHours[hour] === 1 && open === null) {
+          open = hour;
+        } else if (dayHours[hour] === 0 && open !== null) {
+          intervals.push(`${formatHour(open)} - ${formatHour(hour)}`);
+          open = null;
+        }
+      }
+
+      if (open !== null) {
+        intervals.push(`${formatHour(open)} - ${formatHour(hoursInDay)}`);
+      }
+
+      result[day] = intervals.length > 0 ? intervals : ["Closed"];
+    });
+
+    return result;
+  };
+
+  const formatHour = (hour) => {
+    let period = hour < 12 ? 'AM' : 'PM';
+    let formattedHour = hour % 12 === 0 ? 12 : hour % 12;
+    return `${formattedHour} ${period}`;
+  };
+
+  const readableOpeningHours = convertArrayToReadableFormat(openingHours);
+
   return (
     <Container>
       <Main testID="hosting-edit3-scroll-view">
@@ -94,7 +133,17 @@ const HostingEdit3 = (props) => {
             onSubmit={onSubmit}
           />
         </Modal>
-      </Main >
+        <ScrollView>
+          {Object.entries(readableOpeningHours).map(([day, hours]) => (
+            <View key={day}>
+              <Text style={styles.dayTitle}>{day}:</Text>
+              {hours.map((interval, idx) => (
+                <Text key={idx} style={styles.intervalText}>{interval}</Text>
+              ))}
+            </View>
+          ))}
+        </ScrollView>
+      </Main>
       <Next>
         <Left></Left>
         <BtnContainer>
@@ -160,6 +209,13 @@ const Flex = styled.View`
 const styles = StyleSheet.create({
   general: {
     padding: 5,
+  },
+  dayTitle: {
+    fontWeight: 'bold',
+    marginTop: 10,
+  },
+  intervalText: {
+    marginLeft: 10,
   },
 });
 
