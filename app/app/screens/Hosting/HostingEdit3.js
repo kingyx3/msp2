@@ -90,29 +90,21 @@ const HostingEdit3 = (props) => {
 
     daysOfWeek.forEach((day, index) => {
       let dayHours = openingHours.slice(index * hoursInDay, (index + 1) * hoursInDay);
-      let regularHours = [];
-      let peakHours = [];
-      let offPeakHours = [];
+      let intervals = [];
       let currentStatus = dayHours[0];
       let startHour = 0;
 
       for (let hour = 1; hour <= hoursInDay; hour++) {
         if (dayHours[hour] !== currentStatus || hour === hoursInDay) {
-          const timeInterval = `${formatHour(startHour)} - ${formatHour(hour)}`;
-          if (currentStatus === 1) regularHours.push(timeInterval);
-          else if (currentStatus === 2) peakHours.push(timeInterval);
-          else if (currentStatus === 3) offPeakHours.push(timeInterval);
+          const timeInterval = `${formatHour(startHour)} - ${formatHour(hour)}${getStatusSuffix(currentStatus)}`;
+          if (currentStatus !== 0) intervals.push(timeInterval);
           
           currentStatus = dayHours[hour];
           startHour = hour;
         }
       }
 
-      result[day] = {
-        regular: regularHours.length > 0 ? regularHours : ["Closed"],
-        peak: peakHours.length > 0 ? peakHours : ["Closed"],
-        offPeak: offPeakHours.length > 0 ? offPeakHours : ["Closed"],
-      };
+      result[day] = intervals.length > 0 ? intervals : ["Closed"];
     });
 
     return result;
@@ -122,6 +114,19 @@ const HostingEdit3 = (props) => {
     let period = hour < 12 || hour === 24 ? 'AM' : 'PM';
     let formattedHour = hour % 12 === 0 ? 12 : hour % 12;
     return `${formattedHour} ${period}`;
+  };
+
+  const getStatusSuffix = (status) => {
+    switch (status) {
+      case 1:
+        return '';
+      case 2:
+        return ' (peak)';
+      case 3:
+        return ' (off peak)';
+      default:
+        return '';
+    }
   };
 
   const readableOpeningHours = convertArrayToReadableFormat(openingHours);
@@ -134,16 +139,7 @@ const HostingEdit3 = (props) => {
           <View key={index}>
             {renderButton(day, index)}
             <Text style={styles.dayTitle}>{day}:</Text>
-            <Text style={styles.hoursTitle}>Regular:</Text>
-            {readableOpeningHours[day].regular.map((interval, idx) => (
-              <Text key={idx} style={styles.intervalText}>{interval}</Text>
-            ))}
-            <Text style={styles.hoursTitle}>Peak:</Text>
-            {readableOpeningHours[day].peak.map((interval, idx) => (
-              <Text key={idx} style={styles.intervalText}>{interval}</Text>
-            ))}
-            <Text style={styles.hoursTitle}>Off-Peak:</Text>
-            {readableOpeningHours[day].offPeak.map((interval, idx) => (
+            {readableOpeningHours[day].map((interval, idx) => (
               <Text key={idx} style={styles.intervalText}>{interval}</Text>
             ))}
           </View>
@@ -226,10 +222,6 @@ const styles = StyleSheet.create({
   dayTitle: {
     fontWeight: 'bold',
     marginTop: 10,
-  },
-  hoursTitle: {
-    fontStyle: 'italic',
-    marginTop: 5,
   },
   intervalText: {
     marginLeft: 10,
