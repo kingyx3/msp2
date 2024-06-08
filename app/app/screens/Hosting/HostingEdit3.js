@@ -23,7 +23,7 @@ const initializeDefaultRules = () => {
   const defaultRules = Array(168).fill(0);
   for (let day = 0; day < 7; day++) {
     for (let hour = 8; hour < 18; hour++) {
-      defaultRules[day * 24 + hour] = 1; // Assume 1 is the code for open hours
+      defaultRules[day * 24 + hour] = 1; // Assume 1 is the code for regular hours
     }
   }
   return defaultRules;
@@ -91,19 +91,17 @@ const HostingEdit3 = (props) => {
     daysOfWeek.forEach((day, index) => {
       let dayHours = openingHours.slice(index * hoursInDay, (index + 1) * hoursInDay);
       let intervals = [];
-      let open = null;
+      let currentStatus = dayHours[0];
+      let startHour = 0;
 
-      for (let hour = 0; hour < hoursInDay; hour++) {
-        if (dayHours[hour] === 1 && open === null) {
-          open = hour;
-        } else if (dayHours[hour] === 0 && open !== null) {
-          intervals.push(`${formatHour(open)} - ${formatHour(hour)}`);
-          open = null;
+      for (let hour = 1; hour <= hoursInDay; hour++) {
+        if (dayHours[hour] !== currentStatus || hour === hoursInDay) {
+          if (currentStatus !== 0) {
+            intervals.push(`${formatHour(startHour)} - ${formatHour(hour)}: ${getStatusLabel(currentStatus)}`);
+          }
+          currentStatus = dayHours[hour];
+          startHour = hour;
         }
-      }
-
-      if (open !== null) {
-        intervals.push(`${formatHour(open)} - ${formatHour(hoursInDay)}`);
       }
 
       result[day] = intervals.length > 0 ? intervals : ["Closed"];
@@ -113,9 +111,22 @@ const HostingEdit3 = (props) => {
   };
 
   const formatHour = (hour) => {
-    let period = hour < 12 ? 'AM' : 'PM';
+    let period = hour < 12 || hour === 24 ? 'AM' : 'PM';
     let formattedHour = hour % 12 === 0 ? 12 : hour % 12;
     return `${formattedHour} ${period}`;
+  };
+
+  const getStatusLabel = (status) => {
+    switch (status) {
+      case 1:
+        return 'Regular hours';
+      case 2:
+        return 'Peak hours';
+      case 3:
+        return 'Off-peak hours';
+      default:
+        return 'Closed';
+    }
   };
 
   const readableOpeningHours = convertArrayToReadableFormat(openingHours);
