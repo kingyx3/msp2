@@ -5,13 +5,13 @@ import {
   Modal,
   ScrollView,
   Text,
-  TouchableOpacity,
 } from 'react-native';
 import RuleMakerEditor from '../../components/RuleMakerEditor';
 import styled from 'styled-components/native';
 import * as Typography from '../../config/Typography';
 import colors from '../../config/colors';
 import * as MyButton from '../../components/Button';
+import { Button } from 'react-native-elements';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import { connect } from 'react-redux';
 import {
@@ -63,28 +63,23 @@ const HostingEdit3 = (props) => {
     props.navigation.navigate('HostingEdit4', { editMode, selectedSpace });
   };
 
-  const renderDayRow = (day, index) => (
-    <View style={styles.dayContainer} key={index}>
-      <TouchableOpacity
-        style={styles.button}
+  const renderButton = (day, index) => (
+    <View style={styles.general} key={index}>
+      <Button
+        icon={
+          <Icon
+            name={openingHours.slice(index * 24, (index + 1) * 24).some(hour => hour) ? 'check-square-o' : 'square-o'}
+            size={15}
+            color="white"
+          />
+        }
+        title={`  Set ${day} Peak/Off-Peak`}
         onPress={() => {
           setModalVisible(true);
           setRuleDays([index]);
           setDefaultRules(openingHours.slice(index * 24, (index + 1) * 24));
         }}
-      >
-        <Icon
-          name={openingHours.slice(index * 24, (index + 1) * 24).some(hour => hour) ? 'check-square-o' : 'square-o'}
-          size={15}
-          color="white"
-        />
-        <Text style={styles.buttonText}>{day}</Text>
-      </TouchableOpacity>
-      <View style={styles.hoursContainer}>
-        {readableOpeningHours[day].map((interval, idx) => (
-          <Text key={idx} style={styles.intervalText}>{interval}</Text>
-        ))}
-      </View>
+      />
     </View>
   );
 
@@ -141,8 +136,12 @@ const HostingEdit3 = (props) => {
       <Main testID="hosting-edit3-scroll-view">
         <Typography.H>Set your Opening hours</Typography.H>
         {['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'].map((day, index) => (
-          <View key={index}>
-            {renderDayRow(day, index)}
+          <View key={index} style={index === 6 ? styles.lastDayContainer : {}}>
+            {renderButton(day, index)}
+            <Text style={styles.dayTitle}>{day}:</Text>
+            {readableOpeningHours[day].map((interval, idx) => (
+              <Text key={idx} style={styles.intervalText}>{interval}</Text>
+            ))}
           </View>
         ))}
         <Modal animationType="fade" visible={modalVisible}>
@@ -218,25 +217,12 @@ const Flex = styled.View`
 `;
 
 const styles = StyleSheet.create({
-  dayContainer: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    marginBottom: 10,
+  general: {
+    padding: 5,
   },
-  button: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    backgroundColor: colors.primary,
-    padding: 10,
-    borderRadius: 5,
-    marginRight: 10,
-  },
-  buttonText: {
-    color: 'white',
-    marginLeft: 5,
-  },
-  hoursContainer: {
-    flex: 1,
+  dayTitle: {
+    fontWeight: 'bold',
+    marginTop: 10,
   },
   intervalText: {
     marginLeft: 10,
