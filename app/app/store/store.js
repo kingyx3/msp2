@@ -1,4 +1,4 @@
-import { configureStore } from '@reduxjs/toolkit';
+import { configureStore, getDefaultMiddleware } from '@reduxjs/toolkit';
 import rootReducer from './reducer';
 // import thunk from 'redux-thunk'; // No longer needed, as it's included by default
 
@@ -15,7 +15,12 @@ import rootReducer from './reducer';
 const store = configureStore({
   reducer: rootReducer,
   // preloadedState: initialState,
-  // middleware: (getDefaultMiddleware) => getDefaultMiddleware().concat(yourAdditionalMiddleware), // Only if you need additional middleware
+  // Added middleware to disable warnings
+  middleware: (getDefaultMiddleware) =>
+    getDefaultMiddleware({
+      immutableCheck: false,
+      serializableCheck: false,
+    }),
 });
 
 export default store;

@@ -29,10 +29,10 @@ const HostingEdit8 = (props) => {
       }
       const { spaceType, price, peakPrice, offPeakPrice, images, location, title, description, openingHours, weekdayRule, saturdayRule, sundayRule, numSpaces, cancellationPolicy, monthsAhead, needHostConfirm } = props.state;
       const adjustedOpeningHours = adjustOpeningHoursToUTC(openingHours);
-      const openingHoursWithPrices = setPricesInOpeningHours(adjustedOpeningHours, price, peakPrice, offPeakPrice);
+      // const openingHoursWithPrices = setPricesInOpeningHours(adjustedOpeningHours, price, peakPrice, offPeakPrice);
 
       if (editMode) {
-        updateSpace(selectedSpace.id, price, peakPrice, offPeakPrice, images, title, description, cancellationPolicy, monthsAhead, openingHoursWithPrices, needHostConfirm)
+        updateSpace(selectedSpace.id, price, peakPrice, offPeakPrice, images, title, description, cancellationPolicy, monthsAhead, adjustedOpeningHours, needHostConfirm)
           .then(() => {
             setLoading(false);
             Alert.alert("Space Updated!", "Success", [
@@ -46,7 +46,7 @@ const HostingEdit8 = (props) => {
             ]);
           });
       } else {
-        createSpace(spaceType, price, peakPrice, offPeakPrice, images, location, title, description, numSpaces, cancellationPolicy, monthsAhead, openingHoursWithPrices, needHostConfirm)
+        createSpace(spaceType, price, peakPrice, offPeakPrice, images, location, title, description, numSpaces, cancellationPolicy, monthsAhead, adjustedOpeningHours, needHostConfirm)
           .then(() => {
             setLoading(false);
             Alert.alert("Space Created!", "Success", [

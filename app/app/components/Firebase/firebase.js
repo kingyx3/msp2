@@ -314,7 +314,7 @@ export function setSelectedSpaces(spaceType, start, end, spaceSummaryz) {
     const q = query(
       allSpacesAvailabilityRef,
       where('spaceType', '==', spaceType),
-      where('date', 'in', dates) // Note: 'in' query supports only up to 10 items
+      where('date', 'in', dates) // Note: 'in' query supports only up to 10 items i.e. 10 dates/availabilitydocs
     );
 
     try {
@@ -349,17 +349,34 @@ export function setSelectedSpaces(spaceType, start, end, spaceSummaryz) {
 
         Object.values(timeSlotSpaces).forEach(spaceTimeSlotAvailabilityObj => {
           const spaceTimeSlotAvailabilityArray = spaceTimeSlotAvailabilityObj[spaceId];
+          // console.log('spaceTimeSlotAvailabilityArray', spaceTimeSlotAvailabilityArray)
 
           if (spaceTimeSlotAvailabilityArray) {
             periodAvailabilityArray = periodAvailabilityArray.length === 0
               ? spaceTimeSlotAvailabilityArray
               : periodAvailabilityArray.map((e, idx) => e + spaceTimeSlotAvailabilityArray[idx]);
+            // console.log('periodAvailabilityArray', periodAvailabilityArray)
           }
         });
 
         if (periodAvailabilityArray.includes(timeSlots.length)) {
-          const [periodPrice, ...availabilityArray] = periodAvailabilityArray;
+          const [periodPriceType, ...availabilityArray] = periodAvailabilityArray;
+          console.log('periodPriceType', periodPriceType, spaceId, availabilityArray)
+          // const periodPrice = 10
+          // if (spaceSummary[spaceId]) {
+          // } else {
+          //   console.log(spaceId)
+          // }
+          const periodPrice =
+            periodPriceType.includes('r')
+              ? spaceSummary[spaceId].price
+              : periodPriceType.includes('p')
+                ? spaceSummary[spaceId].peakPrice
+                : periodPriceType.includes('o')
+                  ? spaceSummary[spaceId].offPeakPrice
+                  : null
           availableSpaces[spaceId] = {
+            ...(availableSpaces[spaceId]),
             periodAvailabilityArray: availabilityArray,
             periodPrice,
           };
@@ -367,39 +384,47 @@ export function setSelectedSpaces(spaceType, start, end, spaceSummaryz) {
       });
 
 
-      // console.log('availableSpaces:', availableSpaces);
+      console.log('availableSpaces:', Object.values(availableSpaces).length);
 
       if (Object.keys(availableSpaces).length === 0) {
         console.log("NO AVAILABLE SPACES FOR THESE TIMESLOTS");
         dispatch({ type: 'SET_SELECTED_SPACES', payload: { selectedSpaces: [] } });
         return;
       }
-
       const combinedSpaces = deepmerge.all([spaceSummary, availableSpaces]);
+      // Object.values(combinedSpaces).forEach((space, index) => console.log(index, space.title, space.images, space?.location?.description, space.periodAvailabilityArray, space.periodPrice))
       const selectedSpaces = Object.values(combinedSpaces).filter(space =>
-        space.title && space.images && space.location && space.periodAvailabilityArray && space.periodPrice > 0 && !space.disabled
-      ).map(space => ({
-        id: space.id,
-        title: space.title,
-        images: space.images,
-        location: {
-          latitude: space.location.latitude,
-          longitude: space.location.longitude,
-          street: space.location.geoapify.street,
-          suburb: space.location.geoapify.suburb,
-          country: space.location.geoapify.country,
-        },
-        periodAvailabilityArray: space.periodAvailabilityArray,
-        periodPrice: space.periodPrice,
-        disabled: space.disabled,
-        third_party: space.third_party,
-        reviews: space.ratingCount,
-        rating: getRating(space.ratingCount, space.ratingTotal),
-        userId: space.userId,
-        needHostConfirm: space.needHostConfirm,
-      }));
+        space.title
+        && space.images
+        && space.location
+        && space.periodAvailabilityArray
+        && space.periodPrice > 0
+        && !space.disabled
+        && space.userId !== auth.currentUser.uid
+      ).map(space => {
+        return ({
+          id: space.id,
+          title: space.title,
+          images: space.images,
+          location: {
+            latitude: space.location.latitude,
+            longitude: space.location.longitude,
+            street: space.location.geoapify.street,
+            suburb: space.location.geoapify.suburb,
+            country: space.location.geoapify.country,
+          },
+          periodAvailabilityArray: space.periodAvailabilityArray,
+          periodPrice: space.periodPrice,
+          disabled: space.disabled,
+          third_party: space.third_party,
+          reviews: space.ratingCount,
+          rating: getRating(space.ratingCount, space.ratingTotal),
+          userId: space.userId,
+          needHostConfirm: space.needHostConfirm,
+        })
+      });
 
-      // console.log('selectedSpaces:', selectedSpaces);
+      console.log('selectedSpaces:', Object.entries(selectedSpaces).length);
       dispatch({ type: 'SET_SELECTED_SPACES', payload: { selectedSpaces } });
     } catch (e) {
       console.log("ALLSPACESAVAILABILITY DOCS READ ERROR:", e);

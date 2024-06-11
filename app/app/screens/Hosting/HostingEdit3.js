@@ -20,10 +20,10 @@ import {
 import { getTimingDiffFromUTC } from '../../components/Firebase/firebase';
 
 const initializeDefaultRules = () => {
-  const defaultRules = Array(168).fill(0);
+  const defaultRules = Array(168).fill('c');
   for (let day = 0; day < 7; day++) {
     for (let hour = 8; hour < 18; hour++) {
-      defaultRules[day * 24 + hour] = 1; // Assume 1 is the code for regular hours
+      defaultRules[day * 24 + hour] = 'r'; // Assume r is the code for regular hours
     }
   }
   return defaultRules;
@@ -40,8 +40,7 @@ const HostingEdit3 = (props) => {
   useEffect(() => {
     if (selectedSpace && !count) {
       const adjustedToLocalOpeningHours = adjustOpeningHoursToLocal(selectedSpace.openingHours);
-      const oldRules = revertPricesInOpeningHours(adjustedToLocalOpeningHours, selectedSpace.price, selectedSpace.peakPrice, selectedSpace.offPeakPrice);
-      setOpeningHours(oldRules);
+      setOpeningHours(adjustedToLocalOpeningHours);
       setCount(1);
     }
   }, [count, selectedSpace]);
@@ -97,8 +96,8 @@ const HostingEdit3 = (props) => {
       for (let hour = 1; hour <= hoursInDay; hour++) {
         if (dayHours[hour] !== currentStatus || hour === hoursInDay) {
           const timeInterval = `${formatHour(startHour)} - ${formatHour(hour)}${getStatusSuffix(currentStatus)}`;
-          if (currentStatus !== 0) intervals.push(timeInterval);
-          
+          if (currentStatus !== 'c') intervals.push(timeInterval);
+
           currentStatus = dayHours[hour];
           startHour = hour;
         }
@@ -118,11 +117,11 @@ const HostingEdit3 = (props) => {
 
   const getStatusSuffix = (status) => {
     switch (status) {
-      case 1:
+      case 'r':
         return '';
-      case 2:
+      case 'p':
         return ' (peak)';
-      case 3:
+      case 'o':
         return ' (off peak)';
       default:
         return '';
@@ -137,11 +136,11 @@ const HostingEdit3 = (props) => {
         <Typography.H>Set your Opening hours</Typography.H>
         {['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'].map((day, index) => (
           <View key={index} style={index === 6 ? styles.lastDayContainer : {}}>
-            {renderButton(day, index)}
             <Text style={styles.dayTitle}>{day}:</Text>
             {readableOpeningHours[day].map((interval, idx) => (
               <Text key={idx} style={styles.intervalText}>{interval}</Text>
             ))}
+            {renderButton(day, index)}
           </View>
         ))}
         <Modal animationType="fade" visible={modalVisible}>
@@ -241,19 +240,4 @@ function adjustOpeningHoursToLocal(openingHours) {
   const shiftedArr = openingHours.slice(-timeDiffHours);
   const adjustedToLocalOpeningHours = shiftedArr.concat(openingHours.slice(0, -timeDiffHours));
   return adjustedToLocalOpeningHours;
-}
-
-function revertPricesInOpeningHours(openingHours, price, peakPrice, offPeakPrice) {
-  return openingHours.map(hour => {
-    switch (hour) {
-      case price:
-        return 1;
-      case peakPrice:
-        return 2;
-      case offPeakPrice:
-        return 3;
-      default:
-        return 0;
-    }
-  });
 }

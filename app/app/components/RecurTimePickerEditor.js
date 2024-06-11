@@ -28,9 +28,10 @@ const RecurTimePickerEditor = ({
           hour={hour}
           style={[styles.day, dayStyle]}
           activeTextColor='38dfe1'
-          isActive={hours[hour] === 1}
-          isActive2={hours[hour] === 2}
-          isActive3={hours[hour] === 3}
+          availabilityType={hours[hour]}
+        // isActive={hours[hour] === 'r'}
+        // isActive2={hours[hour] === 'p'}
+        // isActive3={hours[hour] === 'o'}
         />
       );
     });
@@ -48,9 +49,7 @@ const RecurTimePickerEditor = ({
           hour={hour}
           style={[styles.day, dayStyle]}
           activeTextColor='38dfe1'
-          isActive={updatedHours[hour] === 1}
-          isActive2={updatedHours[hour] === 2}
-          isActive3={updatedHours[hour] === 3}
+          availabilityType={hours[hour]}
         />
       );
     });
@@ -59,18 +58,28 @@ const RecurTimePickerEditor = ({
 
   const toggleHour = (hour) => {
     if (editMode) {
-      if (hours[hour] === 3) {
-        hours[hour] = 1;
-      } else if (hours[hour] === 0) {
-        hours[hour] = 0;
+      if (hours[hour] === 'r') {
+        hours[hour] = 'p';
+      } else if (hours[hour] === 'p') {
+        hours[hour] = 'o';
+      } else if (hours[hour] === 'o') {
+        hours[hour] = 'r';
       } else {
-        hours[hour] += 1;
+        hours[hour] = 'r'
+        console.log("invalid option selected, setting to regular hours")
       }
     } else {
-      if (hours[hour] === 3) {
-        hours[hour] = 0;
+      if (hours[hour] === 'r') {
+        hours[hour] = 'p';
+      } else if (hours[hour] === 'p') {
+        hours[hour] = 'o';
+      } else if (hours[hour] === 'o') {
+        hours[hour] = 'c';
+      } else if (hours[hour] === 'c') {
+        hours[hour] = 'r';
       } else {
-        hours[hour] += 1;
+        hours[hour] = 'r'
+        console.log("invalid option selected, setting to regular hours")
       }
     }
     handleChange(hours);
@@ -101,11 +110,25 @@ const Hour = (props) => {
       style={[
         props.style,
         styles.default,
-        props.isActive3 ? styles.active3 : props.isActive2 ? styles.active2 : props.isActive ? styles.active : styles.inactive
+        props.availabilityType == 'r'
+          ? styles.active
+          : props.availabilityType == 'p'
+            ? styles.active2
+            : props.availabilityType == 'o'
+              ? styles.active3
+              : props.availabilityType == 'c'
+                ? styles.inactive
+                : null
       ]}
       onPress={() => props.toggleHour(props.hour)}
     >
-      <Text style={props.isActive3 ? styles.activeText3 : props.isActive2 ? styles.activeText2 : props.isActive ? styles.activeText : styles.inactiveText}>
+      <Text style={props.availabilityType == 'r'
+        ? styles.activeText
+        : props.availabilityType == 'p'
+          ? styles.activeText2
+          : props.availabilityType == 'o'
+            ? styles.activeText3
+            : styles.inactiveText}>
         {hoursMapping[props.hour]}
       </Text>
     </TouchableOpacity>
