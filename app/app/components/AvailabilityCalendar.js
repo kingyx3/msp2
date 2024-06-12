@@ -14,7 +14,7 @@ const options = {
 const { width, height } = Dimensions.get('window');
 const ITEM_HEIGHT = 93
 
-const AvailabilityCalendar = ({ data, setDatedEvents, unitLabel, disabled }) => {
+const AvailabilityCalendar = ({ data, setDatedEvents, unitLabel, disabled, selectedSpace }) => {
     const today = moment().format('YYYY-MM-DD')
     let sortedData = data
         ? Object.keys(data)
@@ -24,7 +24,7 @@ const AvailabilityCalendar = ({ data, setDatedEvents, unitLabel, disabled }) => 
     const firstDate = sortedData[0]
     const [selectedDate, setSelectedDate] = useState(null);
     const [selectedTimeslot, setSelectedTimeslot] = useState(null)
-    const [price, setPrice] = useState(0)
+    const [priceType, setPriceType] = useState(0)
     const [bookingData, setBookingData] = useState([]);
     const [modalVisible, setModalVisible] = useState(false);
     const selectedDayData = data[selectedDate] ? Object.entries(data[selectedDate]).sort((a, b) => a[0] - b[0]) : null
@@ -35,11 +35,11 @@ const AvailabilityCalendar = ({ data, setDatedEvents, unitLabel, disabled }) => 
 
     const handleTimeslotPress = (item) => {
         const timeSlot = item[0]
-        const [price, ...availability] = item[1];
+        const [priceType, ...availability] = item[1];
         setSelectedTimeslot(timeSlot);
-        setPrice(price)
         setModalVisible(true);
         setBookingData([...availability])
+        setPriceType(priceType)
     };
 
     const renderDate = ({ item }) => {
@@ -54,7 +54,7 @@ const AvailabilityCalendar = ({ data, setDatedEvents, unitLabel, disabled }) => 
                 disabled={disabled}
                 onPress={() => setSelectedDate(isSelected ? null : item)}
             >
-                <Typography.P color={isSelected ? 'white' : 'black'} >{`${moment(item).format("DD/MM/YY")}`}</Typography.P>
+                <Typography.P color={isSelected ? 'white' : 'black'} >{`${moment(item).format("DD MMM YY")}`}</Typography.P>
                 <Typography.P color={isSelected ? 'white' : 'black'} >{`${moment(item).format("(dddd)")}`}</Typography.P>
             </TouchableOpacity>
         );
@@ -62,11 +62,12 @@ const AvailabilityCalendar = ({ data, setDatedEvents, unitLabel, disabled }) => 
 
     const renderTimeslotItem = ({ item }) => {
         const timeSlot = item[0]
-        const [price, ...availability] = item[1];
+        const [priceType, ...availability] = item[1];
         const totalAvailable = [...availability].length
         const available = [...availability].filter(item => item === '').length;
         const blocked = [...availability].filter(item => item === 'blocked').length;
         const booked = totalAvailable - available - blocked
+        const displayPrice = getPrice(priceType, selectedSpace.price, selectedSpace.peakPrice, selectedSpace.offPeakPrice)
 
         return (
             <TouchableOpacity
@@ -75,7 +76,7 @@ const AvailabilityCalendar = ({ data, setDatedEvents, unitLabel, disabled }) => 
                 disabled={disabled}
                 onPress={() => handleTimeslotPress(item)}
             >
-                <Text>{`${moment(+timeSlot).format('hA')} - $${price}`}</Text>
+                <Text>{`${moment(+timeSlot).format('hA')} - $${displayPrice}`}</Text>
                 <Text style={{ color: 'green' }}>{'Available: ' + available}</Text>
                 <Text style={{ color: 'red' }}>{'Blocked: ' + blocked}</Text>
                 <Text style={{ color: 'blue' }}>{'Booked: ' + booked}</Text>
@@ -175,9 +176,9 @@ const AvailabilityCalendar = ({ data, setDatedEvents, unitLabel, disabled }) => 
                                         </View>
                                         <View style={{ flex: 1 }}>
                                             <Counter
-                                                result={price}
-                                                onMinus={(newPrice) => setPrice(newPrice)}
-                                                onPlus={(newPrice) => setPrice(newPrice)}
+                                                result={getPrice(priceType, selectedSpace.price, selectedSpace.peakPrice, selectedSpace.offPeakPrice)}
+                                                onMinus={(priceType) => setPriceType(priceType)}
+                                                onPlus={(priceType) => setPriceType(priceType)}
                                                 min={5}
                                             />
                                         </View>
@@ -197,7 +198,7 @@ const AvailabilityCalendar = ({ data, setDatedEvents, unitLabel, disabled }) => 
                                 label="Confirm"
                                 color={colors.red}
                                 onPress={() => {
-                                    data[selectedDate][selectedTimeslot] = [+price].concat(bookingData);
+                                    data[selectedDate][selectedTimeslot] = [priceType].concat(bookingData);
                                     setDatedEvents(data);
                                     setModalVisible(false);
                                 }}
@@ -242,3 +243,33 @@ const Flex = styled.View`
 align - items: center;
 justify - content: space - between;
 `;
+
+function getPrice(priceType, price, peakPrice, offPeakPrice) {
+    if (!isNaN(priceType)) {
+        return priceType;
+    }
+    switch (priceType) {
+        case "r":
+            return price;
+        case "p":
+            return peakPrice;
+        case "o":
+            return offPeakPrice;
+        default:
+            console.log("Invalid Price... setting to default regular hour price");
+            return price;
+    }
+}
+
+// function getPriceType(price, regularPrice, peakPrice, offPeakPrice) {
+//     if (price === regularPrice) {
+//         return "r";
+//     } else if (price === peakPrice) {
+//         return "p";
+//     } else if (price === offPeakPrice) {
+//         return "o";
+//     } else {
+//         console.log("Invalid Price... setting to default regular hour price type");
+//         return "r";
+//     }
+// }

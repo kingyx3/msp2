@@ -69,6 +69,7 @@ const SpaceAvailability = (props) => {
         unitLabel={selectedSpaceType.unitLabel}
         disabled={disabled}
         setDatedEvents={setDatedEvents}
+        selectedSpace={selectedSpace}
       />
       <Step>
         <Button.BtnContain
@@ -107,7 +108,7 @@ const SpaceAvailability = (props) => {
 
               // console.log('newDbEvents', newDbEvents);
               // console.log('dbEvents', dbEvents);
-              console.log('updateDbEvents', updateDbEvents);
+              // console.log('updateDbEvents', updateDbEvents);
 
               updateBlocked(selectedSpace.id, updateDbEvents)
                 .then(() => {

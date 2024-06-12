@@ -345,41 +345,42 @@ export function setSelectedSpaces(spaceType, start, end, spaceSummaryz) {
       const availableSpaces = {};
 
       spaceIds.forEach(spaceId => {
-        let periodAvailabilityArray = [];
+        if (spaceSummary[spaceId]) {
+          let periodAvailabilityArray = [];
+          Object.values(timeSlotSpaces).forEach(spaceTimeSlotAvailabilityObj => {
+            const spaceTimeSlotAvailabilityArray = spaceTimeSlotAvailabilityObj[spaceId];
+            // console.log('spaceTimeSlotAvailabilityArray', spaceTimeSlotAvailabilityArray)
 
-        Object.values(timeSlotSpaces).forEach(spaceTimeSlotAvailabilityObj => {
-          const spaceTimeSlotAvailabilityArray = spaceTimeSlotAvailabilityObj[spaceId];
-          // console.log('spaceTimeSlotAvailabilityArray', spaceTimeSlotAvailabilityArray)
+            if (spaceTimeSlotAvailabilityArray) {
+              periodAvailabilityArray = periodAvailabilityArray.length === 0
+                ? spaceTimeSlotAvailabilityArray
+                : periodAvailabilityArray.map((e, idx) => e + spaceTimeSlotAvailabilityArray[idx]);
+              // console.log('periodAvailabilityArray', periodAvailabilityArray)
+            }
+          });
 
-          if (spaceTimeSlotAvailabilityArray) {
-            periodAvailabilityArray = periodAvailabilityArray.length === 0
-              ? spaceTimeSlotAvailabilityArray
-              : periodAvailabilityArray.map((e, idx) => e + spaceTimeSlotAvailabilityArray[idx]);
-            // console.log('periodAvailabilityArray', periodAvailabilityArray)
+          if (periodAvailabilityArray.includes(timeSlots.length)) {
+            const [periodPriceType, ...availabilityArray] = periodAvailabilityArray;
+            console.log('periodPriceType', periodPriceType, spaceId, availabilityArray)
+            // const periodPrice = 10
+            // if (spaceSummary[spaceId]) {
+            // } else {
+            //   console.log(spaceId)
+            // }
+            const periodPrice =
+              periodPriceType.includes('r')
+                ? spaceSummary[spaceId].price
+                : periodPriceType.includes('p')
+                  ? spaceSummary[spaceId].peakPrice
+                  : periodPriceType.includes('o')
+                    ? spaceSummary[spaceId].offPeakPrice
+                    : periodPriceType // Custom price updated via spaceavailability
+            availableSpaces[spaceId] = {
+              ...(availableSpaces[spaceId]),
+              periodAvailabilityArray: availabilityArray,
+              periodPrice,
+            };
           }
-        });
-
-        if (periodAvailabilityArray.includes(timeSlots.length)) {
-          const [periodPriceType, ...availabilityArray] = periodAvailabilityArray;
-          console.log('periodPriceType', periodPriceType, spaceId, availabilityArray)
-          // const periodPrice = 10
-          // if (spaceSummary[spaceId]) {
-          // } else {
-          //   console.log(spaceId)
-          // }
-          const periodPrice =
-            periodPriceType.includes('r')
-              ? spaceSummary[spaceId].price
-              : periodPriceType.includes('p')
-                ? spaceSummary[spaceId].peakPrice
-                : periodPriceType.includes('o')
-                  ? spaceSummary[spaceId].offPeakPrice
-                  : null
-          availableSpaces[spaceId] = {
-            ...(availableSpaces[spaceId]),
-            periodAvailabilityArray: availabilityArray,
-            periodPrice,
-          };
         }
       });
 
