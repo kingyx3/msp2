@@ -16,8 +16,13 @@ describe('AvailabilityCalendar', () => {
             },
             // ... other dates
         };
-        const { getByText } = render(<AvailabilityCalendar data={testData} />);
-        expect(getByText('01/01/21')).toBeTruthy();
+        const selectedSpace = {
+            price: 10,
+            peakPrice: 15,
+            offPeakPrice: 8
+        }
+        const { getByText } = render(<AvailabilityCalendar data={testData} selectedSpace={selectedSpace} />);
+        expect(getByText('01 Jan 21')).toBeTruthy();
         expect(getByText('(Monday)')).toBeTruthy();
         // Add more assertions as needed
     });
@@ -40,8 +45,13 @@ describe('AvailabilityCalendar', () => {
                 "1702602000000": [20, ""],
             }
         }
+        const selectedSpace = {
+            price: 10,
+            peakPrice: 15,
+            offPeakPrice: 8
+        }
         // Only renders latest date (if all test data is historical dates)
-        const { getByTestId, getAllByTestId, queryByTestId } = render(<AvailabilityCalendar data={testData} setDatedEvents={setDatedEvents} />);
+        const { getByTestId, getAllByTestId, queryByTestId } = render(<AvailabilityCalendar data={testData} setDatedEvents={setDatedEvents} selectedSpace={selectedSpace} />);
         expect(getByTestId('date-flatlist')).toBeDefined();
 
         // const dateElement = getByTestId('date-flatlist').props.renderItem(dateTestData);
