@@ -69,7 +69,7 @@ const Reserve_1 = (props) => {
       // Device is connected to the internet
       setLoading(true)
       // console.log(selectedSpace.id, start, end, bookingId, courtId)
-      createBooking(selectedSpace.id, start, end, courtId)
+      createBooking(selectedSpace.id, start, end, courtId, periodPrice)
         .then(async () => {
           Alert.alert('Success', selectedSpace.needHostConfirm ? 'Your booking is now pending host confirmation.' : 'The payment was confirmed successfully.', [{
             text: 'Ok',

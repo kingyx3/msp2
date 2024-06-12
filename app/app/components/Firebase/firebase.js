@@ -645,9 +645,9 @@ export function deleteSpace(spaceId) { // need to beware of dependencies i.e. pr
 }
 
 // Function to create a booking (BOOKING-C) (XR+XW+2W) => XR depends on allspacesavailability (number of dates involved)
-export async function createBooking(spaceId, start, end, courtId) {//selectedSpace, start, end, price, userBookings) { // TRANSACTION-ED
+export async function createBooking(spaceId, start, end, courtId, frontEndPrice) {//selectedSpace, start, end, price, userBookings) { // TRANSACTION-ED
   const CFcreateBooking = httpsCallable(functions, 'createBooking');
-  const inputs = { spaceId, start, end, courtId }
+  const inputs = { spaceId, start, end, courtId, frontEndPrice }
   // console.log(inputs)
   return CFcreateBooking(inputs)
     .then(() => console.log("BOOKING CREATED SUCCESSFULLY!"))
