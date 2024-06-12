@@ -144,8 +144,12 @@ export const getCancellationPolicies = async (setCancellationPolicies) => {
 
     if (snapshot.exists()) {
       const data = snapshot.val();
-      const cancellationPolicy = Object.values(data)
-      setCancellationPolicies(cancellationPolicy);
+      const cancellationPolicies = Object.values(data)
+
+      // Sort the policies by numberOfHours
+      cancellationPolicies.sort((a, b) => a.numberOfHours - b.numberOfHours);
+
+      setCancellationPolicies(cancellationPolicies);
       // return cancellationPolicy
       return
     } else {
