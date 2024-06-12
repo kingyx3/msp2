@@ -175,7 +175,7 @@ const Home = (props) => {
               <View style={styles.balanceContainer}>
                 <View testID="wallet-balance">
                   <Typography.H2 bold >{"SGD " + (props?.user?.wallet?.sgd / 100 || 0).toFixed(2)}</Typography.H2>
-                  <Typography.pS>{props?.user?.wallet?.sgd ? "Wallet Balance" : ""}</Typography.pS>
+                  <Typography.pS>{process.env.EXPO_PUBLIC_TYPE !== 'TEST' ? "Wallet Balance" : props?.user?.wallet?.sgd ? "Wallet Balance" : ""}</Typography.pS>
                 </View>
                 <TouchableOpacity
                   testID="top-up-button"
