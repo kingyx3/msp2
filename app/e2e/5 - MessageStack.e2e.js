@@ -1,4 +1,6 @@
 // MessageStackModal
+import { navigateToHomeScreen } from "./helpers";
+
 describe('Check MessageStack & send a message', () => {
   beforeAll(async () => {
     await device.launchApp({
@@ -17,7 +19,7 @@ describe('Check MessageStack & send a message', () => {
     await element(by.id('submit-email-button')).tap();
 
     // Wait for navigation to complete & perform the visibility checks
-    await waitFor(element(by.text('Quick Search'))).toBeVisible().withTimeout(60000);
+    await navigateToHomeScreen();
   });
 
   it('Navigate to Messages screen', async () => {
