@@ -1,4 +1,4 @@
-const navigateToHomeScreen = async () => {
+export const navigateToHomeScreen = async () => {
   await waitFor(element(by.text('Wallet Balance'))).toBeVisible().withTimeout(30000);
   await waitFor(element(by.id('search-bar'))).toBeVisible().withTimeout(30000);
   await expect(element(by.text("Continue with Email"))).not.toBeVisible();
