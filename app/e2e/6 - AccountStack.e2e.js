@@ -1,5 +1,5 @@
 // AccountStackModal
-import { testBookingDetail } from "./helpers";
+import { testBookingDetail, navigateToHomeScreen } from "./helpers";
 
 describe('Check AccountStack & ensure navigation works across bookings & spaces', () => {
   beforeAll(async () => {
@@ -19,9 +19,7 @@ describe('Check AccountStack & ensure navigation works across bookings & spaces'
     await element(by.id('submit-email-button')).tap();
 
     // Wait for navigation to complete & perform the visibility checks
-    await waitFor(element(by.text('Quick Search'))).toBeVisible().withTimeout(60000);
-    await waitFor(element(by.id('search-bar'))).toBeVisible().withTimeout(60000);
-    await expect(element(by.text("Continue with Email"))).not.toBeVisible()
+    await navigateToHomeScreen();
   });
 
   it('Navigate to Account screen', async () => {
@@ -119,22 +117,22 @@ describe('Check AccountStack & ensure navigation works across bookings & spaces'
   })
 });
 
-const testBookingDetailFromActivity = async (host) => {
-  // navigate to BookingDetail screen
-  await element(by.id('0_' + (host ? "host" : "user") + '_log')).tap();
+// const testBookingDetailFromActivity = async (host) => {
+//   // navigate to BookingDetail screen
+//   await element(by.id('0_' + (host ? "host" : "user") + '_log')).tap();
 
-  await waitFor(element(by.id("booking-detail-scroll-view"))).toBeVisible(100).withTimeout(60000)
-  await waitFor(element(by.id("booking-title"))).toBeVisible(100).withTimeout(10000)
-  await waitFor(element(by.id("booking-price"))).toBeVisible(100).withTimeout(10000)
+//   await waitFor(element(by.id("booking-detail-scroll-view"))).toBeVisible(100).withTimeout(60000)
+//   await waitFor(element(by.id("booking-title"))).toBeVisible(100).withTimeout(10000)
+//   await waitFor(element(by.id("booking-price"))).toBeVisible(100).withTimeout(10000)
 
-  await testBookingDetail()
+//   await testBookingDetail()
 
-  // navigate back to Activity screen
-  await element(by.id("back-button-booking-detail")).tap();
+//   // navigate back to Activity screen
+//   await element(by.id("back-button-booking-detail")).tap();
 
-  await waitFor(element(by.id('activity-header-component'))).toBeVisible().withTimeout(60000);
-  await expect(element(by.text((host ? 'Hosting' : 'Booking') + ' activity'))).toBeVisible();
-}
+//   await waitFor(element(by.id('activity-header-component'))).toBeVisible().withTimeout(60000);
+//   await expect(element(by.text((host ? 'Hosting' : 'Booking') + ' activity'))).toBeVisible();
+// }
 
 // // Dont need specific testing
 // RootStack
