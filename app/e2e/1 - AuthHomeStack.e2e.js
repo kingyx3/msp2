@@ -63,7 +63,7 @@ describe('AuthStack & Home Stack', () => {
     await element(by.id("back-button")).tap();
 
     // Wait for navigation to complete & perform the visibility checks
-    await waitFor(element(by.text('Quick Search'))).toBeVisible().withTimeout(60000);
+    await navigateToHomeScreen();
   });
 
   it('Navigate to Account Screen & Log Out', async () => { // Log back in
