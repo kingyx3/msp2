@@ -1,4 +1,6 @@
 // AuthStack & HomeStack
+import { navigateToHomeScreen } from "./helpers";
+
 describe('AuthStack & Home Stack', () => {
   beforeAll(async () => {
     await device.launchApp({
@@ -40,8 +42,7 @@ describe('AuthStack & Home Stack', () => {
     await element(by.id('submit-email-button')).tap();
 
     // Wait for navigation to complete & perform the visibility checks
-    await waitFor(element(by.text('Quick Search'))).toBeVisible().withTimeout(60000);
-    await expect(element(by.text("Continue with Email"))).not.toBeVisible()
+    await navigateToHomeScreen()
   });
 
   it('Navigate to TopUp screen', async () => {
@@ -82,7 +83,6 @@ describe('AuthStack & Home Stack', () => {
     await element(by.id('submit-email-button')).tap();
 
     // Wait for navigation to complete & perform the visibility checks
-    await waitFor(element(by.text('Quick Search'))).toBeVisible().withTimeout(60000);
-    await expect(element(by.text("Continue with Email"))).not.toBeVisible()
+    await navigateToHomeScreen()
   });
 });
