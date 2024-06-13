@@ -1,14 +1,5 @@
 // SearchStackModal & ListStackModal
-
-const navigateToHomeScreen = async () => {
-  await waitFor(element(by.text('Wallet Balance'))).toBeVisible().withTimeout(30000);
-  await waitFor(element(by.id('search-bar'))).toBeVisible().withTimeout(30000);
-  await expect(element(by.text("Continue with Email"))).not.toBeVisible();
-
-  const walletBalanceLabel = (await element(by.id("wallet-balance")).getAttributes()).label;
-  const match = walletBalanceLabel.match(/(\d+\.\d+)/);
-  global.beginWalletBalance = match ? parseFloat(match[0]) : 0;
-};
+import { navigateToHomeScreen } from "./helpers";
 
 const navigateToListingDetailsScreen = async (type) => {
   await element(by.id('0_' + type)).tap();
