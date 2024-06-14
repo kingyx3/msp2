@@ -1,5 +1,5 @@
 // HostingStackModal
-import { updateSpaceTestSuite } from "./helpers";
+import { updateSpaceTestSuite, navigateToHomeScreen } from "./helpers";
 
 describe('Hosting - Manage Space', () => {
   beforeAll(async () => {
@@ -19,7 +19,7 @@ describe('Hosting - Manage Space', () => {
     await element(by.id('submit-email-button')).tap();
 
     // Wait for navigation to complete & perform the visibility checks
-    await waitFor(element(by.text('Quick Search'))).toBeVisible().withTimeout(60000);
+    await navigateToHomeScreen();
   });
 
   it('Navigate to Hosting screen', async () => {

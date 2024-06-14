@@ -1,14 +1,5 @@
 // SearchStackModal & ListStackModal
-
-const navigateToHomeScreen = async () => {
-  await waitFor(element(by.text('Wallet Balance'))).toBeVisible().withTimeout(30000);
-  await waitFor(element(by.id('search-bar'))).toBeVisible().withTimeout(30000);
-  await expect(element(by.text("Continue with Email"))).not.toBeVisible();
-
-  const walletBalanceLabel = (await element(by.id("wallet-balance")).getAttributes()).label;
-  const match = walletBalanceLabel.match(/(\d+\.\d+)/);
-  global.beginWalletBalance = match ? parseFloat(match[0]) : 0;
-};
+import { navigateToHomeScreen } from "./helpers";
 
 const navigateToListingDetailsScreen = async (type) => {
   await element(by.id('0_' + type)).tap();
@@ -47,7 +38,9 @@ const attemptBooking = async () => {
   } else {
     console.log('Insufficient Balance');
     await waitFor(element(by.text('Error'))).toBeVisible().withTimeout(60000);
-    await expect(element(by.text('Sorry, you do not have sufficient funds in your wallet, please top up at least SGD ' + (Math.round((-1 * global.excessBalance) * 100) / 100).toString() + '.'))).toBeVisible();
+    const errorText = 'Sorry, you do not have sufficient funds in your wallet, please top up at least SGD ' + (Math.round((-1 * global.excessBalance) * 100) / 100).toString() + '.'
+    console.log('errorText', errorText)
+    await expect(element(by.text(errorText))).toBeVisible();
     await element(by.text('Ok')).tap();
     await waitFor(element(by.id('balance-container'))).toBeVisible().withTimeout(60000);
     await element(by.id("back-button")).atIndex(1).tap();
