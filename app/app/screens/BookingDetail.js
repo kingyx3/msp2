@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useCallback } from "react";
 import { View, Text, StyleSheet, Alert, Platform, TouchableOpacity } from "react-native";
 import MapView, { PROVIDER_DEFAULT, PROVIDER_GOOGLE, Marker } from "react-native-maps";
 import moment from 'moment';
@@ -26,6 +26,7 @@ import { connect } from "react-redux";
 const BookingDetails = (props) => {
   const { bookingId, spaceId, host } = props.route.params;
   const { selectedBooking: booking, selectedSpace } = props.state;
+
   const [loading, setLoading] = useState(false);
   const [userName, setUserName] = useState('');
   const [hostName, setHostName] = useState('');
@@ -34,35 +35,30 @@ const BookingDetails = (props) => {
   const postcode = selectedSpace?.location?.geoapify?.postcode;
   const cancelByTime = host ? moment(booking?.end).add(5, 'days') : moment(booking?.start).subtract(booking?.cancellationPolicy?.numberOfHours, 'hours');
   const cancelByTimeFormatted = cancelByTime.format('DD MMM YYYY, ha');
-
   const isHostAbleToCancel = host && moment(booking?.end).add(5, 'days').isAfter(Date.now());
   const isUserAbleToCancel = !host && moment(booking.start).isAfter(Date.now());
   const isBookingInProgress = moment().isBetween(moment(booking.start), moment(booking.end));
+  const refundAmount = !host ? (moment().isBefore(cancelByTime) || booking.status === "pending_host" ? booking?.price?.total_price * 100 : 0) : booking?.price?.total_price * 100;
 
-  let refundAmount = 0;
-  if (!host) {
-    refundAmount = (moment().isBefore(cancelByTime) || booking.status === "pending_host") ? booking?.price?.total_price * 100 : 0;
-  } else {
-    refundAmount = booking?.price?.total_price * 100;
-  }
+  const fetchUserNames = useCallback(async () => {
+    if (spaceId === selectedSpace.id) {
+      const hostName = await getUserName(selectedSpace.userId);
+      setHostName(hostName);
+    } else {
+      props.setSelectedSpace(spaceId);
+    }
+
+    if (bookingId === booking.id) {
+      const userName = await getUserName(booking.userId);
+      setUserName(userName);
+    } else {
+      props.fetchBooking(bookingId);
+    }
+  }, [spaceId, selectedSpace, bookingId, booking, props]);
 
   useEffect(() => {
-    const fetchUserNames = async () => {
-      if (spaceId === selectedSpace.id) {
-        const hostName = await getUserName(selectedSpace.userId);
-        setHostName(hostName);
-      } else {
-        props.setSelectedSpace(spaceId);
-      }
-      if (bookingId === booking.id) {
-        const userName = await getUserName(booking.userId);
-        setUserName(userName);
-      } else {
-        props.fetchBooking(bookingId);
-      }
-    };
     fetchUserNames();
-  }, [selectedSpace, booking]);
+  }, [fetchUserNames]);
 
   const openMaps = (latitude, longitude, label) => {
     const scheme = Platform.select({ ios: 'maps://app?daddr=', android: 'geo:0,0?q=' });
@@ -71,7 +67,7 @@ const BookingDetails = (props) => {
     Linking.openURL(url);
   };
 
-  const cancelBookingBox = async () => {
+  const handleCancelBooking = async () => {
     const networkState = await Network.getNetworkStateAsync();
     if (networkState.isConnected) {
       Alert.alert(
@@ -98,6 +94,142 @@ const BookingDetails = (props) => {
       );
     } else {
       showOfflineAlert();
+    }
+  };
+
+  const renderActionButtons = () => {
+    const buttons = [];
+
+    // Contact Host/User Button
+    if (booking.status !== "cancelled" && moment().diff(moment(booking.end), 'days') < 5) {
+      buttons.push(
+        <Button.BtnContain
+          key="contact"
+          testID="contact-host-or-user"
+          label={host ? "Contact User" : "Contact Host"}
+          color={loading ? colors.lightgray : colors.black}
+          size="small"
+          disabled={loading}
+          onPress={() => {
+            props.navigation.navigate("MessageStackModal", {
+              screen: 'MessageDetail',
+              params: {
+                selectedChat: {
+                  otherUserId: host ? booking.userId : selectedSpace.userId,
+                  otherUserName: host ? userName : hostName,
+                },
+              },
+            });
+          }}
+        />
+      );
+    }
+
+    // Write Review Button
+    if (!host && booking.status === "confirmed" && moment().isAfter(booking.end) && moment().diff(moment(booking.end), 'days') < 2) {
+      buttons.push(
+        <Button.BtnContain
+          key="review"
+          testID="write-review"
+          label="Write Review"
+          color={loading ? colors.lightgray : colors.black}
+          size="small"
+          disabled={loading}
+          onPress={() => props.navigation.navigate("ReviewInput", { selectedSpace })}
+        />
+      );
+    }
+
+    // Cancel Booking Button
+    const canCancelBooking = isHostAbleToCancel || isUserAbleToCancel || isBookingInProgress;
+    const cancelButtonLabel = booking.status.includes("cancelled")
+      ? "Booking Cancelled"
+      : booking.status === "pending_host"
+        ? "Cancel Pending"
+        : "Cancel Booking";
+    const isCancelButtonDisabled = booking.status.includes("cancelled") || loading || !canCancelBooking;
+
+    if ((host && booking.status !== "pending_host") || (!host && booking.status !== "pending_host")) {
+      buttons.push(
+        <Button.BtnContain
+          key="cancel"
+          testID="cancel-booking"
+          label={cancelButtonLabel}
+          color={isCancelButtonDisabled ? colors.lightgray : colors.black}
+          size="small"
+          disabled={isCancelButtonDisabled}
+          onPress={handleCancelBooking}
+        />
+      );
+    }
+
+    return buttons;
+  };
+
+  const renderApproveRejectButtons = () => {
+    if (booking.status === "pending_host" && host) {
+      return (
+        <View style={{ margin: 10 }}>
+          <Button.BtnContain
+            testID="approve-booking"
+            label="Approve Booking"
+            color={loading ? colors.lightgray : colors.black}
+            size="small"
+            disabled={loading}
+            onPress={() => {
+              Alert.alert(
+                "Approve Booking",
+                'Are you sure you want to approve this booking?',
+                [
+                  { text: "Cancel", style: "cancel" },
+                  {
+                    text: "Confirm",
+                    onPress: async () => {
+                      setLoading(true);
+                      try {
+                        await approveBooking(bookingId);
+                        Alert.alert("Booking Approved!", "Success", [{ text: "OK", onPress: () => { setLoading(false); props.navigation.goBack(); } }]);
+                      } catch {
+                        Alert.alert("Booking Approval Error!", 'Please try again later.', [{ text: "OK", onPress: () => { setLoading(false); props.navigation.goBack(); } }]);
+                        setLoading(false);
+                      }
+                    }
+                  }
+                ]
+              );
+            }}
+          />
+          <Button.BtnContain
+            testID="reject-booking"
+            label="Reject Booking"
+            color={loading ? colors.lightgray : colors.black}
+            size="small"
+            disabled={loading}
+            onPress={() => {
+              Alert.alert(
+                "Reject Booking",
+                'Are you sure you want to reject this booking?',
+                [
+                  { text: "Cancel", style: "cancel" },
+                  {
+                    text: "Confirm",
+                    onPress: async () => {
+                      setLoading(true);
+                      try {
+                        await cancelBooking(bookingId);
+                        Alert.alert("Booking Rejected!", "Success", [{ text: "OK", onPress: () => { setLoading(false); props.navigation.goBack(); } }]);
+                      } catch {
+                        Alert.alert("Booking Rejection Error!", 'Please try again later.', [{ text: "OK", onPress: () => { setLoading(false); props.navigation.goBack(); } }]);
+                        setLoading(false);
+                      }
+                    }
+                  }
+                ]
+              );
+            }}
+          />
+        </View>
+      );
     }
   };
 
@@ -177,115 +309,9 @@ const BookingDetails = (props) => {
             />
           </Host>
           <View style={{ margin: 10 }}>
-            {booking.status !== "cancelled" && moment().diff(moment(booking.end), 'days') < 5 && (
-              <Button.BtnContain
-                testID="contact-host-or-user"
-                label={host ? "Contact User" : "Contact Host"}
-                color={loading ? colors.lightgray : colors.black}
-                size="small"
-                disabled={loading}
-                onPress={() => {
-                  props.navigation.navigate("MessageStackModal", {
-                    screen: 'MessageDetail',
-                    params: {
-                      selectedChat: {
-                        otherUserId: host ? booking.userId : selectedSpace.userId,
-                        otherUserName: host ? userName : hostName,
-                      },
-                    },
-                  });
-                }}
-              />
-            )}
-            {!host && booking.status === "confirmed" && moment().isAfter(booking.end) && moment().diff(moment(booking.end), 'days') < 2 && (
-              <Button.BtnContain
-                testID="write-review"
-                label="Write Review"
-                color={loading ? colors.lightgray : colors.black}
-                size="small"
-                disabled={loading}
-                onPress={() => props.navigation.navigate("ReviewInput", { selectedSpace })}
-              />
-            )}
-            {((host && booking.status !== "pending_host") || (!host && booking.status !== "pending_host")) && (
-              <Button.BtnContain
-                testID="cancel-booking"
-                label={
-                  booking.status.includes("cancelled")
-                    ? "Booking Cancelled"
-                    : (isHostAbleToCancel || isUserAbleToCancel || isBookingInProgress)
-                      ? (booking.status === "pending_host" ? "Cancel Pending" : "Cancel Booking")
-                      : "Booking Completed"
-                }
-                color={(booking.status.includes("cancelled") ? true : loading || !(isHostAbleToCancel || isUserAbleToCancel)) ? colors.lightgray : colors.black}
-                size="small"
-                disabled={booking.status.includes("cancelled") ? true : loading || !(isHostAbleToCancel || isUserAbleToCancel)}
-                onPress={cancelBookingBox}
-              />
-            )}
+            {renderActionButtons()}
+            {renderApproveRejectButtons()}
           </View>
-          {booking.status === "pending_host" && host && (
-            <View style={{ margin: 10 }}>
-              <Button.BtnContain
-                testID="approve-booking"
-                label="Approve Booking"
-                color={loading ? colors.lightgray : colors.black}
-                size="small"
-                disabled={loading}
-                onPress={() => {
-                  Alert.alert(
-                    "Approve Booking",
-                    'Are you sure you want to approve this booking?',
-                    [
-                      { text: "Cancel", style: "cancel" },
-                      {
-                        text: "Confirm",
-                        onPress: async () => {
-                          setLoading(true);
-                          try {
-                            await approveBooking(bookingId);
-                            Alert.alert("Booking Approved!", "Success", [{ text: "OK", onPress: () => { setLoading(false); props.navigation.goBack(); } }]);
-                          } catch {
-                            Alert.alert("Booking Approval Error!", 'Please try again later.', [{ text: "OK", onPress: () => { setLoading(false); props.navigation.goBack(); } }]);
-                            setLoading(false);
-                          }
-                        }
-                      }
-                    ]
-                  );
-                }}
-              />
-              <Button.BtnContain
-                testID="reject-booking"
-                label="Reject Booking"
-                color={loading ? colors.lightgray : colors.black}
-                size="small"
-                disabled={loading}
-                onPress={() => {
-                  Alert.alert(
-                    "Reject Booking",
-                    'Are you sure you want to reject this booking?',
-                    [
-                      { text: "Cancel", style: "cancel" },
-                      {
-                        text: "Confirm",
-                        onPress: async () => {
-                          setLoading(true);
-                          try {
-                            await cancelBooking(bookingId);
-                            Alert.alert("Booking Rejected!", "Success", [{ text: "OK", onPress: () => { setLoading(false); props.navigation.goBack(); } }]);
-                          } catch {
-                            Alert.alert("Booking Rejection Error!", 'Please try again later.', [{ text: "OK", onPress: () => { setLoading(false); props.navigation.goBack(); } }]);
-                            setLoading(false);
-                          }
-                        }
-                      }
-                    ]
-                  );
-                }}
-              />
-            </View>
-          )}
         </Main2>
       </Main>
     </Container>

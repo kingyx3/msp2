@@ -67,7 +67,7 @@ export const NolineNavBar = ({ nav, title, action, onPress, testID }) => {
   );
 };
 
-export const NavBarChat = ({ nav, avatar, name, onPress, testID }) => {
+export const NavBarChat = ({ nav, avatar, placeholder, name, onPress, testID }) => {
   return (
     <Container >
       <OtherUserInfo>
@@ -83,6 +83,7 @@ export const NavBarChat = ({ nav, avatar, name, onPress, testID }) => {
         <View>
           <ImgSliderItems
             source={avatar}
+            placeholder={placeholder}
             customStyle={{
               width: 46,
               height: 46,

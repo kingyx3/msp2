@@ -352,7 +352,22 @@ export function setSelectedSpaces(spaceType, start, end, spaceSummaryz) {
         if (spaceSummary[spaceId]) {
           let periodAvailabilityArray = [];
           Object.values(timeSlotSpaces).forEach(spaceTimeSlotAvailabilityObj => {
-            const spaceTimeSlotAvailabilityArray = spaceTimeSlotAvailabilityObj[spaceId];
+            let spaceTimeSlotAvailabilityArray = spaceTimeSlotAvailabilityObj[spaceId];
+            const [periodPriceType, ...availabilityArray] = spaceTimeSlotAvailabilityArray;
+            let subPeriodPrice
+            if (!isNaN(periodPriceType)) {
+              subPeriodPrice = periodPriceType
+            } else {
+              subPeriodPrice =
+                periodPriceType == 'r'
+                  ? spaceSummary[spaceId].price
+                  : periodPriceType == 'p'
+                    ? spaceSummary[spaceId].peakPrice
+                    : periodPriceType == 'o'
+                      ? spaceSummary[spaceId].offPeakPrice
+                      : spaceSummary[spaceId].price // Unrecognized priceType, assuming to be regular
+            }
+            spaceTimeSlotAvailabilityArray = [subPeriodPrice, ...availabilityArray]
             // console.log('spaceTimeSlotAvailabilityArray', spaceTimeSlotAvailabilityArray)
 
             if (spaceTimeSlotAvailabilityArray) {
@@ -362,23 +377,10 @@ export function setSelectedSpaces(spaceType, start, end, spaceSummaryz) {
               // console.log('periodAvailabilityArray', periodAvailabilityArray)
             }
           });
-
+          // console.log('periodAvailabilityArray', periodAvailabilityArray)
           if (periodAvailabilityArray.includes(timeSlots.length)) {
-            const [periodPriceType, ...availabilityArray] = periodAvailabilityArray;
-            console.log('periodPriceType', periodPriceType, spaceId, availabilityArray)
-            // const periodPrice = 10
-            // if (spaceSummary[spaceId]) {
-            // } else {
-            //   console.log(spaceId)
-            // }
-            const periodPrice =
-              periodPriceType.includes('r')
-                ? spaceSummary[spaceId].price
-                : periodPriceType.includes('p')
-                  ? spaceSummary[spaceId].peakPrice
-                  : periodPriceType.includes('o')
-                    ? spaceSummary[spaceId].offPeakPrice
-                    : periodPriceType // Custom price updated via spaceavailability
+            const [periodPrice, ...availabilityArray] = periodAvailabilityArray;
+            // console.log('periodPrice', periodPrice, spaceId, availabilityArray)
             availableSpaces[spaceId] = {
               ...(availableSpaces[spaceId]),
               periodAvailabilityArray: availabilityArray,
