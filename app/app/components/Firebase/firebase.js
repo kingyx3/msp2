@@ -389,7 +389,7 @@ export function setSelectedSpaces(spaceType, start, end, spaceSummaryz) {
       });
 
 
-      console.log('availableSpaces:', Object.values(availableSpaces).length);
+      // console.log('availableSpaces:', Object.values(availableSpaces).length);
 
       if (Object.keys(availableSpaces).length === 0) {
         console.log("NO AVAILABLE SPACES FOR THESE TIMESLOTS");
@@ -429,7 +429,7 @@ export function setSelectedSpaces(spaceType, start, end, spaceSummaryz) {
         })
       });
 
-      console.log('selectedSpaces:', Object.entries(selectedSpaces).length);
+      // console.log('selectedSpaces:', Object.entries(selectedSpaces).length);
       dispatch({ type: 'SET_SELECTED_SPACES', payload: { selectedSpaces } });
     } catch (e) {
       console.log("ALLSPACESAVAILABILITY DOCS READ ERROR:", e);

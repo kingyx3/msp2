@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Dimensions, FlatList, Modal, View, Alert } from "react-native";
+import { Dimensions, FlatList, View, Modal, TouchableOpacity } from "react-native";
 import moment from 'moment';
 import { useIsFocused } from '@react-navigation/native';
 import * as Network from 'expo-network';
@@ -9,88 +9,72 @@ import { NavBar } from "../../components/NavBar";
 import * as Button from "../../components/Button";
 import MapCard from "../../components/MapCard";
 
-//import screens
-import ListMap from "./ListMap";
-
 //import styles and assets
 import styled from "styled-components/native";
 import * as Typography from "../../config/Typography";
+import colors from "../../config/colors";
 
-// import { rooms } from "../../data/testdata";
-import { clearSelectedSpace, setSelectedSpace, setSelectedSpaces, showOfflineAlert } from "../../components/Firebase/firebase";
-
-//import redux
+// import redux
 import { bindActionCreators } from 'redux'
 import { connect } from "react-redux";
-import { TouchableOpacity } from "react-native-gesture-handler";
 
-// const filteroptions = [
-//   { label: "Heating", value: "난방" },
-//   { label: "WiFi", value: "무선인터넷" },
-//   { label: "Aircon", value: "에어컨" },
-//   { label: "Hair Dryer", value: "헤어드라이어" },
-//   { label: "Shampoo", value: "샴푸" },
-// ];
+// import firebase actions
+import { clearSelectedSpace, setSelectedSpace, setSelectedSpaces, showOfflineAlert } from "../../components/Firebase/firebase";
 
 const { width, height } = Dimensions.get("window");
-let now = new Date()
-now.setMinutes(60, 0, 0);
 
 const Listings = (props) => {
   const isFocused = useIsFocused();
-  let spaceType = props.state.spaceType;
-  let startM = moment(props.state.start); //moment object
-  let endM = moment(props.state.end); //moment(startM).add(duration, 'h');
-  let spaceSummary = props.state.spaceSummary
-  let selectedSpaces = props.state.selectedSpaces
-  selectedSpaces = selectedSpaces.slice(0, 25) // only show first 25
-  let selectedSpaceType = props.state.spaceType;
-
+  const { spaceType, start, end, spaceSummary, selectedSpaces: selectedSpacesProp } = props.state;
+  const startM = moment(start);
+  const endM = moment(end);
+  const [selectedSpaces, setSelectedSpacesState] = useState(selectedSpacesProp.slice(0, 25)); // only show first 25
   const [showFilter, setShowFilter] = useState(false);
-  const [showMap, setShowMap] = useState(false);
+  const [sortOrder, setSortOrder] = useState('asc');
 
   useEffect(() => {
-    // console.log('1', isFocused)
     if (isFocused) {
-      if (spaceSummary) {
-        if (spaceSummary['spaceType'] == spaceType || Object.keys(spaceSummary).length === 0) {
-          props.setSelectedSpaces(spaceType, startM, endM, spaceSummary)
-        }
+      if (spaceSummary && (spaceSummary['spaceType'] === spaceType || Object.keys(spaceSummary).length === 0)) {
+        props.setSelectedSpaces(spaceType, startM, endM, spaceSummary);
       }
     }
-  }, [isFocused, spaceSummary])//,[spaceType, startM, endM])
+  }, [isFocused, spaceSummary]);
 
-  async function submit(spaceId) {
-    // props.clearSelectedSpace()
-    // props.setSelectedSpace(spaceId)
+  useEffect(() => {
+    setSelectedSpacesState(selectedSpacesProp.slice(0, 25));
+  }, [selectedSpacesProp]);
+
+  const submit = async (spaceId) => {
     const networkState = await Network.getNetworkStateAsync();
     if (networkState.isConnected) {
-      // Device is connected to the internet
-      const selectedSpace = selectedSpaces.filter((space) => space.id == spaceId)[0]
-      const periodAvailabilityArray = selectedSpace.periodAvailabilityArray
-      const periodPrice = selectedSpace.periodPrice
-      // const periodPriceExclFees = selectedSpace.periodPriceExclFees
-      // const fees = selectedSpace.fees
+      const selectedSpace = selectedSpaces.find(space => space.id === spaceId);
+      const { periodAvailabilityArray, periodPrice } = selectedSpace;
       props.navigation.navigate('ListStackModal', { screen: "Details", params: { spaceId, periodAvailabilityArray, periodPrice } });
     } else {
-      // Device is not connected to the internet
-      showOfflineAlert()
+      showOfflineAlert();
     }
-  }
+  };
 
-  const renderItem = ({ item, index }) =>
+  const renderItem = ({ item, index }) => (
     <MapCard
-      testID={index.toString() + "_listing"}
+      testID={`${index}_listing`}
       key={index.toString()}
       image={item.images[0]}
-      property={selectedSpaceType}
-      title={(item.location.suburb ? item.location.suburb : item.location.street) + ', ' + item.location.country}
-      subtitle={"$" + item.periodPrice}
+      property={spaceType}
+      title={`${item.location.suburb || item.location.street}, ${item.location.country}`}
+      subtitle={`$${item.periodPrice}`}
       caption={item.needHostConfirm ? null : "Insta-Book"}
       rating={item.rating}
-      reviews={item.reviews} // number of reviews
-      onPress={() => item.third_party ? null : submit(item.id)} //pass marker info?
+      reviews={item.reviews}
+      onPress={() => !item.third_party && submit(item.id)}
     />
+  );
+
+  const applyFilters = () => {
+    const sortedSpaces = [...selectedSpaces].sort((a, b) => sortOrder === 'asc' ? a.periodPrice - b.periodPrice : b.periodPrice - a.periodPrice);
+    setSelectedSpacesState(sortedSpaces);
+    setShowFilter(false);
+  };
 
   return (
     <Body>
@@ -101,18 +85,17 @@ const Listings = (props) => {
           ListHeaderComponent={
             <Header>
               <View>
-                <Typography.SP>{selectedSpaces.length == 0 ? 'No properties' : selectedSpaces.length + ' properties'}</Typography.SP>
+                <Typography.SP>{selectedSpaces.length === 0 ? 'No properties' : `${selectedSpaces.length} properties`}</Typography.SP>
                 <Typography.H1>{spaceType}</Typography.H1>
               </View>
-              {/* <TouchableOpacity>
+              {/* <TouchableOpacity onPress={() => setShowFilter(true)}>
                 <BtnContainer>
-                  <Filter source={require("../../assets/filter.png")}></Filter>
+                  <Filter source={require("../../assets/filter.png")} />
                 </BtnContainer>
               </TouchableOpacity> */}
             </Header>
           }
           data={selectedSpaces}
-          // keyExtractor={(room, index) => index.toString()}
           keyExtractor={item => item.id}
           showsVerticalScrollIndicator={false}
           renderItem={renderItem}
@@ -122,11 +105,58 @@ const Listings = (props) => {
             testID='listmap-button'
             iconName="map-o"
             label=" map"
-            onPress={() => props.navigation.navigate("ListMap", selectedSpaces)} //console.log(spaceType, startM, duration = '1 hr', selectedSpaces) }
+            onPress={() => props.navigation.navigate("ListMap", selectedSpaces)}
           />
         </MapBtnWrapper>
       </Main>
-    </Body>
+      {
+        showFilter && (
+          <Modal transparent={true} animationType="slide" visible={showFilter}>
+            <FilterContainer>
+              <ModalContent>
+                <CloseBtn onPress={() => setShowFilter(false)}>
+                  <Typography.SP>Close</Typography.SP>
+                </CloseBtn>
+                <Typography.H1>Sort by Price</Typography.H1>
+                <FilterOption onPress={() => setSortOrder('asc')} selected={sortOrder === 'asc'}>
+                  <FilterOptionText selected={sortOrder === 'asc'}>Low to High</FilterOptionText>
+                </FilterOption>
+                <FilterOption onPress={() => setSortOrder('desc')} selected={sortOrder === 'desc'}>
+                  <FilterOptionText selected={sortOrder === 'desc'}>High to Low</FilterOptionText>
+                </FilterOption>
+                {/* <Typography.H1>Filters</Typography.H1>
+              <FilterOption>
+                <TouchableOpacity onPress={() => setFilters([...filters, 'WiFi'])}>
+                  <Typography.SP>WiFi</Typography.SP>
+                </TouchableOpacity>
+              </FilterOption>
+              <FilterOption>
+                <TouchableOpacity onPress={() => setFilters([...filters, 'Aircon'])}>
+                  <Typography.SP>Aircon</Typography.SP>
+                </TouchableOpacity>
+              </FilterOption>
+              <FilterOption>
+                <TouchableOpacity onPress={() => setFilters([...filters, 'Heating'])}>
+                  <Typography.SP>Heating</Typography.SP>
+                </TouchableOpacity>
+              </FilterOption>
+              <FilterOption>
+                <TouchableOpacity onPress={() => setFilters([...filters, 'Hair Dryer'])}>
+                  <Typography.SP>Hair Dryer</Typography.SP>
+                </TouchableOpacity>
+              </FilterOption> */}
+                <Button.BtnContain
+                  testID="apply-filters-button"
+                  color={colors.red}
+                  label="Apply Filters"
+                  onPress={applyFilters}
+                />
+              </ModalContent>
+            </FilterContainer>
+          </Modal>
+        )
+      }
+    </Body >
   );
 };
 
@@ -150,7 +180,6 @@ const Filter = styled.Image`
   width: 20px;
   height: 100%;
   resize-mode: contain;
-  /* margin: 10px 0; */
 `;
 
 const BtnContainer = styled.View`
@@ -166,20 +195,44 @@ const MapBtnWrapper = styled.View`
   bottom: 20px;
 `;
 
-const CloseBtn = styled.View`
-  width: 50px;
-  height: 50px;
-  background-color: black;
-  position: absolute;
-  top: 20px;
-  align-self: center;
+const FilterContainer = styled.View`
+  flex: 1;
+  justify-content: center;
+  align-items: center;
+  background-color: rgba(0, 0, 0, 0.5);
 `;
 
-const mapStateToProps = (state) => {
-  return {
-    state: state.search,
-    user: state.user.user
-  };
-};
-const mapDispatchProps = (dispatch) => bindActionCreators({ clearSelectedSpace, setSelectedSpace, setSelectedSpaces }, dispatch);
-export default connect(mapStateToProps, mapDispatchProps)(Listings);
+const ModalContent = styled.View`
+  width: 80%;
+  background-color: white;
+  padding: 20px;
+  border-radius: 10px;
+  align-items: center;
+`;
+
+const CloseBtn = styled.TouchableOpacity`
+  align-self: flex-end;
+  padding: 10px;
+`;
+
+const FilterOption = styled.TouchableOpacity`
+  margin: 5px 0;
+  padding: 10px;
+  width: 100%;
+  align-items: center;
+  border-radius: 5px;
+  background-color: ${({ selected }) => (selected ? colors.red : '#f0f0f0')};
+`;
+
+const FilterOptionText = styled(Typography.SP)`
+  color: ${({ selected }) => (selected ? 'white' : 'black')};
+`;
+
+const mapStateToProps = (state) => ({
+  state: state.search,
+  user: state.user.user
+});
+
+const mapDispatchToProps = (dispatch) => bindActionCreators({ clearSelectedSpace, setSelectedSpace, setSelectedSpaces }, dispatch);
+
+export default connect(mapStateToProps, mapDispatchToProps)(Listings);
