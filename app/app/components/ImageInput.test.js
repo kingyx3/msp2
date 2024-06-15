@@ -53,7 +53,8 @@ describe('ImageInput Component', () => {
   it('handles press when there is no imageUri', async () => {
     launchImageLibraryAsync.mockResolvedValue({ canceled: false, assets: [{ uri: 'new/path/to/image' }] });
     const onChangeImageMock = jest.fn();
-    const { getByTestId } = render(<ImageInput onChangeImage={onChangeImageMock} />);
+
+    const { getByTestId } = render(<ImageInput imageUri={null} onChangeImage={onChangeImageMock} />);
     fireEvent.press(getByTestId('image-input-touchable'));
 
     await expect(launchImageLibraryAsync).toHaveBeenCalled();
@@ -61,6 +62,7 @@ describe('ImageInput Component', () => {
   });
 
   it('handles press when an imageUri is present', async () => {
+    launchImageLibraryAsync.mockResolvedValue({ canceled: false, assets: [{ uri: 'new/path/to/image' }] });
     const onChangeImageMock = jest.fn();
     const imageUri = 'path/to/image';
 
@@ -68,7 +70,7 @@ describe('ImageInput Component', () => {
     fireEvent.press(getByTestId('image-input-touchable'));
 
     await expect(launchImageLibraryAsync).toHaveBeenCalled();
-    expect(onChangeImageMock).toHaveBeenCalledWith('path/to/image');
+    expect(onChangeImageMock).toHaveBeenCalledWith('new/path/to/image');
   });
 
   // it('handles the scenario when permission is not granted (imageUri present)', async () => {
