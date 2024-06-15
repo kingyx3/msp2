@@ -66,12 +66,8 @@ describe('ImageInput Component', () => {
 
     const { getByTestId } = render(<ImageInput imageUri={imageUri} onChangeImage={onChangeImageMock} />);
     fireEvent.press(getByTestId('image-input-touchable'));
-
-    expect(Alert.alert).toHaveBeenCalledWith(
-      'Delete',
-      'Are you sure you want to delete photo?',
-      expect.anything() // You can further specify the expected buttons if needed
-    );
+    await expect(launchImageLibraryAsync).toHaveBeenCalled();
+    expect(onChangeImageMock).toHaveBeenCalledWith('path/to/image');
   });
 
   // it('handles the scenario when permission is not granted (imageUri present)', async () => {
