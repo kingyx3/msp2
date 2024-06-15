@@ -30,7 +30,7 @@ const attemptBooking = async () => {
     console.log(e);
   }
 
-  if (global.excessBalance > 0) {
+  if (global.excessBalance >= 0) {
     console.log('Sufficient Balance');
     await waitFor(element(by.text('Success'))).toBeVisible().withTimeout(60000);
     await element(by.text('Ok')).tap();
