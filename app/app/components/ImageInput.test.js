@@ -60,12 +60,13 @@ describe('ImageInput Component', () => {
     expect(onChangeImageMock).toHaveBeenCalledWith('new/path/to/image');
   });
 
-  it('alerts for image deletion confirmation when an imageUri is present', () => {
+  it('handles press when an imageUri is present', async () => {
     const onChangeImageMock = jest.fn();
     const imageUri = 'path/to/image';
 
     const { getByTestId } = render(<ImageInput imageUri={imageUri} onChangeImage={onChangeImageMock} />);
     fireEvent.press(getByTestId('image-input-touchable'));
+
     await expect(launchImageLibraryAsync).toHaveBeenCalled();
     expect(onChangeImageMock).toHaveBeenCalledWith('path/to/image');
   });
