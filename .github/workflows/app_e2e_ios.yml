@@ -82,7 +82,7 @@ jobs:
           key: ${{ steps.detox-build-cache-get.outputs.cache-primary-key }}
 
       - name: Detox test
-        run: yarn detox test --configuration ${{ env.DETOX_CONFIGURATION }} --cleanup --headless --loglevel trace
+        run: yarn detox test --configuration ${{ env.DETOX_CONFIGURATION }} --cleanup --headless # --loglevel trace
 
       - name: Upload artifacts
         if: failure()
