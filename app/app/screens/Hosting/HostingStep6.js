@@ -19,6 +19,7 @@ const HostingStep6 = ({ route, navigation, setCurrLocation, state }) => {
   const [location, setLocation] = useState(initialState);
   const [searchTerm, setSearchTerm] = useState('');
   const [loading, setLoading] = useState(true);
+  const [isKeyboardVisible, setKeyboardVisible] = useState(false);
 
   useEffect(() => {
     if (location === state.location) {
@@ -28,6 +29,26 @@ const HostingStep6 = ({ route, navigation, setCurrLocation, state }) => {
       setCurrLocation(location);
     }
   }, [location, state.location]);
+
+  useEffect(() => {
+    const keyboardDidShowListener = Keyboard.addListener(
+      'keyboardDidShow',
+      () => {
+        setKeyboardVisible(true);
+      }
+    );
+    const keyboardDidHideListener = Keyboard.addListener(
+      'keyboardDidHide',
+      () => {
+        setKeyboardVisible(false);
+      }
+    );
+
+    return () => {
+      keyboardDidShowListener.remove();
+      keyboardDidHideListener.remove();
+    };
+  }, []);
 
   const onNavigate = () => {
     setCurrLocation(location);
@@ -151,19 +172,21 @@ const HostingStep6 = ({ route, navigation, setCurrLocation, state }) => {
             />
           </Step>
         </Main>
-        <Next>
-          <Left></Left>
-          <BtnContainer>
-            <Button.BtnContain
-              testID="hosting-step6-next-button"
-              label="Next"
-              size="small"
-              color={(!loading && location.latitude === location.geoapify.lat && searchTerm === location.description) ? colors.red : colors.lightgray}
-              disabled={(!loading && location.latitude === location.geoapify.lat && searchTerm === location.description) ? false : true}
-              onPress={onNavigate}
-            />
-          </BtnContainer>
-        </Next>
+        {!isKeyboardVisible && (
+          <Next>
+            <Left></Left>
+            <BtnContainer>
+              <Button.BtnContain
+                testID="hosting-step6-next-button"
+                label="Next"
+                size="small"
+                color={(!loading && location.latitude === location.geoapify.lat && searchTerm === location.description) ? colors.red : colors.lightgray}
+                disabled={(!loading && location.latitude === location.geoapify.lat && searchTerm === location.description) ? false : true}
+                onPress={onNavigate}
+              />
+            </BtnContainer>
+          </Next>
+        )}
       </Container>
     </TouchableWithoutFeedback>
   );
