@@ -1,0 +1,104 @@
+name: EAS Build & Submit (iOS)
+
+on:
+  push:
+    branches:
+      - main
+      - develop
+      - stableDevArchive2
+    paths:
+      - app/app.config.js
+      - app/.env*
+      - .github/workflows/app_eas_build_submit_ios.yml
+
+defaults:
+  run:
+    working-directory: app
+
+jobs:
+  build:
+    runs-on: macos-latest
+    steps:
+      - name: 🏗 Setup repo
+        uses: actions/checkout@v4
+
+      - name: 🏗 Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20.x
+          cache: yarn
+          cache-dependency-path: ./app/yarn.lock
+
+      - name: 🏗 Setup Expo and EAS
+        uses: expo/expo-github-action@v8
+        with:
+          token: ${{ secrets.EXPO_TOKEN }}
+          expo-version: latest
+          eas-version: latest
+
+      - name: 🏗 Setup EAS local builds
+        run: yarn global add eas-cli-local-build-plugin
+
+      - name: 📦 Install dependencies
+        run: yarn
+
+      - name: 📋 Test project
+        run: yarn testFinal
+
+      - name: Build on EAS (Development)
+        run: NODE_ENV=development npx eas-cli build --platform ios --non-interactive --profile development --local
+
+      - name: Submit to Testflight (Development)
+        run: EXPO_APPLE_APP_SPECIFIC_PASSWORD=${{ secrets.EXPO_APPLE_APP_SPECIFIC_PASSWORD }} NODE_ENV=development npx eas-cli submit -p ios --latest --non-interactive --profile development
+
+      # Uncomment these steps if needed for other branches or environments
+
+      # - name: 👷 Build app (Development)
+      #   if: github.ref == 'refs/heads/develop'
+      #   run: |
+      #     NODE_ENV=development eas build --local \
+      #       --non-interactive \
+      #       --output=./app-build \
+      #       --platform=ios \
+      #       --profile=development
+
+      # - name: 👷 Build app (Production)
+      #   if: github.ref == 'refs/heads/main'
+      #   run: |
+      #     NODE_ENV=production eas build --local \
+      #       --non-interactive \
+      #       --output=./app-build \
+      #       --platform=ios \
+      #       --profile=production
+      # #
+      # - name: 📱 Upload binary
+      #   uses: actions/upload-artifact@v4
+      #   with:
+      #     name: app-ios
+      #     path: app/app-build
+
+      # - name: Submit app (Development)
+      #   if: github.ref == 'refs/heads/develop'
+      #   run: |
+      #     EXPO_APPLE_APP_SPECIFIC_PASSWORD=${{ secrets.EXPO_APPLE_APP_SPECIFIC_PASSWORD }} eas submit \
+      #       --platform=ios \
+      #       --profile=development \
+      #       --path=./app-build \
+      #       --non-interactive
+
+      # - name: EAS Update (Development)
+      #   if: github.ref == 'refs/heads/develop'
+      #   run: NODE_ENV=development eas update --branch development --auto # Internal track
+
+      # - name: Submit app (Production)
+      #   if: github.ref == 'refs/heads/main'
+      #   run: |
+      #     EXPO_APPLE_APP_SPECIFIC_PASSWORD=${{ secrets.EXPO_APPLE_APP_SPECIFIC_PASSWORD }} eas submit \
+      #       --platform=ios \
+      #       --profile=production \
+      #       --path=./app-build \
+      #       --non-interactive
+
+      # - name: EAS Update (Production)
+      #   if: github.ref == 'refs/heads/main'
+      #   run: NODE_ENV=production eas update --branch production --auto # Internal track

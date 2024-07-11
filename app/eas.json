@@ -21,6 +21,7 @@
     "development": {
       "channel": "development",
       "env": {
+        "EXPO_PUBLIC_APP_SHORT_NAME": "MSP (DEV)",
         "EXPO_PUBLIC_IOS_ID": "com.makeshiftplans.ios.dev",
         "EXPO_PUBLIC_ANDROID_ID": "com.makeshiftplans.android.dev"
       }
@@ -28,6 +29,7 @@
     "production": {
       "channel": "production",
       "env": {
+        "EXPO_PUBLIC_APP_SHORT_NAME": "MSP",
         "EXPO_PUBLIC_IOS_ID": "com.makeshiftplans.ios",
         "EXPO_PUBLIC_ANDROID_ID": "com.makeshiftplans.android"
       }
@@ -38,12 +40,20 @@
       "android": {
         "serviceAccountKeyPath": "pc-api-6795295579632533760-300-d0f297d14ac0.json",
         "track": "internal"
+      },
+      "ios": {
+        "appleId": "makeshiftplans@gmail.com",
+        "ascAppId": "6529522644"
       }
     },
     "production": {
       "android": {
         "serviceAccountKeyPath": "pc-api-6795295579632533760-300-d0f297d14ac0.json",
         "track": "internal"
+      },
+      "ios": {
+        "appleId": "makeshiftplans@gmail.com",
+        "ascAppId": "6529522067"
       }
     }
   }
