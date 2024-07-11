@@ -50,7 +50,7 @@
     "@reduxjs/toolkit": "^2.1.0",
     "@stripe/stripe-react-native": "0.37.2",
     "deepmerge": "^4.3.1",
-    "expo": "~51.0.2",
+    "expo": "51.0.2",
     "expo-application": "~5.9.1",
     "expo-dev-client": "~4.0.13",
     "expo-firebase-messaging": "^2.0.0",

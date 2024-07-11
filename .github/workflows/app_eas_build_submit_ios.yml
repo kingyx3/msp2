@@ -54,6 +54,7 @@ jobs:
       # Uncomment these steps if needed for other branches or environments
 
       # - name: 👷 Build app (Development)
+
       #   if: github.ref == 'refs/heads/develop'
       #   run: |
       #     NODE_ENV=development eas build --local \
