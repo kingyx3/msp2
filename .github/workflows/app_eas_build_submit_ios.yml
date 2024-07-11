@@ -9,6 +9,7 @@ on:
     paths:
       - app/app.config.js
       - app/.env*
+      - app/package.json
       - .github/workflows/app_eas_build_submit_ios.yml
 
 defaults:
