@@ -5,11 +5,9 @@ on:
     branches:
       - main
       - develop
-      - stableDevArchive2
     paths:
       - app/app.config.js
       - app/.env*
-      - app/package.json
       - .github/workflows/app_eas_build_submit_ios.yml
 
 defaults:
@@ -46,61 +44,52 @@ jobs:
       - name: 📋 Test project
         run: yarn testFinal
 
-      - name: Build on EAS (Development)
-        run: NODE_ENV=development npx eas-cli build --platform ios --non-interactive --profile development --local
+      - name: 👷 Build app (Development)
+        if: github.ref == 'refs/heads/develop'
+        run: |
+          NODE_ENV=development eas build --local \
+            --non-interactive \
+            --output=./app-build \
+            --platform=ios \
+            --profile=development
 
-      - name: Submit to Testflight (Development)
-        run: EXPO_APPLE_APP_SPECIFIC_PASSWORD=${{ secrets.EXPO_APPLE_APP_SPECIFIC_PASSWORD }} NODE_ENV=development npx eas-cli submit -p ios --latest --non-interactive --profile development
+      - name: 👷 Build app (Production)
+        if: github.ref == 'refs/heads/main'
+        run: |
+          NODE_ENV=production eas build --local \
+            --non-interactive \
+            --output=./app-build \
+            --platform=ios \
+            --profile=production
 
-      # Uncomment these steps if needed for other branches or environments
+      - name: 📱 Upload binary
+        uses: actions/upload-artifact@v4
+        with:
+          name: app-ios
+          path: app/app-build
 
-      # - name: 👷 Build app (Development)
+      - name: Submit app (Development)
+        if: github.ref == 'refs/heads/develop'
+        run: |
+          EXPO_APPLE_APP_SPECIFIC_PASSWORD=${{ secrets.EXPO_APPLE_APP_SPECIFIC_PASSWORD }} eas submit \
+            --platform=ios \
+            --profile=development \
+            --path=./app-build \
+            --non-interactive
 
-      #   if: github.ref == 'refs/heads/develop'
-      #   run: |
-      #     NODE_ENV=development eas build --local \
-      #       --non-interactive \
-      #       --output=./app-build \
-      #       --platform=ios \
-      #       --profile=development
+      - name: EAS Update (Development)
+        if: github.ref == 'refs/heads/develop'
+        run: NODE_ENV=development eas update --branch development --auto # Internal track
 
-      # - name: 👷 Build app (Production)
-      #   if: github.ref == 'refs/heads/main'
-      #   run: |
-      #     NODE_ENV=production eas build --local \
-      #       --non-interactive \
-      #       --output=./app-build \
-      #       --platform=ios \
-      #       --profile=production
-      # #
-      # - name: 📱 Upload binary
-      #   uses: actions/upload-artifact@v4
-      #   with:
-      #     name: app-ios
-      #     path: app/app-build
+      - name: Submit app (Production)
+        if: github.ref == 'refs/heads/main'
+        run: |
+          EXPO_APPLE_APP_SPECIFIC_PASSWORD=${{ secrets.EXPO_APPLE_APP_SPECIFIC_PASSWORD }} eas submit \
+            --platform=ios \
+            --profile=production \
+            --path=./app-build \
+            --non-interactive
 
-      # - name: Submit app (Development)
-      #   if: github.ref == 'refs/heads/develop'
-      #   run: |
-      #     EXPO_APPLE_APP_SPECIFIC_PASSWORD=${{ secrets.EXPO_APPLE_APP_SPECIFIC_PASSWORD }} eas submit \
-      #       --platform=ios \
-      #       --profile=development \
-      #       --path=./app-build \
-      #       --non-interactive
-
-      # - name: EAS Update (Development)
-      #   if: github.ref == 'refs/heads/develop'
-      #   run: NODE_ENV=development eas update --branch development --auto # Internal track
-
-      # - name: Submit app (Production)
-      #   if: github.ref == 'refs/heads/main'
-      #   run: |
-      #     EXPO_APPLE_APP_SPECIFIC_PASSWORD=${{ secrets.EXPO_APPLE_APP_SPECIFIC_PASSWORD }} eas submit \
-      #       --platform=ios \
-      #       --profile=production \
-      #       --path=./app-build \
-      #       --non-interactive
-
-      # - name: EAS Update (Production)
-      #   if: github.ref == 'refs/heads/main'
-      #   run: NODE_ENV=production eas update --branch production --auto # Internal track
+      - name: EAS Update (Production)
+        if: github.ref == 'refs/heads/main'
+        run: NODE_ENV=production eas update --branch production --auto # Internal track
