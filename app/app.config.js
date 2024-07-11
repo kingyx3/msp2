@@ -27,6 +27,7 @@ module.exports = {
   ],
   "ios": {
     "infoPlist": {
+      "ITSAppUsesNonExemptEncryption": false,
       "UIUserInterfaceStyle": "Light",
       "FirebaseDynamicLinksCustomDomains": [
         "link.makeshiftplans.com"
