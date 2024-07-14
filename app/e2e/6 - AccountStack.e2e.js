@@ -7,7 +7,7 @@ describe('Check AccountStack & ensure navigation works across bookings & spaces'
       permissions: {
         // location: 'always', // inuse||never||unset
         photos: 'YES',
-        medialibrary: 'YES',
+        // medialibrary: 'YES',
       }
     });
     await device.disableSynchronization(); // Disable synchronization
