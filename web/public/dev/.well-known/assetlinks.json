@@ -1,0 +1,14 @@
+[
+  {
+    "relation": [
+      "delegate_permission/common.handle_all_urls"
+    ],
+    "target": {
+      "namespace": "android_app",
+      "package_name": "com.makeshiftplans.android.dev",
+      "sha256_cert_fingerprints": [
+        "1F:A3:B7:42:AA:FD:76:9B:7B:40:1B:C7:75:8D:F9:1A:8B:83:42:08:05:DB:53:EE:61:92:D8:AF:1D:58:71:7F"
+      ]
+    }
+  }
+]

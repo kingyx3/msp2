@@ -24,6 +24,24 @@
             "value": "application/json"
           }
         ]
+      },
+      {
+        "source": "/dev/.well-known/assetlinks.json",
+        "headers": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ]
+      },
+      {
+        "source": "/dev/apple-app-site-association",
+        "headers": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ]
       }
     ],
     "rewrites": [
@@ -38,6 +56,14 @@
       {
         "source": "/apple-app-site-association",
         "destination": "/apple-app-site-association"
+      },
+      {
+        "source": "/dev/.well-known/assetlinks.json",
+        "destination": "/dev/.well-known/assetlinks.json"
+      },
+      {
+        "source": "/dev/apple-app-site-association",
+        "destination": "/dev/apple-app-site-association"
       }
     ]
   }
