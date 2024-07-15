@@ -32,7 +32,7 @@ export const loginWithEmailLink = async (email) => {
     // This must be true.
     handleCodeInApp: true,
     iOS: {
-      bundleId: 'host.exp.Exponent'
+      bundleId: process.env.EXPO_PUBLIC_IOS_ID
     },
     android: {
       packageName: process.env.EXPO_PUBLIC_ANDROID_ID,
