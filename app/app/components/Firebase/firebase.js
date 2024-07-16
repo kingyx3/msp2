@@ -28,7 +28,7 @@ export const loginWithEmailLink = async (email) => {
   let actionCodeSettings = {
     // URL you want to redirect back to. The domain (www.example.com) for this
     // URL must be in the authorized domains list in the Firebase Console.
-    url: 'https://makeshiftplans.com/?key=' + latestRandomKey, //Linking.createURL(),
+    url: 'https://' + EXPO_PUBLIC_FB_authDomain + '/?key=' + latestRandomKey, //Linking.createURL(),
     // This must be true.
     handleCodeInApp: true,
     iOS: {
