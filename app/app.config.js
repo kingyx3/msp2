@@ -39,7 +39,6 @@ module.exports = {
     "associatedDomains": [
       "applinks:makeshiftplans.com",
       "applinks:" + process.env.EXPO_PUBLIC_FB_authDomain,
-      "applinks:" + process.env.EXPO_PUBLIC_FB_HOSTING_DOMAIN,
     ],
     "config": {
       "googleMapsApiKey": process.env.EXPO_PUBLIC_GOOGLE_PLACES_API_KEY
@@ -72,11 +71,6 @@ module.exports = {
           {
             "scheme": "https",
             "host": process.env.EXPO_PUBLIC_FB_authDomain,
-            "pathPrefix": "/"
-          },
-          {
-            "scheme": "https",
-            "host": process.env.EXPO_PUBLIC_FB_HOSTING_DOMAIN,
             "pathPrefix": "/"
           },
         ],
