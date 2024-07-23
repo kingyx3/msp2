@@ -68,6 +68,14 @@ export const UserList = ({
   unreadCount,
   ...otherProps
 }) => {
+
+  const truncateString = (str, num) => {
+    if (str.length <= num) {
+      return str;
+    }
+    return str.slice(0, num) + '...';
+  };
+
   return (
     <Swipeable renderRightActions={RightActions}>
       <TouchableHighlight {...otherProps} underlayColor={colors.faintgray} onPress={onPress}>
@@ -110,7 +118,7 @@ export const UserList = ({
               <FirstLine>
                 {secondary && (
                   <Typography.P numberOfLines={1} color={colors.gray}>
-                    {secondary}
+                    {truncateString(secondary, 25)}
                   </Typography.P>
                 )}
                 {unreadCount > 0 &&
