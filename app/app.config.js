@@ -48,6 +48,7 @@ module.exports = {
   "android": {
     "package": process.env.EXPO_PUBLIC_ANDROID_ID,
     "versionCode": process.env.nativeBuildVersionAndroid,
+    "targetSdkVersion" : 34,
     "adaptiveIcon": {
       "foregroundImage": "./app/assets/adaptive-icon.png",
       "backgroundColor": "#ffffff"
