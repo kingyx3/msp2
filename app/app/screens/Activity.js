@@ -70,7 +70,11 @@ const UserActivity = (props) => {
           return (item?.amount?.refundAmount == 0) ? "" : ('+ SGD ' + item?.amount?.refundAmount)
         case 'createBooking':
           // POV user - booking created
-          return '- SGD ' + item?.amount?.total_price;
+          if(item.confirmed) {
+            return ''
+          } else {
+            return '- SGD ' + item?.amount?.total_price;
+          }
         case 'createBookingPending':
           // POV user - pending booking created
           return '- SGD ' + item?.amount?.total_price;
