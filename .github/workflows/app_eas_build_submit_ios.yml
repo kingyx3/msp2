@@ -78,7 +78,7 @@ jobs:
             --non-interactive
 
       - name: EAS Update (Development)
-        if: github.ref == 'refs/heads/develop'
+        if: always() && github.ref == 'refs/heads/develop'
         run: NODE_ENV=development eas update --branch development --auto # Internal track
 
       - name: Submit app (Production)
@@ -91,5 +91,5 @@ jobs:
             --non-interactive
 
       - name: EAS Update (Production)
-        if: github.ref == 'refs/heads/main'
+        if: always() && github.ref == 'refs/heads/main'
         run: NODE_ENV=production eas update --branch production --auto # Internal track
