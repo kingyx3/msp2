@@ -27,6 +27,8 @@ module.exports = {
   ],
   "ios": {
     "infoPlist": {
+      "NSLocationWhenInUseUsageDescription": "This app needs access to your location to provide personalized recommendations and nearby features.",
+      "NSPhotoLibraryUsageDescription": "This app needs access to your photo library to let you upload photos and personalize your profile.",
       "ITSAppUsesNonExemptEncryption": false,
       "UIUserInterfaceStyle": "Light",
       "FirebaseDynamicLinksCustomDomains": [
@@ -48,7 +50,7 @@ module.exports = {
   "android": {
     "package": process.env.EXPO_PUBLIC_ANDROID_ID,
     "versionCode": process.env.nativeBuildVersionAndroid,
-    "targetSdkVersion" : 34,
+    "targetSdkVersion": 34,
     "adaptiveIcon": {
       "foregroundImage": "./app/assets/adaptive-icon.png",
       "backgroundColor": "#ffffff"
