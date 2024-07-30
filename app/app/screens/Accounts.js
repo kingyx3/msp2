@@ -1,9 +1,10 @@
 import React, { useState, useEffect } from "react";
-import { View, FlatList, Text, SectionList, StatusBar } from "react-native";
+import { View, FlatList, Text, SectionList, StatusBar, Alert } from "react-native";
 import { connect } from "react-redux";
 import * as List from "../components/List";
 import { Image } from "expo-image";
 import * as Network from 'expo-network';
+import * as Linking from 'expo-linking';
 
 //import styles and assets
 import styled from "styled-components/native";
@@ -27,6 +28,7 @@ const AccountItems = [
       // { title: "Notifications", icon: "bell", screen: "Notifications" },
       { title: "Your activity", icon: "bell", screen: "Activity" },
       // { title: "Payment history", icon: "credit-card", screen: "Hosting" },
+      { title: "Delete account", icon: "bin", screen: "", url: "https://makeshiftplans.com/contact-us" }
     ],
   },
   // {
@@ -159,7 +161,31 @@ const Accounts = (props) => {
             iconcolor={colors.darkgray}
             // onPress={() => console.log("selected", item)}
             // onPress={() => props.navigation.navigate(`${item.screen}`)}
-            onPress={() => props.navigation.navigate("AccountStackModal", { screen: `${item.screen}` })}
+            onPress={async () => {
+              const networkState = await Network.getNetworkStateAsync();
+              if (networkState.isConnected) {
+                if (item.screen != "") {
+                  props.navigation.navigate("AccountStackModal", { screen: `${item.screen}` })
+                } else {
+                  Alert.alert(
+                    'Are you sure you want to delete your account?',
+                    'Kindly submit a request, we will reach out to refund your wallet balances before closing the account.',
+                    [
+                      {
+                        text: 'Ok', onPress: () => Linking.openURL(item.url)
+                      },
+                      // {
+                      //   text: 'Cancel', onPress: () => console.log('Cancel pressed!')
+                      // },
+                    ],
+                    { cancelable: true }
+                  );
+                }
+              } else {
+                // Device is not connected to the internet
+                showOfflineAlert()
+              }
+            }}
           />
         )}
         ItemSeparatorComponent={() => <HLine />}
