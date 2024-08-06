@@ -10,7 +10,7 @@ import * as Linking from 'expo-linking';
 import styled from "styled-components/native";
 import colors from "../config/colors";
 import { Cap } from "../config/Typography";
-import { logout, updateAvatar, getUserName, updateUserName, showOfflineAlert } from "../components/Firebase/firebase";
+import { logout, updateAvatar, getUserName, updateUserName, showOfflineAlert, disableUser } from "../components/Firebase/firebase";
 
 //import components
 import * as Typography from "../config/Typography";
@@ -28,7 +28,7 @@ const AccountItems = [
       // { title: "Notifications", icon: "bell", screen: "Notifications" },
       { title: "Your activity", icon: "bell", screen: "Activity" },
       // { title: "Payment history", icon: "credit-card", screen: "Hosting" },
-      { title: "Delete account", icon: "bin", screen: "", url: "https://makeshiftplans.com/contact-us" }
+      { title: "Delete account", icon: "delete", screen: "", url: "https://makeshiftplans.com/contact-us", color: colors.red }
     ],
   },
   // {
@@ -169,16 +169,15 @@ const Accounts = (props) => {
                 } else {
                   Alert.alert(
                     'Are you sure you want to delete your account?',
-                    'Kindly submit a request, we will reach out to refund your wallet balances before closing the account.',
+                    'All spaces and bookings relating to your account will be cancelled. You will not be able to sign up for another account using the same email again.',
                     [
                       {
-                        text: 'Ok', onPress: () => Linking.openURL(item.url)
+                        text: 'Yes', onPress: () => disableUser()
                       },
-                      // {
-                      //   text: 'Cancel', onPress: () => console.log('Cancel pressed!')
-                      // },
+                      {
+                        text: 'No', onPress: () => console.log('No pressed!')
+                      },
                     ],
-                    { cancelable: true }
                   );
                 }
               } else {

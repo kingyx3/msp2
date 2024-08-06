@@ -590,6 +590,12 @@ async function deleteExtraImages(spaceId, newImageCount) {
   return Promise.all(deletePromises);
 }
 
+// Function to disable a user
+export async function disableUser() {
+  const CFdisableUser = httpsCallable(functions, 'disableUser');
+  return CFdisableUser()
+}
+
 // Function to disable an space (SPACE-U) (XW)
 export async function disableSpace(spaceId) {
   const CFdisableSpace = httpsCallable(functions, 'disableSpace');

@@ -28,13 +28,19 @@ export default function App(props) {
           // For svc acct
           await loginWithEmail(email, 'QnIVZ-ke7c3_nGcU$QkMFi@iFftsOT!497M-QBq8EdY2b7bdrJHETZVS8SrL-Iop');
         } catch (error) {
-          await registerWithEmail(email);
-          try {
-            await loginWithEmailLink(email)
-            props.navigation.navigate('Email Link Sent', email)
-          } catch (e) {
-            // Alert.alert(e)
-            console.log('Email Link Error: ', e)
+          if (error.code === 'auth/user-disabled') {
+            Alert.alert("Error", "User account deleted", [
+              "Ok"
+            ])
+          } else {
+            await registerWithEmail(email);
+            try {
+              await loginWithEmailLink(email)
+              props.navigation.navigate('Email Link Sent', email)
+            } catch (e) {
+              // Alert.alert(e)
+              console.log('Email Link Error: ', e)
+            }
           }
         } finally {
           setDisabled(false)
