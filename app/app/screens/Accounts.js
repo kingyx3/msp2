@@ -172,10 +172,19 @@ const Accounts = (props) => {
                     'All spaces and bookings relating to your account will be cancelled. You will not be able to sign up for another account using the same email again.',
                     [
                       {
-                        text: 'Yes', onPress: async() => { 
-await disableUser();
-await logout();
-}
+                        text: 'Yes', onPress: async() => {
+                          try {
+                            await disableUser();
+                            await logout();
+                          } catch (e) {
+                             Alert.alert(
+                              'Error',
+                              e,
+                              [{text: 'Yes', onPress: () => console.log('Pressed!')}]
+                            )
+                            console.error('Error occurred:', error);
+                          }
+                        }
                       },
                       {
                         text: 'No', onPress: () => console.log('No pressed!')
