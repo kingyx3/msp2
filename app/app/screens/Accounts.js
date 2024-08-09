@@ -172,7 +172,9 @@ const Accounts = (props) => {
                     'All spaces and bookings relating to your account will be cancelled. You will not be able to sign up for another account using the same email again.',
                     [
                       {
-                        text: 'Yes', onPress: () => disableUser()
+                        text: 'Yes', onPress: async() => { 
+await logout();
+await disableUser()}
                       },
                       {
                         text: 'No', onPress: () => console.log('No pressed!')
