@@ -173,8 +173,9 @@ const Accounts = (props) => {
                     [
                       {
                         text: 'Yes', onPress: async() => { 
+await disableUser();
 await logout();
-await disableUser()}
+}
                       },
                       {
                         text: 'No', onPress: () => console.log('No pressed!')
