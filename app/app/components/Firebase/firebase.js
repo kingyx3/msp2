@@ -308,7 +308,7 @@ export function setSelectedSpaces(spaceType, start, end, spaceSummaryz) {
   let spaceSummary = JSON.parse(JSON.stringify(spaceSummaryz));
   return async (dispatch) => {
     dispatch({ type: 'SET_SELECTED_SPACES', payload: { selectedSpaces: [] } });
-    console.log('Cleared cache - Getting available', spaceType, 'from:', start, 'to:', end);
+    console.log('Cleared cache - Getting available', spaceType, 'from:', start, 'to:', end, ' UTC time...');
     start = start.valueOf();
     end = end.valueOf();
     const timeSlots = getTimeSlots(start, end);
@@ -325,15 +325,18 @@ export function setSelectedSpaces(spaceType, start, end, spaceSummaryz) {
     try {
       const snapshot = await getDocs(q);
       console.log("NUMBER OF READS (setSelectedSpaces):", snapshot.docs.length + 1);
-
-      const spaceIds = Array.from(new Set(
-        snapshot.docs.flatMap(doc =>
-          Object.values(doc.data()).flatMap(timeSlot =>
-            Object.keys(timeSlot)
-          )
-        )
-      ));
-
+      // Initialize an empty Set to store unique space ids
+      const uniqueSpaceIds = new Set();
+      snapshot.docs.forEach(doc => {
+        const data = doc.data(); // Get the data from the document
+        Object.keys(data).forEach(key => {
+          if (data[key] === true) { // Check if the value is true
+            uniqueSpaceIds.add(key); // Add the key to the Set if the condition is met
+          }
+        });
+      });
+      // Convert the Set to an array
+      const spaceIds = Array.from(uniqueSpaceIds);
       // console.log('spaceIds:', spaceIds);
 
       const timeSlotSpaces = snapshot.docs.reduce((acc, doc) => {
@@ -353,34 +356,35 @@ export function setSelectedSpaces(spaceType, start, end, spaceSummaryz) {
         if (spaceSummary[spaceId]) {
           let periodAvailabilityArray = [];
           Object.values(timeSlotSpaces).forEach(spaceTimeSlotAvailabilityObj => {
-            let spaceTimeSlotAvailabilityArray = spaceTimeSlotAvailabilityObj[spaceId];
-            const [periodPriceType, ...availabilityArray] = spaceTimeSlotAvailabilityArray;
-            let subPeriodPrice
-            if (!isNaN(periodPriceType)) {
-              subPeriodPrice = periodPriceType
-            } else {
-              subPeriodPrice =
-                periodPriceType == 'r'
-                  ? spaceSummary[spaceId].price
-                  : periodPriceType == 'p'
-                    ? spaceSummary[spaceId].peakPrice
-                    : periodPriceType == 'o'
-                      ? spaceSummary[spaceId].offPeakPrice
-                      : spaceSummary[spaceId].price // Unrecognized priceType, assuming to be regular
-            }
-            spaceTimeSlotAvailabilityArray = [subPeriodPrice, ...availabilityArray]
-            // console.log('spaceTimeSlotAvailabilityArray', spaceTimeSlotAvailabilityArray)
-
-            if (spaceTimeSlotAvailabilityArray) {
-              periodAvailabilityArray = periodAvailabilityArray.length === 0
-                ? spaceTimeSlotAvailabilityArray
-                : periodAvailabilityArray.map((e, idx) => e + spaceTimeSlotAvailabilityArray[idx]);
-              // console.log('periodAvailabilityArray', periodAvailabilityArray)
+            if (spaceTimeSlotAvailabilityObj[spaceId]) {
+              let spaceTimeSlotAvailabilityArray = spaceTimeSlotAvailabilityObj[spaceId];
+              // console.log('spaceTimeSlotAvailabilityArray1', spaceTimeSlotAvailabilityArray)
+              const [periodPriceType, ...availabilityArray] = spaceTimeSlotAvailabilityArray;
+              let subPeriodPrice
+              if (!isNaN(periodPriceType)) {
+                subPeriodPrice = periodPriceType
+              } else {
+                subPeriodPrice =
+                  periodPriceType == 'r'
+                    ? spaceSummary[spaceId].price
+                    : periodPriceType == 'p'
+                      ? spaceSummary[spaceId].peakPrice
+                      : periodPriceType == 'o'
+                        ? spaceSummary[spaceId].offPeakPrice
+                        : spaceSummary[spaceId].price // Unrecognized priceType, assuming to be regular
+              }
+              spaceTimeSlotAvailabilityArray = [subPeriodPrice, ...availabilityArray]
+              // console.log('spaceTimeSlotAvailabilityArray', spaceTimeSlotAvailabilityArray)
+              if (spaceTimeSlotAvailabilityArray) {
+                periodAvailabilityArray = periodAvailabilityArray.length === 0
+                  ? spaceTimeSlotAvailabilityArray
+                  : periodAvailabilityArray.map((e, idx) => e + spaceTimeSlotAvailabilityArray[idx]);
+              }
             }
           });
           // console.log('periodAvailabilityArray', periodAvailabilityArray)
-          if (periodAvailabilityArray.includes(timeSlots.length)) {
-            const [periodPrice, ...availabilityArray] = periodAvailabilityArray;
+          if (periodAvailabilityArray && periodAvailabilityArray.includes(timeSlots.length)) {
+            const [periodPrice, ...availabilityArray] = periodAvailabilityArray || [];
             // console.log('periodPrice', periodPrice, spaceId, availabilityArray)
             availableSpaces[spaceId] = {
               ...(availableSpaces[spaceId]),
@@ -390,8 +394,6 @@ export function setSelectedSpaces(spaceType, start, end, spaceSummaryz) {
           }
         }
       });
-
-
       // console.log('availableSpaces:', Object.values(availableSpaces).length);
 
       if (Object.keys(availableSpaces).length === 0) {

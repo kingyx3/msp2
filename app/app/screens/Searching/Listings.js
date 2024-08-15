@@ -87,7 +87,7 @@ const Listings = (props) => {
               <View>
                 <Typography.SP>{selectedSpaces.length === 0 ? 'No properties' : `${selectedSpaces.length} properties`}</Typography.SP>
                 <Typography.H1>{spaceType}</Typography.H1>
-                <Typography.SP>{startM.format("DD MMM YYYY hA")} to {endM.format("hA")} - {start}</Typography.SP>
+                <Typography.SP>{startM.format("DD MMM YYYY hA")} to {endM.format("hA")}</Typography.SP>
               </View>
               {/* <TouchableOpacity onPress={() => setShowFilter(true)}>
                 <BtnContainer>

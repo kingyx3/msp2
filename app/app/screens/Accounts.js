@@ -167,30 +167,30 @@ const Accounts = (props) => {
                 if (item.screen != "") {
                   props.navigation.navigate("AccountStackModal", { screen: `${item.screen}` })
                 } else {
-                    Alert.alert(
-                      'Are you sure you want to delete your account?',
-                      'All spaces and bookings relating to your account will be cancelled. You will not be able to sign up for another account using the same email again.',
-                      [
-                        {
-                          text: 'Yes', onPress: async() => {
-                            try {
-                              await disableUser();
-                              await logout();
-                            } catch (error) {
-                               Alert.alert(
-                                'Error',
-                                error,
-                                [{text: 'Yes', onPress: () => console.log('Pressed!')}]
-                              )
-                              console.error('Error occurred:', error);
-                            }
+                  Alert.alert(
+                    'Are you sure you want to delete your account?',
+                    'All spaces and bookings relating to your account will be cancelled. You will not be able to sign up for another account using the same email again.',
+                    [
+                      {
+                        text: 'Yes', onPress: async () => {
+                          try {
+                            await disableUser();
+                            await logout();
+                          } catch (error) {
+                            Alert.alert(
+                              'Error',
+                              error,
+                              [{ text: 'Yes', onPress: () => console.log('Pressed!') }]
+                            )
+                            console.error('Error occurred:', error);
                           }
-                        },
-                        {
-                          text: 'No', onPress: () => console.log('No pressed!')
-                        },
-                      ],
-                    );
+                        }
+                      },
+                      {
+                        text: 'No', onPress: () => console.log('No pressed!')
+                      },
+                    ],
+                  );
                 }
               } else {
                 // Device is not connected to the internet
