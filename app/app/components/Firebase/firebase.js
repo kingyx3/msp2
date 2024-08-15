@@ -307,7 +307,8 @@ export function setSpaceSummary(spaceType) {
 export function setSelectedSpaces(spaceType, start, end, spaceSummaryz) {
   let spaceSummary = JSON.parse(JSON.stringify(spaceSummaryz));
   return async (dispatch) => {
-    console.log('Getting available', spaceType, 'from:', start, 'to:', end);
+    dispatch({ type: 'SET_SELECTED_SPACES', payload: { selectedSpaces: {} } });
+    console.log('Cleared cache - Getting available', spaceType, 'from:', start, 'to:', end);
     start = start.valueOf();
     end = end.valueOf();
     const timeSlots = getTimeSlots(start, end);
