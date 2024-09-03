@@ -21,7 +21,7 @@
     "development": {
       "channel": "development",
       "env": {
-        "EXPO_PUBLIC_APP_SHORT_NAME": "MakeShiftPlans (DEV)",
+        "EXPO_PUBLIC_APP_SHORT_NAME": "Plans (DEV)",
         "EXPO_PUBLIC_IOS_ID": "com.makeshiftplans.iosdev",
         "EXPO_PUBLIC_ANDROID_ID": "com.makeshiftplans.androiddev"
       }
@@ -29,7 +29,7 @@
     "production": {
       "channel": "production",
       "env": {
-        "EXPO_PUBLIC_APP_SHORT_NAME": "MakeShiftPlans",
+        "EXPO_PUBLIC_APP_SHORT_NAME": "Plans",
         "EXPO_PUBLIC_IOS_ID": "com.makeshiftplans.ios",
         "EXPO_PUBLIC_ANDROID_ID": "com.makeshiftplans.android"
       }
