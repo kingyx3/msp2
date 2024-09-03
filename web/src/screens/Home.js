@@ -10,9 +10,9 @@ const Home = () => {
                 <a href="https://play.google.com/store/apps/details?id=com.makeshiftplans.android">
                     <img src="google-play-icon.png" alt="Download on Google Play" style={styles.appStoreBadge} />
                 </a>
-                {/* <a href="https://apps.apple.com/app/yourapp">
-          <img src="apple-store-icon.png" alt="Download on the App Store" style={styles.appStoreBadge} />
-        </a> */}
+                <a href="https://apps.apple.com/sg/app/makeshiftplans/id6529522067">
+                    <img src="apple-store-icon.png" alt="Download on the App Store" style={styles.appStoreBadge} />
+                </a>
             </div>
         </div>
     );
