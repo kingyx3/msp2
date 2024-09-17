@@ -52,6 +52,7 @@
     "deepmerge": "^4.3.1",
     "expo": "^51.0.21",
     "expo-application": "~5.9.1",
+    "expo-clipboard": "~6.0.3",
     "expo-dev-client": "~4.0.20",
     "expo-firebase-messaging": "^2.0.0",
     "expo-image": "~1.12.13",

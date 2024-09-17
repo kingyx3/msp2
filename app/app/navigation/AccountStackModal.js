@@ -8,6 +8,7 @@ import styled from "styled-components/native";
 // Import screens
 import Accounts from "../screens/Accounts";
 import Activity from "../screens/Activity";
+import Referral from "../screens/Referral";
 import BookingDetail from "../screens/BookingDetail";
 import ReviewInput from "../screens/ReviewInput";
 import MessageDetail from "../screens/MessageDetail";
@@ -51,7 +52,20 @@ const AccountStack = ({ navigation, route }) => {
           headerBackTitleVisible: false,
           headerBackImage: () => (
             <IconWrapper testID="back-button-activity">
-              <EvilIcons name="chevron-left" size={30} />
+              <EvilIcons name="close" size={30} />
+            </IconWrapper>
+          ),
+        }}
+      />
+      <Stack.Screen
+        name="Referral"
+        component={Referral}
+        options={{
+          title: false,
+          headerBackTitleVisible: false,
+          headerBackImage: () => (
+            <IconWrapper testID="back-button-activity">
+              <EvilIcons name="close" size={30} />
             </IconWrapper>
           ),
         }}

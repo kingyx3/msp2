@@ -26,7 +26,8 @@ const AccountItems = [
     data: [
       // { title: "Privacy", icon: "account-lock", screen: "Hosting" },
       // { title: "Notifications", icon: "bell", screen: "Notifications" },
-      { title: "Your activity", icon: "bell", screen: "Activity" },
+      { title: "Your activity", icon: "history", screen: "Activity" },
+      { title: "Referrals", icon: "account-multiple-plus", screen: "Referral" },
       // { title: "Payment history", icon: "credit-card", screen: "Hosting" },
       { title: "Delete account", icon: "delete", screen: "", url: "https://makeshiftplans.com/contact-us", color: colors.red }
     ],
