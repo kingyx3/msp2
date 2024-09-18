@@ -68,10 +68,13 @@ module.exports = {
         "data": [
           {
             "scheme": "https",
-            "host": "makeshiftplans.com",
+            "host": process.env.EXPO_PUBLIC_domain,
             "pathPrefix": "/"
-          },
-          {
+          }, {
+            "scheme": "https",
+            "host": process.env.EXPO_PUBLIC_altDomain,
+            "pathPrefix": "/"
+          }, {
             "scheme": "https",
             "host": process.env.EXPO_PUBLIC_FB_authDomain,
             "pathPrefix": "/"
