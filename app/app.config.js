@@ -39,7 +39,8 @@ module.exports = {
     "bundleIdentifier": process.env.EXPO_PUBLIC_IOS_ID,
     "buildNumber": process.env.nativeBuildVersionIOS,
     "associatedDomains": [
-      "applinks:makeshiftplans.com",
+      "applinks:" + process.env.EXPO_PUBLIC_FB_domain,
+      "applinks:" + process.env.EXPO_PUBLIC_FB_altDomain,
       "applinks:" + process.env.EXPO_PUBLIC_FB_authDomain,
     ],
     "config": {
