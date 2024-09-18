@@ -50,7 +50,7 @@ const SpaceManagement = (props) => {
 
   const SpaceManagementItems = [
     {
-      title: "Manage Space Details", icon: "calendar-month", screen: "SpaceDetail", data: {
+      title: "Manage Space Details", icon: "pencil-outline", screen: "SpaceDetail", data: {
         selectedSpace,
       }
     },
@@ -59,7 +59,7 @@ const SpaceManagement = (props) => {
         selectedSpace,
       }
     },
-    { title: "Manage Bookings", icon: "history", screen: "SpaceBooking", data: { spaceId, needHostConfirm: selectedSpace.needHostConfirm, notificationCount } },
+    { title: "Manage Bookings", icon: "currency-usd", screen: "SpaceBooking", data: { spaceId, needHostConfirm: selectedSpace.needHostConfirm, notificationCount } },
     // { title: "Edit Space Details", icon: "application-edit-outline", screen: "HostingEdit2", data: { selectedSpace, editMode: true } },
     { title: selectedSpace.disabled ? "Enable Space" : "Disable Space", icon: selectedSpace.disabled ? "plus-circle-outline" : "minus-circle-outline", screen: "" },
   ]
