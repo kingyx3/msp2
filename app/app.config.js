@@ -40,7 +40,6 @@ module.exports = {
     "buildNumber": process.env.nativeBuildVersionIOS,
     "associatedDomains": [
       "applinks:" + process.env.EXPO_PUBLIC_domain,
-      "applinks:" + process.env.EXPO_PUBLIC_altDomain,
       "applinks:" + process.env.EXPO_PUBLIC_FB_authDomain,
     ],
     "config": {
@@ -70,10 +69,6 @@ module.exports = {
           {
             "scheme": "https",
             "host": process.env.EXPO_PUBLIC_domain,
-            "pathPrefix": "/"
-          }, {
-            "scheme": "https",
-            "host": process.env.EXPO_PUBLIC_altDomain,
             "pathPrefix": "/"
           }, {
             "scheme": "https",
