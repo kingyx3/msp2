@@ -23,7 +23,10 @@
       "env": {
         "EXPO_PUBLIC_APP_SHORT_NAME": "Plans (DEV)",
         "EXPO_PUBLIC_IOS_ID": "com.makeshiftplans.iosdev",
-        "EXPO_PUBLIC_ANDROID_ID": "com.makeshiftplans.androiddev"
+        "EXPO_PUBLIC_ANDROID_ID": "com.makeshiftplans.androiddev",
+        "EXPO_PUBLIC_domain": "makeshiftplans-dev.com",
+        "EXPO_PUBLIC_altDomain": "makeshiftplans-dev.web.app",
+        "EXPO_PUBLIC_FB_authDomain": "makeshiftplans-dev.firebaseapp.com"
       }
     },
     "production": {
@@ -31,7 +34,10 @@
       "env": {
         "EXPO_PUBLIC_APP_SHORT_NAME": "Plans",
         "EXPO_PUBLIC_IOS_ID": "com.makeshiftplans.ios",
-        "EXPO_PUBLIC_ANDROID_ID": "com.makeshiftplans.android"
+        "EXPO_PUBLIC_ANDROID_ID": "com.makeshiftplans.android",
+        "EXPO_PUBLIC_domain": "makeshiftplans.com",
+        "EXPO_PUBLIC_altDomain": "makeshiftplans-prod.web.app",
+        "EXPO_PUBLIC_FB_authDomain": "makeshiftplans-prod.firebaseapp.com"
       }
     }
   },
