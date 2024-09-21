@@ -1,4 +1,12 @@
-module.exports = {
+module.exports = () => {
+  const associatedDomains = [
+     `applinks:${(process.env.EXPO_PUBLIC_domain || '')}`,
+     `applinks:${(process.env.EXPO_PUBLIC_altDomain || '')}`,
+     `applinks:${(process.env.EXPO_PUBLIC_FB_authDomain || '')}`,
+  ]
+  const uniqueDomains = [...new Set(associatedDomains)];
+
+  return {
   "name": process.env.EXPO_PUBLIC_APP_SHORT_NAME,
   "scheme": "msp",
   "slug": "MSP",
@@ -38,11 +46,7 @@ module.exports = {
     "supportsTablet": false,
     "bundleIdentifier": process.env.EXPO_PUBLIC_IOS_ID,
     "buildNumber": process.env.nativeBuildVersionIOS,
-    "associatedDomains": [
-      "applinks:" + process.env.EXPO_PUBLIC_domain,
-      "applinks:" + process.env.EXPO_PUBLIC_altDomain,
-      "applinks:" + process.env.EXPO_PUBLIC_FB_authDomain,
-    ],
+    "associatedDomains": uniqueDomains,
     "config": {
       "googleMapsApiKey": process.env.EXPO_PUBLIC_GOOGLE_PLACES_API_KEY
     }
@@ -97,4 +101,5 @@ module.exports = {
     "policy": "sdkVersion"
   },
   "owner": "kingyx3"
+}
 }
