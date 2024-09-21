@@ -39,8 +39,9 @@ module.exports = {
     "bundleIdentifier": process.env.EXPO_PUBLIC_IOS_ID,
     "buildNumber": process.env.nativeBuildVersionIOS,
     "associatedDomains": [
-      "applinks:" + "makeshiftplans.com",
-      "applinks:" + "makeshiftplans-dev.firebaseapp.com",
+      "applinks:" + process.env.EXPO_PUBLIC_domain,
+      "applinks:" + process.env.EXPO_PUBLIC_altDomain,
+      "applinks:" + process.env.EXPO_PUBLIC_FB_authDomain,
     ],
     "config": {
       "googleMapsApiKey": process.env.EXPO_PUBLIC_GOOGLE_PLACES_API_KEY
@@ -69,6 +70,10 @@ module.exports = {
           {
             "scheme": "https",
             "host": process.env.EXPO_PUBLIC_domain,
+            "pathPrefix": "/"
+          }, {
+            "scheme": "https",
+            "host": process.env.EXPO_PUBLIC_altDomain,
             "pathPrefix": "/"
           }, {
             "scheme": "https",
