@@ -109,6 +109,7 @@ const styles = StyleSheet.create({
   },
   messagesContainer: {
     backgroundColor: 'white',
+    padding: 3
   },
   textInput: {
     padding: 10,
