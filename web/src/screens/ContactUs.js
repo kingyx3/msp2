@@ -1,10 +1,11 @@
 import React from 'react';
 import ContactForm from '../components/ContactForm';
+import { envVars } from '../envConfig'
 
 const ContactFormScreen = () => {
     return (
         <div style={styles.container}>
-            <img src="/icon.png" alt="Makeshiftplans" style={styles.logo} />
+            <img src="/icon.png" alt={envVars.REACT_APP_NAME} style={styles.logo} />
             <ContactForm />
         </div>
     );

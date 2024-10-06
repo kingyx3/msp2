@@ -1,9 +1,10 @@
 import React from 'react';
+import { envVars } from '../envConfig'
 
 const ReturnScreen = () => {
     return (
         <div style={styles.container}>
-            <img src="/icon.png" alt="Makeshiftplans" style={styles.logo} />
+            <img src="/icon.png" alt={envVars.REACT_APP_NAME} style={styles.logo} />
             <p style={styles.message}>Please close this window and return to the mobile app.</p>
         </div>
     );

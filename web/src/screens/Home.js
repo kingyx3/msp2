@@ -1,16 +1,17 @@
 import React from 'react';
+import { envVars } from '../envConfig'
 
 const Home = () => {
     return (
         <div style={styles.container}>
-            <img src="/icon.png" alt="MakeShiftPlans" style={styles.logo} />
-            <h1>Welcome to MakeShiftPlans</h1>
+            <img src="/icon.png" alt={envVars.REACT_APP_NAME} style={styles.logo} />
+            <h1>Welcome to {envVars.REACT_APP_NAME}</h1>
             <p>Find the perfect space for your needs</p>
             <div style={styles.downloadLinks}>
-                <a href="https://play.google.com/store/apps/details?id=com.makeshiftplans.android">
+                <a href={process.env.REACT_APP_PLAYSTORE_LINK}>
                     <img src="google-play-icon.png" alt="Download on Google Play" style={styles.appStoreBadge} />
                 </a>
-                <a href="https://apps.apple.com/sg/app/makeshiftplans/id6529522067">
+                <a href={process.env.REACT_APP_APPSTORE_LINK}>
                     <img src="apple-store-icon.png" alt="Download on the App Store" style={styles.appStoreBadge} />
                 </a>
             </div>

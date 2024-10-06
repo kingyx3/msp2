@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 
 import Home from './screens/Home';
@@ -17,7 +17,14 @@ import PricingPolicy from './screens/Policies/PricingPolicy';
 import HostingFees from './screens/Policies/HostingFees';
 import NavBarBtm from './components/NavBarBtm';
 
+import { redirectToApp } from './utils/appRedirect';
+
 const App = () => {
+  useEffect(() => {
+    // Attempt to redirect when the component loads
+    redirectToApp();
+  }, []); // The empty dependency array ensures this runs once when the component mounts
+
   return (
     <Router>
       <Navbar />
