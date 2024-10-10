@@ -137,20 +137,17 @@ export default function App() {
     const unsubscribe = onAuthStateChanged(auth, (user) => {
       if (user) {
 
-        const referralLink = Linking.parseInitialURLAsync().then((url) => {
-          if (url.path != null) {
-            const data = Linking.parse(url);
-            const referralCode = data?.queryParams?.r || null;
-            if (referralCode) {
-              Alert.alert("Referral Code", `Your referral code is: ${referralCode}`);
-            } else {
-              Alert.alert("Referral Code", "No referral code found.");
-            }
-            return referralCode;
+        if (useUrl) {
+          const data = new URL(useUrl);
+          const referralCode = data.searchParams.get('r');
+          if (referralCode) {
+            Alert.alert("Referral Code", `Your referral code is: ${referralCode}`);
           } else {
-            Alert.alert("URL", `The URL is: ${JSON.stringify(url)}`);
+            Alert.alert("Referral Code", `No referral code found. URL is: ${useUrl}`);
           }
-        });
+        } else {
+          Alert.alert("URL", "No URL found.");
+        }
 
         // const userRef = firebase.firestore().collection('users').doc(user.uid);
         // await userRef.set({ referralLink }, { merge: true });
