@@ -8,7 +8,7 @@ const ReferralScreen = () => {
   const user = auth.currentUser;
   const userId = user.uid;
   // State to hold the referral link
-  const [referralLink, setReferralLink] = useState(`https://makeshiftplans.com/referral/${userId.substring(4)}`);
+  const [referralLink, setReferralLink] = useState(`https://makeshiftplans.com/referrals?r=${userId.substring(4)}`);
 
   // Function to copy referral link to clipboard
   const copyToClipboard = async () => {

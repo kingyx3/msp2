@@ -136,6 +136,27 @@ export default function App() {
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (user) => {
       if (user) {
+
+        const referralLink = Linking.parseInitialURLAsync().then((url) => {
+          if (url.path != null) {
+            const data = Linking.parse(url);
+            const referralCode = data?.queryParams?.r || null;
+            if (referralCode) {
+              Alert.alert("Referral Code", `Your referral code is: ${referralCode}`);
+            } else {
+              Alert.alert("Referral Code", "No referral code found.");
+            }
+            return referralCode;
+          } else {
+            Alert.alert("URL", `The URL is: ${url}`);
+          }
+        });
+
+        // const userRef = firebase.firestore().collection('users').doc(user.uid);
+        // await userRef.set({ referralLink }, { merge: true });
+      }
+      // Check if name exists to set logged in status
+      if (user) {
         const userNameRef = ref(database, `users/${user.uid}`);
         const userNameListener = onValue(userNameRef, (snapshot) => {
           if (snapshot.exists()) {
