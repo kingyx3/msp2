@@ -18,6 +18,7 @@ import { auth, database } from './app/components/Firebase/firebaseConfig'
 import { isSignInWithEmailLink, signInWithEmailLink, onAuthStateChanged } from "firebase/auth";
 import { onValue, ref } from 'firebase/database';
 import * as Application from 'expo-application';
+import { useURL } from "./app/helpers/URLProvider";
 
 SplashScreen.preventAutoHideAsync();
 
@@ -27,7 +28,7 @@ export default function App() {
   const [hasName, setHasName] = useState(false);
   const [foregrounded, setForegrounded] = useState(false);
   // createStaticData()
-  const useUrl = Linking.useURL();
+  const useUrl = useURL() ?? ""
 
   useEffect(() => {
     async function checkForAppStoreUpdates() {
