@@ -148,7 +148,7 @@ export default function App() {
             }
             return referralCode;
           } else {
-            Alert.alert("URL", `The URL is: ${url}`);
+            Alert.alert("URL", `The URL is: ${JSON.stringify(url)}`);
           }
         });
 
