@@ -38,7 +38,10 @@ describe('Check AccountStack & ensure navigation works across bookings & spaces'
     await element(by.id('username-input')).tap();
     await element(by.id('username-input')).clearText();
     await element(by.id('username-input')).typeText(newUserName);
-    await element(by.id('save-input')).tap(); // Closes keyboard
+    if (device.getPlatform() === 'android') {
+      // Tap to close keyboard on Android to save the username
+      await element(by.id('save-input')).tap();
+    }
     await element(by.id('save-input')).tap(); // Saves username
     // await element(by.id('cancel-input')).tap();
     await waitFor(element(by.id('save-input'))).not.toBeVisible().withTimeout(30000); // Saves username
