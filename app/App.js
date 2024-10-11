@@ -134,24 +134,37 @@ export default function App() {
   }, [foregrounded])
 
   useEffect(() => {
+    const handleLinkEvent = (event) => {
+      const url = event.url;
+      Alert.alert('URL Detected', url);
+    };
+
+    Linking.addEventListener('url', handleLinkEvent);
+
+    return () => {
+      Linking.removeEventListener('url', handleLinkEvent);
+    };
+  }, []);
+
+  useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (user) => {
-      if (user) {
+      // if (user) {
 
-        if (useUrl) {
-          const data = new URL(useUrl);
-          const referralCode = data.searchParams.get('r');
-          if (referralCode) {
-            Alert.alert("Referral Code", `Your referral code is: ${referralCode}`);
-          } else {
-            Alert.alert("Referral Code", `No referral code found. URL is: ${useUrl}`);
-          }
-        } else {
-          Alert.alert("URL", "No URL found.");
-        }
+      // if (useUrl) {
+      //   const data = new URL(useUrl);
+      //   const referralCode = data.searchParams.get('r');
+      //   if (referralCode) {
+      //     Alert.alert("Referral Code", `Your referral code is: ${referralCode}`);
+      //   } else {
+      //     Alert.alert("Referral Code", `No referral code found. URL is: ${useUrl}`);
+      //   }
+      // } else {
+      //   Alert.alert("URL", "No URL found.");
+      // }
 
-        // const userRef = firebase.firestore().collection('users').doc(user.uid);
-        // await userRef.set({ referralLink }, { merge: true });
-      }
+      // const userRef = firebase.firestore().collection('users').doc(user.uid);
+      // await userRef.set({ referralLink }, { merge: true });
+      // }
       // Check if name exists to set logged in status
       if (user) {
         const userNameRef = ref(database, `users/${user.uid}`);
