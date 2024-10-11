@@ -165,18 +165,20 @@ export default function App() {
         // Check if the app was opened with a URL
         const checkInitialURL = async () => {
           const initialUrl = await Linking.getInitialURL();
-          if (initialUrl) {
-            const data = new URL(initialUrl);
-            const referralCode = data.searchParams.get('r');
-            if (referralCode) {
-              Alert.alert("Referral Code", `Your referral code is: ${referralCode}`);
-            } else {
-              Alert.alert("Referral Code", `No referral code found. URL is: ${initialUrl}`);
-            }
-            // const userRef = firebase.firestore().collection('users').doc(user.uid);
-            // await userRef.set({ referralLink }, { merge: true });
+          if (!initialUrl) return;
+
+          const data = new URL(initialUrl);
+          const referralCode = data.searchParams.get('r');
+          if (!referralCode) return;
+
+          const userRef = firebase.firestore().collection('users').doc(user.uid);
+          const userDoc = await userRef.get();
+
+          if (!userDoc.data().referralCode) {
+            await userRef.set({ referralCode }, { merge: true });
           }
         };
+
         // Check the initial URL when the app launches
         checkInitialURL();
       }
