@@ -133,50 +133,54 @@ export default function App() {
     }
   }, [foregrounded])
 
-  useEffect(() => {
-    const handleLinkEvent = (event) => {
-      const url = event.url;
-      Alert.alert('URL Detected', url);
-    };
+  // // For getting urls used to open app
+  // useEffect(() => {
+  //   const handleLinkEvent = (event) => {
+  //     const url = event.url;
+  //     Alert.alert('URL Detected', url);
+  //   };
 
-    // Check if the app was opened with a URL
-    const checkInitialURL = async () => {
-      const initialUrl = await Linking.getInitialURL();
-      if (initialUrl) {
-        Alert.alert('Initial URL Detected', initialUrl);
-      }
-    };
+  //   // Check if the app was opened with a URL
+  //   const checkInitialURL = async () => {
+  //     const initialUrl = await Linking.getInitialURL();
+  //     if (initialUrl) {
+  //       Alert.alert('Initial URL Detected', initialUrl);
+  //     }
+  //   };
 
-    // Set up the listener for URL changes
-    Linking.addEventListener('url', handleLinkEvent);
+  //   // Set up the listener for URL changes
+  //   Linking.addEventListener('url', handleLinkEvent);
 
-    // Check the initial URL when the app launches
-    checkInitialURL();
+  //   // Check the initial URL when the app launches
+  //   checkInitialURL();
 
-    return () => {
-      Linking.removeEventListener('url', handleLinkEvent);
-    };
-  }, []);
+  //   return () => {
+  //     Linking.removeEventListener('url', handleLinkEvent);
+  //   };
+  // }, []);
 
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (user) => {
-      // if (user) {
+      if (user) {
+        // Check if the app was opened with a URL
+        const checkInitialURL = async () => {
+          const initialUrl = await Linking.getInitialURL();
+          if (initialUrl) {
+            const data = new URL(initialUrl);
+            const referralCode = data.searchParams.get('r');
+            if (referralCode) {
+              Alert.alert("Referral Code", `Your referral code is: ${referralCode}`);
+            } else {
+              Alert.alert("Referral Code", `No referral code found. URL is: ${initialUrl}`);
+            }
+            // const userRef = firebase.firestore().collection('users').doc(user.uid);
+            // await userRef.set({ referralLink }, { merge: true });
+          }
+        };
+        // Check the initial URL when the app launches
+        checkInitialURL();
+      }
 
-      // if (useUrl) {
-      //   const data = new URL(useUrl);
-      //   const referralCode = data.searchParams.get('r');
-      //   if (referralCode) {
-      //     Alert.alert("Referral Code", `Your referral code is: ${referralCode}`);
-      //   } else {
-      //     Alert.alert("Referral Code", `No referral code found. URL is: ${useUrl}`);
-      //   }
-      // } else {
-      //   Alert.alert("URL", "No URL found.");
-      // }
-
-      // const userRef = firebase.firestore().collection('users').doc(user.uid);
-      // await userRef.set({ referralLink }, { merge: true });
-      // }
       // Check if name exists to set logged in status
       if (user) {
         const userNameRef = ref(database, `users/${user.uid}`);
@@ -198,7 +202,7 @@ export default function App() {
     });
     // Clean up the auth state listener when the component unmounts
     return () => unsubscribe();
-  }, [useUrl]);
+  }, []);
 
   if (loaded) {
     wait(1000).then(() => SplashScreen.hideAsync())
