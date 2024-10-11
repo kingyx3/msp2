@@ -173,7 +173,7 @@ export default function App() {
           if (!referralCode) return;
 
           await updateUserReferral(referralCode);
-          Alert.alert('Referral Code Updated', referralCode);
+          // Alert.alert('Referral Code Updated', referralCode);
         };
 
         // Check the initial URL when the app launches
