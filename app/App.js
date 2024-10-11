@@ -21,6 +21,28 @@ import * as Application from 'expo-application';
 
 SplashScreen.preventAutoHideAsync();
 
+const useInitialURL = () => {
+  const [url, setUrl] = useState(null);
+  const [processing, setProcessing] = useState(true);
+
+  useEffect(() => {
+    const getUrlAsync = async () => {
+      // Get the deep link used to open the app
+      const initialUrl = await Linking.getInitialURL();
+
+      // The setTimeout is just for testing purpose
+      setTimeout(() => {
+        setUrl(initialUrl);
+        setProcessing(false);
+      }, 1000);
+    };
+
+    getUrlAsync();
+  }, []);
+
+  return { url, processing };
+};
+
 export default function App() {
   const [loaded, setLoaded] = useState(false);
   const [loggedIn, setLoggedIn] = useState(false);
@@ -28,6 +50,7 @@ export default function App() {
   const [foregrounded, setForegrounded] = useState(false);
   // createStaticData()
   const useUrl = Linking.useURL();
+  const { url: initialUrl, processing } = useInitialURL();
 
   useEffect(() => {
     async function checkForAppStoreUpdates() {
@@ -148,6 +171,7 @@ export default function App() {
 
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (user) => {
+      Alert.alert("Initial URL", `URL is: ${initialUrl}`);
       // if (user) {
 
       // if (useUrl) {
