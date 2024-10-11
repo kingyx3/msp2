@@ -17,6 +17,7 @@ import InputName from "./app/screens/InputName";
 import { auth, database } from './app/components/Firebase/firebaseConfig'
 import { isSignInWithEmailLink, signInWithEmailLink, onAuthStateChanged } from "firebase/auth";
 import { onValue, ref } from 'firebase/database';
+import { updateUserReferral } from "./app/components/Firebase/firebase";
 import * as Application from 'expo-application';
 
 SplashScreen.preventAutoHideAsync();
@@ -171,12 +172,8 @@ export default function App() {
           const referralCode = data.searchParams.get('r');
           if (!referralCode) return;
 
-          const userRef = firebase.firestore().collection('users').doc(user.uid);
-          const userDoc = await userRef.get();
-
-          if (!userDoc.data().referralCode) {
-            await userRef.set({ referralCode }, { merge: true });
-          }
+          await updateUserReferral(referralCode);
+          Alert.alert('Referral Code Updated', referralCode);
         };
 
         // Check the initial URL when the app launches

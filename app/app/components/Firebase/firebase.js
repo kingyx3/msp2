@@ -988,6 +988,13 @@ export async function readMessage(senderId) {
   update(chatReceiverRef, { unread: 0 });
 }
 
+// Function to update referrals
+export const updateUserReferral = async (referralCode) => {
+  const CFupdateUserReferral = httpsCallable(functions, 'updateUserReferral');
+  const inputs = { referralCode };
+  return CFupdateUserReferral(inputs);
+};
+
 /////////////////////////////////////////////////////////////////////////////
 export async function getPaymentSheet(topUpAmount) {
   const CFgetPaymentSheet = httpsCallable(functions, 'getPaymentSheet');
