@@ -41,7 +41,7 @@ export default function App() {
           console.log("No data available");
         }
       });
-      if (Application.nativeApplicationVersion != latestVersion {
+      if (Application.nativeApplicationVersion != latestVersion) {
         if (Platform.OS === 'android') {
           Alert.alert(
             'Update available',
@@ -62,7 +62,7 @@ export default function App() {
             'Please update the app for a better experience.', // + " | " + Application.nativeApplicationVersion + ', ' + latestVersion,
             [
               {
-                text: 'Update', onPress: () => Linking.openURL("https://play.google.com/store/apps/details?id=" + process.env.EXPO_PUBLIC_ANDROID_ID)
+                text: 'Update', onPress: () => Linking.openURL('https://apps.apple.com/sg/app/makeshiftplans/id6529522067')
               }, // open store if update is needed.
               {
                 text: 'Later', onPress: () => console.log('Later pressed!')
