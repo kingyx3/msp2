@@ -33,11 +33,19 @@ export default function App() {
   useEffect(() => {
     async function checkForAppStoreUpdates() {
       // Check for updates using your custom logic (checks for 1.0.2 number only not the version code etc)
-      if (Application.nativeApplicationVersion != process.env.EXPO_PUBLIC_nativeApplicationVersion) {
+      const versionRef = ref(database, `system/version`);
+      const versionListener = onValue(versionRef, (snapshot) => {
+        if (snapshot.exists()) {
+          const latestVersion = snapshot.val();
+        } else {
+          console.log("No data available");
+        }
+      });
+      if (Application.nativeApplicationVersion != latestVersion {
         if (Platform.OS === 'android') {
           Alert.alert(
             'Update available',
-            'Please update the app for a better experience.', // + " | " + Application.nativeApplicationVersion + ', ' + process.env.EXPO_PUBLIC_nativeApplicationVersion,
+            'Please update the app for a better experience.', // + " | " + Application.nativeApplicationVersion + ', ' + latestVersion,
             [
               {
                 text: 'Update', onPress: () => Linking.openURL("https://play.google.com/store/apps/details?id=" + process.env.EXPO_PUBLIC_ANDROID_ID)
@@ -49,6 +57,19 @@ export default function App() {
             { cancelable: false }
           );
         } else if (Platform.OS === 'ios') {
+          Alert.alert(
+            'Update available',
+            'Please update the app for a better experience.', // + " | " + Application.nativeApplicationVersion + ', ' + latestVersion,
+            [
+              {
+                text: 'Update', onPress: () => Linking.openURL("https://play.google.com/store/apps/details?id=" + process.env.EXPO_PUBLIC_ANDROID_ID)
+              }, // open store if update is needed.
+              {
+                text: 'Later', onPress: () => console.log('Later pressed!')
+              },
+            ],
+            { cancelable: false }
+          );
         } else {
         }
       }
