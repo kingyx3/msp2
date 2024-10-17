@@ -38,9 +38,9 @@ const InputName = ({ navigation }) => {
       await updateUserName(name);
       // Assuming updateUserReferral is defined in firebase as well
       await updateUserReferral(referralCode);
-      Alert.alert('Success', 'Your information has been updated.');
+      // Alert.alert('Success', 'Your information has been updated.');
     } catch (error) {
-      Alert.alert("Error", "An error occurred while updating your information.");
+      // Alert.alert("Error", "An error occurred while updating your information.");
     } finally {
       setDisabled(false);
     }

@@ -84,7 +84,7 @@ export default function App() {
         const update = await Updates.checkForUpdateAsync();
         if (update.isAvailable) {
           await Updates.fetchUpdateAsync();
-          // await Updates.reloadAsync();
+          await Updates.reloadAsync();
         }
       } catch (error) {
         // Doesnt work on Expo Go - will error out here.
