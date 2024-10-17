@@ -37,49 +37,54 @@ export default function App() {
       const versionListener = onValue(versionRef, (snapshot) => {
         if (snapshot.exists()) {
           const latestVersion = snapshot.val();
+          if (Application.nativeApplicationVersion != latestVersion) {
+            if (Platform.OS === 'android') {
+              Alert.alert(
+                'Update available',
+                'Please update the app for a better experience.', // + " | " + Application.nativeApplicationVersion + ', ' + latestVersion,
+                [
+                  {
+                    text: 'Update', onPress: () => Linking.openURL("https://play.google.com/store/apps/details?id=" + process.env.EXPO_PUBLIC_ANDROID_ID)
+                  }, // open store if update is needed.
+                  {
+                    text: 'Later', onPress: () => console.log('Later pressed!')
+                  },
+                ],
+                { cancelable: false }
+              );
+            } else if (Platform.OS === 'ios') {
+              Alert.alert(
+                'Update available',
+                'Please update the app for a better experience.', // + " | " + Application.nativeApplicationVersion + ', ' + latestVersion,
+                [
+                  {
+                    text: 'Update', onPress: () => Linking.openURL('https://apps.apple.com/sg/app/makeshiftplans/id6529522067')
+                  }, // open store if update is needed.
+                  {
+                    text: 'Later', onPress: () => console.log('Later pressed!')
+                  },
+                ],
+                { cancelable: false }
+              );
+            } else {
+            }
+          }
         } else {
           console.log("No data available");
         }
+
+        // Return a cleanup function to unsubscribe from the versionListener
+        return () => {
+          versionListener();
+        };
       });
-      if (Application.nativeApplicationVersion != latestVersion) {
-        if (Platform.OS === 'android') {
-          Alert.alert(
-            'Update available',
-            'Please update the app for a better experience.', // + " | " + Application.nativeApplicationVersion + ', ' + latestVersion,
-            [
-              {
-                text: 'Update', onPress: () => Linking.openURL("https://play.google.com/store/apps/details?id=" + process.env.EXPO_PUBLIC_ANDROID_ID)
-              }, // open store if update is needed.
-              {
-                text: 'Later', onPress: () => console.log('Later pressed!')
-              },
-            ],
-            { cancelable: false }
-          );
-        } else if (Platform.OS === 'ios') {
-          Alert.alert(
-            'Update available',
-            'Please update the app for a better experience.', // + " | " + Application.nativeApplicationVersion + ', ' + latestVersion,
-            [
-              {
-                text: 'Update', onPress: () => Linking.openURL('https://apps.apple.com/sg/app/makeshiftplans/id6529522067')
-              }, // open store if update is needed.
-              {
-                text: 'Later', onPress: () => console.log('Later pressed!')
-              },
-            ],
-            { cancelable: false }
-          );
-        } else {
-        }
-      }
     }
     async function checkForExpoUpdates() {
       try {
         const update = await Updates.checkForUpdateAsync();
         if (update.isAvailable) {
           await Updates.fetchUpdateAsync();
-          await Updates.reloadAsync();
+          // await Updates.reloadAsync();
         }
       } catch (error) {
         // Doesnt work on Expo Go - will error out here.
@@ -154,32 +159,6 @@ export default function App() {
         });
     }
   }, [foregrounded])
-
-  // // For getting urls used to open app
-  // useEffect(() => {
-  //   const handleLinkEvent = (event) => {
-  //     const url = event.url;
-  //     Alert.alert('URL Detected', url);
-  //   };
-
-  //   // Check if the app was opened with a URL
-  //   const checkInitialURL = async () => {
-  //     const initialUrl = await Linking.getInitialURL();
-  //     if (initialUrl) {
-  //       Alert.alert('Initial URL Detected', initialUrl);
-  //     }
-  //   };
-
-  //   // Set up the listener for URL changes
-  //   Linking.addEventListener('url', handleLinkEvent);
-
-  //   // Check the initial URL when the app launches
-  //   checkInitialURL();
-
-  //   return () => {
-  //     Linking.removeEventListener('url', handleLinkEvent);
-  //   };
-  // }, []);
 
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (user) => {
