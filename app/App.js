@@ -162,24 +162,6 @@ export default function App() {
 
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (user) => {
-      if (user) {
-        // Check if the app was opened with a URL
-        const checkInitialURL = async () => {
-          const initialUrl = await Linking.getInitialURL();
-          if (!initialUrl) return;
-
-          const data = new URL(initialUrl);
-          const referralCode = data.searchParams.get('r');
-          if (!referralCode) return;
-
-          await updateUserReferral(referralCode);
-          // Alert.alert('Referral Code Updated', referralCode);
-        };
-
-        // Check the initial URL when the app launches
-        checkInitialURL();
-      }
-
       // Check if name exists to set logged in status
       if (user) {
         const userNameRef = ref(database, `users/${user.uid}`);

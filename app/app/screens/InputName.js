@@ -1,16 +1,50 @@
-import React, { useState } from "react";
-import { Text, StyleSheet, KeyboardAvoidingView, TouchableWithoutFeedback, Keyboard, Platform } from "react-native";
+import React, { useState, useEffect } from "react";
+import { Text, StyleSheet, KeyboardAvoidingView, TouchableWithoutFeedback, Keyboard, TextInput, Platform, Alert } from "react-native";
 import styled from "styled-components/native";
-import * as Button from "../components/Button";
-import * as TextInput from "../components/forms/AppInput";
 import { updateUserName } from '../components/Firebase/firebase';
 import SubmitBtn from "../components/forms/SubmitBtn";
 import colors from "../config/colors";
 import * as Typography from "../config/Typography";
-import AppForm from "../components/forms/AppForm";
+import * as Linking from "expo-linking";
 
 const InputName = ({ navigation }) => {
+  const [name, setName] = useState("");
+  const [referralCode, setReferralCode] = useState("");
   const [disabled, setDisabled] = useState(false);
+
+  useEffect(() => {
+    const checkInitialURL = async () => {
+      const initialUrl = await Linking.getInitialURL();
+      if (!initialUrl) return;
+
+      const data = new URL(initialUrl);
+      const referralCodeX = data.searchParams.get('r');
+      if (!referralCodeX) return;
+
+      setReferralCode(referralCodeX);
+    };
+
+    checkInitialURL();
+  }, []);
+
+  const handleSubmit = async () => {
+    if (!name) {
+      Alert.alert("Error", "Name is required");
+      return;
+    }
+
+    setDisabled(true);
+    try {
+      await updateUserName(name);
+      // Assuming updateUserReferral is defined in firebase as well
+      await updateUserReferral(referralCode);
+      Alert.alert('Success', 'Your information has been updated.');
+    } catch (error) {
+      Alert.alert("Error", "An error occurred while updating your information.");
+    } finally {
+      setDisabled(false);
+    }
+  };
 
   return (
     <KeyboardAvoidingView
@@ -23,27 +57,39 @@ const InputName = ({ navigation }) => {
             <Header>
               <Typography.H1 color={colors.red}>How can we address you?</Typography.H1>
             </Header>
-            <AppForm
-              initialValues={{ name: "" }}
-              onSubmit={values => updateUserName(values.name)}
-            >
-              <Input>
-                <Text>Name</Text>
-                <TextInput.Default
-                  name="name"
-                  autoCapitalize="none"
-                  autoCorrect={false}
-                  keyboardType="default"
-                  clearButtonMode="always"
-                  textContentType="name"
-                  maxLength={+(process.env.EXPO_PUBLIC_USERNAME_MAX_LENGTH)}
-                />
-              </Input>
-              <SubmitBtn
-                title="Continue"
-                disabled={disabled}
+            <Input>
+              <Text>Name</Text>
+              <TextInput
+                value={name}
+                onChangeText={setName}
+                autoCapitalize="none"
+                autoCorrect={false}
+                keyboardType="default"
+                clearButtonMode="always"
+                textContentType="name"
+                maxLength={+(process.env.EXPO_PUBLIC_USERNAME_MAX_LENGTH || 30)}
+                style={styles.textInput}
               />
-            </AppForm>
+            </Input>
+            <Input>
+              <Text>Referral Code (Optional)</Text>
+              <TextInput
+                value={referralCode}
+                onChangeText={setReferralCode}
+                autoCapitalize="none"
+                autoCorrect={false}
+                keyboardType="default"
+                clearButtonMode="always"
+                textContentType="name"
+                maxLength={30}
+                style={styles.textInput}
+              />
+            </Input>
+            <SubmitBtn
+              title="Continue"
+              disabled={disabled}
+              onPress={handleSubmit}
+            />
           </Main>
         </Container>
       </TouchableWithoutFeedback>
@@ -71,23 +117,12 @@ const Input = styled.View`
 `;
 
 const styles = StyleSheet.create({
-  footerButtonContainer: {
-    marginVertical: 15,
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-  forgotPasswordButtonText: {
-    color: colors.red,
-    fontSize: Platform.OS === 'ios' ? 18 : 12,
-    fontWeight: '600',
-  },
-  errorText: {
-    marginTop: 20,
-    marginLeft: 15,
-    color: colors.red,
-    fontSize: Platform.OS === 'ios' ? 16 : 10,
-    marginBottom: 5,
-    fontWeight: '600',
+  textInput: {
+    height: 40,
+    borderColor: 'gray',
+    borderWidth: 1,
+    paddingHorizontal: 10,
+    borderRadius: 5,
   },
 });
 
