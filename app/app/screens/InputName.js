@@ -3,6 +3,7 @@ import { Text, StyleSheet, KeyboardAvoidingView, TouchableWithoutFeedback, Keybo
 import styled from "styled-components/native";
 import { updateUserName } from '../components/Firebase/firebase';
 import SubmitBtn from "../components/forms/SubmitBtn";
+import * as Button from "../components/Button"
 import colors from "../config/colors";
 import * as Typography from "../config/Typography";
 import * as Linking from "expo-linking";
@@ -55,7 +56,7 @@ const InputName = ({ navigation }) => {
         <Container>
           <Main>
             <Header>
-              <Typography.H1 color={colors.red}>How can we address you?</Typography.H1>
+              <Typography.H1 color={colors.red}>How should we address you?</Typography.H1>
             </Header>
             <Input>
               <Text>Name</Text>
@@ -85,10 +86,12 @@ const InputName = ({ navigation }) => {
                 style={styles.textInput}
               />
             </Input>
-            <SubmitBtn
-              title="Continue"
+            <Button.BtnContain
+              label="Continue"
+              color={colors.red}
               disabled={disabled}
               onPress={handleSubmit}
+              testID={"name-input-button"}
             />
           </Main>
         </Container>
