@@ -53,7 +53,7 @@ const Accounts = (props) => {
   let [imageUri, setImageUri] = useState(user.avatar)
   let [userName, setUserName] = useState('')
   // console.log(DEFAULTAVATAR)
-  // console.log(imageUri)
+  // console.log(user.email)
 
   useEffect(() => {
     async function fetchUserName(userId) {
@@ -150,7 +150,7 @@ const Accounts = (props) => {
         keyExtractor={(item, index) => item + index}
         renderSectionHeader={({ section: { title } }) => (
           <View style={{ marginTop: 30, marginBottom: 10 }}>
-            <Cap color={colors.gray}>{title}</Cap>
+            <Cap color={colors.gray}>{title + " (" + user.email + ")"}</Cap>
           </View>
         )}
         stickySectionHeadersEnabled={false}
