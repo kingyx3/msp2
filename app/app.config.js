@@ -3,6 +3,7 @@ module.exports = () => {
     `applinks:${(process.env.EXPO_PUBLIC_domain || '')}`,
     `applinks:${(process.env.EXPO_PUBLIC_altDomain || '')}`,
     `applinks:${(process.env.EXPO_PUBLIC_FB_authDomain || '')}`,
+    `applinks:${(process.env.EXPO_PUBLIC_DLINK || '')}`,
   ]
   const uniqueDomains = [...new Set(associatedDomains)];
 
@@ -49,7 +50,9 @@ module.exports = () => {
       "associatedDomains": [
         "applinks:makeshiftplans-dev.web.app",
         "applinks:makeshiftplans-dev.com",
-        "applinks:makeshiftplans-dev.firebaseapp.com"],
+        "applinks:makeshiftplans-dev.firebaseapp.com",
+        "applinks:mspdev.page.link"
+      ],
       "config": {
         "googleMapsApiKey": process.env.EXPO_PUBLIC_GOOGLE_PLACES_API_KEY
       }
@@ -85,6 +88,10 @@ module.exports = () => {
             }, {
               "scheme": "https",
               "host": process.env.EXPO_PUBLIC_FB_authDomain,
+              "pathPrefix": "/"
+            }, {
+              "scheme": "https",
+              "host": process.env.EXPO_PUBLIC_DLINK,
               "pathPrefix": "/"
             },
           ],
