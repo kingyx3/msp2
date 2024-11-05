@@ -42,7 +42,8 @@ module.exports = () => {
         "UIUserInterfaceStyle": "Light",
         "FirebaseDynamicLinksCustomDomains": [
           "link.makeshiftplans.com"
-        ]
+        ],
+        "LSMinimumSystemVersion": "14.0"
       },
       "supportsTablet": false,
       "bundleIdentifier": process.env.EXPO_PUBLIC_IOS_ID,
