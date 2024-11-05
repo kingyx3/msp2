@@ -47,12 +47,7 @@ module.exports = () => {
       "supportsTablet": false,
       "bundleIdentifier": process.env.EXPO_PUBLIC_IOS_ID,
       "buildNumber": process.env.nativeBuildVersionIOS,
-      "associatedDomains": [
-        "applinks:makeshiftplans-dev.web.app",
-        "applinks:makeshiftplans-dev.com",
-        "applinks:makeshiftplans-dev.firebaseapp.com",
-        "applinks:mspdev.page.link"
-      ],
+      "associatedDomains": uniqueDomains,
       "config": {
         "googleMapsApiKey": process.env.EXPO_PUBLIC_GOOGLE_PLACES_API_KEY
       }
