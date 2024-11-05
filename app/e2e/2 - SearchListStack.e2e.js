@@ -23,7 +23,7 @@ const attemptBooking = async () => {
   await element(by.id('book-now-button')).tap();
 
   try {
-    await waitFor(element(by.text('Requires host confirmation'))).toBeVisible().withTimeout(10000);
+    await waitFor(element(by.text('Requires host confirmation'))).toBeVisible().withTimeout(20000);
     await element(by.text('Proceed')).tap();
   } catch (e) {
     console.log('This space does not require host confirmation. i.e. Immediate approval');
