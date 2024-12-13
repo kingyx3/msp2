@@ -17,7 +17,8 @@ module.exports = () => {
     ],
     "plugins": [
       "@config-plugins/detox",
-      "expo-secure-store"
+      "expo-secure-store",
+      ["react-native-appsflyer", { "shouldUseStrictMode": false }],
     ],
     "version": process.env.EXPO_PUBLIC_nativeApplicationVersion,
     "orientation": "portrait",

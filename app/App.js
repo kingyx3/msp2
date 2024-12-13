@@ -19,6 +19,24 @@ import { isSignInWithEmailLink, signInWithEmailLink, onAuthStateChanged } from "
 import { onValue, ref } from 'firebase/database';
 import { updateUserReferral } from "./app/components/Firebase/firebase";
 import * as Application from 'expo-application';
+import appsFlyer from 'react-native-appsflyer';
+
+// appsFlyer.initSdk(
+//   {
+//     devKey: 'GdJFcsH8ugAzvkNsr2suf8',
+//     isDebug: false,
+//     appId: '6529522067',
+//     onInstallConversionDataListener: true, //Optional
+//     onDeepLinkListener: true, //Optional
+//     timeToWaitForATTUserAuthorization: 10 //for iOS 14.5
+//   },
+//   (result) => {
+//     console.log(result);
+//   },
+//   (error) => {
+//     console.error(error);
+//   }
+// );
 
 SplashScreen.preventAutoHideAsync();
 
@@ -29,6 +47,35 @@ export default function App() {
   const [foregrounded, setForegrounded] = useState(false);
   // createStaticData()
   const useUrl = Linking.useURL();
+
+  // console.log('appsFlyer object:', appsFlyer);
+
+  useEffect(() => {
+    const appsFlyerOptions = {
+      isDebug: true,
+      appId: '6529522067',
+      devKey: 'GdJFcsH8ugAzvkNsr2suf8',
+      onInstallConversionDataListener: true,
+      timeToWaitForATTUserAuthorization: 10,
+      onDeepLinkListener: true,
+    };
+
+    appsFlyer.initSdk(
+      appsFlyerOptions,
+      (result) => {
+        Alert.alert(
+          "Success",
+          `AppsFlyer SDK initialized successfully: ${JSON.stringify(result)}`
+        );
+      },
+      (error) => {
+        Alert.alert(
+          "Error",
+          `AppsFlyer SDK initialization failed: ${JSON.stringify(error)}`
+        );
+      }
+    );
+  }, []); // Empty dependency array ensures this runs once when the component mounts
 
   useEffect(() => {
     async function checkForAppStoreUpdates() {
