@@ -4,6 +4,7 @@ module.exports = () => {
     `applinks:${(process.env.EXPO_PUBLIC_altDomain || '')}`,
     `applinks:${(process.env.EXPO_PUBLIC_FB_authDomain || '')}`,
     `applinks:${(process.env.EXPO_PUBLIC_DLINK || '')}`,
+    `applinks:${(process.env.EXPO_PUBLIC_APPSFLYER_ONELINK || '')}`,
   ]
   const uniqueDomains = [...new Set(associatedDomains)];
 
@@ -89,6 +90,10 @@ module.exports = () => {
             }, {
               "scheme": "https",
               "host": process.env.EXPO_PUBLIC_DLINK,
+              "pathPrefix": "/"
+            }, {
+              "scheme": "https",
+              "host": process.env.EXPO_PUBLIC_APPSFLYER_ONELINK,
               "pathPrefix": "/"
             },
           ],
