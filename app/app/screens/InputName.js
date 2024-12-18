@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { Text, StyleSheet, KeyboardAvoidingView, TouchableWithoutFeedback, Keyboard, TextInput, Platform, Alert } from "react-native";
 import styled from "styled-components/native";
-import { updateUserName } from '../components/Firebase/firebase';
+import { updateUserName, updateUserReferral } from '../components/Firebase/firebase';
 import SubmitBtn from "../components/forms/SubmitBtn";
 import * as Button from "../components/Button"
 import colors from "../config/colors";
