@@ -21,23 +21,6 @@ import { updateUserReferral } from "./app/components/Firebase/firebase";
 import * as Application from 'expo-application';
 import appsFlyer from 'react-native-appsflyer';
 
-// appsFlyer.initSdk(
-//   {
-//     devKey: 'GdJFcsH8ugAzvkNsr2suf8',
-//     isDebug: false,
-//     appId: '6529522067',
-//     onInstallConversionDataListener: true, //Optional
-//     onDeepLinkListener: true, //Optional
-//     timeToWaitForATTUserAuthorization: 10 //for iOS 14.5
-//   },
-//   (result) => {
-//     console.log(result);
-//   },
-//   (error) => {
-//     console.error(error);
-//   }
-// );
-
 SplashScreen.preventAutoHideAsync();
 
 export default function App() {
@@ -75,7 +58,7 @@ export default function App() {
         );
       }
     );
-  }, []); // Empty dependency array ensures this runs once when the component mounts
+  }, []);
 
   useEffect(() => {
     async function checkForAppStoreUpdates() {
