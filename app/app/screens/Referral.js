@@ -9,7 +9,7 @@ const ReferralScreen = (props) => {
   const user = auth.currentUser;
   const userId = user.uid;
   // State to hold the referral link
-  const [referralLink, setReferralLink] = useState(props.state.inviteLink) // useState(null) // useState(`https://makeshiftplans.com/referrals?r=${userId.substring(4)}`);
+  const [referralLink, setReferralLink] = useState(props.state.user.inviteLink) // useState(null) // useState(`https://makeshiftplans.com/referrals?r=${userId.substring(4)}`);
 // should change to use user.referralLink from user doc
 
   // Function to copy referral link to clipboard
@@ -27,7 +27,7 @@ const ReferralScreen = (props) => {
       {/* Referral Link Section */}
       <View style={styles.referralLinkContainer}>
         <Text style={styles.referralLinkLabel}>My Referral Link:</Text>
-        <Text style={styles.referralLink}>{props.state.inviteLink}</Text>
+        <Text style={styles.referralLink}>{props.state.user.inviteLink}</Text>
       </View>
 
       {/* Copy Link Button */}
