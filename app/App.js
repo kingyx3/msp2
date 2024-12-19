@@ -36,8 +36,8 @@ export default function App() {
   useEffect(() => {
     const appsFlyerOptions = {
       isDebug: true,
-      appId: '6529522067',
-      devKey: 'GdJFcsH8ugAzvkNsr2suf8',
+      appId: process.env.EXPO_PUBLIC_APPSFLYER_ONELINK_APP_ID,
+      devKey: process.env.EXPO_PUBLIC_APPSFLYER_ONELINK_DEV_KEY,
       onInstallConversionDataListener: true,
       timeToWaitForATTUserAuthorization: 10,
       onDeepLinkListener: true,
