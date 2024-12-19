@@ -3,12 +3,13 @@ import { View, Text, Button, StyleSheet, TouchableOpacity, Alert } from 'react-n
 import * as Clipboard from 'expo-clipboard';
 import colors from '../config/colors';
 import { auth } from '../components/Firebase/firebaseConfig';
+import { connect } from 'react-redux';
 
-const ReferralScreen = () => {
+const ReferralScreen = (props) => {
   const user = auth.currentUser;
   const userId = user.uid;
   // State to hold the referral link
-  const [referralLink, setReferralLink] = useState(null) // useState(`https://makeshiftplans.com/referrals?r=${userId.substring(4)}`);
+  const [referralLink, setReferralLink] = useState(props.state.inviteLink) // useState(null) // useState(`https://makeshiftplans.com/referrals?r=${userId.substring(4)}`);
 // should change to use user.referralLink from user doc
 
   // Function to copy referral link to clipboard
@@ -26,7 +27,7 @@ const ReferralScreen = () => {
       {/* Referral Link Section */}
       <View style={styles.referralLinkContainer}>
         <Text style={styles.referralLinkLabel}>My Referral Link:</Text>
-        <Text style={styles.referralLink}>{referralLink}</Text>
+        <Text style={styles.referralLink}>{props.state.inviteLink}</Text>
       </View>
 
       {/* Copy Link Button */}
@@ -87,4 +88,10 @@ const styles = StyleSheet.create({
   },
 });
 
-export default ReferralScreen;
+const mapStateToProps = (state) => {
+  return {
+    state: state.user,
+  };
+};
+
+export default connect(mapStateToProps, null)(ReferralScreen);
