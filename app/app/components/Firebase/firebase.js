@@ -9,7 +9,7 @@ import { ref, onValue, once, get, set, update, increment, off, serverTimestamp a
 import { httpsCallable } from 'firebase/functions';
 import { ref as storageRef, uploadBytes, listAll, deleteObject } from 'firebase/storage';
 import { isSignInWithEmailLink, sendSignInLinkToEmail, signInWithEmailLink, onAuthStateChanged, signInWithEmailAndPassword, signInAnonymously, signOut, sendPasswordResetEmail } from "firebase/auth";
-
+import appsFlyer from 'react-native-appsflyer';
 import { Image } from 'expo-image';
 
 import _ from 'lodash' //import _, { set } from 'lodash'
@@ -92,9 +92,48 @@ export const passwordReset = (email) => {
 };
 // Function to create user (USER-C) (2W)
 export const registerWithEmail = async (email) => {
-  const CFregisterWithEmail = httpsCallable(functions, 'registerWithEmail');
-  const inputs = { email };
-  return CFregisterWithEmail(inputs);
+  try {
+    // Firebase callable function
+    const CFregisterWithEmail = httpsCallable(functions, 'registerWithEmail');
+
+    // Generate AppsFlyer invite link
+    const linkParams = {
+      campaign: 'user_invite',
+      channel: 'mobile_app',
+      customerUserId: email, // Unique user ID
+      additionalParameters: {
+        referrerId: email, // Custom parameter for referral tracking
+      },
+    };
+
+    // Generate invite link and pass it into the Firebase function
+    return new Promise((resolve, reject) => {
+      appsFlyer.generateInviteLink(linkParams, async (link) => {
+        console.log('Generated Invite Link:', link);
+
+        try {
+          // Send the invite link along with email to Firebase
+          const inputs = {
+            email,
+            inviteLink: link, // Include the invite link in the inputs
+          };
+
+          const registrationResponse = await CFregisterWithEmail(inputs);
+          console.log('User registration successful:', registrationResponse);
+          resolve(registrationResponse);
+        } catch (error) {
+          console.error('Error in Firebase function:', error);
+          reject(error);
+        }
+      }, (error) => {
+        console.error('Error generating invite link:', error);
+        reject(error);
+      });
+    });
+  } catch (error) {
+    console.error('Error in registerWithEmail:', error);
+    throw error;
+  }
 };
 
 // Function to update user name
