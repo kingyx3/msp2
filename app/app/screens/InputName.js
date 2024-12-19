@@ -22,7 +22,8 @@ const InputName = ({ navigation }) => {
       const referralCodeX = data.searchParams.get('r');
       if (!referralCodeX) return;
 
-      setReferralCode(referralCodeX);
+      // setReferralCode(referralCodeX);
+      setReferralCode(initialUrl);
     };
 
     checkInitialURL();
