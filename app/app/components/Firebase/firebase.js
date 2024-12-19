@@ -95,7 +95,7 @@ export const registerWithEmail = async (email) => {
   try {
     // Firebase callable function
     const CFregisterWithEmail = httpsCallable(functions, 'registerWithEmail');
-    appsFlyer.setAppInviteOneLinkID(process.env.EXPO_PUBLIC_APPSFLYER_ONELINK_TEMPLATE_ID, null);
+    
 
     // Generate AppsFlyer invite link
     const linkParams = {
