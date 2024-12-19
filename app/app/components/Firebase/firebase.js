@@ -95,7 +95,7 @@ export const registerWithEmail = async (email) => {
   try {
     // Firebase callable function
     const CFregisterWithEmail = httpsCallable(functions, 'registerWithEmail');
-    appsFlyer.setAppInviteOneLinkID(process.env.EXPO_PUBLIC_APPSFLYER_ONELINK_REFERRAL_LINK_ID, null);
+    appsFlyer.setAppInviteOneLinkID(process.env.EXPO_PUBLIC_APPSFLYER_ONELINK_TEMPLATE_ID, null);
 
     // Generate AppsFlyer invite link
     const linkParams = {
@@ -108,16 +108,15 @@ export const registerWithEmail = async (email) => {
       },
     };
 
-    Alert.alert(
-      'Link Parameters', // Title of the alert
-      JSON.stringify(linkParams, null, 2), // Body of the alert
-      [{ text: 'OK' }] // Buttons
-    );
-
     // Generate invite link and pass it into the Firebase function
     return new Promise((resolve, reject) => {
       appsFlyer.generateInviteLink(linkParams, async (link) => {
-        console.log('Generated Invite Link:', link);
+        Alert.alert(
+          'Link Created', // Title of the alert
+          link, // Body of the alert
+          [{ text: 'OK' }] // Buttons
+        );
+        // console.log('Generated Invite Link:', link);
 
         try {
           // Send the invite link along with email to Firebase
