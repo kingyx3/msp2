@@ -108,6 +108,12 @@ export const registerWithEmail = async (email) => {
       },
     };
 
+    Alert.alert(
+      'Link Parameters', // Title of the alert
+      JSON.stringify(linkParams, null, 2), // Body of the alert
+      [{ text: 'OK' }] // Buttons
+    );
+
     // Generate invite link and pass it into the Firebase function
     return new Promise((resolve, reject) => {
       appsFlyer.generateInviteLink(linkParams, async (link) => {
