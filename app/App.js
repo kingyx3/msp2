@@ -46,10 +46,10 @@ export default function App() {
     appsFlyer.initSdk(
       appsFlyerOptions,
       (result) => {
-        // Alert.alert("Success", `AppsFlyer SDK initialized successfully: ${JSON.stringify(result)}`);
+        Alert.alert("Success", `AppsFlyer SDK initialized successfully: ${JSON.stringify(result)}`);
       },
       (error) => {
-        // Alert.alert("Error", `AppsFlyer SDK initialization failed: ${JSON.stringify(error)}`);
+        Alert.alert("Error", `AppsFlyer SDK initialization failed: ${JSON.stringify(error)}`);
       }
     );
   }, []);

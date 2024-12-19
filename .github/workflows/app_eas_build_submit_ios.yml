@@ -1,5 +1,4 @@
 name: EAS Build & Submit (iOS)
-
 on:
   push:
     branches:
@@ -8,6 +7,7 @@ on:
     paths:
       - app/app.config.js
       - app/.env*
+      - app/package.json
       - .github/workflows/app_eas_build_submit_ios.yml
 
 defaults:
@@ -77,9 +77,9 @@ jobs:
             --path=./app-build \
             --non-interactive
 
-      - name: EAS Update (Development)
-        if: always() && github.ref == 'refs/heads/develop'
-        run: NODE_ENV=development eas update --branch development --auto # Internal track
+      # - name: EAS Update (Development)
+      #   if: always() && github.ref == 'refs/heads/develop'
+      #   run: NODE_ENV=development eas update --branch development --auto # Internal track
 
       - name: Submit app (Production)
         if: github.ref == 'refs/heads/main'
@@ -90,6 +90,6 @@ jobs:
             --path=./app-build \
             --non-interactive
 
-      - name: EAS Update (Production)
-        if: always() && github.ref == 'refs/heads/main'
-        run: NODE_ENV=production eas update --branch production --auto # Internal track
+      # - name: EAS Update (Production)
+      #   if: always() && github.ref == 'refs/heads/main'
+      #   run: NODE_ENV=production eas update --branch production --auto # Internal track
