@@ -3,39 +3,13 @@ import { View, Text, Button, StyleSheet, TouchableOpacity, Alert } from 'react-n
 import * as Clipboard from 'expo-clipboard';
 import colors from '../config/colors';
 import { auth } from '../components/Firebase/firebaseConfig';
-import appsFlyer from 'react-native-appsflyer';
 
 const ReferralScreen = () => {
   const user = auth.currentUser;
   const userId = user.uid;
   // State to hold the referral link
-  const [referralLink, setReferralLink] = null // useState(`https://makeshiftplans.com/referrals?r=${userId.substring(4)}`);
-
-  useEffect(() => {
-    // set the template ID before you generate a link. Without it UserInvite won't work.
-    appsFlyer.setAppInviteOneLinkID(process.env.EXPO_PUBLIC_APPSFLYER_ONELINK_REFERRAL_LINK_ID, null);
-
-    // set the user invite params
-    appsFlyer.generateInviteLink(
-      {
-        channel: 'app',
-        campaign: 'in_app_referral',
-        customerID: userId,
-        userParams: {
-          deep_link_value: 'in_app_referral', // deep link param
-          deep_link_sub1: userId, // deep link param
-          custom_param: 'custom',
-          brandDomain: 'makeshiftplans.com'
-        },
-      },
-      (link) => {
-        setReferralLink(link);
-      },
-      (err) => {
-        console.log(err);
-      }
-    );
-  }, []);
+  const [referralLink, setReferralLink] = useState(null) // useState(`https://makeshiftplans.com/referrals?r=${userId.substring(4)}`);
+// should change to use user.referralLink from user doc
 
   // Function to copy referral link to clipboard
   const copyToClipboard = async () => {
