@@ -42,6 +42,7 @@ export default function App() {
       timeToWaitForATTUserAuthorization: 10,
       onDeepLinkListener: true,
     };
+    appsFlyer.setAppInviteOneLinkID(process.env.EXPO_PUBLIC_APPSFLYER_ONELINK_TEMPLATE_ID, null);
 
     appsFlyer.initSdk(
       appsFlyerOptions,
