@@ -35,22 +35,22 @@ export default function App() {
 
   useEffect(() => {
     const appsFlyerOptions = {
-      isDebug: true,
+      isDebug: false,
       appId: process.env.EXPO_PUBLIC_APPSFLYER_ONELINK_APP_ID,
       devKey: process.env.EXPO_PUBLIC_APPSFLYER_ONELINK_DEV_KEY,
       onInstallConversionDataListener: true,
       timeToWaitForATTUserAuthorization: 10,
-      onDeepLinkListener: true,
+      onDeepLinkListener: true
     };
     appsFlyer.setAppInviteOneLinkID(process.env.EXPO_PUBLIC_APPSFLYER_ONELINK_TEMPLATE_ID, null);
 
     appsFlyer.initSdk(
       appsFlyerOptions,
       (result) => {
-        Alert.alert("Success", `AppsFlyer SDK initialized successfully: ${JSON.stringify(result)}`);
+        // Alert.alert("Success", `AppsFlyer SDK initialized successfully: ${JSON.stringify(result)}`);
       },
       (error) => {
-        Alert.alert("Error", `AppsFlyer SDK initialization failed: ${JSON.stringify(error)}`);
+        // Alert.alert("Error", `AppsFlyer SDK initialization failed: ${JSON.stringify(error)}`);
       }
     );
   }, []);
