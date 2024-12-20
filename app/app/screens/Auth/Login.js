@@ -29,13 +29,10 @@ export default function App(props) {
           await loginWithEmail(email, 'QnIVZ-ke7c3_nGcU$QkMFi@iFftsOT!497M-QBq8EdY2b7bdrJHETZVS8SrL-Iop');
         } catch (error) {
           if (error.code === 'auth/user-disabled') {
-            Alert.alert("Error", "User account deleted", [
-              "Ok"
-            ])
+            Alert.alert("Error", "User account deleted", ["Ok"])
           } else {
-            Alert.alert("Error code", error.code,[
-              "Ok"
-            ])
+            // Alert.alert("Error code", error.code,["Ok"])
+            // invalid-credentials => login, else register
             await registerWithEmail(email);
             try {
               await loginWithEmailLink(email)
