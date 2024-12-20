@@ -34,26 +34,30 @@ export default function App() {
   // console.log('appsFlyer object:', appsFlyer);
 
   useEffect(() => {
-    const appsFlyerOptions = {
-      isDebug: true,
-      appId: process.env.EXPO_PUBLIC_APPSFLYER_ONELINK_APP_ID,
-      devKey: process.env.EXPO_PUBLIC_APPSFLYER_ONELINK_DEV_KEY,
-      onInstallConversionDataListener: true,
-      timeToWaitForATTUserAuthorization: 10,
-      onDeepLinkListener: true
-    };
-    appsFlyer.setAppInviteOneLinkID(process.env.EXPO_PUBLIC_APPSFLYER_ONELINK_TEMPLATE_ID, null);
+  const initializeAppsFlyer = async () => {
+    try {
+      // Set the OneLink ID
+      await appsFlyer.setAppInviteOneLinkID(process.env.EXPO_PUBLIC_APPSFLYER_ONELINK_TEMPLATE_ID);
 
-    appsFlyer.initSdk(
-      appsFlyerOptions,
-      (result) => {
-        // Alert.alert("Success", `AppsFlyer SDK initialized successfully: ${JSON.stringify(result)}`);
-      },
-      (error) => {
-        // Alert.alert("Error", `AppsFlyer SDK initialization failed: ${JSON.stringify(error)}`);
-      }
-    );
-  }, []);
+      // Initialize the AppsFlyer SDK
+      const appsFlyerOptions = {
+        isDebug: true,
+        appId: process.env.EXPO_PUBLIC_APPSFLYER_ONELINK_APP_ID,
+        devKey: process.env.EXPO_PUBLIC_APPSFLYER_ONELINK_DEV_KEY,
+        onInstallConversionDataListener: true,
+        timeToWaitForATTUserAuthorization: 10,
+        onDeepLinkListener: true
+      };
+
+      const result = await appsFlyer.initSdk(appsFlyerOptions);
+      console.log('AppsFlyer SDK initialized successfully:', result);
+    } catch (error) {
+      console.error('Error initializing AppsFlyer SDK:', error);
+    }
+  };
+
+  initializeAppsFlyer();
+}, []);
 
   useEffect(() => {
     async function checkForAppStoreUpdates() {
