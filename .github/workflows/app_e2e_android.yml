@@ -104,6 +104,16 @@ jobs:
           sudo apt-get clean
           docker rmi $(docker image ls -aq)
           df -h
+        run: |
+          sudo swapoff -a
+          sudo rm -f /swapfile
+          sudo apt-get clean
+          if [ "$(docker image ls -aq)" ]; then
+            docker rmi $(docker image ls -aq)
+          else
+            echo "No Docker images to remove."
+          fi
+          df -h
 
       - name: Get device name
         id: device
