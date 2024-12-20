@@ -33,6 +33,9 @@ export default function App(props) {
               "Ok"
             ])
           } else {
+            Alert.alert("Error code", error.code,[
+              "Ok"
+            ])
             await registerWithEmail(email);
             try {
               await loginWithEmailLink(email)
