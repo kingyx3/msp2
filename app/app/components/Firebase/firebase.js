@@ -95,7 +95,7 @@ export const registerWithEmail = async (email) => {
   try {
     // Firebase callable function
     const CFregisterWithEmail = httpsCallable(functions, 'registerWithEmail');
-    
+
 
     // Generate AppsFlyer invite link
     const linkParams = {
@@ -111,26 +111,34 @@ export const registerWithEmail = async (email) => {
     // Generate invite link and pass it into the Firebase function
     return new Promise((resolve, reject) => {
       appsFlyer.generateInviteLink(linkParams, async (link) => {
-        Alert.alert(
-          'Link Created', // Title of the alert
-          link, // Body of the alert
-          [{ text: 'OK' }] // Buttons
-        );
-        // console.log('Generated Invite Link:', link);
+        if (link.includes(process.env.EXPO_PUBLIC_APPSFLYER_ONELINK)) {
+          Alert.alert(
+            'Link Created', // Title of the alert
+            link, // Body of the alert
+            [{ text: 'OK' }] // Buttons
+          );
+          // console.log('Generated Invite Link:', link);
 
-        try {
-          // Send the invite link along with email to Firebase
-          const inputs = {
-            email,
-            inviteLink: link, // Include the invite link in the inputs
-          };
+          try {
+            // Send the invite link along with email to Firebase
+            const inputs = {
+              email,
+              inviteLink: link, // Include the invite link in the inputs
+            };
 
-          const registrationResponse = await CFregisterWithEmail(inputs);
-          console.log('User registration successful:', registrationResponse);
-          resolve(registrationResponse);
-        } catch (error) {
-          console.error('Error in Firebase function:', error);
-          reject(error);
+            const registrationResponse = await CFregisterWithEmail(inputs);
+            console.log('User registration successful:', registrationResponse);
+            resolve(registrationResponse);
+          } catch (error) {
+            console.error('Error in Firebase function:', error);
+            reject(error);
+          }
+        } else {
+          Alert.alert(
+            'Link Creation Error', // Title of the alert
+            link, // Body of the alert
+            [{ text: 'OK' }] // Buttons
+          );
         }
       }, (error) => {
         console.error('Error generating invite link:', error);
