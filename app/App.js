@@ -34,30 +34,82 @@ export default function App() {
   // console.log('appsFlyer object:', appsFlyer);
 
   useEffect(() => {
-  const initializeAppsFlyer = async () => {
-    try {
-      // Set the OneLink ID
-      await appsFlyer.setAppInviteOneLinkID(process.env.EXPO_PUBLIC_APPSFLYER_ONELINK_TEMPLATE_ID);
 
-      // Initialize the AppsFlyer SDK
-      const appsFlyerOptions = {
-        isDebug: true,
-        appId: process.env.EXPO_PUBLIC_APPSFLYER_ONELINK_APP_ID,
-        devKey: process.env.EXPO_PUBLIC_APPSFLYER_ONELINK_DEV_KEY,
-        onInstallConversionDataListener: true,
-        timeToWaitForATTUserAuthorization: 10,
-        onDeepLinkListener: true
-      };
+    // Subscribe to deep linking
+    const deepLinkListener = (response) => {
+      const { status, deepLink } = response;
 
-      const result = await appsFlyer.initSdk(appsFlyerOptions);
-      console.log('AppsFlyer SDK initialized successfully:', result);
-    } catch (error) {
-      console.error('Error initializing AppsFlyer SDK:', error);
-    }
-  };
+      try {
+        if (status === 'FOUND') {
+          const deepLinkDestination = deepLink?.deepLinkValue || 'Unknown Destination';
+          Alert.alert('Deep Link Found', `Destination: ${deepLinkDestination}`);
+          console.log('Deep Link Data:', deepLink);
+          console.log('Deep Link Destination:', deepLinkDestination);
+        } else if (status === 'NOT_FOUND') {
+          Alert.alert('Deep Link Not Found');
+        } else if (status === 'ERROR') {
+          Alert.alert('Deep Link Error', JSON.stringify(response.error));
+        }
+      } catch (error) {
+        console.error('Error handling deep link data:', error);
+        Alert.alert('Error', 'Unable to handle deep link data.');
+      }
+    };
 
-  initializeAppsFlyer();
-}, []);
+    appsFlyer.onDeepLink(deepLinkListener);
+
+    // Cleanup on unmount
+    return () => {
+      appsFlyer.removeDeepLinkListener(deepLinkListener);
+    };
+  }, []);
+
+  useEffect(() => {
+    // Initialize the AppsFlyer SDK
+    const appsFlyerOptions = {
+      isDebug: true,
+      appId: process.env.EXPO_PUBLIC_APPSFLYER_ONELINK_APP_ID,
+      devKey: process.env.EXPO_PUBLIC_APPSFLYER_ONELINK_DEV_KEY,
+      onInstallConversionDataListener: true,
+      timeToWaitForATTUserAuthorization: 10,
+      onDeepLinkListener: true
+    };
+
+    // Set the OneLink ID
+    appsFlyer.setAppInviteOneLinkID(process.env.EXPO_PUBLIC_APPSFLYER_ONELINK_TEMPLATE_ID);
+    appsFlyer.initSdk(appsFlyerOptions);
+    // console.log('AppsFlyer SDK initialized successfully:', result);
+
+    // Subscribe to deep linking
+    const deepLinkListener = (response) => {
+      const { status, deepLink } = response;
+
+      try {
+        if (status === 'FOUND') {
+          const deepLinkDestination = deepLink?.deepLinkValue || 'Unknown Destination';
+          Alert.alert('Deep Link Found', `Destination: ${deepLinkDestination}`);
+          console.log('Deep Link Data:', deepLink);
+          console.log('Deep Link Destination:', deepLinkDestination);
+        } else if (status === 'NOT_FOUND') {
+          Alert.alert('Deep Link Not Found');
+        } else if (status === 'ERROR') {
+          Alert.alert('Deep Link Error', JSON.stringify(response.error));
+        }
+      } catch (error) {
+        console.error('Error handling deep link data:', error);
+        Alert.alert('Error', 'Unable to handle deep link data.');
+      }
+    };
+
+    appsFlyer.onDeepLink(deepLinkListener);
+
+    // Cleanup on unmount
+    return () => {
+      appsFlyer.removeDeepLinkListener(deepLinkListener);
+    };
+
+    initializeAppsFlyer();
+  }, []);
 
   useEffect(() => {
     async function checkForAppStoreUpdates() {

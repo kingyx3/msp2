@@ -14,27 +14,17 @@ const InputName = ({ navigation }) => {
   const [referralCode, setReferralCode] = useState("");
   const [disabled, setDisabled] = useState(false);
 
-  useEffect(() => {
-    const handleDeepLink = (event) => {
-      const url = event.url;
-      console.log("Deep link URL:", url);
+  // useEffect(() => {
+  //   const handleDeepLink = (event) => {
+  //     const url = event.url;
+  //     console.log("Deep link URL:", url);
 
-      appsFlyer.onAppOpenAttribution((data) => {
-        console.log("AppsFlyer Attribution Data:", data);
+  //   // Listen for deep links
+  //   const subscription = Linking.addEventListener("url", handleDeepLink);
 
-        // Process the deep link data
-        if (data.deepLinkValue) {
-          Alert.alert("Deep Link Processed", `Value: ${data.deepLinkValue}`);
-        }
-      });
-    };
-
-    // Listen for deep links
-    const subscription = Linking.addEventListener("url", handleDeepLink);
-
-    // Cleanup
-    return () => subscription.remove();
-  }, []);
+  //   // Cleanup
+  //   return () => subscription.remove();
+  // }, []);
 
   // useEffect(() => {
   //   // Listen for deep links
