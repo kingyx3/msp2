@@ -135,7 +135,7 @@ export const registerWithEmail = async (email) => {
         } else {
           Alert.alert(
             'Link Creation Error', // Title of the alert
-            link, // Body of the alert
+            "Please check your proxy / VPN settings." // link, // Body of the alert
             [{ text: 'OK' }] // Buttons
           );
         }
