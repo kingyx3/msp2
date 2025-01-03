@@ -15,30 +15,52 @@ const InputName = ({ navigation }) => {
   const [disabled, setDisabled] = useState(false);
 
   useEffect(() => {
+    const handleDeepLink = (event) => {
+      const url = event.url;
+      console.log("Deep link URL:", url);
+
+      appsFlyer.onAppOpenAttribution((data) => {
+        console.log("AppsFlyer Attribution Data:", data);
+
+        // Process the deep link data
+        if (data.deepLinkValue) {
+          Alert.alert("Deep Link Processed", `Value: ${data.deepLinkValue}`);
+        }
+      });
+    };
+
     // Listen for deep links
-    const handleDeepLink = async (res) => {
-      Alert.alert("Response", res)
-      if (res && res.deepLinkValue) {
-        console.log('Deep link data:', res.deepLinkValue);
-        console.log('Deep link custom parameters:', res.deepLinkParams);
+    const subscription = Linking.addEventListener("url", handleDeepLink);
 
-        // Access inviting user ID
-        const invitingUserEmail = res.deepLinkParams?.customerUserId;
-        const invitingUserEmail2 = res.deepLinkParams?.additionalParameters.referrerId;
-        const invitingUserId = await getUserIdByEmail(invitingUserEmail)
-        Alert.alert("invitingUserId & Emails", invitingUserId, invitingUserEmail + " " + invitingUserEmail2);
-
-        setReferralCode(invitingUserId);
-      }
-    };
-
-    appsFlyer.onDeepLink(handleDeepLink);
-
-    // Cleanup listener
-    return () => {
-      appsFlyer.onDeepLink(null);
-    };
+    // Cleanup
+    return () => subscription.remove();
   }, []);
+
+  // useEffect(() => {
+  //   // Listen for deep links
+  //   const handleDeepLink = async (res) => {
+  //     Alert.alert("Response", res)
+  //     if (res && res.deepLinkValue) {
+  //       console.log('Deep link data:', res.deepLinkValue);
+  //       console.log('Deep link custom parameters:', res.deepLinkParams);
+
+  //       // Access inviting user ID
+  //       const invitingUserEmail = res.deepLinkParams?.customerUserId;
+  //       const invitingUserEmail2 = res.deepLinkParams?.additionalParameters.referrerId;
+  //       const invitingUserId = await getUserIdByEmail(invitingUserEmail)
+  //       Alert.alert("invitingUserId & Emails", invitingUserId, invitingUserEmail + " " + invitingUserEmail2);
+
+  //       setReferralCode(invitingUserId);
+  //     }
+  //   };
+
+  //   appsFlyer.onDeepLink(handleDeepLink);
+
+  //   // Cleanup listener
+  //   return () => {
+  //     appsFlyer.onDeepLink(null);
+  //   };
+  // }, []);
 
   // useEffect(() => {
   //   const checkInitialURL = async () => {
