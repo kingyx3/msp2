@@ -1,12 +1,13 @@
 import React, { useState, useEffect } from "react";
 import { Text, StyleSheet, KeyboardAvoidingView, TouchableWithoutFeedback, Keyboard, TextInput, Platform, Alert } from "react-native";
 import styled from "styled-components/native";
-import { updateUserName, updateUserReferral } from '../components/Firebase/firebase';
+import { updateUserName, updateUserReferral, getUserIdByEmail } from '../components/Firebase/firebase';
 import SubmitBtn from "../components/forms/SubmitBtn";
 import * as Button from "../components/Button"
 import colors from "../config/colors";
 import * as Typography from "../config/Typography";
 import * as Linking from "expo-linking";
+import appsFlyer from "react-native-appsflyer";
 
 const InputName = ({ navigation }) => {
   const [name, setName] = useState("");
@@ -14,20 +15,45 @@ const InputName = ({ navigation }) => {
   const [disabled, setDisabled] = useState(false);
 
   useEffect(() => {
-    const checkInitialURL = async () => {
-      const initialUrl = await Linking.getInitialURL();
-      if (!initialUrl) return;
+    // Listen for deep links
+    const handleDeepLink = async (res) => {
+      if (res && res.deepLinkValue) {
+        console.log('Deep link data:', res.deepLinkValue);
+        console.log('Deep link custom parameters:', res.deepLinkParams);
 
-      const data = new URL(initialUrl);
-      const referralCodeX = data.searchParams.get('r');
-      if (!referralCodeX) return;
+        // Access inviting user ID
+        const invitingUserEmail = res.deepLinkParams?.customerUserId;
+        const invitingUserEmail2 = res.deepLinkParams?.additionalParameters.referrerId;
+        const invitingUserId = await getUserIdByEmail(invitingUserEmail)
+        Alert.alert("invitingUserId & Emails", invitingUserId, invitingUserEmail + " " + invitingUserEmail2);
 
-      // setReferralCode(referralCodeX);
-      setReferralCode(initialUrl);
+        setReferralCode(invitingUserId);
+      }
     };
 
-    checkInitialURL();
+    appsFlyer.onDeepLink(handleDeepLink);
+
+    // Cleanup listener
+    return () => {
+      appsFlyer.onDeepLink(null);
+    };
   }, []);
+
+  // useEffect(() => {
+  //   const checkInitialURL = async () => {
+  //     const initialUrl = await Linking.getInitialURL();
+  //     if (!initialUrl) return;
+
+  //     const data = new URL(initialUrl);
+  //     const referralCodeX = data.searchParams.get('r');
+  //     if (!referralCodeX) return;
+
+  //     // setReferralCode(referralCodeX);
+  //     setReferralCode(initialUrl);
+  //   };
+
+  //   checkInitialURL();
+  // }, []);
 
   const handleSubmit = async () => {
     if (!name) {

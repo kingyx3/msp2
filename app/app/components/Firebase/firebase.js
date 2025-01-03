@@ -96,7 +96,6 @@ export const registerWithEmail = async (email) => {
     // Firebase callable function
     const CFregisterWithEmail = httpsCallable(functions, 'registerWithEmail');
 
-
     // Generate AppsFlyer invite link
     const linkParams = {
       campaign: 'user_invite',
@@ -251,6 +250,31 @@ export function fetchUser() {
     return listener
   };
 }
+
+export const getUserIdByEmail = async (email) => {
+  try {
+    // Reference to the 'users' collection
+    const usersRef = collection(db, "users");
+
+    // Query to find the user with the specified email
+    const q = query(usersRef, where("email", "==", email));
+
+    // Execute the query
+    const querySnapshot = await getDocs(q);
+
+    if (!querySnapshot.empty) {
+      // Assuming only one user document matches
+      const userDoc = querySnapshot.docs[0];
+      return userDoc.id; // Return the document ID
+    } else {
+      console.log("No user found with the provided email.");
+      return null;
+    }
+  } catch (error) {
+    console.error("Error retrieving user by email:", error);
+    return null;
+  }
+};
 
 // Function to fetch user ip location - non firebase
 export function fetchIpLocation() {
