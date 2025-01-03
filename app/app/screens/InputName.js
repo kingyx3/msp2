@@ -17,6 +17,7 @@ const InputName = ({ navigation }) => {
   useEffect(() => {
     // Listen for deep links
     const handleDeepLink = async (res) => {
+      Alert.alert("Response", res)
       if (res && res.deepLinkValue) {
         console.log('Deep link data:', res.deepLinkValue);
         console.log('Deep link custom parameters:', res.deepLinkParams);
