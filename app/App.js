@@ -49,6 +49,10 @@ export default function App() {
 
     const onInstallConversionDataCanceller = appsFlyer.onInstallConversionData(
   (res) => {
+    Alert.alert('Response', JSON.stringify(res))
+
+
+    /*
     if (JSON.parse(res.data.is_first_launch) == true) {
       if (res.data.af_status === 'Non-organic') {
         var media_source = res.data.media_source;
@@ -59,7 +63,7 @@ export default function App() {
       }
     } else {
       Alert.alert('This is not first launch', res);
-    }
+    }*/
   }
 );
 
