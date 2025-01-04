@@ -34,37 +34,6 @@ export default function App() {
   // console.log('appsFlyer object:', appsFlyer);
 
   useEffect(() => {
-
-    // Subscribe to deep linking
-    const deepLinkListener = (response) => {
-      const { status, deepLink } = response;
-
-      try {
-        if (status === 'FOUND') {
-          const deepLinkDestination = deepLink?.deepLinkValue || 'Unknown Destination';
-          Alert.alert('Deep Link Found', `Destination: ${deepLinkDestination}`);
-          console.log('Deep Link Data:', deepLink);
-          console.log('Deep Link Destination:', deepLinkDestination);
-        } else if (status === 'NOT_FOUND') {
-          Alert.alert('Deep Link Not Found');
-        } else if (status === 'ERROR') {
-          Alert.alert('Deep Link Error', JSON.stringify(response.error));
-        }
-      } catch (error) {
-        console.error('Error handling deep link data:', error);
-        Alert.alert('Error', 'Unable to handle deep link data.');
-      }
-    };
-
-    appsFlyer.onDeepLink(deepLinkListener);
-
-    // Cleanup on unmount
-    return () => {
-      appsFlyer.removeDeepLinkListener(deepLinkListener);
-    };
-  }, []);
-
-  useEffect(() => {
     // Initialize the AppsFlyer SDK
     const appsFlyerOptions = {
       isDebug: true,
@@ -80,35 +49,13 @@ export default function App() {
     appsFlyer.initSdk(appsFlyerOptions);
     // console.log('AppsFlyer SDK initialized successfully:', result);
 
-    // Subscribe to deep linking
-    const deepLinkListener = (response) => {
-      const { status, deepLink } = response;
-
-      try {
-        if (status === 'FOUND') {
-          const deepLinkDestination = deepLink?.deepLinkValue || 'Unknown Destination';
-          Alert.alert('Deep Link Found', `Destination: ${deepLinkDestination}`);
-          console.log('Deep Link Data:', deepLink);
-          console.log('Deep Link Destination:', deepLinkDestination);
-        } else if (status === 'NOT_FOUND') {
-          Alert.alert('Deep Link Not Found');
-        } else if (status === 'ERROR') {
-          Alert.alert('Deep Link Error', JSON.stringify(response.error));
-        }
-      } catch (error) {
-        console.error('Error handling deep link data:', error);
-        Alert.alert('Error', 'Unable to handle deep link data.');
+    // Handle deep linking and attribution data
+    appsFlyer.onInstallConversionData((data) => {
+      Alert.alert('Deep Link Data:', data);
+      if (data && data.deepLinkValue) {
+        // Handle referral logic here
       }
-    };
-
-    appsFlyer.onDeepLink(deepLinkListener);
-
-    // Cleanup on unmount
-    return () => {
-      appsFlyer.removeDeepLinkListener(deepLinkListener);
-    };
-
-    initializeAppsFlyer();
+    });
   }, []);
 
   useEffect(() => {
