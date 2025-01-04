@@ -49,6 +49,7 @@ export default function App() {
     appsFlyer.initSdk(appsFlyerOptions);
     // console.log('AppsFlyer SDK initialized successfully:', result);
 
+    /*
     // Handle deep linking and attribution data
     appsFlyer.onInstallConversionData((data) => {
       Alert.alert('Deep Link Data:', data);
@@ -56,6 +57,8 @@ export default function App() {
         // Handle referral logic here
       }
     });
+    */
+
   }, []);
 
   useEffect(() => {
