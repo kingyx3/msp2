@@ -48,24 +48,24 @@ export default function App() {
     appsFlyer.setAppInviteOneLinkID(process.env.EXPO_PUBLIC_APPSFLYER_ONELINK_TEMPLATE_ID);
 
     const onInstallConversionDataCanceller = appsFlyer.onInstallConversionData(
-  (res) => {
-    Alert.alert('Response', JSON.stringify(res))
+      (res) => {
+        Alert.alert('Response', JSON.stringify(res.data.referrerId))
 
 
-    /*
-    if (JSON.parse(res.data.is_first_launch) == true) {
-      if (res.data.af_status === 'Non-organic') {
-        var media_source = res.data.media_source;
-        var campaign = res.data.campaign;
-        Alert.alert('This is first launch and a Non-Organic install. Media source: ' + media_source + ' Campaign: ' + campaign + res);
-      } else if (res.data.af_status === 'Organic') {
-        Alert.alert('This is first launch and a Organic Install', res);
+        /*
+        if (JSON.parse(res.data.is_first_launch) == true) {
+          if (res.data.af_status === 'Non-organic') {
+            var media_source = res.data.media_source;
+            var campaign = res.data.campaign;
+            Alert.alert('This is first launch and a Non-Organic install. Media source: ' + media_source + ' Campaign: ' + campaign + res);
+          } else if (res.data.af_status === 'Organic') {
+            Alert.alert('This is first launch and a Organic Install', res);
+          }
+        } else {
+          Alert.alert('This is not first launch', res);
+        }*/
       }
-    } else {
-      Alert.alert('This is not first launch', res);
-    }*/
-  }
-);
+    );
 
     // Init appsflyer sdk
     appsFlyer.initSdk(appsFlyerOptions);
@@ -81,9 +81,9 @@ export default function App() {
     });
     */
     return () => {
-    // Clean up listener
-    onInstallConversionDataCanceller?.remove();
-  }; 
+      // Clean up listener
+      onInstallConversionDataCanceller?.remove();
+    };
 
   }, []);
 
