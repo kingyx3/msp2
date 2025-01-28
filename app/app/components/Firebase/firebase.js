@@ -93,61 +93,62 @@ export const passwordReset = (email) => {
 // Function to create user (USER-C) (2W)
 export const registerWithEmail = async (email) => {
   try {
-    // Firebase callable function
+    // Firebase callable function for user registration
     const CFregisterWithEmail = httpsCallable(functions, 'registerWithEmail');
 
-    // Generate AppsFlyer invite link
+    // Step 1: Register the user
+    const registrationResponse = await CFregisterWithEmail({ email });
+    console.log('User registration successful:', registrationResponse);
+
+    // Extract the userId from the registration response
+    const userId = registrationResponse.data.userId; // Assuming the response contains a userId field
+
+    // Step 2: Generate AppsFlyer invite link using the userId
     const linkParams = {
       campaign: 'user_invite',
       channel: 'mobile_app',
-      customerID: email, // Unique user ID
-      // brandDomain: 'makeshiftplans.com',
+      customerID: userId, // Use userId instead of email
       userParams: {
-        referrerId: email, // Custom parameter for referral tracking
-        // deep_link_sub1: email,
-        // af_sub1: email,
+        referrerId: userId, // Use userId for referral tracking
       },
     };
 
-    // Generate invite link and pass it into the Firebase function
-    return new Promise((resolve, reject) => {
-      appsFlyer.generateInviteLink(linkParams, async (link) => {
+    // Generate the invite link
+    const inviteLink = await new Promise((resolve, reject) => {
+      appsFlyer.generateInviteLink(linkParams, (link) => {
         if (link.includes(process.env.EXPO_PUBLIC_APPSFLYER_ONELINK)) {
-          Alert.alert(
-            'Link Created', // Title of the alert
-            link, // Body of the alert
-            [{ text: 'OK' }] // Buttons
-          );
-          // console.log('Generated Invite Link:', link);
-
-          try {
-            // Send the invite link along with email to Firebase
-            const inputs = {
-              email,
-              inviteLink: link, // Include the invite link in the inputs
-            };
-
-            const registrationResponse = await CFregisterWithEmail(inputs);
-            console.log('User registration successful:', registrationResponse);
-            resolve(registrationResponse);
-          } catch (error) {
-            console.error('Error in Firebase function:', error);
-            reject(error);
-          }
+          resolve(link);
         } else {
-          Alert.alert(
-            'Link Creation Error', // Title of the alert
-            "Please check your proxy / VPN settings." // link, // Body of the alert
-            [{ text: 'OK' }] // Buttons
-          );
+          reject(new Error('Link creation failed. Please check your proxy / VPN settings.'));
         }
       }, (error) => {
-        console.error('Error generating invite link:', error);
         reject(error);
       });
     });
+
+    console.log('Generated Invite Link:', inviteLink);
+
+    // Step 3: Save the invite link back to the database using a new Firebase function
+    const CFupdateUserInviteLink = httpsCallable(functions, 'updateUserInviteLink');
+    await CFupdateUserInviteLink({ userId, inviteLink });
+
+    console.log('Invite link saved to database successfully.');
+
+    // Optionally, show an alert with the invite link
+    Alert.alert(
+      'Link Created', // Title of the alert
+      inviteLink, // Body of the alert
+      [{ text: 'OK' }] // Buttons
+    );
+
+    return registrationResponse;
   } catch (error) {
     console.error('Error in registerWithEmail:', error);
+    Alert.alert(
+      'Error', // Title of the alert
+      error.message, // Body of the alert
+      [{ text: 'OK' }] // Buttons
+    );
     throw error;
   }
 };
