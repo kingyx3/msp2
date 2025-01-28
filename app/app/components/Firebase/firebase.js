@@ -101,13 +101,11 @@ export const registerWithEmail = async (email) => {
       campaign: 'user_invite',
       channel: 'mobile_app',
       customerID: email, // Unique user ID
-      deep_link_sub1: email,
-      af_sub1: email,
       // brandDomain: 'makeshiftplans.com',
       userParams: {
         referrerId: email, // Custom parameter for referral tracking
-        deep_link_sub1: email,
-        af_sub1: email,
+        // deep_link_sub1: email,
+        // af_sub1: email,
       },
     };
 
