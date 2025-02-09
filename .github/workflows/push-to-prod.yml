@@ -24,7 +24,7 @@ jobs:
         run: git checkout develop
 
       - name: Pull latest changes from develop
-        run: git pull origin develop
+        run: git pull
 
       - name: Checkout main branch
         run: git checkout main
@@ -33,7 +33,7 @@ jobs:
         run: git merge develop
 
       - name: Push changes to main
-        run: git push origin main --force
+        run: git push main
 
       - name: Checkout develop branch again
         run: git checkout develop
