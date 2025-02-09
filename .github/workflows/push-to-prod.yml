@@ -1,0 +1,39 @@
+name: Push to Production
+
+on:
+  workflow_dispatch:  # Allows manual triggering of the workflow
+
+jobs:
+  push-to-prod:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 0  # Fetch all history for all branches and tags
+
+      - name: Set up Git credentials
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}  # GitHub automatically provides this token
+        run: |
+          git config --global user.name "GitHub Actions"
+          git config --global user.email "actions@github.com"
+
+      - name: Checkout develop branch
+        run: git checkout develop
+
+      - name: Pull latest changes from develop
+        run: git pull origin develop
+
+      - name: Checkout main branch
+        run: git checkout main
+
+      - name: Merge develop into main
+        run: git merge develop
+
+      - name: Push changes to main
+        run: git push origin main
+
+      - name: Checkout develop branch again
+        run: git checkout develop
