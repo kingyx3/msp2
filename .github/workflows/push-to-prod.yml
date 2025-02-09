@@ -33,7 +33,7 @@ jobs:
         run: git merge develop
 
       - name: Push changes to main
-        run: git push main
+        run: git push
 
       - name: Checkout develop branch again
         run: git checkout develop
