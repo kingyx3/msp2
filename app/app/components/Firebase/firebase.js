@@ -101,7 +101,7 @@ export const registerWithEmail = async (email) => {
     console.log('User registration successful:', registrationResponse);
 
     // Extract the userId from the registration response
-    const userId = registrationResponse.data.userId; // Assuming the response contains a userId field
+    const userId = registrationResponse?.data?.userId; // Assuming the response contains a userId field
 
     if(userId) {
 
