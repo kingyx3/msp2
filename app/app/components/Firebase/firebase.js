@@ -136,6 +136,7 @@ export const registerWithEmail = async (email) => {
 
     console.log('Invite link saved to database successfully.');
 
+
     /*
     // Optionally, show an alert with the invite link
     Alert.alert(
