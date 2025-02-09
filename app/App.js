@@ -49,7 +49,7 @@ export default function App() {
 
     const onInstallConversionDataCanceller = appsFlyer.onInstallConversionData(
       (res) => {
-        Alert.alert('Response', JSON.stringify(res.data.referrerId))
+        Alert.alert('Response', JSON.stringify(res.data)) //.referrerId))
 
 
         /*
