@@ -128,7 +128,7 @@ export const registerWithEmail = async (email) => {
       });
     });
 
-    console.log('Generated Invite Link:', inviteLink);
+    Alert.alert('Generated Invite Link:', inviteLink);
 
     // Step 3: Save the invite link back to the database using a new Firebase function
     const CFupdateUserInviteLink = httpsCallable(functions, 'updateUserInviteLink');
