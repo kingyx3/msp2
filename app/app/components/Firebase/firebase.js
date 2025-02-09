@@ -103,6 +103,8 @@ export const registerWithEmail = async (email) => {
     // Extract the userId from the registration response
     const userId = registrationResponse.data.userId; // Assuming the response contains a userId field
 
+    if(userId) {
+
     // Step 2: Generate AppsFlyer invite link using the userId
     const linkParams = {
       campaign: 'user_invite',
@@ -142,6 +144,7 @@ export const registerWithEmail = async (email) => {
     );
 
     return registrationResponse;
+    }
   } catch (error) {
     console.error('Error in registerWithEmail:', error);
     Alert.alert(
