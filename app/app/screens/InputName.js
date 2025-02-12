@@ -8,11 +8,19 @@ import colors from "../config/colors";
 import * as Typography from "../config/Typography";
 import * as Linking from "expo-linking";
 import appsFlyer from "react-native-appsflyer";
+import { useSelector } from 'react-redux';
 
 const InputName = ({ navigation }) => {
   const [name, setName] = useState("");
   const [referralCode, setReferralCode] = useState("");
   const [disabled, setDisabled] = useState(false);
+  const { referrerId, shortlink } = useSelector((state) => state.appsFlyer);
+
+  useEffect(() => {
+    if (shortlink) {
+      setReferralCode(shortlink);
+    }
+  }, [shortlink]); // Runs when shortlink updates
 
   // useEffect(() => {
   //   const handleDeepLink = (event) => {
@@ -78,7 +86,7 @@ const InputName = ({ navigation }) => {
     try {
       await updateUserName(name);
       // Assuming updateUserReferral is defined in firebase as well
-      await updateUserReferral(referralCode);
+      await updateUserReferral(referralCode, referrerId);
       // Alert.alert('Success', 'Your information has been updated.');
     } catch (error) {
       // Alert.alert("Error", "An error occurred while updating your information.");

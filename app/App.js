@@ -2,7 +2,7 @@ import React, { useEffect } from "react";
 import useState from 'react-usestateref';
 import { Alert, Text, View, StatusBar, StyleSheet, Platform, ActivityIndicator, AppState } from "react-native";
 import { NavigationContainer } from "@react-navigation/native";
-import { Provider } from "react-redux";
+import { Provider, useDispatch } from "react-redux";
 import store from "./app/store/store";
 import styled from "styled-components/native";
 import * as Linking from 'expo-linking';
@@ -20,7 +20,7 @@ import { onValue, ref } from 'firebase/database';
 import { updateUserReferral } from "./app/components/Firebase/firebase";
 import * as Application from 'expo-application';
 import appsFlyer from 'react-native-appsflyer';
-
+import { setAppsFlyerData } from '../app/app/store/appsFlyerSlice'
 SplashScreen.preventAutoHideAsync();
 
 export default function App() {
@@ -32,9 +32,9 @@ export default function App() {
   const useUrl = Linking.useURL();
 
   // console.log('appsFlyer object:', appsFlyer);
+  const dispatch = useDispatch();
 
   useEffect(() => {
-    // Initialize the AppsFlyer SDK
     const appsFlyerOptions = {
       isDebug: true,
       appId: process.env.EXPO_PUBLIC_APPSFLYER_ONELINK_APP_ID,
@@ -44,48 +44,24 @@ export default function App() {
       onDeepLinkListener: true
     };
 
-    // Set the OneLink ID
     appsFlyer.setAppInviteOneLinkID(process.env.EXPO_PUBLIC_APPSFLYER_ONELINK_TEMPLATE_ID);
 
-    const onInstallConversionDataCanceller = appsFlyer.onInstallConversionData(
-      (res) => {
-        Alert.alert('Response', JSON.stringify(res.data.referrerId + ', ' +  res.data.shortlink))
+    const onInstallConversionDataCanceller = appsFlyer.onInstallConversionData((res) => {
+      const referrerId = res.data.referrerId;
+      const shortlink = res.data.shortlink;
 
+      Alert.alert('Response', `${referrerId}, ${shortlink}`);
 
-        /*
-        if (JSON.parse(res.data.is_first_launch) == true) {
-          if (res.data.af_status === 'Non-organic') {
-            var media_source = res.data.media_source;
-            var campaign = res.data.campaign;
-            Alert.alert('This is first launch and a Non-Organic install. Media source: ' + media_source + ' Campaign: ' + campaign + res);
-          } else if (res.data.af_status === 'Organic') {
-            Alert.alert('This is first launch and a Organic Install', res);
-          }
-        } else {
-          Alert.alert('This is not first launch', res);
-        }*/
-      }
-    );
-
-    // Init appsflyer sdk
-    appsFlyer.initSdk(appsFlyerOptions);
-    // console.log('AppsFlyer SDK initialized successfully:', result);
-
-    /*
-    // Handle deep linking and attribution data
-    appsFlyer.onInstallConversionData((data) => {
-      Alert.alert('Deep Link Data:', data);
-      if (data && data.deepLinkValue) {
-        // Handle referral logic here
-      }
+      // Dispatch to Redux store
+      dispatch(setAppsFlyerData({ referrerId, shortlink }));
     });
-    */
+
+    appsFlyer.initSdk(appsFlyerOptions);
+
     return () => {
-      // Clean up listener
       onInstallConversionDataCanceller?.remove();
     };
-
-  }, []);
+  }, [dispatch]);
 
   useEffect(() => {
     async function checkForAppStoreUpdates() {

@@ -103,50 +103,50 @@ export const registerWithEmail = async (email) => {
     // Extract the userId from the registration response
     const userId = registrationResponse?.data?.userId; // Assuming the response contains a userId field
 
-    if(userId) {
+    if (userId) {
 
-    // Step 2: Generate AppsFlyer invite link using the userId
-    const linkParams = {
-      campaign: 'user_invite',
-      channel: 'mobile_app',
-      customerID: userId, // Use userId instead of email
-      userParams: {
-        referrerId: userId, // Use userId for referral tracking
-      },
-    };
+      // Step 2: Generate AppsFlyer invite link using the userId
+      const linkParams = {
+        campaign: 'user_invite',
+        channel: 'mobile_app',
+        customerID: userId, // Use userId instead of email
+        userParams: {
+          referrerId: userId, // Use userId for referral tracking
+        },
+      };
 
-    // Generate the invite link
-    const inviteLink = await new Promise((resolve, reject) => {
-      appsFlyer.generateInviteLink(linkParams, (link) => {
-        if (link.includes(process.env.EXPO_PUBLIC_APPSFLYER_ONELINK)) {
-          resolve(link);
-        } else {
-          reject(new Error('Link creation failed. Please check your proxy / VPN settings.'));
-        }
-      }, (error) => {
-        reject(error);
+      // Generate the invite link
+      const inviteLink = await new Promise((resolve, reject) => {
+        appsFlyer.generateInviteLink(linkParams, (link) => {
+          if (link.includes(process.env.EXPO_PUBLIC_APPSFLYER_ONELINK)) {
+            resolve(link);
+          } else {
+            reject(new Error('Link creation failed. Please check your proxy / VPN settings.'));
+          }
+        }, (error) => {
+          reject(error);
+        });
       });
-    });
 
-    // Alert.alert('Generated Invite Link:', inviteLink);
+      // Alert.alert('Generated Invite Link:', inviteLink);
 
-    // Step 3: Save the invite link back to the database using a new Firebase function
-    const CFupdateUserInviteLink = httpsCallable(functions, 'updateUserInviteLink');
-    await CFupdateUserInviteLink({ userId, inviteLink });
+      // Step 3: Save the invite link back to the database using a new Firebase function
+      const CFupdateUserInviteLink = httpsCallable(functions, 'updateUserInviteLink');
+      await CFupdateUserInviteLink({ userId, inviteLink });
 
-    console.log('Invite link saved to database successfully.');
+      console.log('Invite link saved to database successfully.');
 
 
-    /*
-    // Optionally, show an alert with the invite link
-    Alert.alert(
-      'Link Created', // Title of the alert
-      inviteLink, // Body of the alert
-      [{ text: 'OK' }] // Buttons
-    );
-    */
+      /*
+      // Optionally, show an alert with the invite link
+      Alert.alert(
+        'Link Created', // Title of the alert
+        inviteLink, // Body of the alert
+        [{ text: 'OK' }] // Buttons
+      );
+      */
 
-    return registrationResponse;
+      return registrationResponse;
     }
   } catch (error) {
     console.error('Error in registerWithEmail:', error);
@@ -1076,9 +1076,9 @@ export async function readMessage(senderId) {
 }
 
 // Function to update referrals
-export const updateUserReferral = async (referralCode) => {
+export const updateUserReferral = async (referralCode, referrerId) => {
   const CFupdateUserReferral = httpsCallable(functions, 'updateUserReferral');
-  const inputs = { referralCode };
+  const inputs = { referralCode, referrerId };
   return CFupdateUserReferral(inputs);
 };
 
