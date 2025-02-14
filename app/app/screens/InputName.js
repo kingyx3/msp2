@@ -17,6 +17,7 @@ const InputName = ({ navigation }) => {
   const { referrerId, shortlink } = useSelector((state) => state.appsFlyer);
 
   useEffect(() => {
+    Alert.alert("referrerId: "+ referrerId, "shortlink: " + shortlink)
     if (shortlink) {
       setReferralCode(shortlink);
     }
