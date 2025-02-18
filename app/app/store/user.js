@@ -9,6 +9,7 @@ const FETCH_USER_HOSTING_LOGS = 'FETCH_USER_HOSTING_LOGS';
 const FETCH_USER_MESSAGES = 'FETCH_USER_MESSAGES';
 const FETCH_SYS_SPACETYPES = 'FETCH_SYS_SPACETYPES';
 const FETCH_PENDING_HOST = 'FETCH_PENDING_HOST';
+const FETCH_USER_REFERRER = 'FETCH_USER_REFERRER';
 
 const initialStore = {
   user: {},
@@ -21,6 +22,8 @@ const initialStore = {
   spaceTypes: [],
   pendingHost: [],
   pendingHostTotalCount: 0,
+  referrerId: "",
+  referrerShortLink: ""
 };
 
 // Action creators
@@ -63,6 +66,8 @@ const reducer = (state = initialStore, action) => {
       return { ...state, spaceTypes: action.payload.spaceTypes };
     case FETCH_PENDING_HOST:
       return { ...state, pendingHost: action.payload.pendingHost, pendingHostTotalCount: action.payload.pendingHostTotalCount };
+    case FETCH_USER_REFERRER:
+      return { ...state, referrerId: action.payload.referrerId, referrerShortLink: action.payload.referrerShortLink };
     default:
       return state;
   }
