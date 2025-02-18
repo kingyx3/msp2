@@ -17,7 +17,6 @@ import InputName from "./app/screens/InputName";
 import { auth, database } from './app/components/Firebase/firebaseConfig'
 import { isSignInWithEmailLink, signInWithEmailLink, onAuthStateChanged } from "firebase/auth";
 import { onValue, ref } from 'firebase/database';
-import { initializeAppsFlyer } from "./app/components/Firebase/firebase";
 import * as Application from 'expo-application';
 
 SplashScreen.preventAutoHideAsync();
@@ -29,16 +28,6 @@ export default function App() {
   const [foregrounded, setForegrounded] = useState(false);
   // createStaticData()
   const useUrl = Linking.useURL();
-
-  // console.log('appsFlyer object:', appsFlyer);
-
-  useEffect(() => {
-    const onInstallConversionDataCanceller = initializeAppsFlyer();
-    return () => {
-      // Clean up listener
-      onInstallConversionDataCanceller?.remove();
-    };
-  }, []);
 
   useEffect(() => {
     async function checkForAppStoreUpdates() {

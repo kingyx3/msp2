@@ -12,7 +12,7 @@ import HostStackModal from './HostStackModal'
 import MessageStackModal from "../navigation/MessageStackModal";
 import BookingStackModal from "../navigation/BookingStackModal"
 import AccountStackModal from "../navigation/AccountStackModal"
-import { fetchUser, fetchIpLocation, fetchUserSpaces, fetchUserBookings, fetchUserMessages, fetchSpaceTypes, fetchUserLogs, fetchUserHostingLogs, fetchPendingHost, stopFetchPendingHost } from "../components/Firebase/firebase"
+import { initializeAppsFlyer, fetchUser, fetchIpLocation, fetchUserSpaces, fetchUserBookings, fetchUserMessages, fetchSpaceTypes, fetchUserLogs, fetchUserHostingLogs, fetchPendingHost, stopFetchPendingHost } from "../components/Firebase/firebase"
 //import styles and assets
 import styled from 'styled-components/native';
 // import { EvilIcons } from '@expo/vector-icons';
@@ -31,6 +31,7 @@ const RootStack = (props) => {
             props.fetchUserBookings() // Firestore
             props.fetchUserMessages() // RTDB
             props.fetchUserLogs() // Firestore
+            props.initializeAppsFlyer() // Appsflyer
             if (host) {
                 console.log('User is a host, calling host-related subscriptions on RootStack')
                 //  Host-only
@@ -106,8 +107,9 @@ const IconWrapper = styled.View`
 `;
 
 const mapDispatchProps = (dispatch) => bindActionCreators({
-    fetchUser,
-    fetchIpLocation, fetchUserSpaces, fetchUserBookings, fetchUserLogs,
-    fetchUserHostingLogs, fetchUserMessages, fetchSpaceTypes, fetchPendingHost, stopFetchPendingHost
+    fetchUser, fetchIpLocation, fetchUserSpaces, fetchUserBookings,
+    fetchUserLogs, fetchUserHostingLogs, fetchUserMessages,
+    fetchSpaceTypes, fetchPendingHost, stopFetchPendingHost,
+    initializeAppsFlyer
 }, dispatch);
 export default connect(null, mapDispatchProps)(RootStack);
