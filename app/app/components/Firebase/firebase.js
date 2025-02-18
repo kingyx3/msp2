@@ -919,39 +919,41 @@ export function fetchSpaceTypes() {
   };
 }
 
-export const initializeAppsFlyer = (dispatch) => {
-  // Initialize the AppsFlyer SDK
-  const appsFlyerOptions = {
-    isDebug: true,
-    appId: process.env.EXPO_PUBLIC_APPSFLYER_ONELINK_APP_ID,
-    devKey: process.env.EXPO_PUBLIC_APPSFLYER_ONELINK_DEV_KEY,
-    onInstallConversionDataListener: true,
-    timeToWaitForATTUserAuthorization: 10,
-    onDeepLinkListener: true
+export function initializeAppsFlyer() {
+  return (dispatch) => {
+    // Initialize the AppsFlyer SDK
+    const appsFlyerOptions = {
+      isDebug: true,
+      appId: process.env.EXPO_PUBLIC_APPSFLYER_ONELINK_APP_ID,
+      devKey: process.env.EXPO_PUBLIC_APPSFLYER_ONELINK_DEV_KEY,
+      onInstallConversionDataListener: true,
+      timeToWaitForATTUserAuthorization: 10,
+      onDeepLinkListener: true
+    };
+
+    // Set the OneLink ID
+    appsFlyer.setAppInviteOneLinkID(process.env.EXPO_PUBLIC_APPSFLYER_ONELINK_TEMPLATE_ID);
+
+    const onInstallConversionDataCanceller = appsFlyer.onInstallConversionData(
+      (res) => {
+        const referrerId = res.data?.referrerId;
+        const referrerShortLink = res.data?.shortlink;
+        Alert.alert('Response', JSON.stringify(referrerId + ', ' + referrerShortLink));
+
+        // Dispatch action to update state
+        dispatch({
+          type: 'FETCH_USER_REFERRER',
+          payload: { referrerId, referrerShortLink },
+        });
+      }
+    );
+
+    // Init AppsFlyer SDK
+    appsFlyer.initSdk(appsFlyerOptions);
+
+    return onInstallConversionDataCanceller;
   };
-
-  // Set the OneLink ID
-  appsFlyer.setAppInviteOneLinkID(process.env.EXPO_PUBLIC_APPSFLYER_ONELINK_TEMPLATE_ID);
-
-  const onInstallConversionDataCanceller = appsFlyer.onInstallConversionData(
-    (res) => {
-      const referrerId = res.data?.referrerId;
-      const referrerShortLink = res.data?.shortlink;
-      Alert.alert('Response', JSON.stringify(referrerId + ', ' + referrerShortLink));
-
-      // Dispatch action to update state
-      dispatch({
-        type: 'FETCH_USER_REFERRER',
-        payload: { referrerId, referrerShortLink },
-      });
-    }
-  );
-
-  // Init AppsFlyer SDK
-  appsFlyer.initSdk(appsFlyerOptions);
-
-  return onInstallConversionDataCanceller;
-};
+}
 
 // Function to fetch booking - DETAILED (1R)
 export function fetchBooking(bookingId) {

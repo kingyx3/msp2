@@ -31,7 +31,6 @@ const RootStack = (props) => {
             props.fetchUserBookings() // Firestore
             props.fetchUserMessages() // RTDB
             props.fetchUserLogs() // Firestore
-            props.initializeAppsFlyer() // Appsflyer
             if (host) {
                 console.log('User is a host, calling host-related subscriptions on RootStack')
                 //  Host-only
@@ -42,7 +41,12 @@ const RootStack = (props) => {
         }
         getData()
     })
-
+    useEffect(() => {
+        const getData = async () => {
+            props.initializeAppsFlyer() // Appsflyer
+        }
+        getData()
+    }, [])
     return (
         <Stack.Navigator>
             <Stack.Screen
