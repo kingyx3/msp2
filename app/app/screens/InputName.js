@@ -14,11 +14,13 @@ const InputName = ({ navigation }) => {
   const [name, setName] = useState("");
   const [referralCode, setReferralCode] = useState("");
   const [disabled, setDisabled] = useState(false);
+  const [referralInputEditable, setReferralInputEditable] = useState(true);
   const { referrerId, referrerShortLink } = useSelector((state) => state.user);
 
   useEffect(() => {
     if (referrerShortLink) {
       setReferralCode(referrerShortLink);
+      setReferralInputEditable(false)
     }
   }, [referrerShortLink]); // Runs when referrerShortLink updates
 
@@ -132,6 +134,7 @@ const InputName = ({ navigation }) => {
                 textContentType="name"
                 maxLength={30}
                 style={styles.textInput}
+                editable={referralInputEditable}
               />
             </Input>
             <Button.BtnContain
