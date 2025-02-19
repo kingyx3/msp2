@@ -133,7 +133,6 @@ export default function App() {
     checkAuth().catch(console.error);
   }, [useUrl]);
 
-
   // Not very useful, doesnt really help to persist auth
   useEffect(() => {
     // Check if app is foregrounded
