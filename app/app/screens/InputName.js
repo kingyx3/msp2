@@ -2,12 +2,11 @@ import React, { useState, useEffect } from "react";
 import { Text, StyleSheet, KeyboardAvoidingView, TouchableWithoutFeedback, Keyboard, TextInput, Platform, Alert } from "react-native";
 import styled from "styled-components/native";
 import { updateUserName, updateUserReferral, getUserIdByEmail } from '../components/Firebase/firebase';
-import SubmitBtn from "../components/forms/SubmitBtn";
-import * as Button from "../components/Button"
+// import SubmitBtn from "../components/forms/SubmitBtn";
+import * as Button from "../components/Button";
 import colors from "../config/colors";
 import * as Typography from "../config/Typography";
-import * as Linking from "expo-linking";
-import appsFlyer from "react-native-appsflyer";
+// import * as Linking from "expo-linking";
 import { useSelector } from 'react-redux';
 
 const InputName = ({ navigation }) => {
@@ -23,60 +22,6 @@ const InputName = ({ navigation }) => {
       setReferralInputEditable(false)
     }
   }, [referrerShortLink]); // Runs when referrerShortLink updates
-
-  // useEffect(() => {
-  //   const handleDeepLink = (event) => {
-  //     const url = event.url;
-  //     console.log("Deep link URL:", url);
-
-  //   // Listen for deep links
-  //   const subscription = Linking.addEventListener("url", handleDeepLink);
-
-  //   // Cleanup
-  //   return () => subscription.remove();
-  // }, []);
-
-  // useEffect(() => {
-  //   // Listen for deep links
-  //   const handleDeepLink = async (res) => {
-  //     Alert.alert("Response", res)
-  //     if (res && res.deepLinkValue) {
-  //       console.log('Deep link data:', res.deepLinkValue);
-  //       console.log('Deep link custom parameters:', res.deepLinkParams);
-
-  //       // Access inviting user ID
-  //       const invitingUserEmail = res.deepLinkParams?.customerUserId;
-  //       const invitingUserEmail2 = res.deepLinkParams?.additionalParameters.referrerId;
-  //       const invitingUserId = await getUserIdByEmail(invitingUserEmail)
-  //       Alert.alert("invitingUserId & Emails", invitingUserId, invitingUserEmail + " " + invitingUserEmail2);
-
-  //       setReferralCode(invitingUserId);
-  //     }
-  //   };
-
-  //   appsFlyer.onDeepLink(handleDeepLink);
-
-  //   // Cleanup listener
-  //   return () => {
-  //     appsFlyer.onDeepLink(null);
-  //   };
-  // }, []);
-
-  // useEffect(() => {
-  //   const checkInitialURL = async () => {
-  //     const initialUrl = await Linking.getInitialURL();
-  //     if (!initialUrl) return;
-
-  //     const data = new URL(initialUrl);
-  //     const referralCodeX = data.searchParams.get('r');
-  //     if (!referralCodeX) return;
-
-  //     // setReferralCode(referralCodeX);
-  //     setReferralCode(initialUrl);
-  //   };
-
-  //   checkInitialURL();
-  // }, []);
 
   const handleSubmit = async () => {
     if (!name) {
