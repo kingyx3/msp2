@@ -938,7 +938,7 @@ export function initializeAppsFlyer() {
       (res) => {
         const referrerId = res.data?.referrerId;
         const referrerShortLink = res.data?.shortlink;
-        Alert.alert('Response', JSON.stringify(referrerId + ', ' + referrerShortLink));
+        // Alert.alert('Response', JSON.stringify(referrerId + ', ' + referrerShortLink));
 
         // Dispatch action to update state
         dispatch({
